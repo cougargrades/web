@@ -1,7 +1,21 @@
 # cougar-grades
 
-## Dependencies
-- Python 3.6+
-- pipenv: `pip install  pipenv`
-	- use `pip3` instead if Python 2.7 is also installed on your system
-- pypi packages: `make dep`
+
+## Project modules
+- `webserver/` C++11 webserver to run the website using [pistache.io](http://pistache.io/)
+- `mysql/`
+
+## Building and running
+### Dependencies
+- `git`
+- `cmake`
+- `g++` >= 4.7.x
+- Any operating system not Windows
+
+### Building
+- `cd webserver/`
+- `make dep`: Download and install C++ libraries used, invididual build scripts per-library found in `webserver/dependencies/`
+- `make`: Compile cougar-grades
+
+### Running
+- `make run`: Run cougar-grades with configration file `config.json`
