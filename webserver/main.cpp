@@ -3,6 +3,7 @@
 #include <csv.h>
 #include <iostream>
 #include <string>
+#include <chrono>
 
 using namespace Pistache;
 using json = nlohmann::json;
@@ -41,6 +42,8 @@ int main(int argc, char* argv[]) {
     exit(0);
   }
 
+  // Record start time
+  auto start = std::chrono::high_resolution_clock::now();
   for(int i = 1; i < argc; i++) {
     cout << argv[i] << endl;
 
@@ -72,5 +75,9 @@ int main(int argc, char* argv[]) {
       n++;
     }
     cout << n << endl;
+    // Record end time
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    cout << "Elapsed time: " << elapsed.count() << "s " << endl;
   }
 }
