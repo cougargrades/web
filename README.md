@@ -10,6 +10,8 @@
 - `git`
 - `cmake`
 - `g++` >= 4.7.x
+- `wget`
+- `unzip`
 - Any operating system not Windows
 
 ### Building

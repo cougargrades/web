@@ -10,12 +10,11 @@ pistache_LIB=$(PWD)/pistache/prefix/lib
 pistache_LINK=pistache
 
 json_INCLUDE=$(PWD)/nlohmann-json/include
-# json_LIB=$(PWD)/pistache/prefix/lib
-# json_LINK=pistache
+csv_INCLUDE=$(PWD)/fast-cpp-csv-parser
 
-INCLUDE= -I $(pistache_INCLUDE) -I $(json_INCLUDE)
+INCLUDE= -I $(pistache_INCLUDE) -I $(json_INCLUDE) -I $(csv_INCLUDE)
 LIB= -L $(pistache_LIB)
-LINK= -l $(pistache_LINK)
+LINK= -l $(pistache_LINK) -l pthread
 
 .FORCE:
 
@@ -28,9 +27,11 @@ clean:
 cleandep:
 	rm -rf pistache
 	rm -rf nlohmann-json
+	rm -rf fast-cpp-csv-parser
 dep: .FORCE
 	./dependencies/pistache.sh
 	./dependencies/nlohmann-json.sh
+	./dependencies/fast-cpp-csv-parser.sh
 
 # project source
 main.out: main.cpp
