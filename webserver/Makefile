@@ -5,19 +5,21 @@ CC = g++ -std=c++11
 CFLAGS= -pedantic -Wall -Wextra
 
 # libraries
+# pistache.io headers, binaries, and linking instructions
 pistache_INCLUDE=$(PWD)/pistache/prefix/include
 pistache_LIB=$(PWD)/pistache/prefix/lib
 pistache_LINK=pistache
 
+# json & csv header files
 json_INCLUDE=$(PWD)/nlohmann-json/include
 csv_INCLUDE=$(PWD)/fast-cpp-csv-parser
 
+# concatenating the library paths
 INCLUDE= -I $(pistache_INCLUDE) -I $(json_INCLUDE) -I $(csv_INCLUDE)
 LIB= -L $(pistache_LIB)
 LINK= -l $(pistache_LINK) -l pthread
 
 .FORCE:
-
 # make scripts
 default: main.out
 run: main.out
