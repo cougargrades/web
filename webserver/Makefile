@@ -21,7 +21,7 @@ LINK= -l $(pistache_LINK) -l pthread
 # make scripts
 default: main.out
 run: main.out
-	LD_LIBRARY_PATH=$(pistache_LIB) ./main.out
+	LD_LIBRARY_PATH=$(pistache_LIB) ./main.out *.csv
 clean:
 	$(RM) *.o *.out *.zip
 cleandep:
