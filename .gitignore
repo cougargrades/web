@@ -38,4 +38,5 @@
 *.dSYM/
 
 # c++ dependencies
-pistache/
+webserver/pistache/
+webserver/nlohmann-json/
