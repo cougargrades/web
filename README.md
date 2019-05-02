@@ -14,5 +14,9 @@
 
 ### Database creator dependencies
 - Python 3.6+ (you should already have this installed)
+- pip
 ### Database creator running
-- `./csv2db.py --help`
+- `pip install pipenv`: easy virtual environments
+- `pipenv install`: install pip dependencies to a project-only virtual environment
+- `pipenv run ./csv2db.py [csv files ...]`: run with virtual environment
+- Alternatively, there is a `requirements.txt` file for pure pip users

@@ -44,5 +44,6 @@ webserver/fast-cpp-csv-parser/
 
 # data files
 *.csv
+*.db
 
 node_modules/
