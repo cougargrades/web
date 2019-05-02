@@ -1,7 +1,10 @@
 ### Terminology
 `term` => identifier of a semester, Ex: `201701` => Spring 2017, `201803` => Fall 2018
+
 `dept` => identifier of a department that has classes for its code, Ex: `COSC`
+
 `course` => identifier of a particular class, Ex: `1430`
+
 `section` => idenitfier of a particular section in a semester, Ex: `7`
 
 
