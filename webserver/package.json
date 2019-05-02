@@ -6,7 +6,8 @@
   "dependencies": {
     "better-sqlite3": "^5.4.0",
     "fastify": "^2.3.0",
-    "fastify-cli": "^1.0.0"
+    "fastify-cli": "^1.0.0",
+    "make-promises-safe": "^5.0.0"
   },
   "devDependencies": {},
   "scripts": {

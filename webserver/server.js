@@ -1,3 +1,7 @@
+
+'use strict'
+
+require('make-promises-safe')
 //const db = require('better-sqlite3')('foobar.db', {});
 //const row = db.prepare('SELECT * FROM users WHERE id=?').get(userId);
 const fastify = require('fastify')({
