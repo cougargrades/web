@@ -1,23 +1,18 @@
 # cougar-grades
 
-
 ## Project modules
-- `webserver/` C++11 webserver to run the website using [pistache.io](http://pistache.io/)
-- `mysql/`
+- `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
+- `database/` Python script to create the sqlite3 database from a collection of CSV files
 
 ## Building and running
-### Dependencies
-- `git`
-- `cmake`
-- `g++` >= 4.7.x
-- `wget`
-- `unzip`
-- Any operating system not Windows
-
-### Building
+### Webserver dependencies
+- Node.js 10.x.x
+### Webserver running
 - `cd webserver/`
-- `make dep`: Download and install C++ libraries used, invididual build scripts per-library found in `webserver/dependencies/`
-- `make`: Compile cougar-grades
+- `npm install`
+- `npm start`
 
-### Running
-- `make run`: Run cougar-grades with configration file `config.json`
+### Database creator dependencies
+- Python 3.6+ (you should already have this installed)
+### Database creator running
+- `./csv2db.py --help`
