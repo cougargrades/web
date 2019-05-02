@@ -4,18 +4,21 @@
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
 - `database/` Python script to create the sqlite3 database from a collection of CSV files
 
-## Building and running
-### Webserver dependencies
+## Webserver
+### Dependencies
 - Node.js 10.x.x
-### Webserver running
+### Running
 - `cd webserver/`
 - `npm install`
 - `npm start`
 
-### Database creator dependencies
+## Database creator
+[![asciicast](https://asciinema.org/a/243852.svg)](https://asciinema.org/a/243852)
+
+### Dependencies
 - Python 3.6+ (you should already have this installed)
 - pip
-### Database creator running
+### Running
 - `pip install pipenv`: easy virtual environments
 - `pipenv install`: install pip dependencies to a project-only virtual environment
 - `pipenv run ./csv2db.py [csv files ...]`: run with virtual environment
