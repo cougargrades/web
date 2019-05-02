@@ -23,7 +23,7 @@ LINK= -l $(pistache_LINK) -l pthread
 # make scripts
 default: main.out
 run: main.out
-	LD_LIBRARY_PATH=$(pistache_LIB) ./main.out *.csv
+	BASEURL="/cougar" LD_LIBRARY_PATH=$(pistache_LIB) ./main.out
 clean:
 	$(RM) *.o *.out *.zip
 cleandep:
@@ -36,5 +36,8 @@ dep: .FORCE
 	./dependencies/fast-cpp-csv-parser.sh
 
 # project source
-main.out: main.cpp
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIB) $(LINK) $< -o $@ 
+main.out: main.cpp APIEndpoint.o
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIB) $(LINK) -o $@ $< $$(ls *.o)
+
+APIEndpoint.o: APIEndpoint.cpp APIEndpoint.h
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIB) $(LINK) -c $<
