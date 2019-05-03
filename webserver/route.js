@@ -4,7 +4,6 @@ const db = require('better-sqlite3')('records.db', {
     readonly: true,
     fileMustExist: true
 });
-//const row = db.prepare('SELECT * FROM users WHERE id=?').get(userId);
 
 async function routes (fastify, options) {
   
