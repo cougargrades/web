@@ -23,3 +23,9 @@
 - `pipenv install`: install pip dependencies to a project-only virtual environment
 - `pipenv run ./csv2db.py [csv files ...]`: run with virtual environment
 - Alternatively, there is a `requirements.txt` file for pure pip users
+
+
+## Inspiration
+- anex.us/grades/ (author unknown)
+- AggieScheduler (@jake-leland)
+- Good-Bull-Schedules (@SaltyQuetzals)

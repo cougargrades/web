@@ -18,10 +18,10 @@ async function routes (fastify, options) {
     fastify.get('/api/table/:term/:dept/:course', async (request, reply) => {
         reply.type('application/json')
         if(request.params.term.toLowerCase() === "all") {
-            return db.prepare('SELECT * FROM records WHERE SUBJECT=? AND CATALOG_NBR=?').all(request.params.dept, request.params.course)
+            return db.prepare('SELECT * FROM records WHERE SUBJECT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC').all(request.params.dept, request.params.course)
         }
         else {
-            return db.prepare('SELECT * FROM records WHERE TERM_CODE=? AND SUBJECT=? AND CATALOG_NBR=?').all(request.params.term, request.params.dept, request.params.course)
+            return db.prepare('SELECT * FROM records WHERE TERM_CODE=? AND SUBJECT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC').all(request.params.term, request.params.dept, request.params.course)
         }
     })
 }
