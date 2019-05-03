@@ -6,7 +6,7 @@ const db = require('better-sqlite3')('records.db', {
 });
 
 async function routes (fastify, options) {
-  
+
     fastify.get('/', async (request, reply) => {
         return reply.view('./templates/index.mustache', { baseurl: config.baseurl })
     })
