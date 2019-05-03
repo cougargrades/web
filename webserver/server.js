@@ -10,11 +10,6 @@ const fastify = require('fastify')({
 fastify.register(require('fastify-response-time'))
 fastify.register(require('fastify-graceful-shutdown'))
 
-fastify.register(require('under-pressure'), {
-	maxEventLoopDelay: 3000,
-	maxHeapUsedBytes: 100000000,
-	maxRssBytes: 100000000
-})
 fastify.register(require('fastify-rate-limit'), {
 	max: 100,
 	timeWindow: '1 minute'

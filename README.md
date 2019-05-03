@@ -29,3 +29,7 @@
 - anex.us/grades/ (author unknown)
 - AggieScheduler (@jake-leland)
 - Good-Bull-Schedules (@SaltyQuetzals)
+
+## Development
+- @au5ton
+- @fluffthepanda

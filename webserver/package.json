@@ -13,8 +13,7 @@
     "fastify-static": "^2.4.0",
     "make-promises-safe": "^5.0.0",
     "mustache": "^3.0.1",
-    "point-of-view": "^3.3.0",
-    "under-pressure": "^3.0.0"
+    "point-of-view": "^3.3.0"
   },
   "devDependencies": {
     "standard": "*"
