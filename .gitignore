@@ -37,13 +37,9 @@
 # debug symbols
 *.dSYM/
 
-# c++ dependencies
-webserver/pistache/
-webserver/nlohmann-json/
-webserver/fast-cpp-csv-parser/
-
 # data files
 *.csv
 *.db
+config.json
 
 node_modules/
