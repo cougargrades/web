@@ -7,6 +7,8 @@ const fastify = require('fastify')({
 	logger: true
 })
 
+fastify.register(require('fastify-response-time'));
+
 fastify.register(require('fastify-static'), {
 	root: path.join(__dirname, 'public'),
 	prefix: `${config.baseurl}/public/`, // optional: default '/'
