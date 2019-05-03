@@ -11,19 +11,19 @@
 
 - `/api`
 	- `/catalog`
-		- `/terms` => list available terms
+		- [ ] `/terms` => list available terms
 			- returns a json array
 			- element: [201701, 201702, 201703, 201801]
-		- `/depts` => list available deptartments
+		- [ ] `/depts` => list available deptartments
 			- returns a json array
-		- `/courses/:term/:dept` => list avaiable courses for a term from a department
+		- [ ] `/courses/:term/:dept` => list avaiable courses for a term from a department
 			- `:term` can be all
 			- returns a json array
-		- `/sections/:term/:dept/:course` => list all sections for a term from a dept for a course
+		- [ ] `/sections/:term/:dept/:course` => list all sections for a term from a dept for a course
 			- `:term` can be all
 			- returns a json array
 	- `/table`
-		- `/:term/:dept/:course` => table data of all sections for a term from a dept for a course
+		- [X] `/:term/:dept/:course` => table data of all sections for a term from a dept for a course
 			- `:term` can be all
 			- returns array of table data
 	
