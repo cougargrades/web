@@ -1,19 +1,27 @@
-
 'use strict'
 
 require('make-promises-safe')
-//const db = require('better-sqlite3')('foobar.db', {});
-//const row = db.prepare('SELECT * FROM users WHERE id=?').get(userId);
+const path = require('path')
+const config = require('./config.json')
 const fastify = require('fastify')({
 	logger: true
 })
 
-fastify.get('/', async (request, reply) => {
-	reply.type('application/json').code(200)
-	return { hello: 'world' }
+fastify.register(require('fastify-static'), {
+	root: path.join(__dirname, 'public'),
+	prefix: `${config.baseurl}/public/`, // optional: default '/'
 })
 
-fastify.register(require('./route'), { prefix: '/v1' })
+// Use moustache for inserting prefixes into HTML
+fastify.register(require('point-of-view'), {
+	engine: {
+		mustache: require('mustache')
+	},
+	options: {}
+})
+
+// Router file for prefixed endpoints
+fastify.register(require('./route'), { prefix: config.baseurl })
 
 fastify.listen(3000, '0.0.0.0', (err, address) => {
 	if (err) throw err
