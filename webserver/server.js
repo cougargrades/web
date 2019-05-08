@@ -16,7 +16,7 @@ fastify.register(require('fastify-rate-limit'), {
 })
 
 fastify.register(require('fastify-static'), {
-	root: path.join(__dirname, 'public'),
+	root: path.join(__dirname, 'assets', 'public'),
 	prefix: `${config.baseurl}/public/`, // optional: default '/'
 })
 

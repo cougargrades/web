@@ -1,0 +1,53 @@
+#table_div .headerRow {
+  background: #78909c;
+  border-top: 1px solid #cfd8dc;
+  color: #212121;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+#table_div .tableRow {
+  background: #78909c;
+  border-top: 1px solid #cfd8dc;
+  color: #212121;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+#table_div .headerCell {
+  color: white;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+  padding: 2px 5.6px;
+  font-weight: 500;
+  z-index: 10;
+  text-overflow: ellipsis;
+  border: 0;
+  border-radius: 0;
+}
+#table_div .tableCell {
+  background: rgba(255, 255, 255, 0.95);
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: top;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 7px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  border-radius: 0;
+}
+
+/*# sourceMappingURL=index.css.map */

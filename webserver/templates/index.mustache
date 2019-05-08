@@ -1,9 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="{{& baseurl }}/public/client.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
 </head>
 <body>
-Hello World!
+    <div class="container">
+        <h5>Hello World</h5>
+        <input type="button" value="Fetch" id="fetch">
+        <div id="table_div"></div>
+    </div>
+    <script src="{{& baseurl }}/public/CougarGrades.js"></script>
+    <script>
+        (function(){
+            let grades = new CougarGrades("{{& baseurl }}")
+            grades.Main()
+        })()
+    </script>
 </body>
 </html>

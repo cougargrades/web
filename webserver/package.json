@@ -16,11 +16,23 @@
     "point-of-view": "^3.3.0"
   },
   "devDependencies": {
+    "nodemon": "^1.19.0",
+    "sass": "^1.20.1",
     "standard": "*"
   },
+  "config": {
+    "sass": {
+      "src": "assets/sass/",
+      "dest": "assets/public/css/"
+    }
+  },
   "scripts": {
-    "start": "npx fastify start server.js",
-    "test": "npx standard"
+    "build": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
+    "server": "npx fastify start server.js",
+    "start": "npm run build && npm run server",
+    "sasswatch": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
+    "nodewatch": "npx nodemon --exec npm run server",
+    "test": "npm run sasswatch & npm run nodewatch"
   },
   "author": "",
   "license": "ISC"

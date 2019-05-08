@@ -13,10 +13,6 @@ async function routes (fastify, options) {
         return reply.view('./templates/index.mustache', { baseurl: config.baseurl })
     })
 
-    fastify.get('/search/:id', async (request, reply) => {
-        return `Searching for ${request.params.id}`
-    })
-
     fastify.get('/api/catalog/list/terms', async (request, reply) => {
         reply.type('application/json')
         return db.prepare('SELECT DISTINCT TERM_CODE FROM records ORDER BY TERM_CODE ASC').all().map(a => a['TERM_CODE'])
@@ -46,7 +42,7 @@ async function routes (fastify, options) {
         }
     })
 
-    fastify.get('/api/fetch/:term/:dept/:course/:section', async (request, reply) => {
+    fastify.get('/api/table/:term/:dept/:course/:section', async (request, reply) => {
         reply.type('application/json')
         return db.prepare('SELECT * FROM records WHERE TERM_CODE=? AND SUBJECT=? AND CATALOG_NBR=? AND CLASS_SECTION=? ORDER BY TERM_CODE ASC').all(request.params.term, request.params.dept, request.params.course, request.params.section)
     })
