@@ -1,11 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    
+
     <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+
+    <script defer src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="{{& baseurl }}/public/js/Query.js"></script>
+    <script defer src="{{& baseurl }}/public/CougarGrades.js"></script>
 </head>
 <body>
     <div class="container">
@@ -13,12 +16,15 @@
         <input type="button" value="Fetch" id="fetch">
         <div id="table_div"></div>
     </div>
-    <script src="{{& baseurl }}/public/CougarGrades.js"></script>
+    
     <script>
-        (function(){
-            let grades = new CougarGrades("{{& baseurl }}")
-            grades.Main()
-        })()
+        document.addEventListener('DOMContentLoaded', () => {
+            google.charts.load('current', {'packages':['table']});
+            google.charts.setOnLoadCallback(() => {
+                let grades = new CougarGrades("{{& baseurl }}")
+                grades.Main()
+            });
+        })
     </script>
 </body>
 </html>
