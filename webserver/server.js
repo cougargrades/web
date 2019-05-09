@@ -7,6 +7,8 @@ const fastify = require('fastify')({
 	logger: true
 })
 
+const PORT = (process.env.NODE_ENV == 'production') ? require('./package.json').config.server.port : 3000
+
 fastify.register(require('fastify-response-time'))
 fastify.register(require('fastify-graceful-shutdown'))
 
@@ -31,7 +33,10 @@ fastify.register(require('point-of-view'), {
 // Router file for prefixed endpoints
 fastify.register(require('./route'), { prefix: config.baseurl })
 
-fastify.listen(3000, '0.0.0.0', (err, address) => {
+fastify.listen(PORT, '0.0.0.0', (err, address) => {
 	if (err) throw err
+	if(process.env.NODE_ENV == 'production') {
+		fastify.log.info('NODE_ENV set to production')
+	}
 	fastify.log.info(`server listening on ${address}`)
 })
