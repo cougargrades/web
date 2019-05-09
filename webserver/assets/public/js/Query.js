@@ -7,12 +7,17 @@ class Undesired {
 
 class Query {
     constructor(baseurl, dept, course, element) {
-        this.baseurl = baseurl;
-        this.dept = dept;
-        this.course = course;
-        this.table_container = element;
-        this.sql_data = null;
-        this.table_data = null;
+        if(typeof(dept) == 'string' && dept != "" && typeof(course) == 'string' && course != "") {
+            this.baseurl = baseurl
+            this.dept = dept
+            this.course = course
+            this.table_container = element
+            this.sql_data = null
+            this.table_data = null
+        }
+        else {
+            this.broken = true
+        }
     }
 
     get friendly_column_names() {
@@ -58,6 +63,8 @@ class Query {
     }
 
     async process() {
+        if(this.broken)
+            return
         await this.fetch()
         await this.transpose()
         await this.filter()

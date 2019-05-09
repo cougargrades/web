@@ -5,12 +5,12 @@ class CougarGrades {
     }
 
     elem(query) {
-        return document.querySelector('#table_div')
+        return document.querySelector(query)
     }
 
     Main() {
-        document.getElementById('fetch').addEventListener('click', async () => {
-            delete (new Query(this.baseurl, 'COSC', '1304', this.elem('#table_div')).process())
+        this.elem(`.form input[type='submit']`).addEventListener('click', async () => {
+            delete (new Query(this.baseurl, this.elem(`.form input[name='dept']`).value, this.elem(`.form input[name='number']`).value, this.elem('#table_div')).process())
         })
     }
 }
