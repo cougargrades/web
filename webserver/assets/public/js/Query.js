@@ -5,7 +5,6 @@ class Undesired {
     }
 }
 
-
 class Query {
     constructor(baseurl, dept, course, element) {
         this.baseurl = baseurl;
@@ -24,7 +23,7 @@ class Query {
             "CATALOG_NBR": "Course",
             "CLASS_SECTION": "Section",
             "COURSE_DESCR": "Course Description",
-            "INSTR_LAST_NAME": "Instructor Last Name",
+            "INSTR_LAST_NAME": "Instructor",
             "INSTR_FIRST_NAME": "Instructor First Name",
             "A": "A",
             "B": "B",
@@ -48,7 +47,6 @@ class Query {
             "CLASS_SECTION",
             "COURSE_DESCR",
             "INSTR_LAST_NAME",
-            "INSTR_FIRST_NAME",
             "A",
             "B",
             "C",
@@ -62,6 +60,8 @@ class Query {
     async process() {
         await this.fetch()
         await this.transpose()
+        await this.filter()
+        await this.format()
         await this.display()
     }
 
@@ -93,22 +93,23 @@ class Query {
             }
         })
 
-        // Filter columns
-        this.table_data.columns = this.table_data.columns.filter(elem => {
-            return !(elem instanceof Undesired);
-        })
-
         // Create rows
         this.table_data.rows = this.sql_data.map(row => {
             return Object.keys(row).map(key => {
                 if(this.used_columns.includes(key)) {
-                    //console.log('row: ', key)
                     return row[key]
                 }
                 else {
                     return new Undesired()
                 }
             })
+        })
+    }
+
+    async filter() {
+        // Filter columns
+        this.table_data.columns = this.table_data.columns.filter(elem => {
+            return !(elem instanceof Undesired);
         })
 
         // Filter rows
@@ -117,6 +118,41 @@ class Query {
                 return !(elem instanceof Undesired);
             })
         }
+    }
+
+    async format() {
+        // Format cell data
+
+        // For every row
+        this.table_data.rows = this.table_data.rows.map((row, location, array) => {
+            // For every position in the row
+            return row.map((value, index) => {
+
+                // Special cases where default formatting isn't desired
+                if(this.used_columns[index] == 'TERM') {
+                    // Sort by chonologically, not alphabetically
+                    return {
+                        v: String(this.sql_data[location]['TERM_CODE']), 
+                        f: value
+                    }
+                }
+                else if(this.used_columns[index] == 'CATALOG_NBR') {
+                    // Don't put commas in course numbers
+                    return {
+                        v: value,
+                        f: String(value)
+                    }
+                }
+                else if(this.used_columns[index] == 'INSTR_LAST_NAME') {
+                    // Keep instructor info in one column
+                    return `${value}, ${this.sql_data[location]['INSTR_FIRST_NAME']}`
+                }
+                else {
+                    return value
+                }
+                
+            })
+        })
     }
 
     async display() {
