@@ -25,9 +25,9 @@
       "src": "assets/sass/",
       "dest": "assets/public/css/"
     },
-	  "server": {
-	    "port": 3070
-	  }
+    "server": {
+      "port": 3070
+    }
   },
   "scripts": {
     "build": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
