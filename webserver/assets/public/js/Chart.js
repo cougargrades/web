@@ -81,14 +81,6 @@ class Chart {
             return
         }
 
-        // var data = google.visualization.arrayToDataTable([
-        //     ['Year', 'Sales', 'Expenses'],
-        //     ['2004',  1000,      400],
-        //     ['2005',  1170,      460],
-        //     ['2006',  660,       1120],
-        //     ['2007',  1030,      540]
-        // ])
-
         //make column headings for chart
         let cols = new Set() //ensure each prof only appears once in columns
         cols.add('Semester')
@@ -159,52 +151,11 @@ class Chart {
     }
 
     async filter() {
-        // Filter columns
-        this.table_data.columns = this.table_data.columns.filter(elem => {
-            return !(elem instanceof Undesired);
-        })
-
-        // Filter rows
-        for(let i = 0; i < this.table_data.rows.length; i++) {
-            this.table_data.rows[i] = this.table_data.rows[i].filter(elem => {
-                return !(elem instanceof Undesired);
-            })
-        }
+        // nothing
     }
 
     async format() {
         // Format cell data
-
-        // For every row
-        this.table_data.rows = this.table_data.rows.map((row, location, array) => {
-            // For every position in the row
-            return row.map((value, index) => {
-
-                // Special cases where default formatting isn't desired
-                if(this.used_columns[index] == 'TERM') {
-                    // Sort by chonologically, not alphabetically
-                    return {
-                        v: String(this.sql_data[location]['TERM_CODE']), 
-                        f: value
-                    }
-                }
-                else if(this.used_columns[index] == 'CATALOG_NBR') {
-                    // Don't put commas in course numbers
-                    return {
-                        v: value,
-                        f: String(value)
-                    }
-                }
-                else if(this.used_columns[index] == 'INSTR_LAST_NAME') {
-                    // Keep instructor info in one column
-                    return `${value}, ${this.sql_data[location]['INSTR_FIRST_NAME']}`
-                }
-                else {
-                    return value
-                }
-                
-            })
-        })
     }
 
     async display() {
