@@ -1,11 +1,5 @@
 
-class Undesired {
-    constructor() {
-        //
-    }
-}
-
-class Query {
+class Table {
     constructor(baseurl, dept, course, element) {
         if(typeof(dept) == 'string' && dept != "" && typeof(course) == 'string' && course != "") {
             this.baseurl = baseurl

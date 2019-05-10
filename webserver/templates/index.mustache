@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
 
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
-    <script defer src="{{& baseurl }}/public/js/Query.js"></script>
+    <script defer src="{{& baseurl }}/public/js/Chart.js"></script>
+    <script defer src="{{& baseurl }}/public/js/Table.js"></script>
     <script defer src="{{& baseurl }}/public/CougarGrades.js"></script>
 </head>
 <body>
@@ -15,17 +16,19 @@
         <h5>Cougar Grades</h5>
 
         <div class="form">
-            Department (COSC, MATH, ENGR, etc.): <input type="text" name="dept">
-            Class Number (1430, 2430, 3336, etc.): <input type="text" name="number">
+            Department (COSC, MATH, ENGR, etc.): <input type="text" name="dept" value="COSC">
+            Class Number (1430, 2430, 3336, etc.): <input type="text" name="number" value="1304">
             <input type="submit" value="Submit">
         </div>
         
+        <div id="chart_div"></div>
+
         <div id="table_div"></div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            google.charts.load('current', {'packages':['table']});
+            google.charts.load('current', {'packages':['corechart','table']});
             google.charts.setOnLoadCallback(() => {
                 let grades = new CougarGrades("{{& baseurl }}")
                 grades.Main()
