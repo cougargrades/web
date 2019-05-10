@@ -14,48 +14,6 @@ class Chart {
         }
     }
 
-    get friendly_column_names() {
-        return {
-            "ID": "ID",
-            "TERM": "Term",
-            "SUBJECT": "Department",
-            "CATALOG_NBR": "Course",
-            "CLASS_SECTION": "Section",
-            "COURSE_DESCR": "Course Description",
-            "INSTR_LAST_NAME": "Instructor",
-            "INSTR_FIRST_NAME": "Instructor First Name",
-            "A": "A",
-            "B": "B",
-            "C": "C",
-            "D": "D",
-            "F": "F",
-            "Q": "Q",
-            "AVG_GPA": "GPA",
-            "PROF_COUNT": "Section count",
-            "PROF_AVG": "Professor AVG",
-            "TERM_CODE": "Term code",
-            "GROUP_CODE": "Group code"
-        }
-    }
-
-    get used_columns() {
-        return [
-            "TERM",
-            "SUBJECT",
-            "CATALOG_NBR",
-            "CLASS_SECTION",
-            "COURSE_DESCR",
-            "INSTR_LAST_NAME",
-            "A",
-            "B",
-            "C",
-            "D",
-            "F",
-            "Q",
-            "AVG_GPA"
-        ]
-    }
-
     async process() {
         if(this.broken)
             return
@@ -78,6 +36,7 @@ class Chart {
     // heavily inspired by: https://anex.us/grades/drawGraph.js
     async transpose() {
         if(this.sql_data == null || this.sql_data.length == 0) {
+            this.chart_container.innerText = "No data retrieved for that course. Maybe a typo?"
             return
         }
 
@@ -126,18 +85,14 @@ class Chart {
                 let newRow = new Array(cols.length);
                 newRow[0] = (term);
                 graphArray.push(newRow);
-                console.log(newRow)
             }
             else {
                 rowID = rowsMap.get(term);
             }
-            console.log(colsMap.get(instructor))
-            console.log(graphArray[rowID][colsMap.get(instructor)])
             if(typeof graphArray[rowID][colsMap.get(instructor)] === 'undefined') { //initialize cell
                 graphArray[rowID][colsMap.get(instructor)] = 0;
             }
             graphArray[rowID][colsMap.get(instructor)] += gpa*students; //increment student-weighted GPA
-            console.log(graphArray[rowID][colsMap.get(instructor)])
         }
         for(let i = 1; i < graphArray.length; ++i) {
             for(let j = 1; j < graphArray[i].length; ++j) {
@@ -160,25 +115,18 @@ class Chart {
 
     async display() {
         if(this.chart_data == null) {
-            console.log('Nothing to display')
             return
         }
         
-        console.log(this.chart_data)
         var data = google.visualization.arrayToDataTable(this.chart_data)
-        // var data = google.visualization.arrayToDataTable([
-        //     ['Year', 'Sales', 'Expenses'],
-        //     ['2004',  1000,      400],
-        //     ['2005',  1170,      460],
-        //     ['2006',  660,       1120],
-        //     ['2007',  1030,      540]
-        // ])
         var options = {
             vAxis: {
                 title: 'GPA',
                 gridlines: {
                     count: -1 //auto
-                }
+                },
+                maxValue: 4.0,
+                minValue: 0.0
             },
             hAxis: {
                 title: 'Semester',
@@ -192,5 +140,6 @@ class Chart {
 
         var chart = new google.visualization.LineChart(this.chart_container);
         chart.draw(data, options);
+        chart.setAction()
     }
 }

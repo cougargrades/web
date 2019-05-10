@@ -1,4 +1,8 @@
 
+const REVISION = require('child_process')
+    .execSync('git rev-parse --short HEAD')
+    .toString().trim();
+
 const config = require('./config.json')
 const db = require('better-sqlite3')('records.db', {
     readonly: true,
@@ -10,7 +14,7 @@ async function routes (fastify, options) {
     // (ID int primary key, TERM text, SUBJECT text, CATALOG_NBR smallint, CLASS_SECTION smallint, COURSE_DESCR text, INSTR_LAST_NAME text, INSTR_FIRST_NAME text, A smallint, B smallint, C smallint, D smallint, F smallint, Q smallint, AVG_GPA real, PROF_COUNT smallint, PROF_AVG real, TERM_CODE smallint, GROUP_CODE text)
 
     fastify.get('/', async (request, reply) => {
-        return reply.view('./templates/index.mustache', { baseurl: config.baseurl })
+        return reply.view('./templates/index.mustache', { baseurl: config.baseurl, commit: REVISION })
     })
 
     fastify.get('/api/catalog/list/terms', async (request, reply) => {
