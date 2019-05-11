@@ -1,4 +1,6 @@
 
+const prettyHrtime = require('pretty-hrtime');
+
 // generate delay synchronously
 function isPrime(value) {
     for(var i = 2; i < value; i++) {
@@ -38,10 +40,15 @@ const timer = (...args) => {
     }
 };
 
-timer(async (a,b) => {
-    checkPrimes()
-    console.log(`A: ${a}`)
-    console.log(`B: ${b}`)
-}, async (pretty, hrtime) => {
-    console.log(`pretty time: ${pretty}`)
-})("thing 1", "thing 2")
+(async function(){
+    let output = await (timer(async (a,b) => {
+        checkPrimes()
+        console.log(`A: ${a}`)
+        console.log(`B: ${b}`)
+        return 7777;
+    }, async (pretty, hrtime) => {
+        console.log(`pretty time: ${pretty}`)
+    })("thing 1", "thing 2"))
+    
+    console.log(output) // 7777
+})()
