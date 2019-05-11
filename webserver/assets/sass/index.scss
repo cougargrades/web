@@ -2,6 +2,11 @@
 .hero {
     .logo {
         color: #fff;
+        text-align: center;
+    }
+    .chips-autocomplete {
+        display: inline-block;
+        width: 80%;
     }
 }
 

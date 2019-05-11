@@ -8,8 +8,10 @@ class CougarGrades {
         let $ = (q) => document.querySelector(q)
         let $$ = (q) => document.querySelectorAll(q)
 
-        M.AutoInit();
-        let chips = M.Chips.getInstance($('.chips'))
+        //M.AutoInit();
+        let chips = M.Chips.init($('.chips'), {
+            limit: 6
+        })
         chips.addChip({
             tag: 'COSC 1430',
             image: null
@@ -18,7 +20,7 @@ class CougarGrades {
             tag: 'MATH 2331',
             image: null
         })
-        let autocomplete = M.Autocomplete.getInstance($('input.autocomplete'))
+        let autocomplete = M.Autocomplete.init($('input.autocomplete'))
         // autocomplete.updateData({
         //     "Apple": null,
         //     "Microsoft": null,
