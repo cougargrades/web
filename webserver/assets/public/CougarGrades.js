@@ -8,15 +8,34 @@ class CougarGrades {
         let $ = (q) => document.querySelector(q)
         let $$ = (q) => document.querySelectorAll(q)
 
-        $(`.form input[type='submit']`).addEventListener('click', async () => {
-            //delete (new Chart(this.baseurl, elem(`.form input[name='dept']`).value, elem(`.form input[name='number']`).value, elem('#chart_div')).process())
-            //delete (new Table(this.baseurl, elem(`.form input[name='dept']`).value, elem(`.form input[name='number']`).value, elem('#table_div')).process())
+        M.AutoInit();
+        let chips = M.Chips.getInstance($('.chips'))
+        chips.addChip({
+            tag: 'COSC 1430',
+            image: null
+        })
+        chips.addChip({
+            tag: 'MATH 2331',
+            image: null
+        })
+        let autocomplete = M.Autocomplete.getInstance($('input.autocomplete'))
+        // autocomplete.updateData({
+        //     "Apple": null,
+        //     "Microsoft": null,
+        //     "Google": null
+        // });
 
-            let list = [
-                'COSC 1430',
-                'MATH 3336'
-            ]
+        $(`.form #submit`).addEventListener('click', async () => {
+            let list = chips.chipsData.map(value => {
+                return value.tag
+            })
+
             let container = $('#results')
+            let fc = container.firstChild
+            while(fc) {
+                container.removeChild(fc)
+                fc = container.firstChild
+            }
             for(let elem of list) {
                 console.log(elem)
                 let course = new Course(elem.split(' ')[0], elem.split(' ')[1])
@@ -24,9 +43,6 @@ class CougarGrades {
                 await collap.create()
             }
         })
-
-        
-        
     }
 }
 

@@ -1,12 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
     <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
+    <link href="{{& baseurl }}/public/css/materialize.css" rel="stylesheet">
 
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script defer src="{{& baseurl }}/public/js/MiscClasses.js"></script>
     <script defer src="{{& baseurl }}/public/js/Collapsible.js"></script>
     <script defer src="{{& baseurl }}/public/js/Chart.js"></script>
@@ -15,17 +17,16 @@
 </head>
 <body class="red darken-4">
     <div class="container">
-        <h5>Cougar Grades</h5>
-
-        <div class="form">
-            Department (COSC, MATH, ENGR, etc.): <input type="text" name="dept" value="COSC">
-            Class Number (1430, 2430, 3336, etc.): <input type="text" name="number" value="1304">
-            <input type="submit" value="Submit">
+        <div class="hero">
+            <h3 class="logo">Cougar Grades</h3>
+            <div class="card-panel form">
+                <p class="flow-text">Type a course and press search.</p>
+                <div class="chips chips-autocomplete input-field">
+                    <input class="autocomplete">
+                </div>
+                <a id="submit" class="waves-effect waves-light btn blue-grey darken-4">Search</a>
+            </div>
         </div>
-        
-        {{! <div id="chart_div"></div>
-
-        <div id="table_div"></div> }}
 
         <div id="results"></div>
 

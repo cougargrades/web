@@ -1,9 +1,16 @@
-body {
-    //background: teal;
+
+.hero {
+    .logo {
+        color: #fff;
+    }
+}
+
+#results {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 .zcollapsible {
-    background-color: #777;
+    background-color: #37474f;
     color: white;
     cursor: pointer;
     padding: 18px;
@@ -11,23 +18,20 @@ body {
     border: none;
     text-align: left;
     outline: none;
-    font-size: 15px;
-}
-
-.zcollapsible.active, .zcollapsible:hover, .zcollapsible:focus {
-    background-color: #555;
-}
-
-.zcollapsible:after {
-    content: '\002B';
-    color: white;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-
-.zcollapsible-active:after {
-    content: "\2212";
+    font-size: 18px;
+    &.active, &:hover, &:focus {
+        background-color: #263238;
+    }
+    &:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+    &.active:after {
+        content: "\2212";
+    }
 }
 
 .zcollapsible-content {
@@ -109,7 +113,7 @@ div[x-cougargrades-table=true] {
 }
 
 p.commit {
-    //text-align: center;
+    color: #fff;
     font-style: italic;
 }
 
