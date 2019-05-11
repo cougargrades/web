@@ -43,7 +43,9 @@
 }
 
 div[x-cougargrades-chart=true] {
-    width: 100%;
+    display: block;
+    margin: 0 auto;
+    max-width: 900px;
     height: 500px;
 }
 
