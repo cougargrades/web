@@ -21,28 +21,38 @@ class CougarGrades {
             image: null
         })
         let autocomplete = M.Autocomplete.init($('input.autocomplete'))
-        // autocomplete.updateData({
-        //     "Apple": null,
-        //     "Microsoft": null,
-        //     "Google": null
-        // });
+        M.Modal.init(document.querySelectorAll('.modal'));
 
         $(`.form #submit`).addEventListener('click', async () => {
-            let list = chips.chipsData.map(value => {
+            let searchbar = chips.chipsData.map(value => {
                 return value.tag
             })
-
             let container = $('#results')
-            let fc = container.firstChild
-            while(fc) {
-                container.removeChild(fc)
-                fc = container.firstChild
+
+            let results = $$('#results .zcollapsible')
+            let preloaded = []
+            // populate preloaded elements
+            for(let i = 0; i < results.length; i++) {
+                preloaded.push(results[i].innerText)
             }
-            for(let elem of list) {
-                console.log(elem)
-                let course = new Course(elem.split(' ')[0], elem.split(' ')[1])
-                let collap = new Collapsible(this.baseurl, course, container)
-                await collap.create()
+            // check for elements that are from a previous query and aren't requested anymore
+            for(let i = 0; i < preloaded.length; i++) {
+                if(!searchbar.includes(preloaded[i])) {
+                    console.log(`removing ${preloaded[i]}`)
+                    let offenders = document.querySelectorAll(`[x-cougargrades-course=\'${preloaded[i]}\']`)
+                    for(let j = 0; j < offenders.length; j++) {
+                        offenders[j].parentNode.removeChild(offenders[j])
+                    }
+                }
+            }
+            
+            // check for new searchbar requests that aren't preloaded yet and make them
+            for(let elem of searchbar) {
+                if(!preloaded.includes(elem)) {
+                    let course = new Course(elem.split(' ')[0], elem.split(' ')[1])
+                    let collap = new Collapsible(this.baseurl, course, container)
+                    await collap.create()
+                }
             }
         })
     }

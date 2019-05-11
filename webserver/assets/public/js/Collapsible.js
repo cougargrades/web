@@ -29,11 +29,13 @@ class Collapsible {
     async createCollapsible(visuals) {
         let button = document.createElement('button')
         button.setAttribute('class', 'zcollapsible')
+        button.setAttribute('x-cougargrades-course',`${this.course.dept} ${this.course.catalog_number}`)
         button.innerText = `${this.course.dept} ${this.course.catalog_number}`
         this.container.appendChild(button)
 
         let content = document.createElement('div')
         content.setAttribute('class', 'zcollapsible-content')
+        content.setAttribute('x-cougargrades-course',`${this.course.dept} ${this.course.catalog_number}`)
         this.container.appendChild(content)
 
         button.addEventListener('click', () => {

@@ -5,7 +5,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
     <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
-    <link href="{{& baseurl }}/public/css/materialize.css" rel="stylesheet">
 
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -18,12 +17,22 @@
 <body class="red darken-4">
     <div class="container">
         <div class="hero">
-            <h2 class="logo">Cougar Grades</h2>
+            <h2 class="logo">CougarGrades</h2>
             <div class="card-panel form">
                 <div class="chips chips-autocomplete input-field">
                     <input class="autocomplete">
                 </div>
                 <a id="submit" class="waves-effect waves-light btn blue-grey darken-4">Search</a>
+                <a id="help" href="#modal1" class="waves-effect waves-light btn blue-grey darken-4 modal-trigger">Help</a>
+                <div id="modal1" class="modal modal-fixed-footer">
+                    <div class="modal-content">
+                        <h4>How to use</h4>
+                        <div style='position:relative; padding-bottom:calc(71.43% + 44px)'><iframe src='https://gfycat.com/ifr/ShimmeringEverlastingIbis' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -31,6 +40,7 @@
 
         <p class="commit">Using commit: {{& commit }}</p>
     </div>
+    
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
