@@ -43,8 +43,8 @@ div[x-cougargrades-chart=true] {
     height: 500px;
 }
 
-#table_div {
-    width: 990px;
+div[x-cougargrades-table=true] {
+    width: 100%;
     .headerRow {
         background: #78909c;
         border-top: 1px solid #cfd8dc;

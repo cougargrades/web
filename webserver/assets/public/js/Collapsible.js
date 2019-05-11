@@ -62,7 +62,12 @@ class Collapsible {
         for(let viz of visuals) {
             if(viz instanceof Displayable) {
                 let box = document.createElement('div')
-                box.setAttribute('x-cougargrades-chart', true)
+                if(viz instanceof Chart) {
+                    box.setAttribute('x-cougargrades-chart', true)
+                }
+                else if(viz instanceof Table) {
+                    box.setAttribute('x-cougargrades-table', true)
+                }
                 content.appendChild(box)
                 viz.setElement(box)
             }
@@ -74,7 +79,7 @@ class Collapsible {
 
     async display() {
         console.log('display')
-        let visuals = [new Chart(this.baseurl, this.sql_data)] // each collapsible has multiple visuals (chart, table, etc)
+        let visuals = [new Chart(this.baseurl, this.sql_data), new Table(this.baseurl, this.sql_data)] // each collapsible has multiple visuals (chart, table, etc)
         await this.createCollapsible(visuals)
         for(let i in visuals) {
             await visuals[i].process()

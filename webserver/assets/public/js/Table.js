@@ -1,16 +1,15 @@
 
-class Table {
-    constructor(baseurl, dept, course, element) {
-        if(typeof(dept) == 'string' && dept != "" && typeof(course) == 'string' && course != "") {
+class Table extends Displayable {
+    constructor(baseurl, sqldata) {
+        super()
+        if(sqldata instanceof SQLData) {
             this.baseurl = baseurl
-            this.dept = dept
-            this.course = course
-            this.table_container = element
-            this.sql_data = null
+            this.table_container = null
+            this.sql_data = sqldata.data
             this.table_data = null
         }
         else {
-            this.broken = true
+            throw "Invalid constructor parameters"
         }
     }
 
@@ -56,23 +55,26 @@ class Table {
         ]
     }
 
-    async process() {
-        if(this.broken)
-            return
-        await this.fetch()
-        await this.transpose()
-        await this.filter()
-        await this.format()
-        await this.display()
+    setElement(element) {
+        if(element instanceof HTMLElement) {
+            this.table_container = element
+        }
+        else {
+            throw "Invalid parameters"
+        }
     }
 
-    async fetch() {
-        try {
-            this.sql_data = await ((await fetch(`${this.baseurl}/api/table/all/${this.dept}/${this.course}`)).json())
+    async process() {
+        if(this.table_container instanceof HTMLElement) {
+            await this.transpose()
+            await this.filter()
+            await this.format()
+            await this.display()
         }
-        catch(err) {
-            //
+        else {
+            throw "table_container not set"
         }
+        
     }
 
     async transpose() {

@@ -39,10 +39,10 @@ div[x-cougargrades-chart=true] {
   height: 500px;
 }
 
-#table_div {
-  width: 990px;
+div[x-cougargrades-table=true] {
+  width: 100%;
 }
-#table_div .headerRow {
+div[x-cougargrades-table=true] .headerRow {
   background: #78909c;
   border-top: 1px solid #cfd8dc;
   color: #212121;
@@ -52,7 +52,7 @@ div[x-cougargrades-chart=true] {
   text-align: center;
   vertical-align: middle;
 }
-#table_div .tableRow {
+div[x-cougargrades-table=true] .tableRow {
   background: #78909c;
   border-top: 1px solid #cfd8dc;
   color: #212121;
@@ -62,7 +62,7 @@ div[x-cougargrades-chart=true] {
   text-align: center;
   vertical-align: middle;
 }
-#table_div .headerCell {
+div[x-cougargrades-table=true] .headerCell {
   color: white;
   font-family: Roboto, sans-serif;
   font-size: 16px;
@@ -75,7 +75,7 @@ div[x-cougargrades-chart=true] {
   border: 0;
   border-radius: 0;
 }
-#table_div .tableCell {
+div[x-cougargrades-table=true] .tableCell {
   background: rgba(255, 255, 255, 0.95);
   font-family: Roboto, sans-serif;
   font-size: 14px;
