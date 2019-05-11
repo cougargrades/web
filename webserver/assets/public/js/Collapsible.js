@@ -65,13 +65,11 @@ class Collapsible {
     }
 
     async display() {
-        console.log('display')
         let visuals = [new Chart(this.baseurl, this.sql_data), new Table(this.baseurl, this.sql_data)] // each collapsible has multiple visuals (chart, table, etc)
         await this.createCollapsible(visuals)
         for(let i in visuals) {
             await visuals[i].process()
             window.addEventListener('resize', () => {
-                console.log('resize?')
                 visuals[i].display()
             })
         }

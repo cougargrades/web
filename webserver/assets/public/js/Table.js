@@ -40,10 +40,7 @@ class Table extends Displayable {
     get used_columns() {
         return [
             "TERM",
-            "SUBJECT",
-            "CATALOG_NBR",
             "CLASS_SECTION",
-            "COURSE_DESCR",
             "INSTR_LAST_NAME",
             "A",
             "B",
@@ -74,7 +71,7 @@ class Table extends Displayable {
         else {
             throw "table_container not set"
         }
-        
+        console.log(this)
     }
 
     async transpose() {
@@ -180,8 +177,6 @@ class Table extends Displayable {
                 rowNumberCell: 'rowNumberCell'
             }
         }
-
-        console.log(this)
 
         for(let col of this.table_data.columns) {
             data.addColumn(col.type, col.label)
