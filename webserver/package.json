@@ -5,6 +5,8 @@
   "main": "example.js",
   "dependencies": {
     "better-sqlite3": "^5.4.0",
+    "chalk": "^2.4.2",
+    "convert-hrtime": "^3.0.0",
     "fastify": "^2.3.0",
     "fastify-cli": "^1.0.0",
     "fastify-graceful-shutdown": "^2.0.1",
@@ -13,7 +15,8 @@
     "fastify-static": "^2.4.0",
     "make-promises-safe": "^5.0.0",
     "mustache": "^3.0.1",
-    "point-of-view": "^3.3.0"
+    "point-of-view": "^3.3.0",
+    "pretty-hrtime": "^1.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.19.0",
@@ -34,7 +37,7 @@
     "server": "npx fastify start server.js",
     "start": "npm run build && npm run server",
     "sasswatch": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "nodewatch": "npx nodemon --exec npm run server",
+    "nodewatch": "npx nodemon --ignore assets/ --exec npm run server",
     "test": "npm run sasswatch & npm run nodewatch"
   },
   "author": "",

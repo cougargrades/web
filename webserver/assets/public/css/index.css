@@ -1,5 +1,41 @@
-#chart_div {
-  width: 900px;
+@charset "UTF-8";
+.zcollapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.zcollapsible.active, .zcollapsible:hover, .zcollapsible:focus {
+  background-color: #555;
+}
+
+.zcollapsible:after {
+  content: "+";
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.zcollapsible-active:after {
+  content: "−";
+}
+
+.zcollapsible-content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+div[x-cougargrades-chart=true] {
+  width: 100%;
   height: 500px;
 }
 

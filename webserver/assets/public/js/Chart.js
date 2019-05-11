@@ -1,35 +1,34 @@
 
-class Chart {
-    constructor(baseurl, dept, course, element) {
-        if(typeof(dept) == 'string' && dept != "" && typeof(course) == 'string' && course != "") {
+class Chart extends Displayable {
+    constructor(baseurl, sqldata) {
+        super()
+        if(sqldata instanceof SQLData) {
             this.baseurl = baseurl
-            this.dept = dept
-            this.course = course
-            this.chart_container = element
-            this.sql_data = null
+            this.chart_container = null
+            this.sql_data = sqldata.data
             this.chart_data = null
         }
         else {
-            this.broken = true
+            throw "Invalid constructor parameters"
+        }
+    }
+
+    setElement(element) {
+        if(element instanceof HTMLElement) {
+            this.chart_container = element
+        }
+        else {
+            throw "Invalid parameters"
         }
     }
 
     async process() {
-        if(this.broken)
-            return
-        await this.fetch()
-        await this.transpose()
-        //await this.filter()
-        //await this.format()
-        await this.display()
-    }
-
-    async fetch() {
-        try {
-            this.sql_data = await ((await fetch(`${this.baseurl}/api/table/all/${this.dept}/${this.course}`)).json())
+        if(this.chart_container instanceof HTMLElement) {
+            await this.transpose()
+            await this.display()
         }
-        catch(err) {
-            //
+        else {
+            throw "chart_container not set"
         }
     }
 
@@ -105,14 +104,6 @@ class Chart {
         this.chart_data = graphArray;
     }
 
-    async filter() {
-        // nothing
-    }
-
-    async format() {
-        // Format cell data
-    }
-
     async display() {
         if(this.chart_data == null) {
             return
@@ -140,6 +131,5 @@ class Chart {
 
         var chart = new google.visualization.LineChart(this.chart_container);
         chart.draw(data, options);
-        chart.setAction()
     }
 }

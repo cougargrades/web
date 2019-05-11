@@ -2,11 +2,13 @@
 <html>
 <head>
 
-    <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+    <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
 
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer src="{{& baseurl }}/public/js/MiscClasses.js"></script>
+    <script defer src="{{& baseurl }}/public/js/Collapsible.js"></script>
     <script defer src="{{& baseurl }}/public/js/Chart.js"></script>
     <script defer src="{{& baseurl }}/public/js/Table.js"></script>
     <script defer src="{{& baseurl }}/public/CougarGrades.js"></script>
@@ -21,9 +23,11 @@
             <input type="submit" value="Submit">
         </div>
         
-        <div id="chart_div"></div>
+        {{! <div id="chart_div"></div>
 
-        <div id="table_div"></div>
+        <div id="table_div"></div> }}
+
+        <div id="results"></div>
 
         <p class="commit">Using commit: {{& commit }}</p>
     </div>

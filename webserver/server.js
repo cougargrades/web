@@ -4,7 +4,8 @@ require('make-promises-safe')
 const path = require('path')
 const config = require('./config.json')
 const fastify = require('fastify')({
-	logger: true
+	logger: false,
+	trustProxy: true
 })
 
 const PORT = (process.env.NODE_ENV == 'production') ? require('./package.json').config.server.port : 3000
@@ -36,7 +37,7 @@ fastify.register(require('./route'), { prefix: config.baseurl })
 fastify.listen(PORT, '0.0.0.0', (err, address) => {
 	if (err) throw err
 	if(process.env.NODE_ENV == 'production') {
-		fastify.log.info('NODE_ENV set to production')
+		console.log('NODE_ENV set to production')
 	}
-	fastify.log.info(`server listening on ${address}`)
+	console.log(`server listening on ${address}`)
 })
