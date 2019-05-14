@@ -40,7 +40,7 @@ fastify.register(require('point-of-view'), {
 })
 
 // Router file for prefixed endpoints
-fastify.register(require('./route'), { prefix: config.baseurl })
+fastify.register(require('./lib/route'), { prefix: config.baseurl })
 fastify.use(`${config.baseurl}/api`, (req, res) => {
 	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
 })
@@ -52,3 +52,6 @@ fastify.listen(PORT, '0.0.0.0', (err, address) => {
 	}
 	console.log(`server listening on ${address}`)
 })
+
+console.log(process.env)
+console.log(config)

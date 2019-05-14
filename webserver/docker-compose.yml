@@ -11,7 +11,7 @@ mariadb:
   container_name: cougar-grades.mariadb
   restart: always
   environment:
-    MYSQL_ROOT_PASSWORD: example
+    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
 app:
   image: au5ton/cougar-grades
@@ -26,5 +26,6 @@ app:
     - NODE_ENV=development
     - PORT=3000
     - REDIS_URL=redis://cache
+    - DB_FILE=${DB_FILE}
   command:
     sh -c 'npm i && node server.js'

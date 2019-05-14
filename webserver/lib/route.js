@@ -5,8 +5,8 @@ const REVISION = "boop"
 //     .toString().trim();
 const CACHE_AGE = 604800 // in seconds
 
-const config = require(process.env.CONFIG_FILE || './config.json')
-const db = require('better-sqlite3')(process.env.DB_FILE || 'records.db', {
+const config = require(process.env.CONFIG_FILE || '../config.json')
+const db = require('better-sqlite3')(process.env.DB_FILE || '../records.db', {
     readonly: true,
     fileMustExist: true
 });
