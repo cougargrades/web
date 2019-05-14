@@ -43,8 +43,11 @@
     "nodewatch": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js",
     "test": "npm run sasswatch & npm run nodewatch",
     "docker": "npm run docker:build && npm run docker:run",
+    "docker:fresh": "npm run docker:stop && npm run docker:prune && npm run docker",
+    "docker:stop": "sudo docker stop cougar-grades.webserver cougar-grades.cache cougar-grades.mariadb",
+    "docker:prune": "sudo docker container rm --volumes cougar-grades.webserver cougar-grades.cache cougar-grades.mariadb",
     "docker:build": "sudo docker build -t au5ton/cougar-grades .",
-    "docker:run": "sudo docker-compose up --build --force-recreate",
+    "docker:run": "sudo docker-compose up --build",
     "docker:run-old": "sudo docker run -p $npm_package_config_server_port:3070 au5ton/cougar-grades"
   },
   "author": "",

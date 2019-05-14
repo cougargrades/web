@@ -83,5 +83,4 @@ console.log(config);
 	// query database
 	const [rows, fields] = await connection.execute('SELECT * FROM records');
 	console.log(rows)
-	console.log(fields)
 })()
