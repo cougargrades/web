@@ -1,2 +1,10 @@
+colorama==0.3.9
+cursor==1.2.0
+enum34==1.1.6
 halo==0.0.23
-tqdm==4.31.1
+log-symbols==0.0.12
+PyMySQL==0.9.3
+six==1.11.0
+spinners==0.0.23
+termcolor==1.1.0
+tqdm==4.32.1
