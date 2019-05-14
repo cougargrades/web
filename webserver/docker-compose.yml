@@ -1,0 +1,30 @@
+# docker-compose.yml
+# Add this top-level entry
+redis:
+  image: redis
+  container_name: cougar-grades.cache
+  expose:
+    - 6379
+
+mariadb:
+  image: mariadb/server:10.3
+  container_name: cougar-grades.mariadb
+  restart: always
+  environment:
+    MYSQL_ROOT_PASSWORD: example
+
+app:
+  image: au5ton/cougar-grades
+  container_name: cougar-grades.webserver
+  volumes:
+    - ./:/opt/cougargrades
+  ports:
+    - 3000:3000
+  links:
+    - redis
+  environment:
+    - NODE_ENV=development
+    - PORT=3000
+    - REDIS_URL=redis://cache
+  command:
+    sh -c 'npm i && node server.js'
