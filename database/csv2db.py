@@ -32,7 +32,7 @@ c = conn.cursor()
 # Create table
 c.execute('''CREATE TABLE records (
     TERM text,
-    SUBJECT text,
+    DEPT text,
     CATALOG_NBR smallint,
     CLASS_SECTION smallint,
     COURSE_DESCR text,
@@ -101,7 +101,7 @@ cwrite = conn.cursor()
 cwrite.execute('''CREATE TABLE records_extra (
     ID int primary key,
     TERM text,
-    SUBJECT text,
+    DEPT text,
     CATALOG_NBR smallint,
     CLASS_SECTION smallint,
     COURSE_DESCR text,
@@ -124,13 +124,13 @@ conn.commit()
 # compute count()/avg()
 cread.execute('''
 SELECT 
-records.TERM, records.SUBJECT, records.CATALOG_NBR, records.CLASS_SECTION, records.COURSE_DESCR, records.INSTR_LAST_NAME, records.INSTR_FIRST_NAME, 
+records.TERM, records.DEPT, records.CATALOG_NBR, records.CLASS_SECTION, records.COURSE_DESCR, records.INSTR_LAST_NAME, records.INSTR_FIRST_NAME, 
 records.A, records.B, records.C, records.D, records.F, records.Q, records.AVG_GPA,
 t2.PROF_COUNT, t2.PROF_AVG FROM records
 
-LEFT JOIN(SELECT COUNT(records.AVG_GPA) AS PROF_COUNT, AVG(records.AVG_GPA) AS PROF_AVG, records.TERM, records.SUBJECT, records.CATALOG_NBR, records.INSTR_LAST_NAME, records.INSTR_FIRST_NAME FROM records GROUP BY TERM, SUBJECT, CATALOG_NBR, INSTR_LAST_NAME, INSTR_FIRST_NAME) t2
+LEFT JOIN(SELECT COUNT(records.AVG_GPA) AS PROF_COUNT, AVG(records.AVG_GPA) AS PROF_AVG, records.TERM, records.DEPT, records.CATALOG_NBR, records.INSTR_LAST_NAME, records.INSTR_FIRST_NAME FROM records GROUP BY TERM, DEPT, CATALOG_NBR, INSTR_LAST_NAME, INSTR_FIRST_NAME) t2
 
-ON records.TERM = t2.TERM AND records.SUBJECT = t2.SUBJECT AND records.CATALOG_NBR = t2.CATALOG_NBR AND records.INSTR_LAST_NAME = t2.INSTR_LAST_NAME AND records.INSTR_FIRST_NAME = t2.INSTR_FIRST_NAME
+ON records.TERM = t2.TERM AND records.DEPT = t2.DEPT AND records.CATALOG_NBR = t2.CATALOG_NBR AND records.INSTR_LAST_NAME = t2.INSTR_LAST_NAME AND records.INSTR_FIRST_NAME = t2.INSTR_FIRST_NAME
 ''')
 spinner.succeed()
 print('Done')

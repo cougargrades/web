@@ -22,10 +22,12 @@ app:
     - 3000:3000
   links:
     - redis
+    - mariadb
   environment:
     - NODE_ENV=development
     - PORT=3000
     - REDIS_URL=redis://cache
     - DB_FILE=${DB_FILE}
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
   command:
-    sh -c 'npm i && node server.js'
+    [sh, -c, "/opt/cougargrades/db/prepare.sh; npm install && npm start"]

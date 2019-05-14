@@ -15,8 +15,10 @@
     "fastify-static": "^2.4.0",
     "make-promises-safe": "^5.0.0",
     "mustache": "^3.0.1",
+    "mysql2": "^1.6.5",
     "point-of-view": "^3.3.0",
     "pretty-hrtime": "^1.0.3",
+    "redis": "^2.8.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -42,7 +44,7 @@
     "test": "npm run sasswatch & npm run nodewatch",
     "docker": "npm run docker:build && npm run docker:run",
     "docker:build": "sudo docker build -t au5ton/cougar-grades .",
-    "docker:run": "sudo docker-compose up --build",
+    "docker:run": "sudo docker-compose up --build --force-recreate",
     "docker:run-old": "sudo docker run -p $npm_package_config_server_port:3070 au5ton/cougar-grades"
   },
   "author": "",
