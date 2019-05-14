@@ -21,6 +21,11 @@ class CougarGrades {
             image: null
         })
         let autocomplete = M.Autocomplete.init($('input.autocomplete'))
+        autocomplete.updateData({
+            "Apple": null,
+            "Microsoft": null,
+            "Google": null
+        });
         M.Modal.init(document.querySelectorAll('.modal'));
 
         $(`.form #submit`).addEventListener('click', async () => {

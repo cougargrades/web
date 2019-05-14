@@ -33,3 +33,9 @@
 ## Development
 - @au5ton
 - @fluffthepanda
+
+
+
+### Docker
+- install docker-ce
+- install docker-compose

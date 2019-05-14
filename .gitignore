@@ -9,3 +9,7 @@ config.json
 node_modules/
 
 webserver/assets/public/css/*
+
+*.log
+
+.env

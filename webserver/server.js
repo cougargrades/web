@@ -8,7 +8,9 @@ const fastify = require('fastify')({
 	trustProxy: true
 })
 
-const PORT = (process.env.NODE_ENV == 'production') ? require('./package.json').config.server.port : 3000
+const PORT = process.env.PORT
+const STATIC_CACHE_AGE = 604800
+const API_CACHE_AGE = 604800
 
 fastify.register(require('fastify-response-time'))
 fastify.register(require('fastify-graceful-shutdown'))
@@ -21,6 +23,12 @@ fastify.register(require('fastify-rate-limit'), {
 fastify.register(require('fastify-static'), {
 	root: path.join(__dirname, 'assets', 'public'),
 	prefix: `${config.baseurl}/public/`, // optional: default '/'
+	setHeaders: (res, path, stat) => {
+		if(process.env.NODE_ENV === 'production') {
+			// Cache static assets for 7 days
+			res.setHeader('Cache-Control', `public, max-age=${STATIC_CACHE_AGE}`)
+		}
+	}
 })
 
 // Use moustache for inserting prefixes into HTML
@@ -33,6 +41,9 @@ fastify.register(require('point-of-view'), {
 
 // Router file for prefixed endpoints
 fastify.register(require('./route'), { prefix: config.baseurl })
+fastify.use(`${config.baseurl}/api`, (req, res) => {
+	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
+})
 
 fastify.listen(PORT, '0.0.0.0', (err, address) => {
 	if (err) throw err

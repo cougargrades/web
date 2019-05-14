@@ -16,7 +16,8 @@
     "make-promises-safe": "^5.0.0",
     "mustache": "^3.0.1",
     "point-of-view": "^3.3.0",
-    "pretty-hrtime": "^1.0.3"
+    "pretty-hrtime": "^1.0.3",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.0",
@@ -29,16 +30,20 @@
       "dest": "assets/public/css/"
     },
     "server": {
-      "port": 3070
+      "port": 3000
     }
   },
   "scripts": {
     "build": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "server": "npx fastify start server.js",
+    "server": "node --max-old-space-size=2048 server.js",
     "start": "npm run build && npm run server",
     "sasswatch": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "nodewatch": "npx nodemon --ignore assets/ --exec npm run server",
-    "test": "npm run sasswatch & npm run nodewatch"
+    "nodewatch": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js",
+    "test": "npm run sasswatch & npm run nodewatch",
+    "docker": "npm run docker:build && npm run docker:run",
+    "docker:build": "sudo docker build -t au5ton/cougar-grades .",
+    "docker:run": "sudo docker-compose up --build",
+    "docker:run-old": "sudo docker run -p $npm_package_config_server_port:3070 au5ton/cougar-grades"
   },
   "author": "",
   "license": "ISC"
