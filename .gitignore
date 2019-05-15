@@ -3,6 +3,7 @@
 
 # data files
 *.csv
+!sample.csv
 *.db
 config.json
 

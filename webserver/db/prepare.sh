@@ -13,6 +13,6 @@ apt update
 apt install -y mariadb-client
 
 printf "[prepare.sh] Preparing mariadb webserver essentials\n"
-mysql -h "cougar-grades.mariadb" -u "root" "-p"$MYSQL_ROOT_PASSWORD -e 'CREATE DATABASE records;'
+mysql -h "cougar-grades.mariadb" -u "root" "-p"$MYSQL_ROOT_PASSWORD -e 'CREATE DATABASE IF NOT EXISTS records;'
 mysql -h "cougar-grades.mariadb" -u "root" "-p"$MYSQL_ROOT_PASSWORD "records" < /opt/cougargrades/db/records.sql
 printf "[prepare.sh] Done\n"

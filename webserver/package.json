@@ -1,7 +1,7 @@
 {
   "name": "cougar-grades",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web application",
   "main": "example.js",
   "dependencies": {
     "better-sqlite3": "^5.4.0",
@@ -50,6 +50,9 @@
     "docker:run": "sudo docker-compose up --build",
     "docker:run-old": "sudo docker run -p $npm_package_config_server_port:3070 au5ton/cougar-grades"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/au5ton/cougar-grades.git"
+  },
   "license": "ISC"
 }
