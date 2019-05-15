@@ -39,3 +39,5 @@
 ### Docker
 - install docker-ce
 - install docker-compose
+- install make
+- put csv files in `payload/`
