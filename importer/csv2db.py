@@ -21,6 +21,9 @@ def season_code(season):
 def group_code(term, subject, catalog_number, last, first):
     return f'{term_code(term)}-{subject}{catalog_number}_{last.replace(" ","")}{first.replace(" ","")}'
 
+if len(sys.argv) < 2:
+    print(f'Usage: {sys.argv[0]} <csvfile> [..csvfile]')
+    exit(0)
 
 if os.path.exists('records.db'):
     os.remove('records.db')

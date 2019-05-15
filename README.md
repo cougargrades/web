@@ -1,29 +1,28 @@
 # cougar-grades
+[indev] University of Houston service for students
 
 ## Project modules
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
-- `database/` Python script to create the sqlite3 database from a collection of CSV files
+- `importer/` Python script to process a collection of CSV files into the MariaDB database
 
-## Webserver
-### Dependencies
-- Node.js 10.x.x
-### Running
-- `cd webserver/`
-- `npm install`
-- `npm start`
-
-## Database creator
+### Database importer
 [![asciicast](https://asciinema.org/a/243852.svg)](https://asciinema.org/a/243852)
 
-### Dependencies
-- Python 3.6+ (you should already have this installed)
-- pip
-### Running
-- `pip install pipenv`: easy virtual environments
-- `pipenv install`: install pip dependencies to a project-only virtual environment
-- `pipenv run ./csv2db.py [csv files ...]`: run with virtual environment
-- Alternatively, there is a `requirements.txt` file for pure pip users
+### Webserver
+[![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis)
 
+## Dependencies
+- Docker
+- Docker Compose
+- `make`
+- Grade data in CSV format with the schema seen in `sample.csv` 
+- At least 1-1.5GB in space (Docker images large)
+
+## Running
+- Copy your CSV files into `importer/payload/`
+- cd `cougar-grades/`
+- *Start containers in the background:* `make daemon`
+- *Start containers interactively:* `make`
 
 ## Inspiration
 - anex.us/grades/ (author unknown)
@@ -33,7 +32,6 @@
 ## Development
 - @au5ton
 - @fluffthepanda
-
 
 
 ### Docker

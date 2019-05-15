@@ -3,20 +3,34 @@ default: main
 
 main: build run FORCE
 
-fresh: stop prune main
+daemon: build rund FORCE
+
+fresh: clean main FORCE
+
+clean: stop prune FORCE
 
 stop: FORCE
 	sudo docker stop cougar-grades.webserver cougar-grades.importer cougar-grades.cache cougar-grades.mariadb | true
 
 prune: FORCE
-	sudo docker container rm --volumes cougar-grades.webserver cougar-grades.importer cougar-grades.cache cougar-grades.mariadb | true
+	sudo docker rm --volumes cougar-grades.webserver cougar-grades.importer cougar-grades.cache cougar-grades.mariadb | true
+	sudo docker rmi --force $$(sudo docker images -q 'cougar-grades*' | uniq) | true
 
 build: FORCE
 	sudo docker build -t cougar-grades.webserver webserver/
 	sudo docker build -t cougar-grades.importer importer/
 
 run: FORCE
-	sudo docker-compose up
+	sudo docker-compose up --build
+
+rund: FORCE
+	sudo docker-compose up -d
+
+# debugging
+webserver: FORCE
+	sudo docker build -t cougar-grades.webserver webserver/
+	sudo docker run --name make_temp cougar-grades.webserver 
+	sudo docker container rm --volumes make_temp
 
 FORCE: 
 

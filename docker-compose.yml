@@ -16,16 +16,16 @@ services:
   importer:
     build: ./importer
     container_name: cougar-grades.importer
+    expose:
+      - 8000
     volumes:
       - ./importer:/opt/databaseimport
     depends_on:
       - mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    command:
-      [python3, -c, 'print("Hello, World")']
   webserver:
-    image: au5ton/cougar-grades
+    build: ./webserver
     container_name: cougar-grades.webserver
     volumes:
       - ./webserver:/opt/cougargrades
@@ -41,5 +41,3 @@ services:
       - REDIS_URL=redis://cache
       - DB_FILE=${DB_FILE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    command:
-      [sh, -c, "/opt/cougargrades/db/prepare.sh; npm install && npm start"]

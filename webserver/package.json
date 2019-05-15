@@ -16,6 +16,7 @@
     "make-promises-safe": "^5.0.0",
     "mustache": "^3.0.1",
     "mysql2": "^1.6.5",
+    "node-fetch": "^2.5.0",
     "point-of-view": "^3.3.0",
     "pretty-hrtime": "^1.0.3",
     "redis": "^2.8.0",
@@ -36,19 +37,13 @@
     }
   },
   "scripts": {
-    "build": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "server": "node --max-old-space-size=2048 server.js",
     "start": "npm run build && npm run server",
-    "sasswatch": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "nodewatch": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js",
-    "test": "npm run sasswatch & npm run nodewatch",
-    "docker": "npm run docker:build && npm run docker:run",
-    "docker:fresh": "npm run docker:stop && npm run docker:prune && npm run docker",
-    "docker:stop": "sudo docker stop cougar-grades.webserver cougar-grades.cache cougar-grades.mariadb",
-    "docker:prune": "sudo docker container rm --volumes cougar-grades.webserver cougar-grades.cache cougar-grades.mariadb",
-    "docker:build": "sudo docker build -t au5ton/cougar-grades .",
-    "docker:run": "sudo docker-compose up --build",
-    "docker:run-old": "sudo docker run -p $npm_package_config_server_port:3070 au5ton/cougar-grades"
+    "build": "npm run build:sass",
+    "build:sass": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
+    "server": "node --max-old-space-size=2048 server.js",
+    "dev": "npm run dev:sass & npm run dev:nodemon",
+    "dev:sass": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
+    "dev:nodemon": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js"
   },
   "repository": {
     "type": "git",
