@@ -66,8 +66,8 @@ console.log(process.env)
 console.log(config);
 
 (async function(){
-	// redis successful
-	await redis.set('message', 'hello world')
+	// redis successful (expire in a day)
+	await redis.set('message', 'hello world', 'EX', 60*60*24)
 	console.log(await redis.get('message'))
 	console.log(await redis.get('fake key'))
 
