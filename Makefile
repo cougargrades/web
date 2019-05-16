@@ -14,7 +14,10 @@ stop: FORCE
 
 prune: FORCE
 	sudo docker rm --volumes cougar-grades.webserver cougar-grades.importer cougar-grades.cache cougar-grades.mariadb | true
-	sudo docker rmi --force $$(sudo docker images -q 'cougar-grades*' | uniq) | true
+	M = $$(docker ps -a -q --filter "name=cougar")
+	MS = $$(echo "$M" | tr '\n' ' ')
+	echo $(MS)
+	sudo docker rmi --force $(sudo docker images -q 'cougar-grades*' | uniq) | true
 
 build: FORCE
 	sudo docker build -t cougar-grades.webserver webserver/
