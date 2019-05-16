@@ -1,6 +1,9 @@
 # cougar-grades
 [indev] University of Houston service for students
 
+## Indev ⚠
+cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building.
+
 ## Project modules
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
 - `importer/` Python script to process a collection of CSV files into the MariaDB database
