@@ -2,7 +2,6 @@
   "name": "cougar-grades",
   "version": "1.0.0",
   "description": "Web application",
-  "main": "example.js",
   "dependencies": {
     "better-sqlite3": "^5.4.0",
     "chalk": "^2.4.2",

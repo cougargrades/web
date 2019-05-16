@@ -76,7 +76,12 @@ async function routes (fastify, options) {
     fastify.get('/api/catalog/list/courses/:term/:dept', timer(async (request, reply) => {
         reply.type('application/json')
         if(request.params.term.toLowerCase() === 'all') {
-            return db.prepare('SELECT DISTINCT CATALOG_NBR FROM records WHERE DEPT=? ORDER BY CATALOG_NBR ASC').all(request.params.dept).map(a => a['CATALOG_NBR'])
+            if(request.params.dept.toLowerCase() === 'all') {
+                return db.prepare('SELECT DISTINCT DEPT, CATALOG_NBR FROM records ORDER BY DEPT ASC, CATALOG_NBR ASC').all().map(a => `${a['DEPT']} ${a['CATALOG_NBR']}`)
+            }
+            else {
+                return db.prepare('SELECT DISTINCT CATALOG_NBR FROM records WHERE DEPT=? ORDER BY CATALOG_NBR ASC').all(request.params.dept).map(a => a['CATALOG_NBR'])
+            }
         }
         else {
             return db.prepare('SELECT DISTINCT CATALOG_NBR FROM records WHERE TERM_CODE=? AND DEPT=? ORDER BY CATALOG_NBR ASC').all(request.params.term, request.params.dept).map(a => a['CATALOG_NBR'])
