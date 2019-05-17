@@ -2,14 +2,13 @@
 
 require('make-promises-safe')
 const path = require('path')
-const config = require('./config.json')
 const fastify = require('fastify')({
 	logger: false,
 	trustProxy: true
 })
 
-const PORT = process.env.PORT
-const STATIC_CACHE_AGE = 604800
+const BASEURL = process.env.WEBSERVER_BASEURL
+const STATIC_CACHE_AGE = 604800 // 1 week in seconds
 const API_CACHE_AGE = 604800
 
 fastify.register(require('fastify-response-time'))
@@ -31,7 +30,7 @@ const redis = {
 
 fastify.register(require('fastify-static'), {
 	root: path.join(__dirname, 'assets', 'public'),
-	prefix: `${config.baseurl}/public/`, // optional: default '/'
+	prefix: `${BASEURL}/public/`, // optional: default '/'
 	setHeaders: (res, path, stat) => {
 		if(process.env.NODE_ENV === 'production') {
 			// Cache static assets for 7 days
@@ -49,12 +48,12 @@ fastify.register(require('point-of-view'), {
 })
 
 // Router file for prefixed endpoints
-fastify.register(require('./lib/route'), { prefix: config.baseurl })
-fastify.use(`${config.baseurl}/api`, (req, res) => {
+fastify.register(require('./lib/route'), { prefix: BASEURLL })
+fastify.use(`${BASEURL}/api`, (req, res) => {
 	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
 })
 
-fastify.listen(PORT, '0.0.0.0', (err, address) => {
+fastify.listen(3000, '0.0.0.0', (err, address) => {
 	if (err) throw err
 	if(process.env.NODE_ENV == 'production') {
 		console.log('NODE_ENV set to production')

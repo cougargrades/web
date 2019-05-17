@@ -1,12 +1,8 @@
 
 const REVISION = "boop"
-// require('child_process')
-//     .execSync('git rev-parse --short HEAD')
-//     .toString().trim();
-const CACHE_AGE = 604800 // in seconds
 
-const config = require(process.env.CONFIG_FILE || '../config.json')
-const db = require('better-sqlite3')(process.env.DB_FILE || '../records.db', {
+const BASEURL = process.env.WEBSERVER_BASEURL
+const db = require('better-sqlite3')('records.db', {
     readonly: true,
     fileMustExist: true
 });
@@ -55,7 +51,7 @@ const log = async (pretty, duration, request) => {
 async function routes (fastify, options) {
     // (ID int primary key, TERM text, DEPT text, CATALOG_NBR smallint, CLASS_SECTION smallint, COURSE_DESCR text, INSTR_LAST_NAME text, INSTR_FIRST_NAME text, A smallint, B smallint, C smallint, D smallint, F smallint, Q smallint, AVG_GPA real, PROF_COUNT smallint, PROF_AVG real, TERM_CODE smallint, GROUP_CODE text)
     fastify.get('/', timer(async (request, reply) => {
-        return await reply.view('./templates/index.mustache', { baseurl: config.baseurl, commit: REVISION })
+        return await reply.view('./templates/index.mustache', { baseurl: BASEURL, commit: REVISION })
     }, log))
 
     fastify.get('/api/catalog/list/terms', timer(async (request, reply) => {

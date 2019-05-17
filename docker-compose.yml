@@ -2,42 +2,30 @@
 # Add this top-level entry
 version: "3"
 services:
+  mariadb:
+    build:
+      context: .
+      dockerfile: ./docker/mariadb/Dockerfile
+    image: mariadb-records:latest
+    container_name: cougar-grades.mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
   redis:
     image: redis:5.0-alpine
     container_name: cougar-grades.cache
     expose:
       - 6379
-  mariadb:
-    image: yobasystems/alpine-mariadb:latest
-    container_name: cougar-grades.mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  importer:
-    build: ./importer
-    container_name: cougar-grades.importer
-    expose:
-      - 8000
-    volumes:
-      - ./importer:/opt/databaseimport
-    depends_on:
-      - mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
   webserver:
     build: ./webserver
     container_name: cougar-grades.webserver
-    volumes:
-      - ./webserver:/opt/cougargrades
     ports:
       - 3000:3000
     depends_on:
       - redis
       - mariadb
-      - importer
     environment:
-      - NODE_ENV=development
-      - PORT=3000
-      - REDIS_URL=redis://cache
-      - DB_FILE=${DB_FILE}
+      - NODE_ENV=${NODE_ENV}
+      - WEBSERVER_BASEURL=${WEBSERVER_BASEURL}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
