@@ -5,10 +5,15 @@ source "importer/spinner.sh"
 
 print_usage()
 {
-    echo "\e[33mUsage: $0 load [directory with csvfiles | csvfile]"
-    echo "\t\e[33mDocker image 'au5ton/cougar-grades.importer' must be built before using."
-    echo "\t\e[33mUse 'make importer' to build"
-    exit 0
+echo -e "\e[33mUsage: $0 [directory with csvfiles | csvfile] [--cleanup]
+    Docker image 'au5ton/cougar-grades.importer' must be built before using.
+    Use 'make importer' to build.
+    Script is argument order sensitive.
+    The --cleanup tag will:
+    - run 'make importer'
+    - delete 'python:3.7' image on exit
+    - delete 'au5ton/cougar-grades.importer' image on exit"
+exit 0
 }
 
 if [ $# -eq 0 ]; then
@@ -16,13 +21,19 @@ if [ $# -eq 0 ]; then
     exit 0
 fi
 
-if [ $1 != "load" ]; then
+if [ ! -e "$1" ]; then
     print_usage $0
     exit 0
 fi
 
-if [ ! -e "$2" ]; then
-    print_usage $0
+if [ "$2" == "--cleanup" ]; then
+    start_spinner ">> make importer"
+    make importer > /dev/null 2>&1
+    stop_spinner $?
+fi
+
+if [ -z $(sudo docker images -q 'au5ton/cougar-grades.importer') ]; then
+    echo -e "\e[91mDocker image 'au5ton/cougar-grades.importer' not yet built. Use 'make importer' or --cleanup"
     exit 0
 fi
 
@@ -31,8 +42,8 @@ CONTAINER=$(sudo docker run -t -d -e COLUMNS=90 -e LINES=48 -e TERM=$TERM au5ton
 stop_spinner $?
 
 SHRT=$(printf $CONTAINER | cut -c 1-5)
-TWO=$(printf $2 | cut -c 1-10)
-LEN=${#2}
+TWO=$(printf $1 | cut -c 1-10)
+LEN=${#1}
 if [ "$LEN" -gt "10" ]; then
     TWO="$TWO..." # add ellipsis
 fi
@@ -40,8 +51,8 @@ fi
 echo " $ /opt/importer/install-dep.sh"
 sudo docker exec $CONTAINER bash /opt/importer/install-dep.sh $SHRT
 
-start_spinner ">> Container ready, copying: $2"
-if [ -d "$2" ]; then
+start_spinner ">> Container ready, copying: $1"
+if [ -d "$1" ]; then
     #echo ">> Passed a directory, compressing:"
     tar -c payload/*.csv -f payload.tar.gz
     #echo ">> Copying to container"
@@ -49,12 +60,12 @@ if [ -d "$2" ]; then
     rm payload.tar.gz # clean up
     #echo ">> Extracting within container"
     sudo docker exec $CONTAINER tar xf /opt/payload.tar.gz -C /opt
-elif [ -f "$2" ]; then
+elif [ -f "$1" ]; then
     #echo ">> Copying file to container"
     sudo docker exec $CONTAINER mkdir /opt/payload
-    sudo docker cp "$2" $CONTAINER:/opt/payload
+    sudo docker cp "$1" $CONTAINER:/opt/payload
 else 
-    echo ">> \e[31mFound nothing?"
+    echo -e ">> \e[31mFound nothing?"
 fi
 stop_spinner $?
 
@@ -62,8 +73,6 @@ sudo docker exec $CONTAINER tree /opt/payload
 
 echo " $ ./csv2db.py /opt/payload/*.csv"
 sudo docker exec $CONTAINER /bin/bash -c './csv2db.py /opt/payload/*.csv'
-printf ">> records.db: "
-sudo docker exec $CONTAINER du -hs records.db
 start_spinner "$ sqlite3 records.db -cmd '.output records.sql' '.dump'"
 sudo docker exec $CONTAINER sqlite3 records.db -cmd ".output records.sql" ".dump"
 stop_spinner $?
@@ -74,5 +83,16 @@ stop_spinner $?
 
 echo ">> Removing container"
 sudo docker rm --force $CONTAINER
-echo "\e[36mTo prune the downloaded Python docker image (~1.0GB), run:"
-echo "\e[36m  make pruneimg"
+
+if [ "$2" == "--cleanup" ]; then
+    IMGSIZE=0
+    IMGTMP=$(docker image inspect python:3.7 --format="{{.Size}}")
+    IMGSIZE=$((IMGSIZE + IMGTMP))
+    IMGTMP=$(docker image inspect au5ton/cougar-grades.importer --format="{{.Size}}")
+    IMGSIZE=$((IMGSIZE + IMGTMP))
+    IMGSIZE=$(numfmt --to=iec $IMGSIZE)
+    start_spinner ">> Cleaning up $IMGSIZE worth of docker images"
+    sudo docker rmi --force au5ton/cougar-grades.importer > /dev/null 2>&1
+    sudo docker rmi --force python:3.7 > /dev/null 2>&1
+    stop_spinner $?
+fi

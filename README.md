@@ -9,7 +9,7 @@ cougar-grades is in private early development and the master branch will get ver
 - `importer/` Python script to process a collection of CSV files into the MariaDB database
 
 ### Database importer
-[![asciicast](https://asciinema.org/a/k8TSmnEH5ap2EkKInKR57oN9N.svg)](https://asciinema.org/a/k8TSmnEH5ap2EkKInKR57oN9N)
+[![asciicast](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw.svg)](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw)
 
 <!-- ### Webserver
  [![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis) -->

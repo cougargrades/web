@@ -137,9 +137,8 @@ LEFT JOIN(SELECT COUNT(records.AVG_GPA) AS PROF_COUNT, AVG(records.AVG_GPA) AS P
 ON records.TERM = t2.TERM AND records.DEPT = t2.DEPT AND records.CATALOG_NBR = t2.CATALOG_NBR AND records.INSTR_LAST_NAME = t2.INSTR_LAST_NAME AND records.INSTR_FIRST_NAME = t2.INSTR_FIRST_NAME
 ''')
 spinner.succeed()
-print('Done')
 
-print('Creating extra table from copied table...')
+print('Creating extra table from copied table...', end="")
 row = cread.fetchone()
 id_num = 1
 with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
@@ -168,7 +167,7 @@ with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
 conn.commit()
 print('Done')
 
-print('Dropping original table and renaming extra table...')
+print('Dropping original table and renaming extra table...', end="")
 cwrite.execute('DROP TABLE records')
 cwrite.execute('''
 ALTER TABLE records_extra

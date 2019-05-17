@@ -36,13 +36,9 @@ webserver: FORCE
 	sudo docker container rm --volumes make_temp
 
 importer: FORCE
-	sudo docker rm -f $$(docker ps -q -f 'ancestor=au5ton/cougar-grades.importer') | true
+	sudo docker rm --force $$(docker ps -q -f 'ancestor=au5ton/cougar-grades.importer') | true
 	sudo docker rmi --force au5ton/cougar-grades.importer | true
 	sudo docker build -t au5ton/cougar-grades.importer importer/
-
-pruneimg:
-	sudo docker rmi au5ton/cougar-grades.importer | true
-	sudo docker rmi python:3.7 | true
 
 
 FORCE: 
