@@ -14,3 +14,7 @@ webserver/assets/public/css/*
 *.log
 
 .env
+dump.sql
+
+payload.zip
+payload.tar.gz

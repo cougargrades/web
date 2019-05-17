@@ -8,24 +8,25 @@ cougar-grades is in private early development and the master branch will get ver
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
 - `importer/` Python script to process a collection of CSV files into the MariaDB database
 
-### Database importer
+<!-- ### Database importer
 [![asciicast](https://asciinema.org/a/243852.svg)](https://asciinema.org/a/243852)
 
 ### Webserver
-[![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis)
+ [![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis) -->
 
 ## Dependencies
 - Docker
 - Docker Compose
 - `make`
-- Grade data in CSV format with the schema seen in `sample.csv` 
-- At least 1-1.5GB in space (Docker images large)
+- Grade data (only one is required):
+    - in CSV format with the schema seen in `schema/sample.csv`
+- At least 1-2GB in space (Docker images large)
 
 ## Running
-- Copy your CSV files into `importer/payload/`
 - cd `cougar-grades/`
-- *Start containers in the background:* `make daemon`
-- *Start containers interactively:* `make`
+- Build importer docker image: `make importer`
+- Generate SQLite and SQL files: `./export-sql.sh load [directory with csvfiles | csvfile]`
+- A `records.db` and a `records.sql` file will be available.
 
 ## Inspiration
 - anex.us/grades/ (author unknown)
@@ -35,10 +36,3 @@ cougar-grades is in private early development and the master branch will get ver
 ## Development
 - @au5ton
 - @fluffthepanda
-
-
-### Docker
-- install docker-ce
-- install docker-compose
-- install make
-- put csv files in `payload/`

@@ -3,7 +3,6 @@ cursor==1.2.0
 enum34==1.1.6
 halo==0.0.23
 log-symbols==0.0.12
-PyMySQL==0.9.3
 six==1.11.0
 spinners==0.0.23
 termcolor==1.1.0
