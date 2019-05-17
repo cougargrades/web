@@ -5,7 +5,7 @@ source "importer/spinner.sh"
 
 print_usage()
 {
-echo -e "\e[33mUsage: $0 [directory with csvfiles | csvfile] [--cleanup]
+echo -e "\e[33mUsage: "$(basename $0)" [directory with csvfiles | csvfile] [--cleanup]
     Docker image 'au5ton/cougar-grades.importer' must be built before using.
     Use 'make importer' to build.
     Script is argument order sensitive.
