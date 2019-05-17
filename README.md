@@ -6,13 +6,13 @@ cougar-grades is in private early development and the master branch will get ver
 
 ## Project modules
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
-- `importer/` Python script to process a collection of CSV files into the MariaDB database
+- `importer/` Python script to process a collection of CSV files into .db and .sql files for importing into the webserver module
 
 ### Database importer
 [![asciicast](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw.svg)](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw)
 
-<!-- ### Webserver
- [![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis) -->
+### Webserver
+[indev]
 
 ## Dependencies
 - Docker
@@ -20,13 +20,13 @@ cougar-grades is in private early development and the master branch will get ver
 - `make`
 - Grade data (only one is required):
     - in CSV format with the schema seen in `schema/sample.csv`
-- At least 1-2GB in space (Docker images large)
+- At least 1-2GB in space (Docker images are large)
 
 ## Running
-- cd `cougar-grades/`
-- Build importer docker image: `make importer`
-- Generate SQLite and SQL files: `./export-sql.sh load [directory with csvfiles | csvfile]`
-- A `records.db` and a `records.sql` file will be available.
+- `cd cougar-grades/`
+- Generate SQLite and SQL files: `./generate.sh [directory with csvfiles | csvfile] --cleanup`
+    - `records.db` and a `records.sql` files will be copied to `cougar-grades/` before deleting the container and images generated
+- TBD
 
 ## Inspiration
 - anex.us/grades/ (author unknown)
