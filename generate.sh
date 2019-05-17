@@ -59,12 +59,13 @@ sudo docker exec $CONTAINER bash /opt/importer/install-dep.sh $SHRT
 start_spinner ">> Container ready, copying: $1"
 if [ -d "$1" ]; then
     #echo ">> Passed a directory, compressing:"
-    tar -c payload/*.csv -f payload.tar.gz
+    tar -c $1/*.csv -f payload.tar.gz
     #echo ">> Copying to container"
     sudo docker cp payload.tar.gz $CONTAINER:/opt/
     rm payload.tar.gz # clean up
     #echo ">> Extracting within container"
     sudo docker exec $CONTAINER tar xf /opt/payload.tar.gz -C /opt
+    sudo docker exec $CONTAINER mv /opt/$(basename $1) /opt/payload
 elif [ -f "$1" ]; then
     #echo ">> Copying file to container"
     sudo docker exec $CONTAINER mkdir /opt/payload
@@ -78,9 +79,7 @@ sudo docker exec $CONTAINER tree /opt/payload
 
 echo " $ ./csv2db.py /opt/payload/*.csv"
 sudo docker exec $CONTAINER /bin/bash -c './csv2db.py /opt/payload/*.csv'
-start_spinner "$ sqlite3 records.db -cmd '.output records.sql' '.dump'"
-sudo docker exec $CONTAINER sqlite3 records.db -cmd ".output records.sql" ".dump"
-stop_spinner $?
+sudo docker exec $CONTAINER bash /opt/importer/sqlite2maria.sh $SHRT
 start_spinner ">> Copy records out of container"
 sudo docker cp $CONTAINER:/opt/importer/records.db .
 sudo docker cp $CONTAINER:/opt/importer/records.sql .

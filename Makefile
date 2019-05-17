@@ -32,7 +32,20 @@ upd: FORCE
 
 down: FORCE
 	sudo docker-compose down --rmi all
-	docker ps -a
-	docker images
+	sudo docker ps -a
+	sudo docker images
+
+# dev tools only
+devls: FORCE
+	sudo docker ps -all
+	sudo docker images
+
+devmariadb: devmariadbdown devmariadbup FORCE
+
+devmariadbdown: FORCE
+	sudo docker-compose down --rmi all
+devmariadbup: FORCE
+	sudo docker-compose up --build mariadb
+
 
 FORCE: 
