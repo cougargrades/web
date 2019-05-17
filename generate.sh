@@ -26,6 +26,11 @@ if [ ! -e "$1" ]; then
     exit 0
 fi
 
+if [ "$EUID" -ne 0 ]; then
+    echo -e "\e[91mPlease run as root"
+    exit 0
+fi
+
 if [ "$2" == "--cleanup" ]; then
     start_spinner ">> make importer"
     make importer > /dev/null 2>&1
