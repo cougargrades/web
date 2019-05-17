@@ -8,10 +8,10 @@ cougar-grades is in private early development and the master branch will get ver
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
 - `importer/` Python script to process a collection of CSV files into the MariaDB database
 
-<!-- ### Database importer
-[![asciicast](https://asciinema.org/a/243852.svg)](https://asciinema.org/a/243852)
+### Database importer
+[![asciicast](https://asciinema.org/a/Zwi2Z32YH0fvR4VQjhRgZ4JVX.svg)](https://asciinema.org/a/Zwi2Z32YH0fvR4VQjhRgZ4JVX)
 
-### Webserver
+<!-- ### Webserver
  [![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis) -->
 
 ## Dependencies
