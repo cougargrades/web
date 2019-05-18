@@ -6,12 +6,14 @@ services:
     build:
       context: .
       dockerfile: ./docker/mariadb/Dockerfile
-    image: mariadb-records:latest
+    image: cougar-grades.mariadb:latest
     container_name: cougar-grades.mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASS: ${MYSQL_PASS}
   redis:
     image: redis:5.0-alpine
     container_name: cougar-grades.cache
