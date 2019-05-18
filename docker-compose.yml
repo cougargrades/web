@@ -20,7 +20,10 @@ services:
     expose:
       - 6379
   webserver:
-    build: ./webserver
+    build:
+      context: .
+      dockerfile: ./webserver/Dockerfile
+    image: cougar-grades.webserver:latest
     container_name: cougar-grades.webserver
     ports:
       - 3000:3000

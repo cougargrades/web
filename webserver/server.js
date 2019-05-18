@@ -48,7 +48,7 @@ fastify.register(require('point-of-view'), {
 })
 
 // Router file for prefixed endpoints
-fastify.register(require('./lib/route'), { prefix: BASEURLL })
+fastify.register(require('./lib/route'), { prefix: BASEURL })
 fastify.use(`${BASEURL}/api`, (req, res) => {
 	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
 })
@@ -59,10 +59,10 @@ fastify.listen(3000, '0.0.0.0', (err, address) => {
 		console.log('NODE_ENV set to production')
 	}
 	console.log(`server listening on ${address}`)
-})
+});
 
-console.log(process.env)
-console.log(config);
+//console.log(process.env)
+//console.log(config);
 
 (async function(){
 	// redis successful (expire in a day)

@@ -1,8 +1,8 @@
-CREATE TABLE IF NOT EXISTS "records" (
+CREATE TABLE IF NOT EXISTS records (
     ID int primary key,
     TERM text,
     DEPT text,
-    CATALOG_NBR smallint,
+    CATALOG_NBR text,
     CLASS_SECTION smallint,
     COURSE_DESCR text,
     INSTR_LAST_NAME text,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS "records" (
     AVG_GPA real,
     PROF_COUNT smallint,
     PROF_AVG real,
-    TERM_CODE smallint,
+    TERM_CODE int,
     GROUP_CODE text
     );
 INSERT INTO records VALUES(1,'Fall 2013','ACCT',4105,1,'PPA Colloquium 1','Newman','Michael Ray',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,201303,'201303-ACCT4105_NewmanMichaelRay');

@@ -4,7 +4,7 @@ cd /opt/importer/
 export TERM="xterm-256color"
 source "$(pwd)/spinner.sh"
 
-wget --quiet https://raw.githubusercontent.com/NotoriousPyro/SQLite-to-MariaDB-MySQL-perl-script/master/sqlite-to-mariadb.pl
+wget --quiet https://raw.githubusercontent.com/au5ton/SQLite-to-MariaDB-MySQL-perl-script/master/sqlite-to-mariadb.pl
 chmod +x sqlite-to-mariadb.pl
 
 start_spinner "[$1] .db ==> .sqlite"
@@ -27,6 +27,7 @@ SET autocommit=0;
 SET unique_checks=0;
 SET foreign_key_checks=0;
 ") records.sql > records.sql.tmp
+# replaces with temporary file
 rm records.sql
 mv records.sql.tmp records.sql
 # append to file
