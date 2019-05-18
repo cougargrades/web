@@ -5,8 +5,8 @@
 *.csv
 !sample.csv
 *.db
-# *.sql
-# !sample.sql
+*.sql
+!sample.sql
 config.json
 
 node_modules/
