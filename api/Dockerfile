@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:10
+FROM node:10-alpine
 
 # Create app directory
 WORKDIR '/opt/cougargrades'

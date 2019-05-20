@@ -19,14 +19,20 @@ services:
     container_name: cougar-grades.cache
     expose:
       - 6379
+  web:
+    build: 
+      context: .
+      dockerfile: ./web/Dockerfile
+      args:
+        - WEBSERVER_BASEURL=${WEBSERVER_BASEURL}
+    ports:
+      - 3000:80
   webserver:
     build:
       context: .
       dockerfile: ./webserver/Dockerfile
     image: cougar-grades.webserver:latest
     container_name: cougar-grades.webserver
-    ports:
-      - 3000:3000
     depends_on:
       - redis
       - mariadb
