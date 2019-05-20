@@ -49,9 +49,9 @@ fastify.register(require('point-of-view'), {
 
 // Router file for prefixed endpoints
 fastify.register(require('./lib/route'), { prefix: BASEURL })
-fastify.use(`${BASEURL}/api`, (req, res) => {
-	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
-})
+// fastify.use(`${BASEURL}/api/`, (req, res) => {
+// 	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
+// })
 
 fastify.listen(3000, '0.0.0.0', (err, address) => {
 	if (err) throw err
@@ -82,4 +82,4 @@ fastify.listen(3000, '0.0.0.0', (err, address) => {
 	// query database
 	const [rows, fields] = await connection.execute('SELECT * FROM records');
 	console.log(rows)
-})()
+})

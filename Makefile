@@ -24,8 +24,8 @@ build: FORCE
 # development management
 fresh: down main FORCE
 
-up: build FORCE
-	sudo docker-compose up
+up: FORCE
+	sudo SOURCE_COMMIT=$$(git rev-parse HEAD) docker-compose up
 
 upd: FORCE
 	sudo docker-compose up -d
@@ -47,5 +47,21 @@ devmariadbdown: FORCE
 devmariadbup: FORCE
 	sudo docker-compose up --build mariadb
 
+devwebserver: devwebserverprep up FORCE
+
+devwebserverprep: FORCE
+	sudo docker stop cougar-grades.webserver
+	sudo docker rm cougar-grades.webserver
+	sudo docker rmi cougar-grades.webserver
+	sudo docker-compose build webserver
+
+devwebserverupd: FORCE
+	sudo docker-compose up -d --build webserver
+	sudo docker attach --sig-proxy=false cougar-grades.webserver
+
+devwebserverswap: FORCE
+	sudo docker cp ./webserver cougar-grades.webserver:/opt/cougargrades
+	sudo docker restart cougar-grades.webserver
+	sudo docker attach --sig-proxy=false cougar-grades.webserver
 
 FORCE: 

@@ -1,38 +1,11 @@
 
-const REVISION = "boop"
+const REVISION = new String(process.env.SOURCE_COMMIT).substring(0,7)
 
 const BASEURL = process.env.WEBSERVER_BASEURL
 const db = require('better-sqlite3')('records.db', {
     readonly: true,
     fileMustExist: true
 });
-
-const winston = require('winston')
-const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.simple(),
-    transports: [
-        //
-        // - Write to all logs with level `info` and below to `combined.log`
-        // - Write all logs error (and below) to `error.log`.
-        //
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'output.log' })
-    ]
-});
-
-//
-// If we're not in production then **ALSO** log to the `console`
-// with the colorized simple format.
-//
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
-        format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-        )
-    }));
-}
 
 
 const timer = require('./timer')
@@ -45,7 +18,7 @@ const log = async (pretty, duration, request) => {
     if(duration.milliseconds > 100) {
         color = 'red'
     }
-    logger.info(chalk[color](`${request.ip} - [${new Date().toLocaleString()}] - ${request.raw.method} ${request.raw.url} ${pretty}`))
+    console.log(chalk[color](`${request.ip} - [${new Date().toLocaleString()}] - ${request.raw.method} ${request.raw.url} ${pretty}`))
 }
 
 async function routes (fastify, options) {

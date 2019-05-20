@@ -112,7 +112,7 @@ class Chart extends Displayable {
         
         var data = google.visualization.arrayToDataTable(this.chart_data)
         var options = {
-            title: `${this.sql_data[0].SUBJECT} ${this.sql_data[0].CATALOG_NBR}: ${this.sql_data[0].COURSE_DESCR}`,
+            title: `${this.sql_data[0].DEPT} ${this.sql_data[0].CATALOG_NBR}: ${this.sql_data[0].COURSE_DESCR}`,
             vAxis: {
                 title: 'GPA',
                 gridlines: {

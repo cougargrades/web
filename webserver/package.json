@@ -39,7 +39,7 @@
     "start": "npm run build && npm run server",
     "build": "npm run build:sass",
     "build:sass": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "server": "node --max-old-space-size=2048 server.js",
+    "server": "node server.js",
     "dev": "npm run dev:sass & npm run dev:nodemon",
     "dev:sass": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
     "dev:nodemon": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js"

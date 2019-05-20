@@ -17,7 +17,7 @@ class Table extends Displayable {
         return {
             "ID": "ID",
             "TERM": "Term",
-            "SUBJECT": "Department",
+            "DEPT": "Department",
             "CATALOG_NBR": "Course",
             "CLASS_SECTION": "Section",
             "COURSE_DESCR": "Course Description",
