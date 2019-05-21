@@ -4,7 +4,7 @@ class Chart extends Displayable {
         super()
         if(sqldata instanceof SQLData) {
             this.baseurl = baseurl
-            this.chart_container = null
+            this.element = null
             this.sql_data = sqldata.data
             this.chart_data = null
         }
@@ -15,7 +15,7 @@ class Chart extends Displayable {
 
     setElement(element) {
         if(element instanceof HTMLElement) {
-            this.chart_container = element
+            this.element = element
         }
         else {
             throw "Invalid parameters"
@@ -23,12 +23,12 @@ class Chart extends Displayable {
     }
 
     async process() {
-        if(this.chart_container instanceof HTMLElement) {
+        if(this.element instanceof HTMLElement) {
             await this.transpose()
             await this.display()
         }
         else {
-            throw "chart_container not set"
+            throw "element not set"
         }
         console.log(this)
     }
@@ -36,7 +36,7 @@ class Chart extends Displayable {
     // heavily inspired by: https://anex.us/grades/drawGraph.js
     async transpose() {
         if(this.sql_data == null || this.sql_data.length == 0) {
-            this.chart_container.innerText = "No data retrieved for that course. Maybe a typo?"
+            this.element.innerText = "No data retrieved for that course. Maybe a typo?"
             return
         }
 
@@ -131,7 +131,7 @@ class Chart extends Displayable {
             interpolateNulls: true //lines between point gaps
         };
 
-        var chart = new google.visualization.LineChart(this.chart_container);
+        var chart = new google.visualization.LineChart(this.element);
         chart.draw(data, options);
     }
 }

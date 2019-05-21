@@ -71,9 +71,12 @@ class Collapsible {
         await this.createCollapsible(visuals)
         for(let i in visuals) {
             await visuals[i].process()
-            window.addEventListener('resize', () => {
-                visuals[i].display()
-            })
+            window.addEventListener('resize', debounce(() => {
+                if(visuals[i].element.parentNode.previousSibling.getAttribute('class').includes('active')) {
+                    // Only resize if collapsible is visible
+                    visuals[i].display()
+                }
+            }, 100))
         }
     }
 }

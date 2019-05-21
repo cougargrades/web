@@ -5,14 +5,16 @@ const timer = require('./lib/timer')
 const db = require('./lib/db')
 const chalk = require('chalk')
 const log = async (pretty, duration, request) => {
-    let color = 'green'
-    if(duration.milliseconds > 40) {
-        color = 'yellow'
+    if(process.env.NODE_ENV != 'production') {
+        let color = 'green'
+        if(duration.milliseconds > 40) {
+            color = 'yellow'
+        }
+        if(duration.milliseconds > 100) {
+            color = 'red'
+        }
+        //console.log(chalk[color](`${request.ip} - [${new Date().toLocaleString()}] - ${request.raw.method} ${request.raw.url} ${pretty}`))
     }
-    if(duration.milliseconds > 100) {
-        color = 'red'
-    }
-    console.log(chalk[color](`${request.ip} - [${new Date().toLocaleString()}] - ${request.raw.method} ${request.raw.url} ${pretty}`))
 }
 
 async function routes (fastify, options) {

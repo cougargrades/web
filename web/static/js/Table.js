@@ -4,7 +4,7 @@ class Table extends Displayable {
         super()
         if(sqldata instanceof SQLData) {
             this.baseurl = baseurl
-            this.table_container = null
+            this.element = null
             this.sql_data = sqldata.data
             this.table_data = null
         }
@@ -54,7 +54,7 @@ class Table extends Displayable {
 
     setElement(element) {
         if(element instanceof HTMLElement) {
-            this.table_container = element
+            this.element = element
         }
         else {
             throw "Invalid parameters"
@@ -62,14 +62,14 @@ class Table extends Displayable {
     }
 
     async process() {
-        if(this.table_container instanceof HTMLElement) {
+        if(this.element instanceof HTMLElement) {
             await this.transpose()
             await this.filter()
             await this.format()
             await this.display()
         }
         else {
-            throw "table_container not set"
+            throw "element not set"
         }
         console.log(this)
     }
@@ -183,7 +183,7 @@ class Table extends Displayable {
         }
         data.addRows(this.table_data.rows)
 
-        let table = new google.visualization.Table(this.table_container);
+        let table = new google.visualization.Table(this.element);
         table.draw(data, options);
     }
 }

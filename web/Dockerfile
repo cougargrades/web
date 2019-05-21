@@ -13,4 +13,5 @@ FROM nginx:latest
 WORKDIR /root/
 COPY --from=0 /opt/web/_site /usr/share/nginx/html
 COPY --from=0 /opt/web/nginx/default.conf /etc/nginx/conf.d/
+RUN mkdir -p /tmp/nginx/cache
 # CMD nginx  
