@@ -1,14 +1,13 @@
 
 const REVISION = new String(process.env.SOURCE_COMMIT).substring(0,7)
 
-const BASEURL = process.env.WEBSERVER_BASEURL
+const BASEURL = process.env.BASEURL
 const db = require('better-sqlite3')('records.db', {
     readonly: true,
     fileMustExist: true
 });
 
-
-const timer = require('./timer')
+const timer = require('./lib/timer')
 const chalk = require('chalk')
 const log = async (pretty, duration, request) => {
     let color = 'green'
@@ -23,8 +22,15 @@ const log = async (pretty, duration, request) => {
 
 async function routes (fastify, options) {
     // (ID int primary key, TERM text, DEPT text, CATALOG_NBR smallint, CLASS_SECTION smallint, COURSE_DESCR text, INSTR_LAST_NAME text, INSTR_FIRST_NAME text, A smallint, B smallint, C smallint, D smallint, F smallint, Q smallint, AVG_GPA real, PROF_COUNT smallint, PROF_AVG real, TERM_CODE smallint, GROUP_CODE text)
+
     fastify.get('/', timer(async (request, reply) => {
-        return await reply.view('./templates/index.mustache', { baseurl: BASEURL, commit: REVISION })
+        reply.type('application/json')
+        return `Welcome to the ${request.raw.url}`
+    }, log))
+
+    fastify.get('/api/', timer(async (request, reply) => {
+        reply.type('application/json')
+        return `Welcome to the ${request.raw.url}`
     }, log))
 
     fastify.get('/api/catalog/list/terms', timer(async (request, reply) => {

@@ -4,15 +4,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
-    <link href="{{& baseurl }}/public/css/index.css" rel="stylesheet">
+    <link href="{{& BASEURL }}/css/index.css" rel="stylesheet">
 
     <script defer src="https://www.gstatic.com/charts/loader.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script defer src="{{& baseurl }}/public/js/MiscClasses.js"></script>
-    <script defer src="{{& baseurl }}/public/js/Collapsible.js"></script>
-    <script defer src="{{& baseurl }}/public/js/Chart.js"></script>
-    <script defer src="{{& baseurl }}/public/js/Table.js"></script>
-    <script defer src="{{& baseurl }}/public/CougarGrades.js"></script>
+    <script defer src="{{& BASEURL }}/js/MiscClasses.js"></script>
+    <script defer src="{{& BASEURL }}/js/Collapsible.js"></script>
+    <script defer src="{{& BASEURL }}/js/Chart.js"></script>
+    <script defer src="{{& BASEURL }}/js/Table.js"></script>
+    <script defer src="{{& BASEURL }}/js/CougarGrades.js"></script>
 </head>
 <body class="red darken-4">
     <div class="container">
@@ -38,7 +38,7 @@
 
         <div id="results"></div>
 
-        <p class="commit">Using commit: {{& commit }}</p>
+        <p class="commit">Using commit: {{& SOURCE_COMMIT }}</p>
     </div>
     
     
@@ -46,7 +46,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             google.charts.load('current', {'packages':['corechart','table']});
             google.charts.setOnLoadCallback(() => {
-                let grades = new CougarGrades("{{& baseurl }}")
+                let grades = new CougarGrades("{{& BASEURL }}")
                 grades.Main()
             });
         })

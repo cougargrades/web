@@ -7,7 +7,6 @@ const fastify = require('fastify')({
 	trustProxy: true
 })
 
-const BASEURL = process.env.WEBSERVER_BASEURL
 const STATIC_CACHE_AGE = 604800 // 1 week in seconds
 const API_CACHE_AGE = 604800
 
@@ -28,30 +27,14 @@ const redis = {
 	end: promisify(client.end).bind(client)
 }
 
-fastify.register(require('fastify-static'), {
-	root: path.join(__dirname, 'assets', 'public'),
-	prefix: `${BASEURL}/public/`, // optional: default '/'
-	setHeaders: (res, path, stat) => {
-		if(process.env.NODE_ENV === 'production') {
-			// Cache static assets for 7 days
-			res.setHeader('Cache-Control', `public, max-age=${STATIC_CACHE_AGE}`)
-		}
-	}
-})
-
-// Use moustache for inserting prefixes into HTML
-fastify.register(require('point-of-view'), {
-	engine: {
-		mustache: require('mustache')
-	},
-	options: {}
-})
-
 // Router file for prefixed endpoints
-fastify.register(require('./lib/route'), { prefix: BASEURL })
-// fastify.use(`${BASEURL}/api/`, (req, res) => {
-// 	res.setHeader('Cache-Control', `public, max-age=${API_CACHE_AGE}`)
-// })
+fastify.register(require('./route'), { prefix: process.env.BASEURL })
+
+fastify.get('/debug', async (req, reply) => {
+	reply.type('application/json')
+	console.log(process.env)
+	return 'Debug info logged'
+})
 
 fastify.listen(3000, '0.0.0.0', (err, address) => {
 	if (err) throw err
@@ -60,9 +43,6 @@ fastify.listen(3000, '0.0.0.0', (err, address) => {
 	}
 	console.log(`server listening on ${address}`)
 });
-
-//console.log(process.env)
-//console.log(config);
 
 (async function(){
 	// redis successful (expire in a day)

@@ -5,15 +5,13 @@ services:
   mariadb:
     build:
       context: .
-      dockerfile: ./docker/mariadb/Dockerfile
-    image: cougar-grades.mariadb:latest
+      dockerfile: ./mariadb/Dockerfile
+    image: cougar-grades.mariadb
     container_name: cougar-grades.mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASS: ${MYSQL_PASS}
   redis:
     image: redis:5.0-alpine
     container_name: cougar-grades.cache
@@ -24,20 +22,30 @@ services:
       context: .
       dockerfile: ./web/Dockerfile
       args:
-        - WEBSERVER_BASEURL=${WEBSERVER_BASEURL}
+        - BASEURL=${BASEURL}
+        - SOURCE_COMMIT
+    image: cougar-grades.nginx
+    container_name: cougar-grades.nginx
+    depends_on:
+      - api
     ports:
       - 3000:80
-  webserver:
+  api:
     build:
       context: .
-      dockerfile: ./webserver/Dockerfile
-    image: cougar-grades.webserver:latest
-    container_name: cougar-grades.webserver
+      dockerfile: ./api/Dockerfile
+    image: cougar-grades.api
+    container_name: cougar-grades.api
     depends_on:
       - redis
       - mariadb
+    ports:
+      - 3010:3000
+      - 9229:9229
+    volumes: 
+      - ./api:/opt/cougargrades
     environment:
       - NODE_ENV=${NODE_ENV}
-      - WEBSERVER_BASEURL=${WEBSERVER_BASEURL}
+      - BASEURL=${BASEURL}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - SOURCE_COMMIT

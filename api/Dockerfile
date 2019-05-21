@@ -4,7 +4,9 @@ FROM node:10-alpine
 # Create app directory
 WORKDIR '/opt/cougargrades'
 
-COPY ./webserver .
+COPY ./api .
 COPY ./records.db .
 
-CMD ["sh", "-c", "npm install && npm start"]
+RUN apk --update add alpine-sdk build-base libc-dev gcc g++ git bash python make sqlite curl
+RUN npm install
+CMD bash -c './entry.sh'

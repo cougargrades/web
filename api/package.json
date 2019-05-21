@@ -11,15 +11,11 @@
     "fastify-graceful-shutdown": "^2.0.1",
     "fastify-rate-limit": "^2.1.1",
     "fastify-response-time": "github:lolo32/fastify-response-time",
-    "fastify-static": "^2.4.0",
     "make-promises-safe": "^5.0.0",
-    "mustache": "^3.0.1",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.5.0",
-    "point-of-view": "^3.3.0",
     "pretty-hrtime": "^1.0.3",
-    "redis": "^2.8.0",
-    "winston": "^3.2.1"
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.0",
@@ -27,22 +23,16 @@
     "standard": "*"
   },
   "config": {
-    "sass": {
-      "src": "assets/sass/",
-      "dest": "assets/public/css/"
-    },
     "server": {
       "port": 3000
     }
   },
   "scripts": {
-    "start": "npm run build && npm run server",
-    "build": "npm run build:sass",
-    "build:sass": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
+    "start": "npm run ping; npm run server",
+    "ping": "curl http://cougar-grades.nginx:80$BASEURL > /dev/null",
     "server": "node server.js",
-    "dev": "npm run dev:sass & npm run dev:nodemon",
-    "dev:sass": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "dev:nodemon": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js"
+    "dev": "npm run dev:nodemon",
+    "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js"
   },
   "repository": {
     "type": "git",
