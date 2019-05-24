@@ -8,7 +8,7 @@ cougar-grades is in private early development and the master branch will get ver
 - `api/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
 - `importer/` Python script to process a collection of CSV files into .db and .sql files for importing into the webserver module
 - `mariadb/` MariaDB Docker image that imports the .sql files produced by `importer/`
-- `web/` Nginx Docker image that preprosses the Sass CSS and {{Mustache}} files for configurable baseurl support
+- `web/` Nginx Docker image that preprocesses the Sass CSS and {{Mustache}} files for configurable baseurl support
 
 ### Database importer
 [![asciicast](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw.svg)](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw)
