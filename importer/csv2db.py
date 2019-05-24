@@ -103,7 +103,7 @@ cread = conn.cursor()
 cwrite = conn.cursor()
 
 cwrite.execute('''CREATE TABLE records_extra (
-    ID int primary key,
+    ID int unsigned not null primary key unique,
     TERM text,
     DEPT text,
     CATALOG_NBR text,

@@ -53,6 +53,9 @@ if [ "$LEN" -gt "10" ]; then
     TWO="$TWO..." # add ellipsis
 fi
 
+echo " $ apk update && apk add bash ncurses"
+sudo docker exec $CONTAINER sh -c 'apk update --quiet && apk add bash ncurses --quiet'
+
 echo " $ /opt/importer/install-dep.sh"
 sudo docker exec $CONTAINER bash /opt/importer/install-dep.sh $SHRT
 
@@ -90,13 +93,13 @@ sudo docker rm --force $CONTAINER
 
 if [ "$2" == "--cleanup" ]; then
     IMGSIZE=0
-    IMGTMP=$(docker image inspect python:3.7 --format="{{.Size}}")
+    IMGTMP=$(docker image inspect python:3.7-alpine --format="{{.Size}}")
     IMGSIZE=$((IMGSIZE + IMGTMP))
     IMGTMP=$(docker image inspect au5ton/cougar-grades.importer --format="{{.Size}}")
     IMGSIZE=$((IMGSIZE + IMGTMP))
     IMGSIZE=$(numfmt --to=iec $IMGSIZE)
     start_spinner ">> Cleaning up $IMGSIZE worth of docker images"
     sudo docker rmi --force au5ton/cougar-grades.importer > /dev/null 2>&1
-    sudo docker rmi --force python:3.7 > /dev/null 2>&1
+    sudo docker rmi --force python:3.7-alpine > /dev/null 2>&1
     stop_spinner $?
 fi
