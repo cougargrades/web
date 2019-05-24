@@ -7,7 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.base.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.base.min.css"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light cg-navbar">
@@ -163,43 +164,33 @@
                     color: #ffffff; 
                 }
             </style>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js"></script>
             <script>
                 function autocomplete(elem, arr) {
                     // prepend for testing
                     for(let i = 0; i < arr.length; i++) {
-                        arr[i] = `COSC ${arr[i]}`
+                        //arr[i] = `COSC ${arr[i]}`
                     }
 
-                    // prepare <datalist>
-                    let dump = document.getElementById('cg-datalist')
-                    console.log()
-                    let id = dump.children.length
-                    let list = document.createElement('datalist')
-                    list.setAttribute('id',`datalist-${id}`)
-                    dump.appendChild(list)
-                    for(let e of arr) {
-                        let x = document.createElement('option')
-                        x.setAttribute('value', e)
-                        list.appendChild(x)
-                    }
-
-                    // link <datalist>
-                    elem.setAttribute('list', `datalist-${id}`)
+                    new Awesomplete(elem, {
+                        list: arr,
+                        minChars: 3,
+                        maxItems: 4
+                    });
                 }
 
                 document.querySelector('form#search').addEventListener('submit', (event) => {
                     event.preventDefault()
                     alert('Submitted')
-                })
+                });
 
-                let courses = ["1300","1304","1306","1320","1410","1430","2320","2410","2430","2440","3320","3330","3340","3360","3380","3396","3399","4198","4211","4298","4311","4315","4324","4330","4332","4335","4348","4349","4351","4353","4354","4355","4358","4359","4364","4368","4370","4371","4372","4377","4390","4393","4396","4397","4398","4399","4498","6110","6305","6306","6308","6309","6310","6318","6320","6321","6323","6326","6327","6332","6335","6336","6339","6340","6342","6343","6344","6345","6346","6347","6348","6349","6353","6354","6355","6358","6359","6360","6361","6364","6365","6368","6369","6370","6372","6373","6374","6376","6377","6380","6384","6385","6389","6390","6396","6397","6398","6399","6698","7199","7336","7362","7363","7370","7373","7378","7384","7388","7397","7398","7399","7698","8199","8298","8398","8399","8598","8698","8699","8998","8999"]
-                // ^ Mutating this array *does* show in the autocomplete results because javascript passes by reference
-                
-                /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-                autocomplete(document.querySelector('form#search input[type=\'text\']'), courses);
+                (async function(){
+                    let courses = ["1300","1304","1306","1320","1410","1430","2320","2410","2430","2440","3320","3330","3340","3360","3380","3396","3399","4198","4211","4298","4311","4315","4324","4330","4332","4335","4348","4349","4351","4353","4354","4355","4358","4359","4364","4368","4370","4371","4372","4377","4390","4393","4396","4397","4398","4399","4498","6110","6305","6306","6308","6309","6310","6318","6320","6321","6323","6326","6327","6332","6335","6336","6339","6340","6342","6343","6344","6345","6346","6347","6348","6349","6353","6354","6355","6358","6359","6360","6361","6364","6365","6368","6369","6370","6372","6373","6374","6376","6377","6380","6384","6385","6389","6390","6396","6397","6398","6399","6698","7199","7336","7362","7363","7370","7373","7378","7384","7388","7397","7398","7399","7698","8199","8298","8398","8399","8598","8698","8699","8998","8999"]
+                    courses = await ((await fetch('courses.json')).json())                
+                    autocomplete(document.querySelector('form#search input[type=\'text\']'), courses);
+                })()
             </script>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js" async></script>
     </body>
 </html>
