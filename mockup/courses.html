@@ -7,6 +7,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <style>
+            nav.cg-navbar .navbar-nav a.nav-link {
+                display: inline-flex;
+                vertical-align: middle;
+            }
+            nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
+                font-size: 16px;
+                line-height: 24px;
+                margin-right: 0.1em;
+            }
+
+            form .btn-cg {
+                color: #fff;
+                background-color: #C8102E;
+                border-color: #C8102E;
+            }
+            form .btn-cg:not(:disabled):not(.disabled):active {
+                color: #fff;
+                background-color: #960C22;
+                border-color: #640817;
+            }
+            form .btn-cg:focus {
+                box-shadow: 0 0 0 0.2rem #640817;
+            }
+            form .btn-cg:hover {
+                color: #fff;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light cg-navbar">
@@ -18,102 +46,214 @@
                 <div class="navbar-nav">
                 <a class="nav-item nav-link" href="/">Home</a>
                 <a class="nav-item nav-link active" href="/courses.html">Courses<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="material-icons">lock</i>Professors</a>
+                <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="material-icons">lock</i>Instructors</a>
                 <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="material-icons">lock</i>Groups</a>
                 </div>
             </div>
         </nav>
         <style>
-            nav.cg-navbar .navbar-nav a.nav-link {
-                display: inline-flex;
+            ul.cg-selected li, div.cg-content div.card-header h2 {
+                display: inline-flex!important;
                 vertical-align: middle;
             }
-            nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
-                font-size: 16px;
+            ul.cg-selected li div.controller, div.cg-content div.card-header h2 button {
+                /* max-height: 24px; */
+                display: inline-flex!important;
+                vertical-align: middle;
+            }
+            ul.cg-selected li div.controller div.wrap {
+                margin-right: 5px;
+            }
+            ul.cg-selected li a {
+                color: rgba(0,0,0,.3);
+                max-height: 24px;
+                transition: color 150ms;
+            }
+            ul.cg-selected li a:hover {
+                color: rgba(0,0,0,.6);
+            }
+            ul.cg-selected li a:focus, ul.cg-selected li a:active {
+                color: rgba(0,0,0,.9);
+            }
+            ul.cg-selected li a i.material-icons {
                 line-height: 24px;
-                margin-right: 0.1em;
+                font-size: 20px;
+            }
+            div.cg-content div.card-header h2 button.btn-link:focus, div.cg-content div.card-header h2 button.btn-link:hover {
+                text-decoration: none;
+            }
+            ul.cg-selected li div.controller, div.cg-content div.card-header h2 i.material-icons {
+                margin-right: 5px;
             }
         </style>
         <div class="container">
-            <p>Querying classes</p>
-            <div class="progress">
-                <div id="query_progress" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="6" style="width:0%;"></div>
-            </div>
-            <br>
-            <button id="query_demo" class="btn btn-primary">Increment</button>
-            <script>
-                (function(){
-                    document.getElementById('query_demo').addEventListener('click', () => {
-                        let bar = document.getElementById('query_progress')
-                        let max = parseInt(bar.getAttribute('aria-valuemax'))
-                        let min = parseInt(bar.getAttribute('aria-valuemin'))
-                        let now = parseInt(bar.getAttribute('aria-valuenow'))
-                        if(now < max) {
-                            now++
-                        }
-                        else {
-                            now = min
-                        }
-                        bar.setAttribute('aria-valuenow', now)
-                        bar.style.width = `${now/max * 100}%`
-                        if(now > min) {
-                            bar.innerText = `${now}/${max}`
-                        }
-                        else {
-                            bar.innerText = ''
-                        }
-                    })
-                })()
-            </script>
-            <br><br>
+            <h1>Course search</h1>
 
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+            <div class="row">
+                <div class="col-sm">
+                    <form id="search" autocomplete="off">
+                        <div class="form-group">
+                            <label for="searchbar_btn">Add course</label>
+                            <div class="input-group ">
+                                <input type="text" class="form-control" placeholder="ENGL 1304" list=datalist-0>
+                                <div class="input-group-append">
+                                    <button class="btn btn-cg " type="submit" id="searchbar_btn">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <p>Selected courses:</p>
+                    <ul class="list-group cg-selected">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            COSC 2430
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="14 sections">14</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ECE 3364
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            MATH 3339
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="12 sections">12</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ENGL 1303
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="56 sections">56</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            HIST 1378
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            FREN 2301
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center disabled" tabindex="-1" aria-disabled="true">
+                            HIST 9999
+                            <div class="controller">
+                                <div class="wrap"><span class="badge badge-danger badge-pill" title="Error">Err</span></div>
+                                <a href="#"><i class="material-icons">close</i></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center disabled" tabindex="-1" aria-disabled="true">
+                            <em>Empty</em>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <br><br>
-
-            <p>Timothy Jay McGuire</p>
-            <div class="progress">
-                <div id="num_A" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% A"></div>
-                <div id="num_B" class="progress-bar" role="progressbar" style="width: 25%" data-toggle="tooltip" data-placement="bottom" title="25% B"></div>
-                <div id="num_C" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% C"></div>
-                <div id="num_D" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% D"></div>
-                <div id="num_F" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% F"></div>
-                <div id="num_Q" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% Q"></div>
-            </div>
-            <style>
-                #num_A {
-                    background-color: lightskyblue;
-                }
-                #num_B {
-                    background-color: lightgreen;
-                }
-                #num_C {
-                    background-color: yellow;
-                }
-                #num_D {
-                    background-color: lightsalmon;
-                }
-                #num_F {
-                    background-color: indianred;
-                }
-                #num_Q {
-                    background-color: blueviolet;
-                }
-            </style>
-            <br><br>
-
-            <form id="search" autocomplete="off">
-                <div class="form-group">
-                    <label for="searchbar_btn">Course</label>
-                    <div class="input-group ">
-                        <input type="text" class="form-control" placeholder="ENGL 1304" list=datalist-0>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit" id="searchbar_btn">Button</button>
+            <div class="cg-content">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="material-icons">computer</i>COSC 2430
+                            </button>
+                        </h2>
+                        </div>
+                    
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <i class="material-icons">memory</i>ECE 3364
+                            </button>
+                        </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <i class="material-icons">bar_chart</i>MATH 3339
+                            </button>
+                        </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="material-icons">subject</i>ENGL 1303
+                            </button>
+                        </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <i class="material-icons">book</i>HIST 1378
+                            </button>
+                        </h2>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFive">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <i class="material-icons">translate</i>FREN 2301
+                            </button>
+                        </h2>
+                        </div>
+                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+            <br><br>
+
+
             <div id="cg-datalist" style="display:none;">
                 <datalist id="datalist-0">
                     <option value="Chrome">
@@ -132,5 +272,6 @@
             </script>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
     </body>
 </html>

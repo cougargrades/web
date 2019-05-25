@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CougarGrades</title>
+        <meta name="description" content="Analyze grade distribution data for any past University of Houston course">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light cg-navbar">
+            <a class="navbar-brand mb-0 h1" href="#">CougarGrades.io</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#cg-navbar" aria-controls="cg-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="cg-navbar">
+                <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">Home</a>
+                <a class="nav-item nav-link" href="/courses.html">Courses<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="material-icons">lock</i>Instructors</a>
+                <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="material-icons">lock</i>Groups</a>
+                </div>
+            </div>
+        </nav>
+        <style>
+            nav.cg-navbar .navbar-nav a.nav-link {
+                display: inline-flex;
+                vertical-align: middle;
+            }
+            nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
+                font-size: 16px;
+                line-height: 24px;
+                margin-right: 0.1em;
+            }
+        </style>
+        <div class="container">
+            
+            <p>Timothy Jay McGuire</p>
+            <div class="progress">
+                <div id="num_A" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% A"></div>
+                <div id="num_B" class="progress-bar" role="progressbar" style="width: 25%" data-toggle="tooltip" data-placement="bottom" title="25% B"></div>
+                <div id="num_C" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% C"></div>
+                <div id="num_D" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% D"></div>
+                <div id="num_F" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% F"></div>
+                <div id="num_Q" class="progress-bar" role="progressbar" style="width: 15%" data-toggle="tooltip" data-placement="bottom" title="15% Q"></div>
+            </div>
+            <style>
+                #num_A {
+                    background-color: lightskyblue;
+                }
+                #num_B {
+                    background-color: lightgreen;
+                }
+                #num_C {
+                    background-color: yellow;
+                }
+                #num_D {
+                    background-color: lightsalmon;
+                }
+                #num_F {
+                    background-color: indianred;
+                }
+                #num_Q {
+                    background-color: blueviolet;
+                }
+            </style>
+        </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
+    </body>
+</html>
