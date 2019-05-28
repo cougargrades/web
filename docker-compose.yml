@@ -19,10 +19,3 @@ services:
     container_name: cougar-grades.cache
     ports:
       - 3002:6379
-  nginx:
-    image: nginx:alpine
-    container_name: cougar-grades.nginx
-    ports:
-      - 3003:80
-    volumes:
-    - ./webserver/front/_site:/usr/share/nginx/html

@@ -6,6 +6,7 @@
     "better-sqlite3": "^5.4.0",
     "chalk": "^2.4.2",
     "convert-hrtime": "^3.0.0",
+    "dotenv": "^8.0.0",
     "fastify": "^2.3.0",
     "fastify-cli": "^1.0.0",
     "fastify-graceful-shutdown": "^2.0.1",
@@ -30,8 +31,9 @@
   },
   "scripts": {
     "start": "npm run prod",
-    "prod": "npm run prod:server",
+    "prod": "npm run prod:build; npm run prod:server",
     "prod:server": "node server.js",
+    "prod:build": "./front/preprocess.sh",
     "dev": "npm run dev:nodemon",
     "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js"
   },

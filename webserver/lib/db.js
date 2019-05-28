@@ -3,7 +3,8 @@
 const mysql = require('mysql2');
 // create the connection
 const connection = mysql.createPool({
-    host: 'cougar-grades.mariadb',
+    host: '127.0.0.1',
+    port: 3001,
     user: 'root',
     password: process.env.MYSQL_ROOT_PASSWORD,
     database: process.env.MYSQL_DATABASE
@@ -11,7 +12,8 @@ const connection = mysql.createPool({
 
 const {promisify} = require('util')
 const redis = require('redis').createClient({
-	host: 'cougar-grades.cache' // docker defines hostname in /etc/hosts
+    host: '127.0.0.1',
+    port: 3002
 });
 
 module.exports = {
