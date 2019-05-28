@@ -22,17 +22,17 @@ cougar-grades is in private early development and the master branch will get ver
 - Grade data (only one is required):
     - in CSV format with the schema seen in `sample/sample.csv`
 - At least ~500MB in space (Docker images)
-    - `mariadb:latest    349MB`
-    - `redis:5.0-alpine  30.9MB`
+    - mariadb:latest (~349MB)
+    - redis:5.0-alpine (~30.9MB)
 
 ## Running
 - `cd cougar-grades/`
 - Generate SQLite and SQL files: `./generate.sh [directory with csvfiles | csvfile] --cleanup`
     - `records.db` and a `records.sql` files will be copied to `cougar-grades/` before deleting the container and images generated
-- Start MariaDB and Redis in Docker: `make start`
+- Start MariaDB and Redis in Docker: `make start` (ports 3001 and 3002)
 - cd `webserver/`
 - Webserver dependencies: `npm install`
-- Start server: `npm start`
+- Start webserver: `npm start` (port 3000)
 
 ## Inspiration
 - anex.us/grades/ (author unknown)
