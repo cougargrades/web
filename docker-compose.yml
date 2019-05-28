@@ -12,41 +12,17 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - 3001:3306
   redis:
     image: redis:5.0-alpine
     container_name: cougar-grades.cache
-    expose:
-      - 6379
-  web:
-    build: 
-      context: .
-      dockerfile: ./web/Dockerfile
-      args:
-        - BASEURL=${BASEURL}
-        - SOURCE_COMMIT
-    image: cougar-grades.nginx
+    ports:
+      - 3002:6379
+  nginx:
+    image: nginx:alpine
     container_name: cougar-grades.nginx
-    depends_on:
-      - api
     ports:
-      - 3000:80
-  api:
-    build:
-      context: .
-      dockerfile: ./api/Dockerfile
-    image: cougar-grades.api
-    container_name: cougar-grades.api
-    depends_on:
-      - redis
-      - mariadb
-    ports:
-      - 3010:3000
-      - 9229:9229
-    volumes: 
-      - ./api:/opt/cougargrades
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - BASEURL=${BASEURL}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - SOURCE_COMMIT
+      - 3003:80
+    volumes:
+    - ./webserver/front/_site:/usr/share/nginx/html

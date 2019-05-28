@@ -21,7 +21,7 @@ cougar-grades is in private early development and the master branch will get ver
 - Docker Compose
 - `make`
 - Grade data (only one is required):
-    - in CSV format with the schema seen in `schema/sample.csv`
+    - in CSV format with the schema seen in `sample/sample.csv`
 - At least 1-2GB in space (Docker images are large)
 
 ## Running
