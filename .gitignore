@@ -22,3 +22,5 @@ payload.zip
 payload.tar.gz
 
 _site/
+
+env.json

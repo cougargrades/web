@@ -1,7 +1,7 @@
 # meta
 default: main
 
-main: build up FORCE
+main: start FORCE
 
 # importer (independent)
 importer: FORCE
@@ -9,10 +9,15 @@ importer: FORCE
 	sudo docker rmi --force au5ton/cougar-grades.importer | true
 	sudo docker build -t au5ton/cougar-grades.importer importer/
 
+start:
+	sudo docker-compose up --build -d
+
+stop:
+	sudo docker-compose down --rmi all
+
 # dev tools only
 devls: FORCE
 	sudo docker ps -all
 	sudo docker images
-
 
 FORCE: 
