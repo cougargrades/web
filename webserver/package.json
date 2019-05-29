@@ -13,6 +13,7 @@
     "fastify-rate-limit": "^2.1.1",
     "fastify-response-time": "github:lolo32/fastify-response-time",
     "fastify-static": "^2.4.0",
+    "handlebars": "^4.1.2",
     "make-promises-safe": "^5.0.0",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.5.0",
@@ -36,7 +37,7 @@
     "prod:build": "./front/preprocess.sh",
     "dev": "npm run dev:mustache & npm run dev:sass & npm run dev:nodemon",
     "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js",
-    "dev:mustache": "npx nodemon --watch front/mustache/ --ext mustache --exec ./front/preprocess.sh",
+    "dev:mustache": "npx nodemon --watch front/mustache/ --ext mustache --exec ./front/generate_html.js",
     "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/"
   },
   "repository": {
