@@ -1,32 +1,59 @@
 nav.cg-navbar .navbar-nav a.nav-link {
     display: inline-flex;
     vertical-align: middle;
-}
-nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 0.1em;
+
+    i.material-icons {
+        font-size: 16px;
+        line-height: 24px;
+        margin-right: 0.1em;
+    }
 }
 
 form .btn-cg {
     color: #fff;
     background-color: #C8102E;
     border-color: #C8102E;
-}
-form .btn-cg:not(:disabled):not(.disabled):active {
-    color: #fff;
-    background-color: #960C22;
-    border-color: #640817;
-}
-form .btn-cg:focus {
-    box-shadow: 0 0 0 0.2rem #640817;
-}
-form .btn-cg:hover {
-    color: #fff;
-}
 
+    &:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: #960C22;
+        border-color: #640817;
+    }
+    &:focus {
+        box-shadow: 0 0 0 0.2rem #640817;
+    }
+    &:hover {
+        color: #fff;
+    }
 
-//
+    &.loading {
+        background-color: #F6BE00;
+        border-color: #F6BE00;
+        display: inline-flex;
+    }
+    &.loading:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: #F6BE00;
+        border-color: #D89B00;
+    }
+    &.loading:focus {
+        box-shadow: 0 0 0 0.2rem #D89B00;
+    }
+    i.material-icons {
+        font-size: 1.4em;
+        line-height: 1em;
+    }
+    &.loading i.material-icons {
+        animation: 2s spin linear infinite;
+    }
+    @keyframes spin { 
+        0% { transform: rotateZ(0deg) } 
+        25% { transform: rotateZ(90deg) }
+        50% { transform: rotateZ(180deg) } 
+        75% { transform: rotateZ(270deg) }
+        100% { transform: rotateZ(360deg) } 
+    }
+}
 
 div.cg-selected span.badge {
     background-color: #cc2541;
@@ -38,31 +65,34 @@ div.cg-selected span.badge {
     transition: width 2s;
     position: relative;
     user-select: none;
+
+    i.material-icons {
+        font-size: 1rem;
+        line-height: 1rem;
+        margin-left: 0.35rem;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
-div.cg-selected span.badge i.material-icons {
-    font-size: 1rem;
-    line-height: 1rem;
-    margin-left: 0.35rem;
-}
-div.cg-selected span.badge i.material-icons:hover {
-    cursor: pointer;
-}
-div.cg-content div.card-header:hover {
-    cursor: pointer;
-}
-div.cg-content div.card-header .cg-card-title {
-    display: inline-flex;
-    vertical-align: middle;
-    font-size: 18px;
-    line-height: 24px;
-    /* font-weight: 400; */
-}
-div.cg-content div.card-header .cg-card-title {
-    display: inline-flex;
-    vertical-align: middle;
-}
-div.cg-content div.card-header .cg-card-title i.material-icons {
-    font-size: 24px;
-    line-height: 24px;
-    margin-right: 0.35rem;
+
+div.cg-content div.card-header {
+    &:hover {
+        cursor: pointer;
+    }
+
+    .cg-card-title {
+        display: inline-flex;
+        vertical-align: middle;
+        font-size: 18px;
+        line-height: 24px;
+        /* font-weight: 400; */
+
+        i.material-icons {
+            font-size: 24px;
+            line-height: 24px;
+            margin-right: 0.35rem;
+        }
+    }
 }
