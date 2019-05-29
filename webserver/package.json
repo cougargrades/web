@@ -34,8 +34,10 @@
     "prod": "npm run prod:build; npm run prod:server",
     "prod:server": "node server.js",
     "prod:build": "./front/preprocess.sh",
-    "dev": "npm run dev:nodemon",
-    "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js"
+    "dev": "npm run dev:mustache & npm run dev:sass & npm run dev:nodemon",
+    "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js",
+    "dev:mustache": "npx nodemon --watch front/mustache/ --ext mustache --exec ./front/preprocess.sh",
+    "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/"
   },
   "repository": {
     "type": "git",

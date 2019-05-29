@@ -52,114 +52,62 @@
             </div>
         </nav>
         <style>
-            ul.cg-selected li, div.cg-content div.card-header h2 {
-                display: inline-flex!important;
+            div.cg-selected span.badge {
+                background-color: #cc2541;
+                font-size: 1rem;
+                margin-right: 0.1rem;
+                margin-bottom: 0.5rem;
+                display: inline-flex;
+                vertical-align: middle;
+                transition: width 2s;
+                position: relative;
+                user-select: none;
+            }
+            div.cg-selected span.badge i.material-icons {
+                font-size: 1rem;
+                line-height: 1rem;
+                margin-left: 0.35rem;
+            }
+            div.cg-selected span.badge i.material-icons:hover {
+                cursor: pointer;
+            }
+
+            div.cg-content div.card-header button {
+                display: inline-flex;
                 vertical-align: middle;
             }
-            ul.cg-selected li div.controller, div.cg-content div.card-header h2 button {
-                /* max-height: 24px; */
-                display: inline-flex!important;
+            div.cg-content div.card-header button {
+                display: inline-flex;
                 vertical-align: middle;
             }
-            ul.cg-selected li div.controller div.wrap {
-                margin-right: 5px;
-            }
-            ul.cg-selected li a {
-                color: rgba(0,0,0,.3);
-                max-height: 24px;
-                transition: color 150ms;
-            }
-            ul.cg-selected li a:hover {
-                color: rgba(0,0,0,.6);
-            }
-            ul.cg-selected li a:focus, ul.cg-selected li a:active {
-                color: rgba(0,0,0,.9);
-            }
-            ul.cg-selected li a i.material-icons {
-                line-height: 24px;
-                font-size: 20px;
-            }
-            div.cg-content div.card-header h2 button.btn-link:focus, div.cg-content div.card-header h2 button.btn-link:hover {
-                text-decoration: none;
-            }
-            ul.cg-selected li div.controller, div.cg-content div.card-header h2 i.material-icons {
-                margin-right: 5px;
+            div.cg-content div.card-header button i.material-icons {
+                margin-right: 0.35rem;
             }
         </style>
         <div class="container">
             <h1>Course search</h1>
 
-            <div class="row">
-                <div class="col-sm">
-                    <form id="search" autocomplete="off">
-                        <div class="form-group">
-                            <label for="searchbar_btn">Add course</label>
-                            <div class="input-group ">
-                                <input type="text" class="form-control" placeholder="ENGL 1304" list=datalist-0>
-                                <div class="input-group-append">
-                                    <button class="btn btn-cg " type="submit" id="searchbar_btn">Add</button>
-                                </div>
-                            </div>
+            <form id="search" autocomplete="off">
+                <div class="form-group">
+                    <label for="searchbar_btn">Add course</label>
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="ENGL 1304">
+                        <div class="input-group-append">
+                            <button class="btn btn-cg " type="submit" id="searchbar_btn">Add</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <p>Selected courses:</p>
-                    <ul class="list-group cg-selected">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            COSC 2430
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="14 sections">14</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ECE 3364
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            MATH 3339
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="12 sections">12</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ENGL 1303
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="56 sections">56</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            HIST 1378
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            FREN 2301
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-primary badge-pill" title="33 sections">33</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center disabled" tabindex="-1" aria-disabled="true">
-                            HIST 9999
-                            <div class="controller">
-                                <div class="wrap"><span class="badge badge-danger badge-pill" title="Error">Err</span></div>
-                                <a href="#"><i class="material-icons">close</i></a>
-                            </div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center disabled" tabindex="-1" aria-disabled="true">
-                            <em>Empty</em>
-                        </li>
-                    </ul>
-                </div>
+            </form>
+            <div class="cg-selected">
+                <h5>Selected courses:</h5>
+                <p>
+                    <span class="badge badge-secondary">COSC 2430 <i class="material-icons">cancel</i></span>
+                    <span class="badge badge-secondary">ECE 3364 <i class="material-icons">cancel</i></span>
+                    <span class="badge badge-secondary">ENGL 1303 <i class="material-icons">cancel</i></span>
+                    <span class="badge badge-secondary">HIST 1378 <i class="material-icons">cancel</i></span>
+                    <span class="badge badge-secondary">FREN 2301 <i class="material-icons">cancel</i></span>
+                    <span class="badge badge-secondary">MATH 3339 <i class="material-icons">cancel</i></span>
+                </p>
             </div>
             <br><br>
             <div class="cg-content">
@@ -167,7 +115,7 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <i class="material-icons">computer</i>COSC 2430
                             </button>
                         </h2>
@@ -182,22 +130,8 @@
                     <div class="card">
                         <div class="card-header" id="headingTwo">
                         <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             <i class="material-icons">memory</i>ECE 3364
-                            </button>
-                        </h2>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="material-icons">bar_chart</i>MATH 3339
                             </button>
                         </h2>
                         </div>
@@ -210,7 +144,7 @@
                     <div class="card">
                         <div class="card-header" id="headingThree">
                         <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             <i class="material-icons">subject</i>ENGL 1303
                             </button>
                         </h2>
@@ -224,7 +158,7 @@
                     <div class="card">
                         <div class="card-header" id="headingFour">
                         <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                             <i class="material-icons">book</i>HIST 1378
                             </button>
                         </h2>
@@ -238,7 +172,7 @@
                     <div class="card">
                         <div class="card-header" id="headingFive">
                         <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                             <i class="material-icons">translate</i>FREN 2301
                             </button>
                         </h2>
@@ -249,6 +183,20 @@
                         </div>
                         </div>
                     </div>
+                    <div class="card">
+                            <div class="card-header" id="headingSix">
+                            <h2 class="mb-0">
+                                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <i class="material-icons">bar_chart</i>MATH 3339
+                                </button>
+                            </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <br><br>
