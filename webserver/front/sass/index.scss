@@ -13,27 +13,28 @@ h1.cg-hero {
 nav.cg-navbar .navbar-nav a.nav-link {
     display: inline-flex;
     vertical-align: middle;
-}
-nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 0.1em;
+    
+    i.material-icons {
+        font-size: 16px;
+        line-height: 24px;
+        margin-right: 0.1em;
+    }
 }
 .jumbotron {
     background: #fff;
-}
-.jumbotron .btn-cg {
-    color: #212529;
-    background-color: #F6BE00;
-    border-color: #F6BE00;
-}
-.jumbotron .btn-cg:not(:disabled):not(.disabled):active {
-    color: #212529;
-    background-color: #D89B00;
-    border-color: #B97800;
-}
-.jumbotron .btn-cg:focus {
-    box-shadow: 0 0 0 0.2rem #B97800;
-}
 
-// courses
+    .btn-cg {
+        color: #212529;
+        background-color: #F6BE00;
+        border-color: #F6BE00;
+        
+        &:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: #D89B00;
+            border-color: #B97800;
+        }
+        &:focus {
+            box-shadow: 0 0 0 0.2rem #B97800;
+        }
+    }    
+}

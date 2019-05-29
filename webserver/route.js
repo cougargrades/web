@@ -21,10 +21,16 @@ const log = async (pretty, duration, request) => {
 async function routes (fastify, options) {
     // (ID int primary key, TERM text, DEPT text, CATALOG_NBR smallint, CLASS_SECTION smallint, COURSE_DESCR text, INSTR_LAST_NAME text, INSTR_FIRST_NAME text, A smallint, B smallint, C smallint, D smallint, F smallint, Q smallint, AVG_GPA real, PROF_COUNT smallint, PROF_AVG real, TERM_CODE smallint, GROUP_CODE text)
 
+    // Front end
     fastify.register(require('fastify-static'), {
         root: path.join(__dirname, 'front', '_site')
     })
+    fastify.get('/courses', function (req, reply) {
+        reply.sendFile('courses.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+    })
 
+
+    // Back end
     fastify.get('/api/', timer(async (request, reply) => {
         reply.type('application/json')
         return `Welcome to the ${request.raw.url}`
