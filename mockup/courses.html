@@ -71,16 +71,23 @@
             div.cg-selected span.badge i.material-icons:hover {
                 cursor: pointer;
             }
-
-            div.cg-content div.card-header button {
+            div.cg-content div.card-header:hover {
+                cursor: pointer;
+            }
+            div.cg-content div.card-header .cg-card-title {
+                display: inline-flex;
+                vertical-align: middle;
+                font-size: 18px;
+                line-height: 24px;
+                /* font-weight: 400; */
+            }
+            div.cg-content div.card-header .cg-card-title {
                 display: inline-flex;
                 vertical-align: middle;
             }
-            div.cg-content div.card-header button {
-                display: inline-flex;
-                vertical-align: middle;
-            }
-            div.cg-content div.card-header button i.material-icons {
+            div.cg-content div.card-header .cg-card-title i.material-icons {
+                font-size: 24px;
+                line-height: 24px;
                 margin-right: 0.35rem;
             }
         </style>
@@ -113,14 +120,11 @@
             <div class="cg-content">
                 <div class="accordion" id="accordionExample">
                     <div class="card">
-                        <div class="card-header" id="headingOne">
-                        <h2 class="mb-0">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <i class="material-icons">computer</i>COSC 2430
-                            </button>
-                        </h2>
+                        <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h5 class="mb-0 cg-card-title">
+                                <i class="material-icons">computer</i>COSC 2430
+                            </h5>
                         </div>
-                    
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
@@ -128,12 +132,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="material-icons">memory</i>ECE 3364
-                            </button>
-                        </h2>
+                        <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <h5 class="mb-0 cg-card-title">
+                                <i class="material-icons">memory</i>ECE 3364
+                            </h5>
                         </div>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                         <div class="card-body">
@@ -142,12 +144,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="headingThree">
-                        <h2 class="mb-0">
-                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <i class="material-icons">subject</i>ENGL 1303
-                            </button>
-                        </h2>
+                        <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <h5 class="mb-0 cg-card-title">
+                                <i class="material-icons">subject</i>ENGL 1303
+                            </h5>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                         <div class="card-body">
@@ -156,12 +156,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="headingFour">
-                        <h2 class="mb-0">
-                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            <i class="material-icons">book</i>HIST 1378
-                            </button>
-                        </h2>
+                        <div class="card-header" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <h5 class="mb-0 cg-card-title">
+                                <i class="material-icons">book</i>HIST 1378
+                            </h5>
                         </div>
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                         <div class="card-body">
@@ -170,12 +168,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="headingFive">
-                        <h2 class="mb-0">
-                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            <i class="material-icons">translate</i>FREN 2301
-                            </button>
-                        </h2>
+                        <div class="card-header" id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <h5 class="mb-0 cg-card-title">
+                                <i class="material-icons">translate</i>FREN 2301
+                            </h5>
                         </div>
                         <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                         <div class="card-body">
@@ -184,19 +180,17 @@
                         </div>
                     </div>
                     <div class="card">
-                            <div class="card-header" id="headingSix">
-                            <h2 class="mb-0">
-                                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <div class="card-header" id="headingSix" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            <h5 class="mb-0 cg-card-title">
                                 <i class="material-icons">bar_chart</i>MATH 3339
-                                </button>
-                            </h2>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                            </div>
+                            </h5>
                         </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br><br>
