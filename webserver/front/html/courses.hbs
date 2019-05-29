@@ -15,7 +15,7 @@
                     <div class="input-group ">
                         <input type="text" class="form-control" placeholder="ENGL 1304">
                         <div class="input-group-append">
-                            <button class="btn btn-cg confirm" type="submit" id="searchbar_btn">
+                            <button class="btn btn-cg" type="submit" id="searchbar_btn">
                                 <span class="add-msg">Add to selection</span>
                                 <span class="confirm-msg">Search selection</span>
                                 <i class="material-icons">autorenew</i>
@@ -34,6 +34,14 @@
                     <span class="badge badge-secondary">FREN 2301 <i class="material-icons">cancel</i></span>
                     <span class="badge badge-secondary">MATH 3339 <i class="material-icons">cancel</i></span>
                 </p>
+            </div>
+            <br><br>
+            <div id="root">
+                <div class="noscript">
+                    <h5>Loading...</h5>
+                    {{> spinner fill="#000" class="spinner"}}
+                </div>
+                <p id="noscript_msg">Still not loaded? There could be something preventing it, like an ad blocker.</p>
             </div>
             <br><br>
             <div class="cg-content">
@@ -125,14 +133,9 @@
                     <option value="Microsoft Edge">
                 </datalist>
             </div>
-            <script>
-                document.querySelector('form#search').addEventListener('submit', (event) => {
-                    event.preventDefault()
-                    alert('Submitted')
-                });
-            </script>
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        {{!-- <script type="text/javascript" src="{{& BASEURL}}/js/courses.bundle.js"></script> --}}
     </body>
 </html>
