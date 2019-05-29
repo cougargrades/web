@@ -1,0 +1,68 @@
+nav.cg-navbar .navbar-nav a.nav-link {
+    display: inline-flex;
+    vertical-align: middle;
+}
+nav.cg-navbar .navbar-nav a.nav-link i.material-icons {
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 0.1em;
+}
+
+form .btn-cg {
+    color: #fff;
+    background-color: #C8102E;
+    border-color: #C8102E;
+}
+form .btn-cg:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #960C22;
+    border-color: #640817;
+}
+form .btn-cg:focus {
+    box-shadow: 0 0 0 0.2rem #640817;
+}
+form .btn-cg:hover {
+    color: #fff;
+}
+
+
+//
+
+div.cg-selected span.badge {
+    background-color: #cc2541;
+    font-size: 1rem;
+    margin-right: 0.1rem;
+    margin-bottom: 0.5rem;
+    display: inline-flex;
+    vertical-align: middle;
+    transition: width 2s;
+    position: relative;
+    user-select: none;
+}
+div.cg-selected span.badge i.material-icons {
+    font-size: 1rem;
+    line-height: 1rem;
+    margin-left: 0.35rem;
+}
+div.cg-selected span.badge i.material-icons:hover {
+    cursor: pointer;
+}
+div.cg-content div.card-header:hover {
+    cursor: pointer;
+}
+div.cg-content div.card-header .cg-card-title {
+    display: inline-flex;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 24px;
+    /* font-weight: 400; */
+}
+div.cg-content div.card-header .cg-card-title {
+    display: inline-flex;
+    vertical-align: middle;
+}
+div.cg-content div.card-header .cg-card-title i.material-icons {
+    font-size: 24px;
+    line-height: 24px;
+    margin-right: 0.35rem;
+}

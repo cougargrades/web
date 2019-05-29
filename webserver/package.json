@@ -37,7 +37,7 @@
     "prod:build": "./front/preprocess.sh",
     "dev": "npm run dev:mustache & npm run dev:sass & npm run dev:nodemon",
     "dev:nodemon": "npx nodemon --exec node --inspect=0.0.0.0:9229 server.js",
-    "dev:mustache": "npx nodemon --watch front/mustache/ --ext mustache --exec ./front/generate_html.js",
+    "dev:mustache": "npx nodemon --watch front/html/ --ext hbs --exec ./front/generate_html.js",
     "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/"
   },
   "repository": {
