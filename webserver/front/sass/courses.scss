@@ -26,18 +26,35 @@ form .btn-cg {
         color: #fff;
     }
 
+    // Confirm button
+    &.confirm {
+        background-color: #00B388;
+        border-color: #00B388;
+        display: inline-flex;
+    }
+    &.confirm:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: #00866C;
+        border-color: #005950;
+    }
+    &.confirm:focus {
+        box-shadow: 0 0 0 0.2rem #005950;
+    }
+
+    // Loading spinner
     &.loading {
         background-color: #F6BE00;
         border-color: #F6BE00;
         display: inline-flex;
+        cursor: not-allowed;
     }
     &.loading:not(:disabled):not(.disabled):active {
         color: #fff;
         background-color: #F6BE00;
-        border-color: #D89B00;
+        border-color: rgba(0,0,0,0);
     }
     &.loading:focus {
-        box-shadow: 0 0 0 0.2rem #D89B00;
+        box-shadow: 0 0 0 0.2rem rgba(0,0,0,0);
     }
     i.material-icons {
         font-size: 1.4em;
@@ -46,6 +63,21 @@ form .btn-cg {
     &.loading i.material-icons {
         animation: 2s spin linear infinite;
     }
+
+    // Smooth swapping of content
+    &:not(.loading) > i.material-icons {
+        display: none;
+    }
+    &:not(.confirm) > span.confirm-msg {
+        display: none;
+    }
+    & > span.add-msg {
+        display: none;
+    }
+    &:not(.loading):not(.confirm) > span.add-msg {
+        display: inline;
+    }
+
     @keyframes spin { 
         0% { transform: rotateZ(0deg) } 
         25% { transform: rotateZ(90deg) }
