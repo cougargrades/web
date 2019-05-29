@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        courses: path.resolve(__dirname, 'front', 'js', 'courses.jsx')
+        courses: path.resolve(__dirname, 'front/js/courses/main.jsx')
     },
     output: {
         filename: '[name].bundle.js',
@@ -11,7 +11,7 @@ module.exports = {
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
-            include: path.resolve(__dirname, 'front', 'js'),
+            
             exclude: /node_modules/,
             use: {
                 loader: "babel-loader"
