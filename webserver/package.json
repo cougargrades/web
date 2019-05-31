@@ -18,6 +18,7 @@
     "mysql2": "^1.6.5",
     "node-fetch": "^2.5.0",
     "pretty-hrtime": "^1.0.3",
+    "prop-types": "^15.7.2",
     "redis": "^2.8.0"
   },
   "devDependencies": {
@@ -47,12 +48,12 @@
     "build": "npm run build:preprocess && npm run build:mustache && npm run build:webpack && npm run build:sass",
     "build:preprocess": "./front/preprocess.sh",
     "build:mustache": "./front/generate_html.js",
-    "build:webpack": "npx webpack",
+    "build:webpack": "npx webpack --mode production",
     "build:sass": "npx sass ./front/sass:./front/_site/css/",
     "dev": "npm run dev:mustache & npm run dev:webpack & npm run dev:sass & npm run dev:nodemon",
     "dev:nodemon": "npx nodemon --ignore front/ --exec node --inspect=0.0.0.0:9229 server.js",
     "dev:mustache": "npx nodemon --watch front/html/ --ext hbs --exec ./front/generate_html.js",
-    "dev:webpack": "npx nodemon --watch front/js/ --ext js,jsx --exec npx webpack",
+    "dev:webpack": "npx nodemon --watch front/js/ --ext js,jsx --exec npx webpack --mode development",
     "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/"
   },
   "repository": {

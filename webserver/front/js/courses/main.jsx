@@ -8,7 +8,7 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-document.querySelector('form#search').addEventListener('submit', (event) => {
-    event.preventDefault()
-    alert('Submitted')
-});
+// document.querySelector('form#search').addEventListener('submit', (event) => {
+//     event.preventDefault()
+//     alert('Submitted')
+// });

@@ -56,12 +56,17 @@ form .btn-cg {
         color: #fff;
         background-color: #960C22;
         border-color: #640817;
+        &:focus {
+            box-shadow: 0 0 0 0.2rem #640817;
+        }
     }
     &:focus {
         box-shadow: 0 0 0 0.2rem #640817;
     }
     &:hover {
         color: #fff;
+        background-color: #960C22;
+        border-color: #640817;
     }
 
     // Confirm button
@@ -125,24 +130,33 @@ form .btn-cg {
     }
 }
 
-div.cg-selected span.badge {
-    background-color: #cc2541;
-    font-size: 1rem;
-    margin-right: 0.1rem;
-    margin-bottom: 0.5rem;
-    display: inline-flex;
-    vertical-align: middle;
-    transition: width 2s;
-    position: relative;
-    user-select: none;
+div.cg-selected {
 
-    i.material-icons {
+    span.empty {
+        color: #777;
         font-size: 1rem;
-        line-height: 1rem;
-        margin-left: 0.35rem;
+        font-style: italic;
+    }
 
-        &:hover {
-            cursor: pointer;
+    span.badge {
+        background-color: #cc2541;
+        font-size: 1rem;
+        margin-right: 0.1rem;
+        margin-bottom: 0.5rem;
+        display: inline-flex;
+        vertical-align: middle;
+        transition: width 2s;
+        position: relative;
+        user-select: none;
+    
+        i.material-icons {
+            font-size: 1rem;
+            line-height: 1rem;
+            margin-left: 0.35rem;
+    
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

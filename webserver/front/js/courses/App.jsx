@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CGSearchForm from './searchform.jsx';
+import CGSearchForm from './CGSearchForm.jsx';
 
 class App extends Component {
   constructor(props) {
