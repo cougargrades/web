@@ -47,7 +47,22 @@ nav.cg-navbar .navbar-nav a.nav-link {
 }
 
 
-form .btn-cg {
+form#search input[type=text] {
+
+    &::placeholder {
+        color: rgba(108, 117, 125, 0.85);
+        font-style: italic;
+        transition: 150ms color;
+    }
+
+    &:active::placeholder, &:focus::placeholder {
+        color: rgba(108, 117, 125, 0.65);
+    }
+    
+}
+
+
+form#search .btn-cg {
     color: #fff;
     background-color: #C8102E;
     border-color: #C8102E;
