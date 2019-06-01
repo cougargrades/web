@@ -4,6 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const Handlebars = require('handlebars')
 require('dotenv').config({path: path.resolve(__dirname, '..', '..', '.env')})
+process.env.COMMIT_HASH = require('child_process').execSync('git rev-parse --short HEAD', {cwd: __dirname}).toString().trim()
 
 const partials = fs.readdirSync(path.resolve(__dirname, './html/partials/')) 
 for(let i = 0; i < partials.length; i++) {

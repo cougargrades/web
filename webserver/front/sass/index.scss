@@ -6,9 +6,12 @@ body {
     background-color: #FFF9D9;
 }
 h1.cg-hero {
-    /* font-weight: 300; */
     line-height: 1.2;
     color: #C8102E;
+    sup {
+        font-size: 0.5em;
+        top: -1em;
+    }
 }
 nav.cg-navbar .navbar-nav a.nav-link {
     display: inline-flex;
