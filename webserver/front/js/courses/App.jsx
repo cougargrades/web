@@ -9,7 +9,9 @@ class App extends Component {
 
   render() {
     return (
-      <CGSearchForm />
+      <CGSearchForm hookQuery={(t) => {
+        console.log(t)
+      }}/>
     );
   }
 }

@@ -3,6 +3,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import PropTypes from 'prop-types';
+
 import CGSelectionBadge from './CGSelectionBadge.jsx';
 
 class CGSearchForm extends React.Component {
@@ -94,6 +96,7 @@ class CGSearchForm extends React.Component {
             })
 
             // Emulate fetching the data
+            this.props.hookQuery(this.state.selection)
             setTimeout(() => {
                 // Open the form again after data has been displayed
                 console.log('submitted')
@@ -138,8 +141,6 @@ class CGSearchForm extends React.Component {
         }
     }
 
-
-
     render() {
         return (
         <div>
@@ -170,5 +171,9 @@ class CGSearchForm extends React.Component {
         );
     }
 }
+
+CGSearchForm.propTypes = {
+    hookQuery: PropTypes.func.isRequired
+};
 
 export default CGSearchForm;
