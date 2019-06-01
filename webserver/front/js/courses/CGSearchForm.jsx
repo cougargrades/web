@@ -18,9 +18,11 @@ class CGSearchForm extends React.Component {
     // Selection display
     addSelection(value) {
         // Immutable solution
-        this.setState({
-            selection: [...this.state.selection, value]
-        })
+        if(!this.state.selection.includes(value)) {
+            this.setState({
+                selection: [...this.state.selection, value]
+            })
+        }
     }
     removeSelection(value) {
         // Immutable solution
@@ -56,7 +58,19 @@ class CGSearchForm extends React.Component {
     handleBadgeClick(elem) {
         // Don't remove any badges while the form is in the middle of processing
         if(!this.state.form_disabled) {
-            this.removeSelection(elem)
+            anime({
+                targets: this.getBadgeNodeByName(elem),
+                rotateX: 90,
+                complete: () => this.removeSelection(elem)
+            })
+        }
+    }
+    getBadgeNodeByName(course) {
+        let badges = document.querySelectorAll('.cg-selected p span.badge')
+        for(let i = 0; i < badges.length; i++) {
+            if(badges[i].firstChild.textContent === course) {
+                return badges[i]
+            }
         }
     }
     pullFieldToSelection() {
@@ -78,7 +92,7 @@ class CGSearchForm extends React.Component {
                 form_disabled: true,
                 searchbar: 'loading'
             })
-            
+
             // Emulate fetching the data
             setTimeout(() => {
                 // Open the form again after data has been displayed

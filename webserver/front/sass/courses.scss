@@ -14,8 +14,8 @@ nav.cg-navbar .navbar-nav a.nav-link {
     animation: pulsing 10s infinite;
 
     svg.spinner{
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
     }
 
     @keyframes pulsing {
@@ -46,7 +46,6 @@ nav.cg-navbar .navbar-nav a.nav-link {
     to { opacity: 1; }
 }
 
-
 form#search input[type=text] {
 
     &::placeholder {
@@ -60,7 +59,6 @@ form#search input[type=text] {
     }
     
 }
-
 
 form#search .btn-cg {
     color: #fff;
@@ -175,6 +173,7 @@ div.cg-selected {
         }
     }
 }
+
 
 div.cg-content div.card-header {
     &:hover {
