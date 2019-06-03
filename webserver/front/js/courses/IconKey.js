@@ -54,7 +54,7 @@ export const definitions = {
     FREN: "translate",
     GCEE: null,
     GENB: null,
-    GEOL: null,
+    GEOL: "public",
     GERM: "translate",
     GIS: null,
     GLBT: null,
