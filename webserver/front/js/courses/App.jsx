@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CGSearchForm from './CGSearchForm.jsx';
+import CGCourseResults from './CGCourseResults.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -7,11 +8,16 @@ class App extends Component {
     this.state = {};
   }
 
+  hookQuery(selection) {
+
+  }
+
   render() {
     return (
-      <CGSearchForm hookQuery={(t) => {
-        console.log(t)
-      }}/>
+      <div>
+        <CGSearchForm hookQuery={this.hookQuery}/>
+        <CGCourseResults />
+      </div>
     );
   }
 }

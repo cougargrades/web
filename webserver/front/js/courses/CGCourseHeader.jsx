@@ -1,0 +1,51 @@
+import React from 'react';
+
+import PropTypes from 'prop-types';
+
+import { definitions } from './IconKey.js';
+
+class CGCourseHeader extends React.Component{
+    constructor(props) {
+        super(props)
+        this.dept = props.course.toUpperCase().split(' ')[0]
+    }
+    render() {
+        if(definitions[this.dept] === null) {
+            return (
+                <>
+                <i className="material-icons">class</i>
+                {this.props.course}
+                </>
+            )
+        }
+        else if(typeof definitions[this.dept] === 'string') {
+            return (
+                <>
+                <i className="material-icons">{definitions[this.dept]}</i>
+                {this.props.course}
+                </>
+            )
+        }
+        else if(typeof definitions[this.dept] === 'object') {
+            return (
+                <>
+                <i>{definitions[this.dept]['alt']}</i>
+                {this.props.course}
+                </>
+            )
+        }
+    }
+    get [Symbol.toStringTag]() {
+        return "Icon"
+    }
+    get definitions() {
+        return definitions
+    }
+}
+
+CGCourseHeader.propTypes = {
+    course: PropTypes.string.isRequired
+};
+
+export default CGCourseHeader
+
