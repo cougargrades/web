@@ -1,4 +1,4 @@
-class Course {
+export class Course {
     constructor(dept, catalog_number) {
         if(typeof(dept) == 'string' && dept != "" && typeof(catalog_number) == 'string' && catalog_number != "") {
             this.dept = dept
@@ -10,13 +10,13 @@ class Course {
     }
 }
 
-class SQLData {
+export class SQLData {
     constructor(data) {
         this.data = data
     }
 }
 
-class Displayable {
+export class Displayable {
     constructor() {
         //
     }
@@ -62,3 +62,4 @@ function throttle(callback, wait, immediate = false) {
     }
 }
 
+export default {};

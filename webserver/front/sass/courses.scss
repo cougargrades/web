@@ -1,3 +1,6 @@
+
+@import "colors.scss";
+
 nav.cg-navbar .navbar-nav a.nav-link {
     display: inline-flex;
     vertical-align: middle;
@@ -66,51 +69,51 @@ form#search input[type=text] {
 
 form#search .btn-cg {
     color: #fff;
-    background-color: #C8102E;
-    border-color: #C8102E;
+    background-color: $uh-red;
+    border-color: $uh-red;
 
     &:not(:disabled):not(.disabled):active {
         color: #fff;
-        background-color: #960C22;
-        border-color: #640817;
+        background-color: $uh-brick;
+        border-color: $uh-chocolate;
         &:focus {
-            box-shadow: 0 0 0 0.2rem #640817;
+            box-shadow: 0 0 0 0.2rem $uh-chocolate;
         }
     }
     &:focus {
-        box-shadow: 0 0 0 0.2rem #640817;
+        box-shadow: 0 0 0 0.2rem $uh-chocolate;
     }
     &:hover {
         color: #fff;
-        background-color: #960C22;
-        border-color: #640817;
+        background-color: $uh-brick;
+        border-color: $uh-chocolate;
     }
 
     // Confirm button
     &.confirm {
-        background-color: #00B388;
-        border-color: #00B388;
+        background-color: $uh-teal;
+        border-color: $uh-teal;
         display: inline-flex;
     }
     &.confirm:not(:disabled):not(.disabled):active {
         color: #fff;
-        background-color: #00866C;
-        border-color: #005950;
+        background-color: $uh-green;
+        border-color: $uh-forest;
     }
     &.confirm:focus {
-        box-shadow: 0 0 0 0.2rem #005950;
+        box-shadow: 0 0 0 0.2rem $uh-forest;
     }
 
     // Loading spinner
     &.loading {
-        background-color: #F6BE00;
-        border-color: #F6BE00;
+        background-color: $uh-gold;
+        border-color: $uh-gold;
         display: inline-flex;
         cursor: not-allowed;
     }
     &.loading:not(:disabled):not(.disabled):active {
         color: #fff;
-        background-color: #F6BE00;
+        background-color: $uh-gold;
         border-color: rgba(0,0,0,0);
     }
     &.loading:focus {
@@ -203,10 +206,47 @@ div.cg-content {
                 font-style: normal;
             }
         }
+
+        span.spinner {
+            float: right;
+        }
     }
 
     div.card-body {
-        // temp fix to collapsibles
-        // padding: 0 1.25rem;
+        overflow-x: scroll;
+        text-align: center;
+        
+        div.cg-charts {
+            //min-width: 400px;
+            .cg-chart-wrap, .cg-table-wrap {
+                //width: 100%;
+                div {
+                    display: inline-block
+                }
+            }
+
+            .google-visualization-table {
+                .google-visualization-table-table {
+                    width: 100%;
+                    .tableRow {
+                        background: #78909c;
+                    }
+                    .tableCell {
+                        background: rgba(255, 255, 255, 0.95);
+                    }
+                }
+            }
+        }
+    }
+
+    span.spinner {
+        border-color: lighten($uh-grey, 10%);
+        border-right-color: transparent;
+
+        $size: 1.5em;
+        border-width: calc(#{$size} / 4.5);
+        border-radius: calc(#{$size} / 2);
+        width: $size;
+        height: $size;
     }
 }

@@ -3,6 +3,7 @@
     <head>
         {{> head }}
         <link rel="stylesheet" href="{{& BASEURL }}/css/courses.css">
+        <link rel="stylesheet" href="{{& BASEURL }}/css/three-quarters.css">
     </head>
     <body>
         {{> navbar courses=true }}
@@ -18,6 +19,9 @@
         </div>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native-v4.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+        <script type="text/javascript">
+        const CGBaseurl = "{{& BASEURL}}";
+        </script>
         <script type="text/javascript" src="{{& BASEURL}}/js/courses.bundle.js"></script>
     </body>
 </html>

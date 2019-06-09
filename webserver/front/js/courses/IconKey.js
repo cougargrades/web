@@ -22,7 +22,8 @@ export const definitions = {
     BZAN: null,
     CCS: null,
     CHEE: "build",
-    CHEM: {alt: "🧪"}, // alternate icon set
+    CHEM: null,
+    //CHEM: {alt: "🧪"}, // alternate icon set
     CHNS: "translate",
     CIS: null,
     CIVE: "build",

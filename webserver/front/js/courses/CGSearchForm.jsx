@@ -35,10 +35,10 @@ class CGSearchForm extends React.Component {
             this.setState({
                 searchbar: 'default'
             })
+            this.handleSubmit()
         }
 
         // TODO: use animejs to animate the removal
-
         this.setState({
             selection: this.state.selection.filter(item => item !== value) 
         })
@@ -83,8 +83,8 @@ class CGSearchForm extends React.Component {
     }
 
     // Input box
-    handleSubmit(event) {
-        event.preventDefault()
+    async handleSubmit(event) {
+        if(event) event.preventDefault()
         let field = document.querySelector('form#search input[type=text]')
         if(this.state.searchbar === "confirm") {
             console.log('Submitting query with: ', this.state.selection)
@@ -96,15 +96,12 @@ class CGSearchForm extends React.Component {
             })
 
             // Emulate fetching the data
-            this.props.hookQuery(this.state.selection)
-            setTimeout(() => {
-                // Open the form again after data has been displayed
-                console.log('submitted')
-                this.setState({
-                    form_disabled: false,
-                    searchbar: 'confirm'
-                })
-            }, 5000)
+            await this.props.onQuery(this.state.selection)
+
+            this.setState({
+                form_disabled: false,
+                searchbar: 'default'
+            })
         }
         else if(this.state.searchbar === 'default' && field.value.length > 0) {
             // Add the query
@@ -150,7 +147,7 @@ class CGSearchForm extends React.Component {
                     <InputGroup>
                         <Form.Control type="text" placeholder="Example: ENGL 1304" disabled={this.state.form_disabled} onKeyUp={() => this.handleKeyUp()}/>
                         <InputGroup.Append>
-                            <Button type="submit" className={this.getButtonCSSClass()} disabled={this.state.form_disabled} id="searchbar_btn">
+                            <Button type="submit" className={this.getButtonCSSClass()} disabled={this.state.form_disabled} id="searchbar_btn" onMouseUp={() => this.handleKeyUp()}>
                                 <span className="add-msg">Add to selection</span>
                                 <span className="confirm-msg">Search selection</span>
                                 <i className="material-icons">autorenew</i>
@@ -173,7 +170,7 @@ class CGSearchForm extends React.Component {
 }
 
 CGSearchForm.propTypes = {
-    hookQuery: PropTypes.func.isRequired
+    onQuery: PropTypes.func.isRequired
 };
 
 export default CGSearchForm;

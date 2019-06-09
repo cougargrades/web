@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
+
 import CGSearchForm from './CGSearchForm.jsx';
 import CGCourseResults from './CGCourseResults.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selection: []
+    };
   }
 
-  hookQuery(selection) {
-
+  async handleQuery(selection) {
+    console.log('query handled: ',selection)
+    this.setState({
+      selection: selection.slice()
+    })
   }
 
   render() {
     return (
       <div>
-        <CGSearchForm hookQuery={this.hookQuery}/>
-        <CGCourseResults />
+        <CGSearchForm onQuery={async (val) => this.handleQuery(val)}/>
+        <CGCourseResults selection={this.state.selection} />
       </div>
     );
   }

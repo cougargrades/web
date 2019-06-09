@@ -10,7 +10,7 @@ class CGCourseHeader extends React.Component{
         this.dept = props.course.toUpperCase().split(' ')[0]
     }
     render() {
-        if(definitions[this.dept] === null) {
+        if(definitions[this.dept] === null || definitions[this.dept] === undefined) {
             return (
                 <>
                 <i className="material-icons">class</i>

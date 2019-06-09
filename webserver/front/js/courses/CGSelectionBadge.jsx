@@ -21,7 +21,7 @@ class CGSelectionBadge extends React.Component {
         });
     }
     render() {
-        console.log(this.props)
+        //console.log(this.props)
         return (
             <span key={this.props.course} className="badge badge-secondary" style={{transform: 'translateY(50px) rotateX(0deg)', opacity: 0}}>
                 {this.props.course}
