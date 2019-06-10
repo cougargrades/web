@@ -228,6 +228,13 @@ div.cg-content {
             .google-visualization-table {
                 .google-visualization-table-table {
                     width: 100%;
+                    .headerCell {
+                        cursor: pointer;
+                        &:hover {
+                            background-color: rgba(110,110,110,0.1);
+                            transition: background-color 250ms;
+                        }
+                    }
                     .tableRow {
                         background: #78909c;
                     }
