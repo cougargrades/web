@@ -26,13 +26,17 @@ class CGSearchForm extends React.Component {
             }, this.updateButtonColor)
         }
     }
-    removeSelection(value) {
+    removeSelection(value, callback) {
         // Immutable solution
+        callback = typeof(callback) === 'function' ? callback : ()=>{}; 
 
         // TODO: use animejs to animate the removal
         this.setState({
             selection: this.state.selection.filter(item => item !== value) 
-        }, this.updateButtonColor)
+        }, () => {
+            this.updateButtonColor()
+            callback()
+        })
     }
     renderSelection() {
         if(this.state.selection.length > 0) {
@@ -54,7 +58,11 @@ class CGSearchForm extends React.Component {
             anime({
                 targets: this.getBadgeNodeByName(elem),
                 rotateX: 90,
-                complete: () => this.removeSelection(elem)
+                complete: () => {
+                    this.removeSelection(elem, () => {
+                        this.props.onQuery(this.state.selection)
+                    })
+                }
             })
         }
     }
@@ -103,7 +111,7 @@ class CGSearchForm extends React.Component {
         // Manually create field reference so handleKeyUp can be artificially called
         let field = document.querySelector('form#search input[type=text]');
 
-        console.log('updateButtonColor', this.state.selection, field.value == '' ? undefined : field.value)
+        //console.log('updateButtonColor', this.state.selection, field.value == '' ? undefined : field.value)
 
         if(field.value.length > 0 || this.state.selection.length === 0) {
             //console.log('default')

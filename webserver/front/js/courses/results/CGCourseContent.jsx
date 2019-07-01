@@ -11,6 +11,8 @@ class CGCourseContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            lock: false,
+            valid: null,
             sql_data: [],
             table_data: null,
             chart_data: null
@@ -18,35 +20,41 @@ class CGCourseContent extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.sql_data.length != nextState.sql_data.length);
+        return (this.state.valid !== nextState.valid);
     }
 
+    // Only called once when created, not every render
     async componentDidMount() {
+        console.log(`CGCouseContent#componentDidMount() -> ${this.props.course}`)
+        this.setState({
+            lock: true
+        })
+
         let course = new Course(this.props.course);
         let sql_data = new SQLData(await ((await fetch(`${CGBaseurl}/api/table/all/${course.dept}/${course.catalog_number}`)).json()));
         if(sql_data.data.length == 0) {
             this.setState({
-                sql_data: [],
-                table_data: [],
-                chart_data: []
-            })
-            this.props.onLoaded()
+                valid: false,
+            }, this.props.onLoaded)
         }
         else {
             let table_data = (await (new CGTableData(sql_data)).process()).table_data;
             let chart_data = (await (new CGChartData(sql_data)).process()).chart_data;
-            //let chart_data = []
+
             this.setState({
+                valid: true,
                 sql_data: sql_data,
                 table_data: [table_data.columns, ...table_data.rows],
                 chart_data: chart_data
-            })
-            this.props.onLoaded()
+            }, this.props.onLoaded)
         }
     }
 
+
+
     render() {
-        return (
+        console.log(`CGCouseContent#render() -> ${this.props.course}`)
+        if(this.state.valid) return (
             <div className="cg-charts">
                 <div className="cg-chart-wrap">
                     <Chart 
@@ -100,6 +108,12 @@ class CGCourseContent extends React.Component {
                 </div>
             </div>
         );
+
+        if(this.state.valid === null) return (
+            <span className="spinner three-quarters-loader">🔄</span>
+        );
+
+        return (<p>A course could not be found by that name</p>);
     }
 }
 
