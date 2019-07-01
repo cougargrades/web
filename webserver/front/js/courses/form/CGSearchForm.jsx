@@ -77,7 +77,7 @@ class CGSearchForm extends React.Component {
     pullFieldToSelection() {
         // Add the query to the selection and empty the search bar
         let field = document.querySelector('form#search input[type=text]')
-        this.addSelection(field.value)
+        this.addSelection(field.value.toUpperCase())
         field.value = ''
     }
 
@@ -136,7 +136,7 @@ class CGSearchForm extends React.Component {
                 <Form.Group>
                     <Form.Label>Add course</Form.Label>
                     <InputGroup>
-                        <Form.Control type="text" placeholder="Example: ENGL 1304" defaultValue="MATH 3336" disabled={this.state.form_disabled} onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
+                        <Form.Control type="text" placeholder="ENGL 1304, CHEM 1331, POLS 1336, ..." defaultValue="MATH 3336" disabled={this.state.form_disabled} onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
                         <InputGroup.Append>
                             <Button type="submit" className={`btn-cg ${this.state.searchbar}`} disabled={this.state.form_disabled} id="searchbar_btn">
                                 <span className="add-msg">Add to selection</span>

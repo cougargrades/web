@@ -54,6 +54,7 @@ nav.cg-navbar .navbar-nav a.nav-link {
 }
 
 form#search input[type=text] {
+    text-transform: uppercase;
 
     &::placeholder {
         color: rgba(108, 117, 125, 0.85);
