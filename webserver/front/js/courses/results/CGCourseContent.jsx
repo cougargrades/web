@@ -1,26 +1,13 @@
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Collapse from 'react-bootstrap/Collapse'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-
 import PropTypes from 'prop-types';
 
 import { Chart } from 'react-google-charts';
 
-import CGCourseHeader from './CGCourseHeader.jsx';
 import CGTableData from './CGTableData.jsx';
 import CGChartData from './CGChartData.jsx';
-import { Course, SQLData } from './CGMiscClasses.jsx';
+import { Course, SQLData } from './MiscClasses.js';
 
-function nameToId(course) {
-    // base64 of course name
-    let id = btoa(course)
-    id = id.substring(0,id.length-1)
-    return id.slice()
-}
-
-class CGCourseCollapsibleContent extends React.Component {
+class CGCourseContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -117,9 +104,9 @@ class CGCourseCollapsibleContent extends React.Component {
 }
 
 
-CGCourseCollapsibleContent.propTypes = {
+CGCourseContent.propTypes = {
     course: PropTypes.string.isRequired,
     onLoaded: PropTypes.func.isRequired
 };
 
-export default CGCourseCollapsibleContent;
+export default CGCourseContent;

@@ -1,9 +1,8 @@
 
-import { Displayable, SQLData, Undesired } from './CGMiscClasses.jsx';
+import { SQLData } from './MiscClasses.js';
 
-class CGChartData extends Displayable {
+class CGChartData {
     constructor(sqldata) {
-        super()
         if(sqldata instanceof SQLData) {
             this.sql_data = sqldata.data
             this.chart_data = null

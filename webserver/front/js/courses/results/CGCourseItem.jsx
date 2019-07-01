@@ -1,26 +1,13 @@
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Collapse from 'react-bootstrap/Collapse'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-
 import PropTypes from 'prop-types';
 
-import { Chart } from 'react-google-charts';
+import Collapse from 'react-bootstrap/Collapse'
 
 import CGCourseHeader from './CGCourseHeader.jsx';
-import CGTableData from './CGTableData.jsx';
-import { Course, SQLData } from './CGMiscClasses.jsx';
-import CGCourseCollapsibleContent from './CGCourseCollapsibleContent.jsx';
+import { nameToId } from './MiscClasses.js';
+import CGCourseContent from './CGCourseContent.jsx';
 
-function nameToId(course) {
-    // base64 of course name
-    let id = btoa(course)
-    id = id.substring(0,id.length)
-    return id.slice()
-}
-
-class CGCourseCollapsible extends React.Component {
+class CGCourseItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,8 +36,7 @@ class CGCourseCollapsible extends React.Component {
     render() {
         return (
         <div className="card">
-            {/* data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" */}
-            <div className="card-header" id={this.state.heading} aria-controls={this.state.content} aria-expanded={this.state.open} onClick={() => this.handleClick()}>
+            <div className="card-header" id={this.state.heading} onClick={() => this.handleClick()}>
                 <h5 className="mb-0 cg-card-title">
                     <CGCourseHeader course={this.props.course} />
                 </h5>
@@ -59,7 +45,7 @@ class CGCourseCollapsible extends React.Component {
             <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
-                    <CGCourseCollapsibleContent course={this.props.course} onLoaded={() => this.handleLoaded()}/>
+                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()}/>
                 </div>
                 </div>
             </Collapse>
@@ -69,9 +55,9 @@ class CGCourseCollapsible extends React.Component {
 }
 
 
-CGCourseCollapsible.propTypes = {
+CGCourseItem.propTypes = {
     course: PropTypes.string.isRequired,
     parent: PropTypes.string.isRequired
 };
 
-export default CGCourseCollapsible;
+export default CGCourseItem;

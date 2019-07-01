@@ -22,22 +22,17 @@ export class SQLData {
     }
 }
 
-export class Displayable {
-    constructor() {
-        //
-    }
-    setElement(element) {
-        throw "This method must be implemented."
-    }
-    process() {
-        throw "This method must be implemented."
-    }
-}
-
 export class Undesired {
     constructor() {
         //
     }
+}
+
+export function nameToId(course) {
+    // base64 of course name
+    let id = btoa(course)
+    id = id.substring(0,id.length)
+    return id.slice()
 }
 
 export default {};

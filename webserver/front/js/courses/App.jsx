@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import CGSearchForm from './CGSearchForm.jsx';
-import CGCourseResults from './CGCourseResults.jsx';
+import CGSearchForm from './form/CGSearchForm.jsx';
+import CGCourseResults from './results/CGCourseResults.jsx';
 
 class App extends Component {
   constructor(props) {
