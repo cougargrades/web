@@ -16,7 +16,7 @@ import CGCourseCollapsibleContent from './CGCourseCollapsibleContent.jsx';
 function nameToId(course) {
     // base64 of course name
     let id = btoa(course)
-    id = id.substring(0,id.length-1)
+    id = id.substring(0,id.length)
     return id.slice()
 }
 
@@ -49,13 +49,14 @@ class CGCourseCollapsible extends React.Component {
     render() {
         return (
         <div className="card">
+            {/* data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" */}
             <div className="card-header" id={this.state.heading} aria-controls={this.state.content} aria-expanded={this.state.open} onClick={() => this.handleClick()}>
                 <h5 className="mb-0 cg-card-title">
                     <CGCourseHeader course={this.props.course} />
                 </h5>
                 {this.state.loading ? <span className="spinner three-quarters-loader">🔄</span> : null}
             </div>
-            <Collapse in={this.state.open}>
+            <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
                     <CGCourseCollapsibleContent course={this.props.course} onLoaded={() => this.handleLoaded()}/>

@@ -11,7 +11,7 @@ class App extends Component {
     };
   }
 
-  async handleQuery(selection) {
+  handleQuery(selection) {
     console.log('query handled: ',selection)
     this.setState({
       selection: selection.slice()
@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <CGSearchForm onQuery={async (val) => this.handleQuery(val)}/>
+        <CGSearchForm onQuery={(val) => this.handleQuery(val)}/>
         <CGCourseResults selection={this.state.selection} />
       </div>
     );

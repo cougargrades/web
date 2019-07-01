@@ -25,10 +25,10 @@ class CGCourseResults extends React.Component {
     render() {
         return (
         <div className="cg-content">
-            <div className="accordion" id="accordionExample">
+            <div className="accordion" id="accordion">
                 {this.props.selection.map(elem => {
                     return (
-                        <CGCourseCollapsible key={this.nameToId(elem)} course={elem} parent="#accordionExample" />
+                        <CGCourseCollapsible key={this.nameToId(elem)} course={elem} parent="#accordion" />
                     )
                 })}
                 {/* Testing icons */}

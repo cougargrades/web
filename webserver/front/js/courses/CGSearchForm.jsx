@@ -11,7 +11,7 @@ class CGSearchForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selection: Array(),
+            selection: ['COSC 1430'],
             searchbar: "default",
             form_disabled: false
         };
@@ -23,25 +23,16 @@ class CGSearchForm extends React.Component {
         if(!this.state.selection.includes(value)) {
             this.setState({
                 selection: [...this.state.selection, value]
-            })
+            }, this.updateButtonColor)
         }
     }
     removeSelection(value) {
         // Immutable solution
-        if(this.state.selection.includes(value) && this.state.selection.length === 1) {
-            // If the removal of value is expected to happen 
-            // AND 
-            // the removal would make the selection empty
-            this.setState({
-                searchbar: 'default'
-            })
-            this.handleSubmit()
-        }
 
         // TODO: use animejs to animate the removal
         this.setState({
             selection: this.state.selection.filter(item => item !== value) 
-        })
+        }, this.updateButtonColor)
     }
     renderSelection() {
         if(this.state.selection.length > 0) {
@@ -83,11 +74,11 @@ class CGSearchForm extends React.Component {
     }
 
     // Input box
-    async handleSubmit(event) {
+    handleSubmit(event) {
         if(event) event.preventDefault()
+
         let field = document.querySelector('form#search input[type=text]')
         if(this.state.searchbar === "confirm") {
-            console.log('Submitting query with: ', this.state.selection)
             
             // Lock the inputs
             this.setState({
@@ -95,46 +86,38 @@ class CGSearchForm extends React.Component {
                 searchbar: 'loading'
             })
 
-            // Emulate fetching the data
-            await this.props.onQuery(this.state.selection)
+            this.props.onQuery(this.state.selection)
 
             this.setState({
                 form_disabled: false,
-                searchbar: 'default'
+                searchbar: 'confirm'
             })
+
         }
         else if(this.state.searchbar === 'default' && field.value.length > 0) {
             // Add the query
             this.pullFieldToSelection()
-            // Update the UI
-            this.handleKeyUp()
         }
     }
-    handleKeyUp() {
+    updateButtonColor() {
         // Manually create field reference so handleKeyUp can be artificially called
         let field = document.querySelector('form#search input[type=text]');
+
+        console.log('updateButtonColor', this.state.selection, field.value == '' ? undefined : field.value)
+
         if(field.value.length > 0 || this.state.selection.length === 0) {
+            //console.log('default')
             // If selected courses is empty OR text field has text in it
             this.setState({
                 searchbar: 'default'
             })
         }
         else if(this.state.selection.length > 0 && field.value.length === 0) {
+            //console.log('confirm')
             // If selected courses is not empty AND text field is empty
             this.setState({
                 searchbar: 'confirm'
             })
-        }
-    }
-    getButtonCSSClass() {
-        if(this.state.searchbar === "loading") {
-            return 'btn-cg loading'
-        }
-        else if(this.state.searchbar === "confirm") {
-            return 'btn-cg confirm'
-        }
-        else {
-            return 'btn-cg'
         }
     }
 
@@ -145,9 +128,9 @@ class CGSearchForm extends React.Component {
                 <Form.Group>
                     <Form.Label>Add course</Form.Label>
                     <InputGroup>
-                        <Form.Control type="text" placeholder="Example: ENGL 1304" disabled={this.state.form_disabled} onKeyUp={() => this.handleKeyUp()}/>
+                        <Form.Control type="text" placeholder="Example: ENGL 1304" defaultValue="MATH 3336" disabled={this.state.form_disabled} onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
                         <InputGroup.Append>
-                            <Button type="submit" className={this.getButtonCSSClass()} disabled={this.state.form_disabled} id="searchbar_btn" onMouseUp={() => this.handleKeyUp()}>
+                            <Button type="submit" className={`btn-cg ${this.state.searchbar}`} disabled={this.state.form_disabled} id="searchbar_btn">
                                 <span className="add-msg">Add to selection</span>
                                 <span className="confirm-msg">Search selection</span>
                                 <i className="material-icons">autorenew</i>
