@@ -247,6 +247,12 @@ div.cg-content {
         }
     }
 
+    // Fix for Bootstrap 4 CSS when accordions only contain one element
+    .accordion > .card:last-of-type:first-of-type {
+        border-radius: 0.25rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
     span.spinner {
         border-color: lighten($uh-grey, 10%);
         border-right-color: transparent;
