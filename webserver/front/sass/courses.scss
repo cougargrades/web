@@ -188,12 +188,20 @@ div.cg-content {
         &:hover {
             cursor: pointer;
         }
+
+        &:active {
+            background-color: rgba(0,0,0,0.06); // default is 0.03
+        }
     
         .cg-card-title {
             display: inline-flex;
             vertical-align: middle;
             font-size: 18px;
             line-height: 24px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             /* font-weight: 400; */
     
             i.material-icons {
@@ -208,8 +216,12 @@ div.cg-content {
             }
         }
 
-        span.spinner {
+        .rhs {
             float: right;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     }
 
@@ -247,7 +259,7 @@ div.cg-content {
         }
     }
 
-    // Fix for Bootstrap 4 CSS when accordions only contain one element
+    // Fix for Bootstrap 4 CSS when accordions only contain one .card
     .accordion > .card:last-of-type:first-of-type {
         border-radius: 0.25rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.125);

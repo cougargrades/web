@@ -102,7 +102,8 @@ class CGCourseContent extends React.Component {
                                 headerCell: 'headerCell',
                                 tableCell: 'tableCell',
                                 rowNumberCell: 'rowNumberCell'
-                            }
+                            },
+                            sortColumn: 0
                         }}
                     />
                 </div>

@@ -35,12 +35,15 @@ class CGCourseItem extends React.Component {
 
     render() {
         return (
-        <div className="card">
-            <div className="card-header" id={this.state.heading} onClick={() => this.handleClick()}>
+        <div className="card" ref={this.ref}>
+            <div className={`card-header ${this.state.open ? 'open' : 'closed'}`} id={this.state.heading} onClick={() => this.handleClick()}>
                 <h5 className="mb-0 cg-card-title">
                     <CGCourseHeader course={this.props.course} />
                 </h5>
-                {this.state.loading ? <span className="spinner three-quarters-loader">🔄</span> : null}
+                {(() => {
+                    if(this.state.loading) return <span className="rhs spinner three-quarters-loader">🔄</span>
+                    return this.state.open ? <i className="material-icons rhs">unfold_less</i> : <i className="material-icons rhs">unfold_more</i>
+                })()}
             </div>
             <Collapse in={this.state.open} timeout={300}>
                 <div>
