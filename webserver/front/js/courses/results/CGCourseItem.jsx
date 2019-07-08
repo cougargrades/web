@@ -24,9 +24,66 @@ class CGCourseItem extends React.Component {
     }
 
     handleClick() {
-        if(!this.state.loading) {
-            this.setState({open: !this.state.open})
+        var self = this
+        console.log(this.state.open)
+        if(this.state.open) {
+            anime.timeline()
+            .add({
+                targets: `#${this.state.heading}`,
+                duration: 1000,
+                perspective: 300, // px
+                rotateX: 10, // deg
+                zIndex: 100,
+                boxShadow: '0px 2px 3px rgba(0,0,0,0.25)'
+            })
+            .add({
+                targets: `#${this.state.content}`,
+                duration: 800,
+                translateY: -(document.getElementById(this.state.content).clientHeight) // px
+            }, '-=900')
+            .add({
+                targets: `#${this.state.heading}`,
+                duration: 800,
+                perspective: 300, // px
+                rotateX: 0, // deg
+                boxShadow: '0 0 0 rgba(0,0,0,0)'
+            }, '-=300')
+            .finished.then(function(){
+                self.setState({open: !self.state.open})
+            })
         }
+        else {
+            self.setState({open: !self.state.open}, function(){
+                anime.timeline()
+                .add({
+                    targets: `#${this.state.heading}`,
+                    duration: 1000,
+                    perspective: 300, // px
+                    rotateX: 10, // deg
+                    zIndex: 100,
+                    boxShadow: '0px 2px 3px rgba(0,0,0,0.25)'
+                })
+                .add({
+                    targets: `#${this.state.content}`,
+                    duration: 800,
+                    translateY: 0 // px
+                }, '-=900')
+                .add({
+                    targets: `#${this.state.heading}`,
+                    duration: 800,
+                    perspective: 300, // px
+                    rotateX: 0, // deg
+                    boxShadow: '0 0 0 rgba(0,0,0,0)'
+                }, '-=300')
+                .finished.then(function(){
+                    //
+                })
+            })
+        }
+
+        // if(!this.state.loading) {
+        //     this.setState({open: !this.state.open})
+        // }
     }
 
     handleLoaded() {

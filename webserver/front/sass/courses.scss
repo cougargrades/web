@@ -184,6 +184,25 @@ div.cg-selected {
 
 
 div.cg-content {
+
+    div.card {
+        overflow: visible;
+        .card-header {
+            background-color: #f7f7f7;
+            transform: perspective(300px) rotateX(0deg);
+            transform-origin: top;
+            transition: box-shadow 1000ms;
+        }
+
+        .collapse {
+            overflow: hidden;
+        }
+
+        .collapsing {
+            transition: none;
+        }
+    }
+
     div.card-header {
         &:hover {
             cursor: pointer;
