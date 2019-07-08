@@ -64,7 +64,6 @@ class CGCourseContent extends React.Component {
                         loader={<span className="spinner three-quarters-loader">🔄</span>}
                         data={this.state.chart_data}
                         options={{
-                            width: '100%',
                             title: this.props.course,
                             vAxis: {
                                 title: 'GPA',
@@ -79,6 +78,10 @@ class CGCourseContent extends React.Component {
                                 gridlines: {
                                     count: -1 //auto
                                 }
+                            },
+                            chartArea: {
+                                width: '55%',
+                                left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
                             },
                             pointSize: 5,
                             interpolateNulls: true //lines between point gaps
