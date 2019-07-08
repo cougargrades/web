@@ -28,7 +28,7 @@ class CGSearchForm extends React.Component {
             }, function() {
                 this.updateButtonColor()
                 // Change the URL to be the current selection
-                window.location.hash = this.generateUrlHash()
+                //window.location.hash = this.generateUrlHash()
                 callback()
             })
         }
@@ -44,7 +44,7 @@ class CGSearchForm extends React.Component {
         }, function() {
             this.updateButtonColor()
             // Change the URL to be the current selection
-            window.location.hash = this.generateUrlHash()
+            //window.location.hash = this.generateUrlHash()
             callback()
         })
         
