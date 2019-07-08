@@ -18,25 +18,36 @@ class CGSearchForm extends React.Component {
     }
 
     // Selection display
-    addSelection(value) {
+    addSelection(value, callback) {
+        callback = typeof(callback) === 'function' ? callback : function(){}; 
+
         // Immutable solution
         if(!this.state.selection.includes(value)) {
             this.setState({
                 selection: [...this.state.selection, value]
-            }, this.updateButtonColor)
+            }, function() {
+                this.updateButtonColor()
+                // Change the URL to be the current selection
+                window.location.hash = this.generateUrlHash()
+                callback()
+            })
         }
+        
     }
     removeSelection(value, callback) {
+        callback = typeof(callback) === 'function' ? callback : function(){}; 
+        
         // Immutable solution
-        callback = typeof(callback) === 'function' ? callback : ()=>{}; 
-
         // TODO: use animejs to animate the removal
         this.setState({
             selection: this.state.selection.filter(item => item !== value) 
-        }, () => {
+        }, function() {
             this.updateButtonColor()
+            // Change the URL to be the current selection
+            window.location.hash = this.generateUrlHash()
             callback()
         })
+        
     }
     renderSelection() {
         if(this.state.selection.length > 0) {
@@ -73,6 +84,10 @@ class CGSearchForm extends React.Component {
                 return badges[i]
             }
         }
+    }
+    generateUrlHash() {
+        // Generates a URL has based on the current selection
+        return (this.state.selection.length > 0 ? '#!' : '') + this.state.selection.map(e => encodeURI(e)).join(',')
     }
     pullFieldToSelection() {
         // Add the query to the selection and empty the search bar
@@ -125,6 +140,19 @@ class CGSearchForm extends React.Component {
             // If selected courses is not empty AND text field is empty
             this.setState({
                 searchbar: 'confirm'
+            })
+        }
+    }
+
+    componentDidMount() {
+        // Automatically search for URLs with the courses specified
+
+        let hash = window.location.hash ? window.location.hash.split('#!')[1].split(',').map(e => decodeURI(e)) : null
+        if(hash !== null) {
+            this.setState({
+                selection: hash.slice()
+            }, function() {
+                this.props.onQuery(this.state.selection)
             })
         }
     }
