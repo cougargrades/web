@@ -27,37 +27,43 @@ class CGCourseItem extends React.Component {
         var self = this
         console.log(this.state.open)
         if(this.state.open) {
+            // Closing animation
             anime.timeline()
             .add({
-                targets: `#${this.state.heading}`,
-                duration: 1000,
-                perspective: 300, // px
-                rotateX: 10, // deg
-                zIndex: 100,
-                boxShadow: '0px 2px 3px rgba(0,0,0,0.25)'
-            })
-            .add({
                 targets: `#${this.state.content}`,
-                duration: 800,
+                duration: 500,
+                easing: 'easeInOutQuart',
                 translateY: -(document.getElementById(this.state.content).clientHeight) // px
-            }, '-=900')
-            .add({
-                targets: `#${this.state.heading}`,
-                duration: 800,
-                perspective: 300, // px
-                rotateX: 0, // deg
-                boxShadow: '0 0 0 rgba(0,0,0,0)'
-            }, '-=300')
+            })
             .finished.then(function(){
                 self.setState({open: !self.state.open})
             })
+            // .add({
+            //     targets: `#${this.state.heading}`,
+            //     duration: 1000,
+            //     perspective: 300, // px
+            //     rotateX: 10, // deg
+            //     zIndex: 100,
+            //     boxShadow: '0px 2px 3px rgba(0,0,0,0.25)'
+            // })
+            
+            // .add({
+            //     targets: `#${this.state.heading}`,
+            //     duration: 800,
+            //     perspective: 300, // px
+            //     rotateX: 0, // deg
+            //     boxShadow: '0 0 0 rgba(0,0,0,0)'
+            // }, '-=300')
+            
         }
         else {
+            // Opening animation
             self.setState({open: !self.state.open}, function(){
                 anime.timeline()
                 .add({
                     targets: `#${this.state.heading}`,
                     duration: 1000,
+                    easing: 'easeOutElastic(1, .5)',
                     perspective: 300, // px
                     rotateX: 10, // deg
                     zIndex: 100,
@@ -66,11 +72,13 @@ class CGCourseItem extends React.Component {
                 .add({
                     targets: `#${this.state.content}`,
                     duration: 800,
+                    easing: 'easeOutElastic(1, .5)', // easeOutElastic easeOutElastic(1, .5)
                     translateY: 0 // px
                 }, '-=900')
                 .add({
                     targets: `#${this.state.heading}`,
                     duration: 800,
+                    easing: 'easeOutElastic(1, .5)',
                     perspective: 300, // px
                     rotateX: 0, // deg
                     boxShadow: '0 0 0 rgba(0,0,0,0)'
