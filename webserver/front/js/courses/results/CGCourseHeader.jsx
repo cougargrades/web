@@ -12,7 +12,7 @@ class CGCourseHeader extends React.Component{
         if(definitions[this.dept] === null || definitions[this.dept] === undefined) {
             return (
                 <>
-                <i className="material-icons">class</i>
+                <i className="material-icons cg-icon">class</i>
                 {this.props.course}
                 </>
             )
@@ -20,18 +20,20 @@ class CGCourseHeader extends React.Component{
         else if(typeof definitions[this.dept] === 'string') {
             return (
                 <>
-                <i className="material-icons">{definitions[this.dept]}</i>
+                <i className="material-icons cg-icon">{definitions[this.dept]}</i>
                 {this.props.course}
                 </>
             )
         }
         else if(typeof definitions[this.dept] === 'object') {
-            return (
-                <>
-                <i>{definitions[this.dept]['alt']}</i>
-                {this.props.course}
-                </>
-            )
+            if(definitions[this.dept]['src']) {
+                return (
+                    <>
+                    <img className="cg-icon" src={definitions[this.dept]['src']} />
+                    {this.props.course}
+                    </>
+                )
+            }
         }
     }
     get [Symbol.toStringTag]() {
