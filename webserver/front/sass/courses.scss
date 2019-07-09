@@ -189,9 +189,6 @@ div.cg-content {
         overflow: visible;
         .card-header {
             background-color: #f7f7f7;
-            transform: perspective(300px) rotateX(0deg);
-            transform-origin: top;
-            transition: box-shadow 1000ms;
         }
 
         .collapse {
@@ -204,8 +201,6 @@ div.cg-content {
     }
 
     div.card-header {
-        border-left: 1px solid rgba(0,0,0,.125);
-        border-right: 1px solid rgba(0,0,0,.125);
 
         &:hover {
             cursor: pointer;
