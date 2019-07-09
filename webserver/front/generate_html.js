@@ -4,7 +4,9 @@ const fs = require('fs')
 const path = require('path')
 const Handlebars = require('handlebars')
 require('dotenv').config({path: path.resolve(__dirname, '..', '..', '.env')})
-process.env.COMMIT_HASH = require('child_process').execSync('git rev-parse --short HEAD', {cwd: __dirname}).toString().trim()
+
+var HANDLE_VARS = Object.assign({}, process.env)
+HANDLE_VARS.COMMIT_HASH = require('child_process').execSync('git rev-parse HEAD', {cwd: __dirname}).toString().trim().substring(0,10)
 
 const partials = fs.readdirSync(path.resolve(__dirname, './html/partials/')) 
 for(let i = 0; i < partials.length; i++) {
@@ -20,6 +22,6 @@ for(let i = 0; i < markup.length; i++) {
 	if(markup[i].endsWith('.hbs')) {
 		let template = Handlebars.compile(fs.readFileSync(path.resolve(__dirname, `./html/${markup[i]}`), {encoding: 'utf8'}))
 		console.log(`🚲🔨 => template: ${markup[i]}`)
-		fs.writeFileSync(path.resolve(__dirname, `./_site/${path.basename(markup[i],'.hbs')}.html`), template(process.env), {encoding: 'utf8'})
+		fs.writeFileSync(path.resolve(__dirname, `./_site/${path.basename(markup[i],'.hbs')}.html`), template(HANDLE_VARS), {encoding: 'utf8'})
 	}
 }
