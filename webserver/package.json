@@ -1,6 +1,6 @@
 {
   "name": "cougar-grades",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Web application",
   "private": true,
   "dependencies": {
@@ -58,11 +58,15 @@
     "dev:mustache": "npx nodemon --watch front/html/ --ext hbs --exec ./front/generate_html.js",
     "dev:webpack": "npx nodemon --watch front/js/ --ext js,jsx --exec npx webpack --mode development",
     "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/ -I ./front/sass/partials/",
-    "dev:static": "npx nodemon --watch front/static/ --ext css --exec cp -r ./front/static/* ./front/_site/"
+    "dev:static": "npx nodemon --watch front/static/ --ext css --exec cp -r ./front/static/* ./front/_site/",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/au5ton/cougar-grades.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "restricted"
+  }
 }
