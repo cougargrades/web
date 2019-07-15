@@ -201,6 +201,7 @@ div.cg-content {
     }
 
     div.card-header {
+        z-index: 2;
 
         &:hover {
             cursor: pointer;
@@ -246,6 +247,7 @@ div.cg-content {
     div.card-body {
         overflow-x: scroll;
         text-align: center;
+        z-index: 1;
         
         div.cg-charts {
             //min-width: 400px;
