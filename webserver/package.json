@@ -1,11 +1,13 @@
 {
   "name": "cougar-grades",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Web application",
+  "private": true,
   "dependencies": {
     "better-sqlite3": "^5.4.0",
     "chalk": "^2.4.2",
     "convert-hrtime": "^3.0.0",
+    "dotenv": "^8.0.0",
     "fastify": "^2.3.0",
     "fastify-cli": "^1.0.0",
     "fastify-graceful-shutdown": "^2.0.1",
@@ -13,40 +15,59 @@
     "fastify-response-time": "github:lolo32/fastify-response-time",
     "fastify-static": "^2.4.0",
     "make-promises-safe": "^5.0.0",
-    "mustache": "^3.0.1",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.5.0",
-    "point-of-view": "^3.3.0",
     "pretty-hrtime": "^1.0.3",
-    "redis": "^2.8.0",
-    "winston": "^3.2.1"
+    "prop-types": "^15.7.2",
+    "react-google-charts": "^3.0.13",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/runtime": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "handlebars": "^4.1.2",
     "nodemon": "^1.19.0",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
     "sass": "^1.20.1",
-    "standard": "*"
+    "semantic-release": "^15.13.18",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   },
   "config": {
-    "sass": {
-      "src": "assets/sass/",
-      "dest": "assets/public/css/"
-    },
     "server": {
       "port": 3000
     }
   },
   "scripts": {
-    "start": "npm run build && npm run server",
-    "build": "npm run build:sass",
-    "build:sass": "npx sass --update $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "server": "node --max-old-space-size=2048 server.js",
-    "dev": "npm run dev:sass & npm run dev:nodemon",
-    "dev:sass": "npx sass --watch $npm_package_config_sass_src:$npm_package_config_sass_dest",
-    "dev:nodemon": "npx nodemon --ignore assets/ --exec node --inspect=0.0.0.0:9229 server.js"
+    "start": "npm run prod",
+    "prod": "npm run prod:build && npm run prod:server",
+    "prod:server": "node server.js",
+    "prod:build": "npm run build",
+    "build": "npm run build:preprocess && npm run build:mustache && npm run build:webpack && npm run build:sass",
+    "build:preprocess": "./front/preprocess.sh",
+    "build:mustache": "./front/generate_html.js",
+    "build:webpack": "npx webpack --mode production",
+    "build:sass": "npx sass ./front/sass:./front/_site/css/",
+    "dev": "npm run dev:mustache & npm run dev:webpack & npm run dev:sass & npm run dev:nodemon & npm run dev:static",
+    "dev:nodemon": "npx nodemon --ignore front/ --exec node --inspect=0.0.0.0:9229 server.js",
+    "dev:mustache": "npx nodemon --watch front/html/ --ext hbs --exec ./front/generate_html.js",
+    "dev:webpack": "npx nodemon --watch front/js/ --ext js,jsx --exec npx webpack --mode development",
+    "dev:sass": "npx sass --watch ./front/sass:./front/_site/css/ -I ./front/sass/partials/",
+    "dev:static": "npx nodemon --watch front/static/ --ext css --exec cp -r ./front/static/* ./front/_site/",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/au5ton/cougar-grades.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "restricted"
+  }
 }

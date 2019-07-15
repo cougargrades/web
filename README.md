@@ -2,30 +2,38 @@
 [indev] University of Houston service for students
 
 ## Indev ⚠
-cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building.
+cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building because undocumented changes could've been made.
 
 ## Project modules
+- `importer/` Python script to process a collection of CSV files into .db and .sql files for importing into the webserver module
+- `mariadb/` MariaDB Docker image that imports the .sql files produced by `importer/`
 - `webserver/` Node.js webserver to run the website using [fastify](https://github.com/fastify/fastify/)
-- `importer/` Python script to process a collection of CSV files into the MariaDB database
 
 ### Database importer
-[![asciicast](https://asciinema.org/a/243852.svg)](https://asciinema.org/a/243852)
+[![asciicast](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw.svg)](https://asciinema.org/a/q2sB4WEdl1hiRYR4keoh3AFGw)
 
 ### Webserver
-[![webserver](https://thumbs.gfycat.com/ShimmeringEverlastingIbis-size_restricted.gif)](https://gfycat.com/shimmeringeverlastingibis)
+[indev]
 
 ## Dependencies
 - Docker
 - Docker Compose
 - `make`
-- Grade data in CSV format with the schema seen in `sample.csv` 
-- At least 1-1.5GB in space (Docker images large)
+- Grade data (only one is required):
+    - in CSV format with the schema seen in `sample/sample.csv`
+- At least ~500MB in space (Docker images)
+    - mariadb:latest (~349MB)
+    - redis:5.0-alpine (~30.9MB)
 
 ## Running
-- Copy your CSV files into `importer/payload/`
-- cd `cougar-grades/`
-- *Start containers in the background:* `make daemon`
-- *Start containers interactively:* `make`
+- `cd cougar-grades/`
+- Generate SQLite and SQL files: `./generate.sh [directory with csvfiles | csvfile] --cleanup`
+    - `records.db` and a `records.sql` files will be copied to `cougar-grades/` before deleting the container and images generated
+- Start MariaDB and Redis in Docker: `make start` (ports 3001 and 3002)
+    - Stop with `make stop`
+- cd `webserver/`
+- Webserver dependencies: `npm install`
+- Start webserver: `npm start` (port 3000)
 
 ## Inspiration
 - anex.us/grades/ (author unknown)
@@ -35,10 +43,3 @@ cougar-grades is in private early development and the master branch will get ver
 ## Development
 - @au5ton
 - @fluffthepanda
-
-
-### Docker
-- install docker-ce
-- install docker-compose
-- install make
-- put csv files in `payload/`

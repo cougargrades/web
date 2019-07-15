@@ -1,0 +1,298 @@
+
+@import "colors.scss";
+
+nav.cg-navbar .navbar-nav a.nav-link {
+    display: inline-flex;
+    vertical-align: middle;
+
+    i.material-icons {
+        font-size: 16px;
+        line-height: 24px;
+        margin-right: 0.1em;
+    }
+}
+
+#root {
+    padding-bottom: 50px;
+}
+
+#root div.noscript {
+    text-align: center;
+    animation: pulsing 10s infinite;
+
+    svg.spinner{
+        width: 30px;
+        height: 30px;
+    }
+
+    @keyframes pulsing {
+        0% {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 1.0;
+        }
+        100% {
+            opacity: 0.5;
+        }
+    }
+}
+#noscript_msg {
+    opacity: 0;
+    margin-top: 0.5rem;
+    font-style: italic;
+    text-align: center;
+    animation-name: noscript;
+    animation-duration: 3s;
+    animation-delay: 10s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+@keyframes noscript {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+form#search input[type=text] {
+    text-transform: uppercase;
+
+    &::placeholder {
+        color: rgba(108, 117, 125, 0.85);
+        font-style: italic;
+        transition: 150ms color;
+    }
+
+    &:active::placeholder, &:focus::placeholder {
+        color: rgba(108, 117, 125, 0.65);
+    }
+    
+}
+
+form#search .btn-cg {
+    color: #fff;
+    background-color: $uh-red;
+    border-color: $uh-red;
+
+    &:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: $uh-brick;
+        border-color: $uh-chocolate;
+        &:focus {
+            box-shadow: 0 0 0 0.2rem $uh-chocolate;
+        }
+    }
+    &:focus {
+        box-shadow: 0 0 0 0.2rem $uh-chocolate;
+    }
+    &:hover {
+        color: #fff;
+        background-color: $uh-brick;
+        border-color: $uh-chocolate;
+    }
+
+    // Confirm button
+    &.confirm {
+        background-color: $uh-teal;
+        border-color: $uh-teal;
+        display: inline-flex;
+    }
+    &.confirm:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: $uh-green;
+        border-color: $uh-forest;
+    }
+    &.confirm:focus {
+        box-shadow: 0 0 0 0.2rem $uh-forest;
+    }
+
+    // Loading spinner
+    &.loading {
+        background-color: $uh-gold;
+        border-color: $uh-gold;
+        display: inline-flex;
+        cursor: not-allowed;
+    }
+    &.loading:not(:disabled):not(.disabled):active {
+        color: #fff;
+        background-color: $uh-gold;
+        border-color: rgba(0,0,0,0);
+    }
+    &.loading:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0,0,0,0);
+    }
+    i.material-icons {
+        font-size: 1.4em;
+        line-height: 1em;
+    }
+    &.loading i.material-icons {
+        animation: 2s spin linear infinite;
+    }
+
+    // Smooth swapping of content
+    &:not(.loading) > i.material-icons {
+        display: none;
+    }
+    &:not(.confirm) > span.confirm-msg {
+        display: none;
+    }
+    & > span.add-msg {
+        display: none;
+    }
+    &:not(.loading):not(.confirm) > span.add-msg {
+        display: inline;
+    }
+
+    @keyframes spin { 
+        0% { transform: rotateZ(0deg) } 
+        25% { transform: rotateZ(90deg) }
+        50% { transform: rotateZ(180deg) } 
+        75% { transform: rotateZ(270deg) }
+        100% { transform: rotateZ(360deg) } 
+    }
+}
+
+div.cg-selected {
+
+    span.empty {
+        color: #777;
+        font-size: 1rem;
+        font-style: italic;
+    }
+
+    span.badge {
+        background-color: #cc2541;
+        font-size: 1rem;
+        margin-right: 0.1rem;
+        margin-bottom: 0.5rem;
+        display: inline-flex;
+        vertical-align: middle;
+        transition: width 2s;
+        position: relative;
+        user-select: none;
+    
+        i.material-icons {
+            font-size: 1rem;
+            line-height: 1rem;
+            margin-left: 0.35rem;
+    
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+div.cg-content {
+
+    div.card {
+        overflow: visible;
+        .card-header {
+            background-color: #f7f7f7;
+        }
+
+        .collapse {
+            overflow: hidden;
+        }
+
+        .collapsing {
+            transition: none;
+        }
+    }
+
+    div.card-header {
+        z-index: 2;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:active {
+            background-color: rgba(0,0,0,0.06); // default is 0.03
+        }
+    
+        .cg-card-title {
+            display: inline-flex;
+            vertical-align: middle;
+            font-size: 18px;
+            line-height: 24px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* font-weight: 400; */
+    
+            i.material-icons {
+                font-size: 24px;
+                line-height: 24px;
+                margin-right: 0.35rem;
+            }
+            img.cg-icon {
+                height: 16px;
+                margin-top: 4px;
+                margin-right: 0.35rem;
+                padding-left: 0.25rem;
+            }
+        }
+
+        .rhs {
+            float: right;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    }
+
+    div.card-body {
+        overflow-x: scroll;
+        text-align: center;
+        z-index: 1;
+        
+        div.cg-charts {
+            //min-width: 400px;
+            .cg-chart-wrap, .cg-table-wrap {
+                //width: 100%;
+                div {
+                    display: inline-block
+                }
+            }
+
+            .google-visualization-table {
+                .google-visualization-table-table {
+                    width: 100%;
+                    .headerCell {
+                        cursor: pointer;
+                        &:hover {
+                            background-color: rgba(110,110,110,0.1);
+                            transition: background-color 250ms;
+                        }
+                    }
+                    .tableRow {
+                        background: #78909c;
+                    }
+                    .tableCell {
+                        background: rgba(255, 255, 255, 0.95);
+                    }
+                }
+            }
+        }
+    }
+
+    // Fix for Bootstrap 4 CSS when accordions only contain one .card
+    .accordion > .card:last-of-type:first-of-type {
+        border-radius: 0.25rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    span.spinner {
+        border-color: lighten($uh-grey, 10%);
+        border-right-color: transparent;
+
+        $size: 1.5em;
+        border-width: calc(#{$size} / 4.5);
+        border-radius: calc(#{$size} / 2);
+        width: $size;
+        height: $size;
+    }
+}

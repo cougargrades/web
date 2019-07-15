@@ -36,7 +36,7 @@ c = conn.cursor()
 c.execute('''CREATE TABLE records (
     TERM text,
     DEPT text,
-    CATALOG_NBR smallint,
+    CATALOG_NBR text,
     CLASS_SECTION smallint,
     COURSE_DESCR text,
     INSTR_LAST_NAME text,
@@ -74,7 +74,8 @@ with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
     # for every file provided
     for arg in sys.argv:
         if arg != sys.argv[0]:
-            tqdm.write(f'Reading {arg} as a CSV file...')
+            head, tail = os.path.split(arg)
+            #tqdm.write(f'Reading {tail}...')
             try:
                 # read the file as a CSV file
                 with open(arg, 'r') as csvfile:
@@ -88,7 +89,7 @@ with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
                     # after every file, commit to the db before continuing to the next file
                     conn.commit()
             except Exception as err:
-                tqdm.write(f'Failed to read {arg} as a CSV file.\nException: {err}')
+                tqdm.write(f'Failed to read {short_arg} as a CSV file.\nException: {err}')
 
 conn.commit()
 conn.close()
@@ -102,10 +103,10 @@ cread = conn.cursor()
 cwrite = conn.cursor()
 
 cwrite.execute('''CREATE TABLE records_extra (
-    ID int primary key,
+    ID int unsigned not null primary key unique,
     TERM text,
     DEPT text,
-    CATALOG_NBR smallint,
+    CATALOG_NBR text,
     CLASS_SECTION smallint,
     COURSE_DESCR text,
     INSTR_LAST_NAME text,
@@ -119,7 +120,7 @@ cwrite.execute('''CREATE TABLE records_extra (
     AVG_GPA real,
     PROF_COUNT smallint,
     PROF_AVG real,
-    TERM_CODE smallint,
+    TERM_CODE int,
     GROUP_CODE text
     )''')
 conn.commit()
@@ -136,9 +137,8 @@ LEFT JOIN(SELECT COUNT(records.AVG_GPA) AS PROF_COUNT, AVG(records.AVG_GPA) AS P
 ON records.TERM = t2.TERM AND records.DEPT = t2.DEPT AND records.CATALOG_NBR = t2.CATALOG_NBR AND records.INSTR_LAST_NAME = t2.INSTR_LAST_NAME AND records.INSTR_FIRST_NAME = t2.INSTR_FIRST_NAME
 ''')
 spinner.succeed()
-print('Done')
 
-print('Creating extra table from copied table...')
+print('Creating extra table from copied table...', end="")
 row = cread.fetchone()
 id_num = 1
 with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
@@ -157,8 +157,8 @@ with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
             tup[16] = None
 
         cwrite.execute(f'INSERT INTO records_extra VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', tuple(tup))
-        if id_num % 2000 == 0:
-            tqdm.write(f'Processed row {id_num}')
+        # if id_num % 2000 == 0:
+        #    tqdm.write(f'Processed row {id_num}')
         id_num += 1
         t.update()
         row = cread.fetchone()
@@ -167,7 +167,7 @@ with tqdm(total=ROW_ESTIMATE, unit="rows") as t:
 conn.commit()
 print('Done')
 
-print('Dropping original table and renaming extra table...')
+print('Dropping original table and renaming extra table...', end="")
 cwrite.execute('DROP TABLE records')
 cwrite.execute('''
 ALTER TABLE records_extra
