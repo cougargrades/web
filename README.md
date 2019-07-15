@@ -2,7 +2,7 @@
 [indev] University of Houston service for students
 
 ## Indev ⚠
-cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building.
+cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building because undocumented changes could've been made.
 
 ## Project modules
 - `importer/` Python script to process a collection of CSV files into .db and .sql files for importing into the webserver module
@@ -30,6 +30,7 @@ cougar-grades is in private early development and the master branch will get ver
 - Generate SQLite and SQL files: `./generate.sh [directory with csvfiles | csvfile] --cleanup`
     - `records.db` and a `records.sql` files will be copied to `cougar-grades/` before deleting the container and images generated
 - Start MariaDB and Redis in Docker: `make start` (ports 3001 and 3002)
+    - Stop with `make stop`
 - cd `webserver/`
 - Webserver dependencies: `npm install`
 - Start webserver: `npm start` (port 3000)

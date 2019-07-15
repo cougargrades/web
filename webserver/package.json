@@ -1,6 +1,6 @@
 {
   "name": "cougar-grades",
-  "version": "0.0.0-development",
+  "version": "0.2.0",
   "description": "Web application",
   "private": true,
   "dependencies": {
