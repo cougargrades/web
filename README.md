@@ -1,4 +1,4 @@
-# cougar-grades
+# @cougargrades/web
 [indev] University of Houston service for students
 
 ## Indev ⚠
