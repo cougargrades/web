@@ -1,8 +1,29 @@
+const admin = require('firebase-admin');
 const functions = require('firebase-functions');
+const express = require('express');
+const app = express();
 
-// Create and Deploy Your First Cloud Functions
-// https://firebase.google.com/docs/functions/write-firebase-functions
+// production environment
+if(process.env.GCP_PROJECT) {
+    admin.initializeApp(functions.config().firebase);
+}
+else {
+    // development environment
+    let serviceAccount = require('./firebaseadminsdk.json');
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send(`Hello from Firebase! ${request.originalUrl}`);
-});
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
+}
+
+let db = admin.firestore();
+
+app.get('/user', async (req, res) => {
+    let doc = await db.collection('users').doc('alovelace').get()
+    res.json(doc.exists ? doc.data() : null)
+})
+
+// Create "main" function to host all other top-level functions
+const main = express();
+main.use('/api', app);
+exports.main = functions.https.onRequest(main);
