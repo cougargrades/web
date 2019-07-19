@@ -5,7 +5,7 @@
     ]
   },
   "hosting": {
-    "public": "public",
+    "public": "./app/build/",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -20,6 +20,7 @@
         "source": "/api/**",
         "function": "main"
       }
-    ]
+    ],
+    "predeploy":"./app/predeploy.sh"
   }
 }
