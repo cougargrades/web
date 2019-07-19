@@ -1,5 +1,6 @@
 #!/bin/sh 
-SESSNAME=$(basename "$PWD")"-"$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 4 | head -n 1)
+# generation stolen from: https://gist.github.com/earthgecko/3089509
+SESSNAME=$(basename "$PWD")"-"$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
 tmux new-session -s $SESSNAME -d
 tmux send-keys "clear; npm --prefix ./app start" Enter
 tmux split-window -h
