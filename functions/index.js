@@ -18,55 +18,33 @@ else {
 
 let db = admin.firestore();
 
-app.get('/user', async (req, res) => {
-    let doc = await db.collection('users').doc('alovelace').get()
-    res.json(doc.exists ? doc.data() : null)
-})
-
 app.get('/', async (req, res) => {
-    res.json(`Welcome to ${req.originalUrl}`)
+    return res.json(`Welcome to ${req.originalUrl}`)
 })
 
-/*
-
-let citiesRef = db.collection('cities');
-let query = citiesRef.where('capital', '==', true).get()
-.then(snapshot => {
-    if (snapshot.empty) {
-        console.log('No matching documents.');
-        return;
-    }  
-
-    snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-    });
-})
-.catch(err => {
-    console.log('Error getting documents', err);
-});
-
-
-*/
-
-app.get('/api/catalog/list/term', async (req, res) => {
+app.get('/catalog/list/term', async (req, res) => {
     // SELECT DISTINCT TERM_CODE FROM records ORDER BY TERM_CODE ASC
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     
-    res.json('Not yet implemented')
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/catalog/list/dept', async (req, res) => {
+app.get('/catalog/list/dept', async (req, res) => {
     // SELECT DISTINCT DEPT FROM records ORDER BY DEPT ASC
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 
-    res.json('Not yet implemented')
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/catalog/list/catalog_nbr', async (req, res) => {
+app.get('/catalog/list/catalog_nbr', async (req, res) => {
     // SELECT DISTINCT CATALOG_NBR FROM records ORDER BY DEPT ASC
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
 
-    res.json('Not yet implemented')
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/catalog/list/courses/:term/:dept', async (req, res) => {
+app.get('/catalog/list/courses/:term/:dept', async (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     if(request.params.term.toLowerCase() === 'all') {
         if(request.params.dept.toLowerCase() === 'all') {
             // SELECT DISTINCT DEPT, CATALOG_NBR FROM records ORDER BY DEPT ASC, CATALOG_NBR ASC')).map(a => `${a['DEPT']} ${a['CATALOG_NBR']}`)
@@ -78,35 +56,65 @@ app.get('/api/catalog/list/courses/:term/:dept', async (req, res) => {
     else {
         // SELECT DISTINCT CATALOG_NBR FROM records WHERE TERM_CODE=? AND DEPT=? ORDER BY CATALOG_NBR ASC', [request.params.term, request.params.dept])).map(a => a['CATALOG_NBR'])
     }
-    res.json('Not yet implemented')
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/catalog/list/sections/:term/:dept/:course', async (req, res) => {
+app.get('/catalog/list/sections/:term/:dept/:course', async (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     if(request.params.term.toLowerCase() === 'all') {
         // SELECT DISTINCT CLASS_SECTION FROM records WHERE DEPT=? AND CATALOG_NBR=? ORDER BY CATALOG_NBR ASC', [request.params.dept, request.params.course])).map(a => a['CLASS_SECTION'])
     }
     else {
         // SELECT DISTINCT CLASS_SECTION FROM records WHERE TERM_CODE=? AND DEPT=? AND CATALOG_NBR=? ORDER BY CATALOG_NBR ASC, CLASS_SECTION ASC', [request.params.term, request.params.dept, request.params.course])).map(a => a['CLASS_SECTION'])
     }
-    res.json('Not yet implemented')
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/table/:term/:dept/:course/:section', async (req, res) => {
+app.get('/table/:term/:dept/:course/:section', async (req, res) => {
     // SELECT * FROM records WHERE TERM_CODE=? AND DEPT=? AND CATALOG_NBR=? AND CLASS_SECTION=? ORDER BY TERM_CODE ASC, CLASS_SECTION ASC', [request.params.term, request.params.dept, request.params.course, request.params.section]))
-    res.json('Not yet implemented')
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    
+    return res.json('Not yet implemented')
 })
 
-app.get('/api/table/:term/:dept/:course', async (req, res) => {
-    if(request.params.term.toLowerCase() === "all") {
-        // SELECT * FROM records WHERE DEPT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC', [request.params.dept, request.params.course]))
+app.get('/table/:term/:dept/:course', async (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    try {
+        if(req.params.term.toLowerCase() === "all") {
+            // SELECT * FROM records WHERE DEPT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC', [request.params.dept, request.params.course]))
+            let query = db.collection('records')
+            .where('DEPT', '==', req.params.dept.toUpperCase())
+            .where('CATALOG_NBR', '==', req.params.course.toUpperCase())
+            .orderBy('TERM_CODE', 'asc')
+            .orderBy('CLASS_SECTION', 'asc')
+    
+            let snapshot = await query.get();
+            //console.log(snapshot)
+            //console.log(snapshot.empty, snapshot.docs)
+            let docs = snapshot.empty ? [] : snapshot.docs.map(e => e.data())
+            return res.json(docs);
+        }
+        else {
+            // SELECT * FROM records WHERE TERM_CODE=? AND DEPT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC, CLASS_SECTION ASC', [request.params.term, request.params.dept, request.params.course]))
+            let query = db.collection('records')
+            .where('TERM_CODE', '==', Number(req.params.term))
+            .where('DEPT', '==', req.params.dept.toUpperCase())
+            .where('CATALOG_NBR', '==', req.params.course.toUpperCase())
+            .orderBy('CLASS_SECTION', 'asc')
+    
+            let snapshot = await query.get();
+            let docs = snapshot.empty ? [] : snapshot.docs.map(e => e.data())
+            return res.json(docs);
+        }
     }
-    else {
-        // SELECT * FROM records WHERE TERM_CODE=? AND DEPT=? AND CATALOG_NBR=? ORDER BY TERM_CODE ASC, CLASS_SECTION ASC', [request.params.term, request.params.dept, request.params.course]))
+    catch(err) {
+        console.log(err)
+        res.status(500).json('Error')
     }
-    res.json('Not yet implemented')
 })
 
 // Create "main" function to host all other top-level functions
 const main = express();
 main.use('/api', app);
 exports.main = functions.https.onRequest(main);
+
