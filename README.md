@@ -1,5 +1,5 @@
 # @cougargrades/web
-Analyze grade distribution data for past UH courses
+Analyze grade distribution data for past UH courses.
 
 ## Indev ⚠
 cougar-grades is in private early development and the master branch will get very dirty as a result. This means commits probably won't work if cloned and tried building because undocumented changes could've been made.
