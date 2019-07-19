@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
+    "watch": "nodemon -e js --exec \"clear; npm run lint\"",
     "serve": "firebase serve --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
@@ -20,7 +21,8 @@
   "devDependencies": {
     "eslint": "^5.12.0",
     "eslint-plugin-promise": "^4.0.1",
-    "firebase-functions-test": "^0.1.6"
+    "firebase-functions-test": "^0.1.6",
+    "nodemon": "^1.19.1"
   },
   "private": true
 }

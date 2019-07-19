@@ -21,6 +21,6 @@
         "function": "main"
       }
     ],
-    "predeploy":"./app/predeploy.sh"
+    "predeploy":"npm --prefix ./app run build"
   }
 }
