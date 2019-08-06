@@ -1,0 +1,32 @@
+@import "../_common/colors.scss";
+
+body {
+    //background-color: #FFF9D9;
+}
+h1.cg-hero {
+    line-height: 1.2;
+    color: $uh-red;
+    sup {
+        font-size: 0.5em;
+        top: -1em;
+    }
+}
+.jumbotron {
+    background: #fff;
+    margin-top: 1rem;
+
+    .btn-cg {
+        color: #212529;
+        background-color: $uh-gold;
+        border-color: $uh-gold;
+        
+        &:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: $uh-mustard;
+            border-color: $uh-ocher;
+        }
+        &:focus {
+            box-shadow: 0 0 0 0.2rem $uh-ocher;
+        }
+    }    
+}

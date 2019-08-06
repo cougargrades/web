@@ -1,0 +1,19 @@
+
+@import "../_common/colors.scss";
+
+body {
+    background-color: #fff;
+}
+
+nav.cg-navbar .navbar-nav a.nav-link {
+    display: inline-flex;
+    vertical-align: middle;
+    
+    svg.MuiSvgIcon-root.lock {
+        height: 16px;
+        width: 16px;
+        margin-top: calc(24px/2 - 16px/2); // centered vertically
+        line-height: 24px;
+        margin-right: 0.1em;
+    }
+}
