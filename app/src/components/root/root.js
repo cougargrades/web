@@ -14,6 +14,7 @@ import Home from '../home/home';
 import Courses from '../courses/courses';
 import About from '../about/about';
 
+import Info from '@material-ui/icons/Info';
 import Lock from '@material-ui/icons/Lock';
 
 class Root extends Component {
@@ -29,9 +30,12 @@ class Root extends Component {
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
-              <Nav.Link as={Link} to="/instructors" disabled={true}><Lock className="lock" />Instructors</Nav.Link>
-              <Nav.Link as={Link} to="/groups" disabled={true}><Lock className="lock"/>Groups</Nav.Link>
-              <Nav.Link as={Link} to="/about">About</Nav.Link>
+              <Nav.Link as={Link} to="/instructors" disabled={true}><Lock/>Instructors</Nav.Link>
+              <Nav.Link as={Link} to="/groups" disabled={true}><Lock/>Groups</Nav.Link>
+              
+            </Nav>
+            <Nav className="justify-content-end">
+              <Nav.Link as={Link} to="/about"><Info/>About</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
