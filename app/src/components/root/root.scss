@@ -21,3 +21,15 @@ nav.cg-navbar .navbar-nav a.nav-link {
         }
     }
 }
+
+// iOS fix
+
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+-webkit-appearance: none;
+border-radius: 0;
+}
