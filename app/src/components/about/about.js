@@ -13,14 +13,14 @@ class About extends Component {
         return (
             <Container className="about">
                 <Row>
-                    <Col xs={5} sm={3}>
+                    <Col sm={3}>
                         <picture className="shasta">
                             <source type="image/webp" srcSet="https://cougargrades.github.io/assets/uhp718cc_948x948.webp"/>
                             <source type="image/jpeg" srcSet="https://cougargrades.github.io/assets/uhp718cc_948x948.jpg"/>
                             <img src="https://cougargrades.github.io/assets/uhp718cc_948x948.jpg" title="Shasta III relaxing outside of the University Center. Special Collections, University of Houston Libraries. University of Houston Digital Library. Web. August 6, 2019. https://digital.lib.uh.edu/collection/p15195coll6/item/540."/>
                         </picture>
                     </Col>
-                    <Col xs={7} sm={9}>
+                    <Col sm={9}>
                         <h3>About</h3>
                         <hr/>
                         <p>
