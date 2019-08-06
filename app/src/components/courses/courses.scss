@@ -1,57 +1,5 @@
 
-@import "colors.scss";
-
-nav.cg-navbar .navbar-nav a.nav-link {
-    display: inline-flex;
-    vertical-align: middle;
-
-    i.material-icons {
-        font-size: 16px;
-        line-height: 24px;
-        margin-right: 0.1em;
-    }
-}
-
-#root {
-    padding-bottom: 50px;
-}
-
-#root div.noscript {
-    text-align: center;
-    animation: pulsing 10s infinite;
-
-    svg.spinner{
-        width: 30px;
-        height: 30px;
-    }
-
-    @keyframes pulsing {
-        0% {
-            opacity: 0.5;
-        }
-        50% {
-            opacity: 1.0;
-        }
-        100% {
-            opacity: 0.5;
-        }
-    }
-}
-#noscript_msg {
-    opacity: 0;
-    margin-top: 0.5rem;
-    font-style: italic;
-    text-align: center;
-    animation-name: noscript;
-    animation-duration: 3s;
-    animation-delay: 10s;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
-}
-@keyframes noscript {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+@import "../_common/colors.scss";
 
 form#search input[type=text] {
     text-transform: uppercase;
