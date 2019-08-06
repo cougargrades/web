@@ -1,8 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-//import logo from './logo.svg';
-import './AppRouter.scss';
 
 function Index() {
   return <h2>Home</h2>;
@@ -24,9 +21,13 @@ function Users() {
   return <h2>Users</h2>;
 }
 
-function AppRouter() {
-  return (
-    <Router>
+
+
+
+class Root extends Component {
+  render() {
+    return (
+      <Router>
       <div>
         <nav>
           <ul>
@@ -47,8 +48,8 @@ function AppRouter() {
         <Route path="/users/" component={Users} />
       </div>
     </Router>
-  );
+    );
+  }
 }
 
-export default AppRouter;
-
+export default Root;

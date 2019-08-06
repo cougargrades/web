@@ -2,7 +2,8 @@
   "functions": {
     "predeploy": [
       "npm --prefix \"$PROJECT_DIR/functions\" run lint"
-    ]
+    ],
+    "source": "functions"
   },
   "hosting": {
     "public": "./app/build/",
@@ -15,7 +16,8 @@
       {
         "source": "**",
         "destination": "/index.html"
-      }, {
+      },
+      {
         "source": "/api/**",
         "function": "main"
       }
@@ -23,25 +25,32 @@
     "headers": [
       {
         "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
-        "headers": [ {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        } ]
-      }, {
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(jpg|jpeg|gif|png)",
-        "headers": [ {
-          "key": "Cache-Control",
-          "value": "max-age=7200"
-        } ]
-      }, {
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=7200"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(css|js)",
-        "headers": [ {
-          "key": "Cache-Control",
-          "value": "max-age=31536000"
-        } ]
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
       }
     ],
-
-    "predeploy":"npm --prefix \"$PROJECT_DIR/app\" run build"
+    "predeploy": "npm --prefix \"$PROJECT_DIR/app\" run build"
   }
 }
