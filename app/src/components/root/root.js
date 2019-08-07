@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -40,11 +40,13 @@ class Root extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <Route path="/" exact component={Home} />
-        <Route path="/courses" exact component={Courses} />
-        {/* <Route path="/instructors" exact component={Home} /> */}
-        {/* <Route path="/groups" exact component={Home} /> */}
-        <Route path="/about" component={About} />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/courses" component={Courses} />
+          {/* <Route path="/instructors" exact component={Home} /> */}
+          {/* <Route path="/groups" exact component={Home} /> */}
+          <Route path="/about" component={About} />
+        </Switch>
       </Router>
       );
     }
