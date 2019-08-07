@@ -17,7 +17,7 @@ class About extends Component {
                         <picture className="shasta">
                             <source type="image/webp" srcSet="https://cougargrades.github.io/assets/uhp718cc_948x948.webp"/>
                             <source type="image/jpeg" srcSet="https://cougargrades.github.io/assets/uhp718cc_948x948.jpg"/>
-                            <img src="https://cougargrades.github.io/assets/uhp718cc_948x948.jpg" title="Shasta III relaxing outside of the University Center. Special Collections, University of Houston Libraries. University of Houston Digital Library. Web. August 6, 2019. https://digital.lib.uh.edu/collection/p15195coll6/item/540."/>
+                            <img src="https://cougargrades.github.io/assets/uhp718cc_948x948.jpg" alt="Shasta III" title="Shasta III relaxing outside of the University Center. Special Collections, University of Houston Libraries. University of Houston Digital Library. Web. August 6, 2019. https://digital.lib.uh.edu/collection/p15195coll6/item/540."/>
                         </picture>
                     </Col>
                     <Col sm={9}>

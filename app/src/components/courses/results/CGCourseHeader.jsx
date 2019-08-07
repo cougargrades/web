@@ -29,7 +29,7 @@ class CGCourseHeader extends React.Component{
             if(definitions[this.dept]['src']) {
                 return (
                     <>
-                    <img className="cg-icon" src={definitions[this.dept]['src']} />
+                    <img className="cg-icon" alt="icon" src={definitions[this.dept]['src']} />
                     {this.props.course}
                     </>
                 )

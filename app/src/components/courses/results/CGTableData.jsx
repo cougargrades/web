@@ -7,7 +7,7 @@ class CGTableData {
             this.table_data = null
         }
         else {
-            throw "Invalid constructor parameters"
+            throw new Error("Invalid constructor parameters")
         }
     }
 
@@ -58,7 +58,7 @@ class CGTableData {
     }
 
     async transpose() {
-        if(this.sql_data == null || this.sql_data.length == 0) {
+        if(this.sql_data === null || this.sql_data.length === 0) {
             return
         }
         this.table_data = {}
@@ -112,21 +112,21 @@ class CGTableData {
             return row.map((value, index) => {
 
                 // Special cases where default formatting isn't desired
-                if(this.used_columns[index] == 'TERM') {
+                if(this.used_columns[index] === 'TERM') {
                     // Sort by chonologically, not alphabetically
                     return {
                         v: String(this.sql_data[location]['TERM_CODE']), 
                         f: value
                     }
                 }
-                else if(this.used_columns[index] == 'CATALOG_NBR') {
+                else if(this.used_columns[index] === 'CATALOG_NBR') {
                     // Don't put commas in course numbers
                     return {
                         v: value,
                         f: String(value)
                     }
                 }
-                else if(this.used_columns[index] == 'INSTR_LAST_NAME') {
+                else if(this.used_columns[index] === 'INSTR_LAST_NAME') {
                     // Keep instructor info in one column
                     return `${value}, ${this.sql_data[location]['INSTR_FIRST_NAME']}`
                 }

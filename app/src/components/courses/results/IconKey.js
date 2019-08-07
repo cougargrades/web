@@ -22,7 +22,6 @@ export const definitions = {
     BZAN: null, // 
     CCS: null, // 
     CHEE: "build", // 
-    CHEM: null,
     CHEM: {src: "https://cdn.jsdelivr.net/npm/open-iconic@1.1.1/svg/beaker.svg"}, // 
     CHNS: "translate", // 
     CIS: null, // 

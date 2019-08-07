@@ -5,10 +5,6 @@ import CGCourseItem from './CGCourseItem.jsx';
 import { nameToId } from './MiscClasses.js';
 
 class CGCourseResults extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
         <div className="cg-content">

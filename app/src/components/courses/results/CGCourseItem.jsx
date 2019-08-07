@@ -22,7 +22,7 @@ class CGCourseItem extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.open != nextState.open || this.state.loading != nextState.loading);
+        return (this.state.open !== nextState.open || this.state.loading !== nextState.loading);
     }
 
     handleClick() {

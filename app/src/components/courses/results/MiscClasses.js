@@ -1,17 +1,17 @@
 export class Course {
     constructor(dept, catalog_number) {
-        if(typeof(dept) == 'string' && dept != "") {
-            if(typeof(catalog_number) == 'string' && catalog_number != "") {
+        if(typeof(dept) === 'string' && dept !== "") {
+            if(typeof(catalog_number) === 'string' && catalog_number !== "") {
                 this.dept = dept
                 this.catalog_number = catalog_number
             }
-            else if(typeof(catalog_number) == 'undefined') {
+            else if(typeof(catalog_number) === 'undefined') {
                 this.dept = dept.split(' ')[0]
                 this.catalog_number = dept.split(' ')[1]
             }
         }
         else {
-            throw "Invalid constructor parameters";
+            throw new Error("Invalid constructor parameters");
         }   
     }
 }
@@ -23,9 +23,7 @@ export class SQLData {
 }
 
 export class Undesired {
-    constructor() {
-        //
-    }
+    //
 }
 
 export function nameToId(course) {

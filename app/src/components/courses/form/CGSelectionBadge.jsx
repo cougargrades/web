@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 import anime from 'animejs/lib/anime.es.js';
 
 class CGSelectionBadge extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     // Prevents the re-rendering of badges that were already drawn
     shouldComponentUpdate(nextProps, nextState) { 

@@ -8,7 +8,7 @@ class CGChartData {
             this.chart_data = null
         }
         else {
-            throw "Invalid constructor parameters"
+            throw new Error("Invalid constructor parameters")
         }
     }
 
@@ -19,7 +19,7 @@ class CGChartData {
 
     // heavily inspired by: https://anex.us/grades/drawGraph.js
     async transpose() {
-        if(this.sql_data == null || this.sql_data.length == 0) {
+        if(this.sql_data === null || this.sql_data.length === 0) {
             return
         }
 

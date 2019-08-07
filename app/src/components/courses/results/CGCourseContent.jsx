@@ -32,7 +32,7 @@ class CGCourseContent extends React.Component {
 
         let course = new Course(this.props.course);
         let sql_data = new SQLData(await ((await fetch(`${process.env.REACT_APP_API_SERVER}/api/table/all/${course.dept}/${course.catalog_number}`)).json()));
-        if(sql_data.data.length == 0) {
+        if(sql_data.data.length === 0) {
             this.setState({
                 valid: false,
             }, this.props.onLoaded)
@@ -61,7 +61,7 @@ class CGCourseContent extends React.Component {
                         width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 ? '900px': '100%')}
                         height={window.innerWidth < 800 ? '350px' : '450px'}
                         chartType="LineChart"
-                        loader={<span className="spinner three-quarters-loader">🔄</span>}
+                        loader={<span className="spinner three-quarters-loader">&#x1F504;</span>} // 🔄
                         data={this.state.chart_data}
                         options={{
                             title: this.props.course,
