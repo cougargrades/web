@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Chart } from 'react-google-charts';
 
-import TableProcessor from './processor/TableProcessor';
+import Processor from './Processor';
 //import ChartProcessor from './processor/ChartProcessor';
 
 class CGCourseContent extends React.Component {
@@ -12,8 +12,8 @@ class CGCourseContent extends React.Component {
         this.state = {
             lock: false,
             valid: null,
-            table_data: null,
-            chart_data: null
+            tableData: null,
+            chartData: null
         };
     }
 
@@ -38,16 +38,13 @@ class CGCourseContent extends React.Component {
             // fetch the rest of the data
             let sectionsRef = courseRef.collection('sections');
             let sectionsSnap = await sectionsRef.get();
-            let tableProcessor = new TableProcessor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
-            //let chartProcessor = new ChartProcessor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
+            let processed = new Processor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
 
-            //await Promise.all(tableProcessor.process(), chartProcessor.process())
-
-            // this.setState({
-            //     valid: true,
-            //     table_data: [tableProcessor.table_data.columns, ...tableProcessor.table_data.rows],
-            //     chart_data: chartProcessor.chart_data
-            // }, this.props.onLoaded)
+            this.setState({
+                valid: true,
+                tableData: processed.tableDataFlat,
+                chartData: processed.chartData
+            }, this.props.onLoaded)
         }
         else {
             // The requested query doesn't exist
@@ -67,7 +64,7 @@ class CGCourseContent extends React.Component {
                         height={window.innerWidth < 800 ? '350px' : '450px'}
                         chartType="LineChart"
                         loader={<span className="spinner three-quarters-loader">&#x1F504;</span>} // 🔄
-                        data={this.state.chart_data}
+                        data={this.state.chartData}
                         options={{
                             title: this.props.course,
                             vAxis: {
@@ -98,7 +95,7 @@ class CGCourseContent extends React.Component {
                         width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 ? '900px': '100%')}
                         height={'100%'}
                         chartType="Table"
-                        data={this.state.table_data}
+                        data={this.state.tableData}
                         options={{
                             showRowNumber: true,
                             cssClassNames: {

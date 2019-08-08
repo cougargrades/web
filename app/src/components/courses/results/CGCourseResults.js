@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CGCourseItem from './CGCourseItem';
-import { nameToId } from './MiscClasses';
 
 class CGCourseResults extends React.Component {
     render() {
@@ -11,7 +10,7 @@ class CGCourseResults extends React.Component {
             <div className="accordion" id="accordion">
                 {this.props.selection.map(elem => {
                     return (
-                        <CGCourseItem key={nameToId(elem)} course={elem} parent="#accordion" firebase={this.props.firebase} db={this.props.db} />
+                        <CGCourseItem key={btoa(elem)} course={elem} parent="#accordion" firebase={this.props.firebase} db={this.props.db} />
                     )
                 })}
             </div>

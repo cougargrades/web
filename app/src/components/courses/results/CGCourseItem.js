@@ -6,16 +6,15 @@ import Collapse from 'react-bootstrap/Collapse'
 import anime from 'animejs/lib/anime.es.js';
 
 import CGCourseHeader from './CGCourseHeader';
-import { nameToId } from './MiscClasses';
 import CGCourseContent from './CGCourseContent';
 
 class CGCourseItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: nameToId(this.props.course),
-            heading: `CGCourseCollapsible_heading_${nameToId(this.props.course)}`,
-            content: `CGCourseCollapsible_content_${nameToId(this.props.course)}`,
+            id: btoa(this.props.course),
+            heading: `CGCourseCollapsible_heading_${btoa(this.props.course)}`,
+            content: `CGCourseCollapsible_content_${btoa(this.props.course)}`,
             open: true,
             loading: true
         };
@@ -26,8 +25,7 @@ class CGCourseItem extends React.Component {
     }
 
     handleClick() {
-        var self = this
-        console.log(this.state.open)
+        let self = this;
         if(this.state.open) {
             // Closing animation
             anime.timeline()

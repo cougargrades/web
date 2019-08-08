@@ -44,21 +44,18 @@ class Course {
         if(courseSnap.exists) {
             // Merge section data into course data, merge the compounded object into `this`
             Object.assign(this, Object.assign(courseSnap.data(), sectionSnap.data()));
-
-            // Extrapolate extra data
         }
     }
 
     /**
-     * Expands courseArray to have indepdent sections for sections with multiple instructors
+     * Returns an expanded deep copy of courseArray which has indepdent sections for sections with multiple instructors
      * @param {Course} courseArray - An array of courses 
      */
     static expand(courseArray) {
-        //console.log(courseArray)
+        let t = courseArray.slice()
+        t.forEach(item => { delete item.instructors })
 
-        courseArray.forEach(item => { delete item.instructors })
-
-        let product = JSON.parse(JSON.stringify(courseArray))
+        let product = JSON.parse(JSON.stringify(t))
         // expands sections
         for(let i = 0; i < product.length; i++) {
             // if a course with the same term and sectionNumber has > 1 occurrences
