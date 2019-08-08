@@ -11,14 +11,14 @@ class Courses extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        selection: []
+            selection: []
         };
     }
 
     handleQuery(selection) {
         console.log('query handled: ',selection)
         this.setState({
-        selection: selection.slice()
+            selection: selection.slice()
         })
     }
 
@@ -26,7 +26,7 @@ class Courses extends Component {
         return (
         <Container>
             <CGSearchForm onQuery={(val) => this.handleQuery(val)}/>
-            <CGCourseResults selection={this.state.selection} />
+            <CGCourseResults selection={this.state.selection} firebase={this.props.firebase} db={this.props.db} />
         </Container>
         );
     }

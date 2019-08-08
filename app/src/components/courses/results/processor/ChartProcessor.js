@@ -1,7 +1,7 @@
 
 import { SQLData } from './MiscClasses';
 
-class CGChartData {
+class ChartProcessor {
     constructor(sqldata) {
         if(sqldata instanceof SQLData) {
             this.sql_data = sqldata.data
@@ -89,4 +89,4 @@ class CGChartData {
     }
 }
 
-export default CGChartData;
+export default ChartProcessor;

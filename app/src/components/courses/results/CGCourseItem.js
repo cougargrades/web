@@ -74,7 +74,7 @@ class CGCourseItem extends React.Component {
             <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
-                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()}/>
+                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
                 </div>
                 </div>
             </Collapse>

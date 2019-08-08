@@ -62,7 +62,7 @@ class Home extends Component {
         return (
             <Container>
                 <Jumbotron>
-                    <h1 className="cg-hero">CougarGrades.io <sup>&beta;</sup></h1>
+                    <h1 className="cg-hero">CougarGrades.io <sup>&beta;eta</sup></h1>
                     <p className="lead">Analyze grade distribution data for any past University of Houston course</p>
                     <hr className="my-4" />
                     <p><em>Not affiliated with the University of Houston.</em></p>

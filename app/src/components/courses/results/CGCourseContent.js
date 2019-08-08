@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Chart } from 'react-google-charts';
 
-import CGTableData from './CGTableData';
-import CGChartData from './CGChartData';
-import { Course, SQLData } from './MiscClasses';
+import TableProcessor from './processor/TableProcessor';
+//import ChartProcessor from './processor/ChartProcessor';
 
 class CGCourseContent extends React.Component {
     constructor(props) {
@@ -13,7 +12,6 @@ class CGCourseContent extends React.Component {
         this.state = {
             lock: false,
             valid: null,
-            sql_data: [],
             table_data: null,
             chart_data: null
         };
@@ -25,32 +23,39 @@ class CGCourseContent extends React.Component {
 
     // Only called once when created, not every render
     async componentDidMount() {
+        let db = this.props.db;
         console.log(`CGCouseContent#componentDidMount() -> ${this.props.course}`)
         this.setState({
             lock: true
         })
 
-        let course = new Course(this.props.course);
-        let sql_data = new SQLData(await ((await fetch(`${process.env.REACT_APP_API_SERVER}/api/table/all/${course.dept}/${course.catalog_number}`)).json()));
-        if(sql_data.data.length === 0) {
-            this.setState({
-                valid: false,
-            }, this.props.onLoaded)
+        // Query for requested course
+        let courseRef = db.collection('catalog').doc(`${this.props.course}`);
+        let courseSnap = await courseRef.get();
+
+        // Test for existence
+        if(courseSnap.exists) {
+            // fetch the rest of the data
+            let sectionsRef = courseRef.collection('sections');
+            let sectionsSnap = await sectionsRef.get();
+            let tableProcessor = new TableProcessor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
+            //let chartProcessor = new ChartProcessor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
+
+            //await Promise.all(tableProcessor.process(), chartProcessor.process())
+
+            // this.setState({
+            //     valid: true,
+            //     table_data: [tableProcessor.table_data.columns, ...tableProcessor.table_data.rows],
+            //     chart_data: chartProcessor.chart_data
+            // }, this.props.onLoaded)
         }
         else {
-            let table_data = (await (new CGTableData(sql_data)).process()).table_data;
-            let chart_data = (await (new CGChartData(sql_data)).process()).chart_data;
-
+            // The requested query doesn't exist
             this.setState({
-                valid: true,
-                sql_data: sql_data,
-                table_data: [table_data.columns, ...table_data.rows],
-                chart_data: chart_data
+                valid: false
             }, this.props.onLoaded)
         }
     }
-
-
 
     render() {
         console.log(`CGCouseContent#render() -> ${this.props.course}`)

@@ -5,19 +5,25 @@ body {
     background-color: #fff;
 }
 
-nav.cg-navbar .navbar-nav a.nav-link {
-    display: inline-flex;
-    vertical-align: middle;
-    
-    svg.MuiSvgIcon-root {
-        height: 16px;
-        width: 16px;
-        margin-top: calc(1.5rem/2 - 16px/2); // centered vertically
-        line-height: 24px;
-        margin-right: 0.1em;
+nav.cg-navbar {
+    .beta {
+        color: $uh-red;
+    }
 
-        @media (min-width: 992px) {
-            margin-top: calc(1.5rem/2 - 16px/2 + 1px);
+    .navbar-nav a.nav-link {
+        display: inline-flex;
+        vertical-align: middle;
+        
+        svg.MuiSvgIcon-root {
+            height: 16px;
+            width: 16px;
+            margin-top: calc(1.5rem/2 - 16px/2); // centered vertically
+            line-height: 24px;
+            margin-right: 0.1em;
+    
+            @media (min-width: 992px) {
+                margin-top: calc(1.5rem/2 - 16px/2 + 1px);
+            }
         }
     }
 }

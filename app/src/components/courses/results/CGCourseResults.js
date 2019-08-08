@@ -11,7 +11,7 @@ class CGCourseResults extends React.Component {
             <div className="accordion" id="accordion">
                 {this.props.selection.map(elem => {
                     return (
-                        <CGCourseItem key={nameToId(elem)} course={elem} parent="#accordion" />
+                        <CGCourseItem key={nameToId(elem)} course={elem} parent="#accordion" firebase={this.props.firebase} db={this.props.db} />
                     )
                 })}
             </div>
