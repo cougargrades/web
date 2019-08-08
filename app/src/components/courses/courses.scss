@@ -199,9 +199,7 @@ div.cg-content {
         z-index: 1;
         
         div.cg-charts {
-            //min-width: 400px;
             .cg-chart-wrap, .cg-table-wrap {
-                //width: 100%;
                 div {
                     display: inline-block
                 }
@@ -232,6 +230,18 @@ div.cg-content {
     .accordion > .card:last-of-type:first-of-type {
         border-radius: 0.25rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    svg.MuiCircularProgress-svg {
+        vertical-align: unset;
+    }
+
+    .MuiCircularProgress-colorPrimary {
+        color: $uh-red;
+    }
+
+    .MuiCircularProgress-colorSecondary {
+        color: $uh-grey;
     }
 
     span.spinner {

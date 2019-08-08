@@ -5,6 +5,8 @@ import Collapse from 'react-bootstrap/Collapse'
 
 import anime from 'animejs/lib/anime.es.js';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import CGCourseHeader from './CGCourseHeader';
 import CGCourseContent from './CGCourseContent';
 
@@ -65,14 +67,14 @@ class CGCourseItem extends React.Component {
                     <CGCourseHeader course={this.props.course} />
                 </h5>
                 {(() => {
-                    if(this.state.loading) return <span className="rhs spinner three-quarters-loader">🔄</span>
+                    if(this.state.loading) return <CircularProgress className="rhs" variant="indeterminate" size={20} color="secondary" />
                     return this.state.open ? <i className="material-icons rhs">arrow_drop_down</i> : <i className="material-icons rhs">arrow_left</i>
                 })()}
             </div>
             <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
-                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
+                    <CGCourseContent course={this.props.course} parentId={this.state.content} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
                 </div>
                 </div>
             </Collapse>

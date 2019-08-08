@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { Chart } from 'react-google-charts';
 
 import Processor from './Processor';
@@ -29,6 +31,8 @@ class CGCourseContent extends React.Component {
             lock: true
         })
 
+        console.time('firestore');
+
         // Query for requested course
         let courseRef = db.collection('catalog').doc(`${this.props.course}`);
         let courseSnap = await courseRef.get();
@@ -38,6 +42,8 @@ class CGCourseContent extends React.Component {
             // fetch the rest of the data
             let sectionsRef = courseRef.collection('sections');
             let sectionsSnap = await sectionsRef.get();
+            console.timeEnd('firestore');
+            console.time('processor')
             let processed = new Processor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
 
             this.setState({
@@ -45,6 +51,7 @@ class CGCourseContent extends React.Component {
                 tableData: processed.tableDataFlat,
                 chartData: processed.chartData
             }, this.props.onLoaded)
+            console.timeEnd('processor')
         }
         else {
             // The requested query doesn't exist
@@ -56,14 +63,14 @@ class CGCourseContent extends React.Component {
 
     render() {
         console.log(`CGCouseContent#render() -> ${this.props.course}`)
-        if(this.state.valid) return (
+        if(this.state.valid === null || this.state.valid === true) return (
             <div className="cg-charts">
                 <div className="cg-chart-wrap">
                     <Chart 
                         width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 ? '900px': '100%')}
                         height={window.innerWidth < 800 ? '350px' : '450px'}
                         chartType="LineChart"
-                        loader={<span className="spinner three-quarters-loader">&#x1F504;</span>} // 🔄
+                        loader={<CircularProgress size={25} variant="indeterminate" />}
                         data={this.state.chartData}
                         options={{
                             title: this.props.course,
@@ -88,6 +95,15 @@ class CGCourseContent extends React.Component {
                             pointSize: 5,
                             interpolateNulls: true //lines between point gaps
                         }}
+                        chartEvents={[
+                            {
+                                eventName: 'error',
+                                callback: (event) => {
+                                    // prevent ugly red box when there's no data yet on first-mount
+                                    event.google.visualization.errors.removeError(event.eventArgs[0].id)
+                                }
+                            }
+                        ]}
                     />
                 </div>
                 <div className="cg-table-wrap">
@@ -110,13 +126,18 @@ class CGCourseContent extends React.Component {
                             },
                             sortColumn: 0
                         }}
+                        chartEvents={[
+                            {
+                                eventName: 'error',
+                                callback: (event) => {
+                                    // prevent ugly red box when there's no data yet on first-mount
+                                    event.google.visualization.errors.removeError(event.eventArgs[0].id)
+                                }
+                            }
+                        ]}
                     />
                 </div>
             </div>
-        );
-
-        if(this.state.valid === null) return (
-            <span className="spinner three-quarters-loader">🔄</span>
         );
 
         return (<p>A course could not be found by that name</p>);
