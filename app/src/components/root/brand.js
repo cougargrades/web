@@ -6,7 +6,7 @@ import School from '@material-ui/icons/School';
 
 class Brand extends Component {
     render() {
-        if(this.props.location.pathname === '/')
+        if(this.props.location.pathname === '/' || this.props.location.pathname === '/about')
             return <School />;
         else
             return <>CougarGrades.io <sup className="beta">&beta;eta</sup></>;

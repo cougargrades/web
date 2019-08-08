@@ -21,14 +21,47 @@ class About extends Component {
                         </picture>
                     </Col>
                     <Col sm={9}>
-                        <h3>About</h3>
-                        <hr/>
-                        <p>
-                            Developed by Austin Jackson with contributions from Shay Arratia.<br/>
-                            Powered by Firebase, React, Sass, Bootstrap, AnimeJS.
-                        </p>
-                        <p>Front-end code, database processor, FOIA data, and more, published on Github.</p>
-                        <Button href="https://github.com/cougargrades" variant="primary">Github</Button>
+                        <h2>CougarGrades <sup className="beta">&beta;eta</sup></h2>
+                        <hr />
+                        <p className="lead">
+                            Developed by Austin Jackson<br/>
+                            Contributions from Shay Arratia
+                            </p>
+                        <p><em>Version: {process.env.REACT_APP_VERSION}, Commit: {process.env.REACT_APP_GIT_SHA}</em></p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                    <h4>Resources</h4>
+                    <p>Front-end code, database processor, <abbr title="Freedom of Information Act">FOIA</abbr> data, and more, are published on Github.</p>
+                    <p><Button href="https://github.com/cougargrades" variant="primary">Github</Button></p>
+
+                    <h4>Acknowledgement</h4>
+                    <p>Some other great projects we found inspiration in:</p>
+                    <ul>
+                        <li>anex.us/grades/ (author unknown)</li>
+                        <li>AggieSchduler (<a href="https://github.com/jake-leland">@jake-leland</a>)</li>
+                        <li>Good-Bull-Schedules (<a href="https://github.com/SaltyQuetzals">@SaltyQuetzals</a>)</li>
+                    </ul>
+
+                    <h4>Technologies</h4>
+                    <p>CougarGrades is powered by Google Firebase, ReactJS, Bootstrap, Sass, Google Charts API, AnimeJS, and more.</p>
+
+                    <h4>Authors</h4>
+                    <p>You can visit more of our work on our websites.</p>
+                    <p>
+                        <Button href="https://austinj.net" variant="dark">Austin Jackson</Button>&nbsp;
+                        <Button href="#" variant="dark" disabled>Shay Arratia</Button>
+                    </p>
+
+                    <h5>Notice of Non-Affiliation and Disclaimer</h5>
+                    <p>
+                        <em>
+                        We are not affiliated, associated, authorized, endorsed by, or in any way officially connected with University of Houston, or any of its subsidiaries or its affiliates.
+                        The official University of Houston website can be found at http://www.uh.edu.
+                        The name “University of Houston” as well as related names, marks, emblems and images are registered trademarks of their respective owners.
+                        </em>
+                    </p>
                     </Col>
                 </Row>
             </Container>
