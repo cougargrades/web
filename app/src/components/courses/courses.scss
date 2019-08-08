@@ -20,6 +20,7 @@ form#search .btn-cg {
     color: #fff;
     background-color: $uh-red;
     border-color: $uh-red;
+    -webkit-appearance: none;
 
     &:not(:disabled):not(.disabled):active {
         color: #fff;

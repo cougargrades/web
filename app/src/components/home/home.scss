@@ -19,6 +19,7 @@ h1.cg-hero {
         color: #212529;
         background-color: $uh-gold;
         border-color: $uh-gold;
+        -webkit-appearance: none;
         
         &:not(:disabled):not(.disabled):active {
             color: #212529;
