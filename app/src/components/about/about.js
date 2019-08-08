@@ -27,7 +27,10 @@ class About extends Component {
                             Developed by Austin Jackson<br/>
                             Contributions from Shay Arratia
                             </p>
-                        <p><em>Version: {process.env.REACT_APP_VERSION}, Commit: {process.env.REACT_APP_GIT_SHA}</em></p>
+                        <p><em>
+                            Version: {process.env.REACT_APP_VERSION}, Commit: <a href={`https://github.com/cougargrades/web/commit/${process.env.REACT_APP_GIT_SHA}`}>{process.env.REACT_APP_GIT_SHA}</a> <br/>
+                            Build date: {new Date(process.env.REACT_APP_BUILD_DATE).toLocaleString()}
+                        </em></p>
                     </Col>
                 </Row>
                 <Row>
