@@ -68,7 +68,7 @@ class CGCourseItem extends React.Component {
                 </h5>
                 {(() => {
                     if(this.state.loading) return <span className="rhs spinner three-quarters-loader">🔄</span>
-                    return this.state.open ? <i className="material-icons rhs">unfold_less</i> : <i className="material-icons rhs">unfold_more</i>
+                    return this.state.open ? <i className="material-icons rhs">arrow_drop_down</i> : <i className="material-icons rhs">arrow_left</i>
                 })()}
             </div>
             <Collapse in={this.state.open} timeout={300}>
