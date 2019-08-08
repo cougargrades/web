@@ -9,7 +9,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import './root.scss';
 
-import Brand  from './brand';
+import Brand from './brand';
+import NotFound from './notfound';
 import Home from '../home/home';
 import Courses from '../courses/courses';
 import About from '../about/about';
@@ -72,6 +73,7 @@ class Root extends Component {
                 {/* <Route path="/instructors" exact component={Home} /> */}
                 {/* <Route path="/groups" exact component={Home} /> */}
                 <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />
+                <Route component={NotFound} />
             </Switch>
         </Router>
         );
