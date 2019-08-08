@@ -5,9 +5,9 @@ import Collapse from 'react-bootstrap/Collapse'
 
 import anime from 'animejs/lib/anime.es.js';
 
-import CGCourseHeader from './CGCourseHeader.jsx';
-import { nameToId } from './MiscClasses.js';
-import CGCourseContent from './CGCourseContent.jsx';
+import CGCourseHeader from './CGCourseHeader';
+import { nameToId } from './MiscClasses';
+import CGCourseContent from './CGCourseContent';
 
 class CGCourseItem extends React.Component {
     constructor(props) {

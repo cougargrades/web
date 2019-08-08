@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { definitions } from './IconKey.js';
+import { definitions } from './IconKey';
 
 class CGCourseHeader extends React.Component{
     constructor(props) {

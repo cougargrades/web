@@ -1,4 +1,4 @@
-import { SQLData, Undesired } from './MiscClasses.js';
+import { SQLData, Undesired } from './MiscClasses';
 
 class CGTableData {
     constructor(sqldata) {

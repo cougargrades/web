@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Chart } from 'react-google-charts';
 
-import CGTableData from './CGTableData.jsx';
-import CGChartData from './CGChartData.jsx';
-import { Course, SQLData } from './MiscClasses.js';
+import CGTableData from './CGTableData';
+import CGChartData from './CGChartData';
+import { Course, SQLData } from './MiscClasses';
 
 class CGCourseContent extends React.Component {
     constructor(props) {

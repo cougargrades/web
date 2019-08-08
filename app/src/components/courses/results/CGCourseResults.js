@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CGCourseItem from './CGCourseItem.jsx';
-import { nameToId } from './MiscClasses.js';
+import CGCourseItem from './CGCourseItem';
+import { nameToId } from './MiscClasses';
 
 class CGCourseResults extends React.Component {
     render() {

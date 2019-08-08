@@ -1,5 +1,5 @@
 
-import { SQLData } from './MiscClasses.js';
+import { SQLData } from './MiscClasses';
 
 class CGChartData {
     constructor(sqldata) {

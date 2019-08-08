@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 
 import PropTypes from 'prop-types';
 
-import CGSelectionBadge from './CGSelectionBadge.jsx';
+import CGSelectionBadge from './CGSelectionBadge';
 
 class CGSearchForm extends React.Component {
     constructor(props) {

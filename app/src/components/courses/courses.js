@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 
 import './courses.scss';
 
-import CGSearchForm from './form/CGSearchForm.jsx';
-import CGCourseResults from './results/CGCourseResults.jsx';
+import CGSearchForm from './form/CGSearchForm';
+import CGCourseResults from './results/CGCourseResults';
 
 class Courses extends Component {
     constructor(props) {
