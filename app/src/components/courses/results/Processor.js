@@ -145,6 +145,8 @@ class Processor {
      */
     get chartData() {
         let expanded = Course.expand(this.sections);
+        // Sorts results chronologically
+        expanded.sort((a,b) => a['term'] - b['term'])
 
         //make column headings for chart
         let cols = new Set() //ensure each prof only appears once in columns
