@@ -130,7 +130,8 @@ class CGCourseContent extends React.Component {
                                 tableCell: 'tableCell',
                                 rowNumberCell: 'rowNumberCell'
                             },
-                            sortColumn: 0
+                            sortColumn: 0,
+                            sortAscending: false
                         }}
                         chartEvents={[
                             {
