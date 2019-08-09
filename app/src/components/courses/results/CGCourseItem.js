@@ -27,7 +27,6 @@ class CGCourseItem extends React.Component {
     }
 
     handleClick() {
-        let self = this;
         if(this.state.open) {
             // Closing animation
             anime.timeline()
@@ -37,13 +36,13 @@ class CGCourseItem extends React.Component {
                 easing: 'easeInOutSine',
                 translateY: -(document.getElementById(this.state.content).clientHeight) // px
             })
-            .finished.then(function(){
-                self.setState({open: !self.state.open})
+            .finished.then(() => {
+                this.setState({open: !this.state.open})
             })
         }
         else {
             // Opening animation
-            self.setState({open: !self.state.open}, function(){
+            this.setState({open: !this.state.open}, () => {
                 anime.timeline()
                 .add({
                     targets: `#${this.state.content}`,
@@ -74,7 +73,7 @@ class CGCourseItem extends React.Component {
             <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
-                    <CGCourseContent course={this.props.course} parentId={this.state.content} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
+                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
                 </div>
                 </div>
             </Collapse>

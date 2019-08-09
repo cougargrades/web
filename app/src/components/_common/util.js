@@ -23,6 +23,15 @@ class Util {
         }
         
     }
+
+    /**
+     * Use like: `await sleep(1000)`
+     * From: https://stackoverflow.com/a/39914235
+     * @param {number} ms - milliseconds to sleep
+     */
+    static sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
 
 export default Util;

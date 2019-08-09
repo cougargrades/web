@@ -6,13 +6,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Chart } from 'react-google-charts';
 
 import Processor from './Processor';
+import Util from '../../_common/util';
 //import ChartProcessor from './processor/ChartProcessor';
 
 class CGCourseContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lock: false,
             valid: null,
             tableData: null,
             chartData: null
@@ -27,11 +27,8 @@ class CGCourseContent extends React.Component {
     async componentDidMount() {
         let db = this.props.db;
         console.log(`CGCouseContent#componentDidMount() -> ${this.props.course}`)
-        this.setState({
-            lock: true
-        })
 
-        console.time('firestore');
+        console.time(`firestore (${this.props.course})`);
 
         // Query for requested course
         let courseRef = db.collection('catalog').doc(`${this.props.course}`);
@@ -39,11 +36,12 @@ class CGCourseContent extends React.Component {
 
         // Test for existence
         if(courseSnap.exists) {
+            //console.log(`Found ${this.props.course}`)
             // fetch the rest of the data
             let sectionsRef = courseRef.collection('sections');
             let sectionsSnap = await sectionsRef.get();
-            console.timeEnd('firestore');
-            console.time('processor')
+            console.timeEnd(`firestore (${this.props.course})`);
+            console.time(`processor (${this.props.course})`)
             let processed = new Processor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
 
             this.setState({
@@ -51,14 +49,22 @@ class CGCourseContent extends React.Component {
                 tableData: processed.tableDataFlat,
                 chartData: processed.chartData
             }, this.props.onLoaded)
-            console.timeEnd('processor')
+            console.timeEnd(`processor (${this.props.course})`)
         }
         else {
             // The requested query doesn't exist
+            //console.log(`DoesNotExist ${this.props.course}`)
+            console.timeEnd(`firestore (${this.props.course})`);
+            console.log(`processor (${this.props.course}): N/A - timer cancelled`)
+            await Util.sleep(2000); // this fucking fixes it for some reason
             this.setState({
                 valid: false
             }, this.props.onLoaded)
         }
+    }
+
+    componentWillUnmount() {
+        console.log(`CGCouseContent#componentWillUnmount() -> ${this.props.course}`)
     }
 
     render() {
@@ -139,7 +145,6 @@ class CGCourseContent extends React.Component {
                 </div>
             </div>
         );
-
         return (<p>A course could not be found by that name</p>);
     }
 }
