@@ -29,7 +29,7 @@ class About extends Component {
                             </p>
                         <p><em>
                             Version: {process.env.REACT_APP_VERSION}, Commit: <a href={`https://github.com/cougargrades/web/commit/${process.env.REACT_APP_GIT_SHA}`}>{process.env.REACT_APP_GIT_SHA}</a> <br/>
-                            Build date: {new Date(process.env.REACT_APP_BUILD_DATE).toLocaleString()}
+                            Build date: {new Date(process.env.REACT_APP_BUILD_DATE).toLocaleDateString()}
                         </em></p>
                     </Col>
                 </Row>
