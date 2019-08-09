@@ -22,7 +22,7 @@ class Processor {
         let expanded = Course.expand(this.sections);
 
         return {
-            columns: (function(){
+            columns: (() => {
                 return Object.keys(expanded[0])
                         // only keep desired keys
                         .filter(key => self.enabledColumns.includes(key))
@@ -38,7 +38,7 @@ class Processor {
                             };
                         });
             })(),
-            rows: (function(){
+            rows: (() => {
                 return expanded
                         // Transpose Object array to nested arrays
                         // Remove unwanted properties from every row
@@ -48,10 +48,10 @@ class Processor {
                                 // sort columns in the desired order
                                 // https://stackoverflow.com/a/44063445
                                 .sort((a,b) => self.enabledColumns.indexOf(a) - self.enabledColumns.indexOf(b))
-                                // if key is desired, replace with value. if not desired, replace with null.
-                                .map(key => self.enabledColumns.includes(key) ? row[key] : null)
-                                // filter out null values
-                                .filter(row => row !== null);
+                                // if key is desired, replace with value. if not desired, replace with signalValue.
+                                .map(key => self.enabledColumns.includes(key) ? row[key] : this.signalValue)
+                                // filter out occurences of signalValue values
+                                .filter(row => row !== this.signalValue);
                         })
                         // Format specific columns to better use the Google Chart
                         // Special cases where default formatting isn't desired
@@ -127,6 +127,14 @@ class Processor {
             "Q",
             "semesterGPA"
         ]
+    }
+
+    /**
+     * Values to be removed are replaced with this (hopefully) unique value that won't accidentally be genuine data (because the dataset can sometimes include nulls)
+     */
+    get signalValue() {
+        // md5("io.cougargrades.web.Signal")
+        return '6f953e48a019788a6630018acfbe9c93';
     }
 
 
