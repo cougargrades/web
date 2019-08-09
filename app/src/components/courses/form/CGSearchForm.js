@@ -125,7 +125,7 @@ class CGSearchForm extends React.Component {
     componentDidMount() {
         // Automatically search for URLs with the courses specified
 
-        let hash = window.location.hash ? window.location.hash.split('#!')[1].split(',').map(e => decodeURI(e)) : null
+        let hash = window.location.hash && window.location.hash.startsWith('#!') ? window.location.hash.split('#!')[1].split(',').map(e => decodeURI(e)) : null
         if(hash !== null) {
             this.setState({
                 selection: hash.slice()
