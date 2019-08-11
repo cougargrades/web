@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "@cougargrades/web",
   "version": "0.3.3",
   "private": true,
   "dependencies": {
