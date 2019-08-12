@@ -37,7 +37,7 @@ class About extends Component {
                     <Col>
                     <h4>Resources</h4>
                     <p>Front-end code, database processor, <abbr title="Freedom of Information Act">FOIA</abbr> data, public HTTP API, and more, are published on Github.</p>
-                    <p><Button href="https://github.com/cougargrades" variant="primary">Github</Button></p>
+                    <p><Button href="https://github.com/cougargrades" variant="primary">Github</Button>&nbsp;<Button href="https://cougargrades.github.io/api/" variant="primary">Public API</Button></p>
 
                     <h4>Acknowledgement</h4>
                     <p>Some other great projects we found inspiration in:</p>
