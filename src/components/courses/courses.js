@@ -28,10 +28,9 @@ class Courses extends Component {
             <div>
                 <h2>Course search</h2>
                 <p>
-                    Type in the name of the course you're interested in and press <em>Add to selection</em>. 
+                    Type in the name of the course you're interested in and press <em>Add to selection</em>.
                     This will generate a graph of the average GPA of past classes over time, identified by the instructor.
-                    An interactive table of the data used will also be shown below that includes: the semester of the class, the section number, 
-                    the name of the instructor (Lastname, Firstname), the number of A-Fs received in the course, the number of Withdraws, and the average GPA of the class.
+                    An interactive table will also be generated that shows more detailed information, such as the section number of the class, the number of As, Bs, Cs, and withdraws.
                 </p>
             </div>
             <CGSearchForm onQuery={(val) => this.handleQuery(val)}/>
