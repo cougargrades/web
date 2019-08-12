@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,6 +13,7 @@ import Brand from './brand';
 import NotFound from './notfound';
 import Home from '../home/home';
 import Courses from '../courses/courses';
+import IndividualCourse from '../courses/individual';
 import About from '../about/about';
 
 import Info from '@material-ui/icons/Info';
@@ -70,6 +71,7 @@ class Root extends Component {
             <Switch>
                 <Route path="/" exact component={() => <Home firebase={this.firebase} db={this.db} />} />
                 <Route path="/courses" component={() => <Courses firebase={this.firebase} db={this.db} />} />
+                <Route path="/c/:name" component={({ history, match }) => <IndividualCourse firebase={this.firebase} db={this.db} course={decodeURI(match.params.name)} history={history} />} />
                 {/* <Route path="/instructors" exact component={Home} /> */}
                 {/* <Route path="/groups" exact component={Home} /> */}
                 <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />

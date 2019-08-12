@@ -48,7 +48,9 @@ class CGCourseContent extends React.Component {
                 valid: true,
                 tableData: processed.tableDataFlat,
                 chartData: processed.chartData
-            }, this.props.onLoaded)
+            }, () => {
+                this.props.onLoaded(processed.sections[0])
+            })
             console.timeEnd(`processor (${this.props.course})`)
         }
         else {
@@ -59,7 +61,9 @@ class CGCourseContent extends React.Component {
             await Util.sleep(2000); // this fucking fixes it for some reason
             this.setState({
                 valid: false
-            }, this.props.onLoaded)
+            }, () => {
+                this.props.onLoaded(null)
+            })
         }
     }
 
@@ -73,15 +77,15 @@ class CGCourseContent extends React.Component {
             <div className="cg-charts">
                 <div className="cg-chart-wrap">
                     <Chart 
-                        width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 ? '900px': '100%')}
+                        width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 && this.props.parent === 'collapsible' ? '900px' : '100%')}
                         height={window.innerWidth < 800 ? '350px' : '450px'}
                         chartType="LineChart"
                         loader={<CircularProgress size={25} variant="indeterminate" />}
                         data={this.state.chartData}
                         options={{
-                            title: this.props.course,
+                            title: `${this.props.course} Average GPA Over Time by Instructor`,
                             vAxis: {
-                                title: 'GPA',
+                                title: 'Average GPA',
                                 gridlines: {
                                     count: -1 //auto
                                 },
@@ -114,9 +118,10 @@ class CGCourseContent extends React.Component {
                 </div>
                 <div className="cg-table-wrap">
                     <Chart 
-                        width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 ? '900px': '100%')}
+                        width={window.innerWidth < 600 ? '500px' : (window.innerWidth > 1000 && this.props.parent === 'collapsible' ? '900px': '100%')}
                         height={'100%'}
                         chartType="Table"
+                        className={`react-google-charts-table ${this.props.parent}`}
                         data={this.state.tableData}
                         options={{
                             showRowNumber: true,

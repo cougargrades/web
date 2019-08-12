@@ -108,7 +108,7 @@ class Processor {
             "C": "C",
             "D": "D",
             "F": "F",
-            "Q": "Q",
+            "Q": "W",
             "semesterGPA": "GPA",
             "term": "Term code"
         }

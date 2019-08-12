@@ -1,6 +1,18 @@
 
 @import "../_common/colors.scss";
 
+.container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+form#search .form-label, .cg-selected h5 {
+    font-size: 1.25rem;
+    //margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+} 
+
 form#search input[type=text] {
     text-transform: uppercase;
 
@@ -51,6 +63,7 @@ div.cg-selected {
     span.badge {
         background-color: #cc2541;
         font-size: 1rem;
+        line-height: 1.1rem;
         margin-right: 0.1rem;
         margin-bottom: 0.5rem;
         display: inline-flex;
@@ -59,9 +72,10 @@ div.cg-selected {
         position: relative;
         user-select: none;
     
-        i.material-icons {
-            font-size: 1rem;
-            line-height: 1rem;
+        svg.MuiSvgIcon-root {
+            height: 1rem;
+            width: 1rem;
+            margin-top: 0.05rem;
             margin-left: 0.35rem;
     
             &:hover {
@@ -111,15 +125,15 @@ div.cg-content {
             user-select: none;
             /* font-weight: 400; */
     
-            i.material-icons {
-                font-size: 24px;
-                line-height: 24px;
+            svg.cg-icon {
+                height: 24px;
+                width: 24px;
                 margin-right: 0.35rem;
             }
             img.cg-icon {
-                height: 16px;
+                width: 20px;
                 margin-top: 4px;
-                margin-right: 0.35rem;
+                margin-right: calc(0.35rem + 4px);
                 padding-left: 0.25rem;
             }
         }

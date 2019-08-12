@@ -7,8 +7,14 @@ import anime from 'animejs/lib/anime.es.js';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowLeft from '@material-ui/icons/ArrowLeft';
+import LinkIcon from '@material-ui/icons/Link';
+
 import CGCourseHeader from './CGCourseHeader';
 import CGCourseContent from './CGCourseContent';
+
+import { Link } from "react-router-dom";
 
 class CGCourseItem extends React.Component {
     constructor(props) {
@@ -18,7 +24,8 @@ class CGCourseItem extends React.Component {
             heading: `CGCourseCollapsible_heading_${btoa(this.props.course)}`,
             content: `CGCourseCollapsible_content_${btoa(this.props.course)}`,
             open: true,
-            loading: true
+            loading: true,
+            course: {}
         };
     }
 
@@ -54,8 +61,11 @@ class CGCourseItem extends React.Component {
         }
     }
 
-    handleLoaded() {
-        this.setState({loading: !this.state.loading})
+    handleLoaded(course) {
+        this.setState({
+            loading: !this.state.loading,
+            course: (course === null ? {_noresult: true} : course)
+        })
     }
 
     render() {
@@ -63,17 +73,20 @@ class CGCourseItem extends React.Component {
         <div className="card" ref={this.ref}>
             <div className={`card-header ${this.state.open ? 'open' : 'closed'}`} id={this.state.heading} onClick={() => this.handleClick()}>
                 <h5 className="mb-0 cg-card-title">
-                    <CGCourseHeader course={this.props.course} />
+                    <CGCourseHeader courseName={this.props.course} course={this.state.course} />
                 </h5>
                 {(() => {
                     if(this.state.loading) return <CircularProgress className="rhs" variant="indeterminate" size={20} color="secondary" />
-                    return this.state.open ? <i className="material-icons rhs">arrow_drop_down</i> : <i className="material-icons rhs">arrow_left</i>
+                    return (<>
+                        {this.state.open ? <ArrowDropDown className="rhs"/> : <ArrowLeft className="rhs"/>}
+                        {this.state.course && this.state.course._noresult ? <></> : <Link to={`/c/${encodeURI(this.props.course)}`}><LinkIcon className="rhs"/></Link>}
+                    </>);
                 })()}
             </div>
             <Collapse in={this.state.open} timeout={300}>
                 <div>
                 <div id={this.state.content} className="card-body">
-                    <CGCourseContent course={this.props.course} onLoaded={() => this.handleLoaded()} firebase={this.props.firebase} db={this.props.db} />
+                    <CGCourseContent course={this.props.course} onLoaded={(course) => this.handleLoaded(course)} parent="collapsible" firebase={this.props.firebase} db={this.props.db} />
                 </div>
                 </div>
             </Collapse>

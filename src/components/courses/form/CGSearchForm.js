@@ -87,12 +87,15 @@ class CGSearchForm extends React.Component {
     }
     generateUrlHash() {
         // Generates a URL has based on the current selection
-        return (this.state.selection.length > 0 ? '#!' : '') + this.state.selection.map(e => encodeURI(e)).join(',')
+        return (this.state.selection.length > 0 ? '/' : '') + this.state.selection.map(e => encodeURI(e)).join(',')
     }
     pullFieldToSelection(callback) {
         // Add the query to the selection and empty the search bar
         let field = document.querySelector('form#search input[type=text]')
-        this.addSelection(field.value.toUpperCase(), callback)
+        this.addSelection(field.value.toUpperCase(), () => {
+            //window.location.hash = this.generateUrlHash();
+            callback()
+        })
         field.value = ''
     }
 
@@ -125,7 +128,7 @@ class CGSearchForm extends React.Component {
     componentDidMount() {
         // Automatically search for URLs with the courses specified
 
-        let hash = window.location.hash && window.location.hash.startsWith('#!') ? window.location.hash.split('#!')[1].split(',').map(e => decodeURI(e)) : null
+        let hash = window.location.hash && window.location.hash.startsWith('#/') ? window.location.hash.split('#/')[1].split(',').map(e => decodeURI(e)) : null
         if(hash !== null) {
             this.setState({
                 selection: hash.slice()

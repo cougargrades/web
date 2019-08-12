@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import anime from 'animejs/lib/anime.es.js';
 
+import Cancel from '@material-ui/icons/Cancel';
+
 class CGSelectionBadge extends React.Component {
 
     // Prevents the re-rendering of badges that were already drawn
@@ -20,13 +22,12 @@ class CGSelectionBadge extends React.Component {
         });
     }
     render() {
-        //console.log(this.props)
         return (
             <span key={this.props.course} className="badge badge-secondary" style={{transform: 'translateY(50px) rotateX(0deg)', opacity: 0}}>
                 {this.props.course}
-                <i key={this.props.course} className="material-icons" onClick={() => this.props.onClick()}>cancel</i>
+                <Cancel key={this.props.course} onClick={() => this.props.onClick()}/>
             </span>
-        )
+        );
     }
 }
 
