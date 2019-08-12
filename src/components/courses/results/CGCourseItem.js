@@ -14,23 +14,20 @@ import LinkIcon from '@material-ui/icons/Link';
 import CGCourseHeader from './CGCourseHeader';
 import CGCourseContent from './CGCourseContent';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 class CGCourseItem extends React.Component {
     constructor(props) {
         super(props);
+        console.log('passed into cgcourseitem ', props.selection)
         this.state = {
-            id: btoa(this.props.course),
-            heading: `CGCourseCollapsible_heading_${btoa(this.props.course)}`,
-            content: `CGCourseCollapsible_content_${btoa(this.props.course)}`,
+            id: btoa(props.course),
+            heading: `CGCourseCollapsible_heading_${btoa(props.course)}`,
+            content: `CGCourseCollapsible_content_${btoa(props.course)}`,
             open: true,
             loading: true,
             course: {}
         };
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.open !== nextState.open || this.state.loading !== nextState.loading);
     }
 
     handleClick() {
@@ -79,7 +76,10 @@ class CGCourseItem extends React.Component {
                     if(this.state.loading) return <CircularProgress className="rhs" variant="indeterminate" size={20} color="secondary" />
                     return (<>
                         {this.state.open ? <ArrowDropDown className="rhs"/> : <ArrowLeft className="rhs"/>}
-                        {this.state.course && this.state.course._noresult ? <></> : <Link to={`/c/${encodeURI(this.props.course)}`}><LinkIcon className="rhs"/></Link>}
+                        {this.state.course && this.state.course._noresult ? <></> : <Link to={{
+                            pathname: `/c/${encodeURI(this.props.course)}`,
+                            state: { selection: JSON.parse(JSON.stringify(this.props.selection)) }
+                         }}><LinkIcon className="rhs"/></Link>}
                     </>);
                 })()}
             </div>

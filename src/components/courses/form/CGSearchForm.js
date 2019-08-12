@@ -18,6 +18,9 @@ class CGSearchForm extends React.Component {
             searchbar: "default",
             form_disabled: false
         };
+        if(props.selection && props.selection && props.selection.length > 0) {
+            this.state.selection = JSON.parse(JSON.stringify(props.selection))
+        }
     }
 
     // Selection display

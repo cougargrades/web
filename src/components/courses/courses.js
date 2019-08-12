@@ -10,9 +10,17 @@ import CGCourseResults from './results/CGCourseResults';
 class Courses extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            selection: []
-        };
+        if(props.location && props.location.state && props.location.state.selection && props.location.state.selection.length > 0) {
+            console.log('passed into /courses: ',props.location.state.selection)
+            this.state = {
+                selection: props.location.state.selection
+            }
+        }
+        else {
+            this.state = {
+                selection: []
+            }
+        }
     }
 
     handleQuery(selection) {
@@ -33,7 +41,7 @@ class Courses extends Component {
                     An interactive table will also be generated that shows more detailed information, such as the section number of the class, the number of As, Bs, Cs, and withdraws.
                 </p>
             </div>
-            <CGSearchForm onQuery={(val) => this.handleQuery(val)}/>
+            <CGSearchForm selection={this.state.selection} onQuery={(val) => this.handleQuery(val)}/>
             <CGCourseResults selection={this.state.selection} firebase={this.props.firebase} db={this.props.db} />
         </Container>
         );
