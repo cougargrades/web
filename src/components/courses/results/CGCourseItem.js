@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 class CGCourseItem extends React.Component {
     constructor(props) {
         super(props);
-        console.log('passed into cgcourseitem ', props.selection)
+        //console.log('passed into cgcourseitem ', props.selection)
         this.state = {
             id: btoa(props.course),
             heading: `CGCourseCollapsible_heading_${btoa(props.course)}`,

@@ -22,7 +22,7 @@ class IndividualCourse extends Component {
             selection: []
         }
         if(props.location && props.location.state && props.location.state.selection && props.location.state.selection.length > 0) {
-            console.log('passed into /c/', props.location.state.selection)
+            //console.log('passed into /c/', props.location.state.selection)
             this.state.selection = JSON.parse(JSON.stringify(props.location.state.selection));
         }
     }
@@ -36,7 +36,6 @@ class IndividualCourse extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
         <Container>
             <div>

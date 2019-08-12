@@ -26,7 +26,7 @@ class CGCourseContent extends React.Component {
     // Only called once when created, not every render
     async componentDidMount() {
         let db = this.props.db;
-        console.log(`CGCouseContent#componentDidMount() -> ${this.props.course}`)
+        //console.log(`CGCourseContent#componentDidMount() -> ${this.props.course}`)
 
         console.time(`firestore (${this.props.course})`);
 
@@ -68,11 +68,11 @@ class CGCourseContent extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log(`CGCouseContent#componentWillUnmount() -> ${this.props.course}`)
+        //console.log(`CGCouseContent#componentWillUnmount() -> ${this.props.course}`)
     }
 
     render() {
-        console.log(`CGCouseContent#render() -> ${this.props.course}`)
+        //console.log(`CGCouseContent#render() -> ${this.props.course}`)
         if(this.state.valid === null || this.state.valid === true) return (
             <div className="cg-charts">
                 <div className="cg-chart-wrap">

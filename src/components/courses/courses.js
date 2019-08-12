@@ -11,7 +11,7 @@ class Courses extends Component {
     constructor(props) {
         super(props);
         if(props.location && props.location.state && props.location.state.selection && props.location.state.selection.length > 0) {
-            console.log('passed into /courses: ',props.location.state.selection)
+            //console.log('passed into /courses: ',props.location.state.selection)
             this.state = {
                 selection: props.location.state.selection
             }
@@ -24,7 +24,7 @@ class Courses extends Component {
     }
 
     handleQuery(selection) {
-        console.log('query handled: ',selection)
+        //console.log('query handled: ',selection)
         this.setState({
             selection: selection.slice()
         })
