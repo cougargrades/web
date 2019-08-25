@@ -18,6 +18,7 @@ import About from '../about/about';
 
 import Info from '@material-ui/icons/Info';
 import Lock from '@material-ui/icons/Lock';
+import BugReport from '@material-ui/icons/BugReport';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -63,6 +64,7 @@ class Root extends Component {
                         <Nav.Link as={Link} to="/groups" disabled={true}><Lock/>Groups</Nav.Link>
                     </Nav>
                     <Nav className="justify-content-end">
+                        <Nav.Link href="https://github.com/cougargrades/web/wiki/Feedback"><BugReport />Feedback</Nav.Link>
                         <Nav.Link as={Link} to="/about"><Info/>About</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

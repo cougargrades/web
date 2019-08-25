@@ -1,6 +1,11 @@
 
 .container.about {
     padding-top: 2rem;
+
+    .btn.btn-dark.disabled {
+        cursor: not-allowed;
+        pointer-events: unset;
+    }
 }
 
 .container .row {
