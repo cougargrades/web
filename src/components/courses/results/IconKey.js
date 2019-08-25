@@ -23,6 +23,7 @@ import MusicNote from '@material-ui/icons/MusicNote';
 import DirectionsBoat from '@material-ui/icons/DirectionsBoat';
 import Language from '@material-ui/icons/Language';
 import BarChart from '@material-ui/icons/BarChart';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
 
 export class IconMapper extends React.Component {
     render() {
@@ -93,7 +94,7 @@ export const definitions = {
     HDFS: null, // 
     HIND: Translate, // 
     HISP: null, // 
-    HIST: null, // 
+    HIST: LibraryBooks, // 
     HLT: null, // 
     HON: null, // 
     HRD: null, // 
