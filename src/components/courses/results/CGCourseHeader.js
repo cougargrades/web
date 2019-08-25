@@ -30,7 +30,7 @@ class CGCourseHeader extends React.Component{
                 </>
             )
         }
-        else if(typeof definitions[this.dept] === 'object' && definitions[this.dept]['src']) {
+        else if(definitions[this.dept] && typeof definitions[this.dept] === 'object' && definitions[this.dept]['src']) {
             return (
                 <>
                 <img className="cg-icon" alt="icon" src={definitions[this.dept]['src']} />
