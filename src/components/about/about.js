@@ -39,6 +39,13 @@ class About extends Component {
                     <p>Front-end code, database processor, <abbr title="Freedom of Information Act">FOIA</abbr> data, public HTTP API, and more, are published on Github.</p>
                     <p><Button href="https://github.com/cougargrades" variant="primary">Github</Button>&nbsp;<Button href="https://cougargrades.github.io/api/" variant="primary">Public API</Button></p>
 
+                    <h4>Where is the grade data from?</h4>
+                    <p>
+                        The grade distribution data used by CougarGrades was acquired through use of 
+                        the <em>Freedom of Information Act</em> and the <em>Texas Public Information Act</em> directly 
+                        from the University of Houston <a href="http://www.uh.edu/legal-affairs/general-counsel/texas-public-information/">Office of the General Counsel</a>.
+                    </p>
+
                     <h4>Acknowledgement</h4>
                     <p>Some other great projects we found inspiration in:</p>
                     <ul>

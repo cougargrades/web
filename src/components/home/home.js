@@ -66,6 +66,7 @@ class Home extends Component {
                     <p className="lead">Analyze grade distribution data for any past University of Houston course</p>
                     <hr className="my-4" />
                     <p><em>Not affiliated with the University of Houston.</em></p>
+                    <p><em>Data is sourced from <a href="https://www.foia.gov/"><abbr title="Freedom of Information Act">FOIA</abbr> requests</a>.</em></p>
                     <p><em>Latest data available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
                     <Button variant="primary" className="btn-cg" as={Link} to="/courses">Learn more</Button>
                 </Jumbotron>
