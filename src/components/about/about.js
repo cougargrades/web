@@ -45,19 +45,23 @@ class About extends Component {
                         the <em>Freedom of Information Act</em> and the <em>Texas Public Information Act</em> directly 
                         from the University of Houston <a href="http://www.uh.edu/legal-affairs/general-counsel/texas-public-information/">Office of the General Counsel</a>.
                     </p>
+                    <p>
+                        You can access the original documents we were provided and use the data your own way by checking out our published repositories on Github.
+                    </p>
+                    <p><Button href="https://github.com/cougargrades?q=FOIA-IR" variant="dark">FOIA Data</Button></p>
 
-                    <h4>Acknowledgement</h4>
+                    <h5>Acknowledgement</h5>
                     <p>Some other great projects we found inspiration in:</p>
                     <ul>
                         <li>anex.us/grades/ (author unknown)</li>
-                        <li>AggieSchduler (<a href="https://github.com/jake-leland">@jake-leland</a>)</li>
+                        <li>AggieScheduler (<a href="https://github.com/jake-leland">@jake-leland</a>)</li>
                         <li>Good-Bull-Schedules (<a href="https://github.com/SaltyQuetzals">@SaltyQuetzals</a>)</li>
                     </ul>
 
-                    <h4>Technologies</h4>
+                    <h5>Technologies</h5>
                     <p>CougarGrades is powered by Google Firebase, ReactJS, Bootstrap, Sass, Google Charts API, AnimeJS, and more.</p>
 
-                    <h4>Authors</h4>
+                    <h5>Authors</h5>
                     <p>You can visit more of our work on our websites.</p>
                     <p>
                         <Button href="https://austinj.net" variant="dark">Austin Jackson</Button>&nbsp;
