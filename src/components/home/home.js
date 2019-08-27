@@ -69,7 +69,7 @@ class Home extends Component {
                     <p><em>Data is sourced from <a href="http://www.uh.edu/legal-affairs/general-counsel/texas-public-information/"><abbr title="Freedom of Information Act">FOIA</abbr> requests</a> directly to the University of Houston.</em></p>
                     <p><em>Latest data available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
                     <Button variant="primary" className="btn-cg" as={Link} to="/courses">Learn more</Button>&nbsp;&nbsp;
-                    <Button href="https://github.com/cougargrades?q=FOIA-IR" variant="primary" className="btn-cg">Spreadsheets</Button>
+                    <Button href="https://github.com/search?utf8=%E2%9C%93&q=FOIA-IR+user%3Acougargrades&type=Repositories&ref=advsearch&l=&l=" variant="primary" className="btn-cg">Spreadsheets</Button>
                 </Jumbotron>
             </Container>
         );
