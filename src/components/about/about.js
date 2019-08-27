@@ -48,7 +48,7 @@ class About extends Component {
                     <p>
                         You can access the original documents we were provided and use the data your own way by checking out our published repositories on Github.
                     </p>
-                    <p><Button href="https://github.com/cougargrades?q=FOIA-IR" variant="dark">FOIA Data</Button></p>
+                    <p><Button href="https://github.com/search?utf8=%E2%9C%93&q=FOIA-IR+user%3Acougargrades&type=Repositories&ref=advsearch&l=&l=" variant="dark">FOIA Data</Button></p>
 
                     <h5>Acknowledgement</h5>
                     <p>Some other great projects we found inspiration in:</p>
