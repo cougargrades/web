@@ -70,6 +70,11 @@ class Home extends Component {
                     <p><em>Latest data available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
                     <Button variant="primary" className="btn-cg" as={Link} to="/courses">Learn more</Button>&nbsp;&nbsp;
                     <Button href="https://github.com/search?utf8=%E2%9C%93&q=FOIA-IR+user%3Acougargrades&type=Repositories&ref=advsearch&l=&l=" variant="primary" className="btn-cg">Spreadsheets</Button>
+                    <hr />
+                    <strong>Updates:</strong>
+                    <ul>
+                        <li><small>2019-09-09: Database upgrades are being done and will impact site functionality until the upload is finished. See: <a href="https://github.com/cougargrades/importer">cougargrades/importer</a>.</small></li>
+                    </ul>
                 </Jumbotron>
             </Container>
         );
