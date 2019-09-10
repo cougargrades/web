@@ -73,6 +73,7 @@ class Home extends Component {
                     <hr />
                     <strong>Updates:</strong>
                     <ul>
+                        <li><small>2019-09-10: Database upgrades have been completed. Site functionality should be back to normal.</small></li>
                         <li><small>2019-09-09: Database upgrades are being done and will impact site functionality until the upload is finished. See: <a href="https://github.com/cougargrades/importer">cougargrades/importer</a>.</small></li>
                     </ul>
                 </Jumbotron>
