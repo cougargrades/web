@@ -9,7 +9,7 @@ class Brand extends Component {
         if(this.props.location.pathname === '/' || this.props.location.pathname === '/about')
             return <School />;
         else
-            return <>CougarGrades.io <sup className="beta">&beta;eta</sup></>;
+            return <>CougarGrades.io</>;
     }
 }
 

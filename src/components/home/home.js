@@ -62,22 +62,13 @@ class Home extends Component {
         return (
             <Container>
                 <Jumbotron>
-                    <h1 className="cg-hero">CougarGrades.io <sup>&beta;eta</sup></h1>
+                    <h1 className="cg-hero">CougarGrades.io</h1>
                     <p className="lead">Analyze grade distribution data for any past University of Houston course</p>
                     <hr className="my-4" />
-                    <p><em>Not affiliated with the University of Houston.</em></p>
-                    <p><em>Data is sourced from <a href="http://www.uh.edu/legal-affairs/general-counsel/texas-public-information/"><abbr title="Freedom of Information Act">FOIA</abbr> requests</a> directly to the University of Houston.</em></p>
-                    <p><em>Latest data available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
-                    <Button variant="primary" className="btn-cg" as={Link} to="/courses">Learn more</Button>&nbsp;&nbsp;
+                    <p><em>Not affiliated with the University of Houston. Data is sourced directly from the University of Houston.</em></p>
+                    <p><em>Latest semester available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
+                    <Button variant="primary" className="btn-cg" as={Link} to="/courses">Search Courses</Button>&nbsp;&nbsp;
                     <Button href="https://github.com/search?utf8=%E2%9C%93&q=FOIA-IR+user%3Acougargrades&type=Repositories&ref=advsearch&l=&l=" variant="primary" className="btn-cg">Spreadsheets</Button>
-                    <hr />
-                    <strong>Updates:</strong>
-                    <ul>
-                        <li><small>2019-09-24: Summer 2019 data has finished uploading and should be accessible.</small></li>
-                        <li><small>2019-09-24: Summer 2019 data is actively being uploaded. This may affect site functionality.</small></li>
-                        <li><small>2019-09-10: Database upgrades have been completed. Site functionality should be back to normal.</small></li>
-                        <li><small>2019-09-09: Database upgrades are being done and will impact site functionality until the upload is finished. See: <a href="https://github.com/cougargrades/importer">cougargrades/importer</a>.</small></li>
-                    </ul>
                 </Jumbotron>
             </Container>
         );
