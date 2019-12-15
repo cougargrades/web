@@ -14,7 +14,7 @@
     "react-dom": "^16.8.6",
     "react-google-charts": "^3.0.14",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "^3.3.0"
   },
   "scripts": {
     "start": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts start",
