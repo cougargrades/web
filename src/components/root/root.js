@@ -15,7 +15,6 @@ import Home from '../home/home';
 import Courses from '../courses/courses';
 import IndividualCourse from '../courses/individual';
 import About from '../about/about';
-import Updates from '../updates/updates';
 
 import Lock from '@material-ui/icons/Lock';
 
@@ -64,7 +63,7 @@ class Root extends Component {
                     </Nav>
                     <Nav className="justify-content-end">
                         <Nav.Link href="https://github.com/cougargrades/web/wiki/Feedback">Feedback</Nav.Link>
-                        <Nav.Link as={Link} to="/updates">Updates</Nav.Link>
+                        <Nav.Link href="https://cougargrades.github.io/blog/">Updates</Nav.Link>
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
@@ -76,7 +75,6 @@ class Root extends Component {
                 <Route path="/c/:name" component={({ location, match }) => <IndividualCourse firebase={this.firebase} db={this.db} course={decodeURI(match.params.name)} location={location} />} />
                 {/* <Route path="/instructors" exact component={Home} /> */}
                 {/* <Route path="/groups" exact component={Home} /> */}
-                <Route path="/updates" component={() => <Updates />} />
                 <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />
                 <Route component={NotFound} />
             </Switch>
