@@ -14,6 +14,7 @@ import NotFound from './notfound';
 import Home from '../home/home';
 import Courses from '../courses/courses';
 import IndividualCourse from '../courses/individual';
+import Instructors from '../instructors/instructors';
 import About from '../about/about';
 
 import Lock from '@material-ui/icons/Lock';
@@ -58,7 +59,7 @@ class Root extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
                         <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
-                        <Nav.Link as={Link} to="/instructors" disabled={true}><Lock/>Instructors</Nav.Link>
+                        <Nav.Link as={Link} to="/instructors">Instructors</Nav.Link>
                         <Nav.Link as={Link} to="/groups" disabled={true}><Lock/>Groups</Nav.Link>
                     </Nav>
                     <Nav className="justify-content-end">
@@ -73,7 +74,7 @@ class Root extends Component {
                 <Route path="/" exact component={() => <Home firebase={this.firebase} db={this.db} />} />
                 <Route path="/courses" component={({ location }) => <Courses location={location} firebase={this.firebase} db={this.db} />} />
                 <Route path="/c/:name" component={({ location, match }) => <IndividualCourse firebase={this.firebase} db={this.db} course={decodeURI(match.params.name)} location={location} />} />
-                {/* <Route path="/instructors" exact component={Home} /> */}
+                <Route path="/instructors" component={({ location }) => <Instructors location={location}/>} />
                 {/* <Route path="/groups" exact component={Home} /> */}
                 <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />
                 <Route component={NotFound} />
