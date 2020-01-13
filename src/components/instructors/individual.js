@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Table from 'react-bootstrap/Table';
 
 import Subjects from '../_common/subjects.json';
 import Util from '../_common/util';
@@ -34,10 +35,36 @@ class IndividualInstructor extends Component {
                 if(querySnapshot.docs.length > 0) {
                     let doc = querySnapshot.docs[0].data();
                     // update the interface with the fetched data so far
-                    // TODO: fetch courses and sections here
                     this.setState({
                         instructor: doc
                     });
+                    // TODO: fetch courses and sections here
+                    let crs = [];
+                    let sctn = [];
+                    // run asynchronously
+                    (async () => {
+                        for(let i = 0; i < doc.courses.length; i++) {
+                            crs.push((await doc.courses[i].get()).data())
+                        }
+                        this.setState({
+                            courses: crs
+                        })
+                    })();
+                    
+                    (async () => {
+                        for(let i = 0; i < doc.sections.length; i++) {
+                            sctn.push((await doc.sections[i].get()).data())
+                        }
+                        sctn.sort((a,b) => {
+                            // descending a > b
+                            // ascending a < b
+                            // TODO: sort by course then date
+                            return a.term > b.term
+                        })
+                        this.setState({
+                            sections: sctn
+                        })
+                    })();
                 }
             });
         })();
@@ -121,11 +148,63 @@ class IndividualInstructor extends Component {
                                     <li>GPA standard deviation: <code>{this.state.instructor.GPA.standardDeviation}</code></li>
                                 </ul>
                             </Tab>
-                            <Tab className="tab-courses" eventKey="courses" title="Courses" disabled>
-                                <p>Courses</p>
+                            <Tab className="tab-courses" eventKey="courses" title="Courses" disabled={this.state.courses.length === 0}>
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Course</th>
+                                            <th>Description</th>
+                                            <th>Total sections</th>
+                                            <th>UH GPA</th>
+                                            <th>Prof GPA</th>
+                                            <th>Last taught</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.courses.map(item => {
+                                            return (
+                                                <tr>
+                                                    <td>{`${item.department} ${item.catalogNumber}`}</td>
+                                                    <td>{item.description}</td>
+                                                    <td>{item.sectionCount}</td>
+                                                    <td>{item.GPA.average}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </Table>
                             </Tab>
-                            <Tab className="tab-sections" eventKey="sections" title="Sections" disabled>
-                                <p>Sections</p>
+                            <Tab className="tab-sections" eventKey="sections" title="Sections" disabled={this.state.sections.length === 0}>
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Course</th>
+                                            <th>Term</th>
+                                            <th>Section number</th>
+                                            <th>Total sections</th>
+                                            <th>Semester GPA</th>
+                                            <th>Prof GPA</th>
+                                            <th>UH GPA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.sections.map(item => {
+                                            return (
+                                                <tr>
+                                                    <td></td>
+                                                    <td>{item.termString}</td>
+                                                    <td>{item.sectionNumber}</td>
+                                                    <td></td>
+                                                    <td>{item.semesterGPA}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </Table>
                             </Tab>
                         </Tabs>
                         
