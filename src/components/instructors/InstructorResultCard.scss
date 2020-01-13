@@ -1,38 +1,69 @@
 @import '../_common/colors.scss';
+@import '../_common/mixins.scss';
 
 .instructor-result-card {
-    display: inline-flex;
-    flex-direction: column;
-    min-width: 0;
-    max-width: 300px;
+    display: inline-block;
+    width: 250px;
+    height: 150px;
+    margin-right: 10px;
+    margin-bottom: 5px;
     word-wrap: break-word;
-    //background-color: #fff;
     background-color: $cg-softwhite;
     border: 2px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.5rem;
-    //box-shadow: 0px 2px 2px rgba(40, 40, 40, 0.25);
-    
-    // cursor: pointer;
-    // &:hover {
-    //     background-color: red;
-    // }
+
+    cursor: pointer;
+    @include no-select;
+
+    // while the mouse is pressed
+    &:active {
+        background-color: hsl(200, 29%, 94%);
+    }
+
+    .body-wrap {
+        display: table;
+        width: 100%;
+        height: 100%;
+    }
 
     .body {
-        flex: 1 1 auto;
-        min-height: 1px;
+        width: 100%;
+        height: 100%;
         padding: 1.25rem;
+
+        display: table-cell;
+        vertical-align: middle;
+        //flex-direction: column;
+        //justify-content: center;
 
         .name {
             margin-top: 0.25rem;
             margin-bottom: 0.1rem;
             font-weight: 900;
+
+            display: -webkit-box;
+            max-width: 206px;
+            max-height: 48px;
+            overflow: hidden;
+            word-break: break-all;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+
+            &.s35 {
+                font-size: 1em;
+            }
         }
         .subjects {
             margin-top: 0rem;
             margin-bottom: 0.35rem;
             line-height: 1.0;
             font-weight: 500;
-            
+
+            max-width: 206px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .counts {
             font-size: 90%;

@@ -14,7 +14,9 @@ form#search .form-label, .cg-selected h5 {
 } 
 
 form#search input[type=text] {
-    text-transform: uppercase;
+    &.cgsearchform {
+        text-transform: uppercase;
+    }
 
     &::placeholder {
         color: rgba(108, 117, 125, 0.85);

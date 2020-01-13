@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import './GPABadge.scss';
 
@@ -53,18 +52,20 @@ class GPABadge extends Component {
     }
 
     render() {
-        return (
-            <>
-                <span className={`gpa-badge ${this.color(this.props.value)}`}>{`${this.props.value.toFixed(2)} GPA`}</span>
-                <span className={`gpa-badge-caption ${this.color(this.props.value)}-text`} >{this.props.caption ? this.caption(this.props.value) : ''}</span>
-                <span className={`gpa-badge stddev ${this.sd_color(this.props.stddev)}`} title="standard deviation">{this.props.stddev ? `${this.props.stddev.toFixed(2)} SD` : ''}</span>
-            </>
-        )
+        if(typeof this.props.value === 'number') {
+            return (
+                <div>
+                    <span className={`gpa-badge ${this.color(this.props.value)}`} title="Grade Point Average">{`${this.props.value.toFixed(2)} GPA`}</span>
+                    <span className={`gpa-badge-caption ${this.color(this.props.value)}-text`} >{this.props.caption ? this.caption(this.props.value) : ''}</span>
+                    <span className={`gpa-badge stddev ${this.sd_color(this.props.stddev)}`} title="Standard Deviation">{typeof this.props.stddev === 'number' ? `${this.props.stddev.toFixed(2)} SD` : ''}</span>
+                </div>
+            )
+        }
+        else {
+            return <></>
+        }
+        
     }
 }
-
-GPABadge.propTypes = {
-    value: PropTypes.number.isRequired
-};
 
 export default GPABadge;

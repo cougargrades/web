@@ -1,54 +1,95 @@
 import React, { Component } from 'react';
 
 import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
 
 import InstructorResultCard from './InstructorResultCard'
 
 import './instructors.scss';
 
-const james_west = {
-    GPA: {
-        average: 2.3685,
-        maximum: 3.257,
-        median: 2.3445,
-        minimum: 1.727,
-        range: 1.53,
-        standardDeviation: 0.31841 // 0.31841
-    },
-    courses_count: 7,
-    departments: {
-        MATH: 7
-    },
-    firstName: 'James David',
-    fullName: 'James David West',
-    lastName: 'West',
-    sections_count: 51
-}
-
 class Instructors extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            results: [ ],
+            searchbar: 'default',
+            form_disabled: true
+        };
+    }
+
+    // Input box
+    handleSubmit(event) {
+        if(event) event.preventDefault()
+
+        let field = document.querySelector('form#search input[type=text]');
+
+        (async () => {
+            let db = this.props.db;
+            db.collection('instructors')
+            .where('keywords', 'array-contains', field.value.toLowerCase())
+            .orderBy('lastName')
+            .limit(10)
+            .get()
+            .then((querySnapshot) => {
+                let docs = []
+                for(let doc of querySnapshot.docs) {
+                    docs.push(doc.data());
+                }
+                this.setState({
+                    results: docs
+                })
+            });
+        })();
+
+
+        this.setState({
+            form_disabled: true
+        })
+    }
+
+    updateButtonColor() {
+        // Manually create field reference so handleKeyUp can be artificially called
+        let field = document.querySelector('form#search input[type=text]');
+
+        if(field.value.length > 0) {
+            // field must have text in it for button to work
+            this.setState({
+                form_disabled: false
+            })
+        }
+        else {
+            this.setState({
+                form_disabled: true
+            })
+        }
+    }
+
     render() {
         return (
             <Container>
                 <div>
                     <h2>Instructor search</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim ac urna nec sodales. Proin luctus velit a tincidunt ultrices. </p>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Subtitle className="text-muted">Card Subtitle</Card.Subtitle>
-                            <Card.Link href="#">Card Link</Card.Link>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Subtitle className="text-muted">Card Subtitle</Card.Subtitle>
-                            <Card.Link href="#">Card Link</Card.Link>
-                        </Card.Body>
-                    </Card>
-                    <hr />
-                    <InstructorResultCard instructor={james_west}/>
+                    <Form id="search" autoComplete="off" onSubmit={e => this.handleSubmit(e)}>
+                        <Form.Group>
+                            <InputGroup>
+                                <Form.Control type="text" placeholder="Renu Khator" onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
+                                <InputGroup.Append>
+                                    <Button type="submit" className={`btn-cg ${this.state.searchbar}`} disabled={this.state.form_disabled} id="searchbar_btn">
+                                        <span className="add-msg">Search</span>
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form>
+                    <div className="instructor-results">
+                        {this.state.results.map(prof => {
+                            return <InstructorResultCard key={prof.fullName} instructor={prof}/>
+                        })}
+                    </div>
+                    
                 </div>
             </Container>
         )

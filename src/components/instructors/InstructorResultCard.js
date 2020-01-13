@@ -12,8 +12,8 @@ import './InstructorResultCard.scss';
  * Mathematics, Biology
  */
 
-class InstructorResultCard extends Component {
-
+class InstructorResultCard extends Component {  
+    
     subject_str() {
         let depts = Object.keys(this.props.instructor.departments)
         let str = ''
@@ -29,14 +29,18 @@ class InstructorResultCard extends Component {
     }
 
     render() {
+        let fN = this.props.instructor.fullName.length;
+
         return (
             <div className="instructor-result-card">
-                <div className="body">
-                    <GPABadge value={this.props.instructor.GPA.average} stddev={this.props.instructor.GPA.standardDeviation} />
-                    <div className="name h5">{this.props.instructor.fullName}</div>
-                    <div className="subjects text-muted">{this.subject_str()}</div>
-                    <div className="counts">
-                        <span>{this.props.instructor.courses_count} courses &bull; {this.props.instructor.sections_count} sections</span>
+                <div className="body-wrap">
+                    <div className="body">
+                        <GPABadge value={this.props.instructor.GPA.average} stddev={this.props.instructor.GPA.standardDeviation} />
+                        <div className={`name h5 ${fN >= 35 ? 's35' : ''}`}>{this.props.instructor.fullName}</div>
+                        <div className="subjects text-muted">{this.subject_str()}</div>
+                        <div className="counts">
+                            <span>{this.props.instructor.courses_count} courses &bull; {this.props.instructor.sections_count} sections</span>
+                        </div>
                     </div>
                 </div>
             </div>

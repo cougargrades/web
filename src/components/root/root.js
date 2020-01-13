@@ -74,7 +74,7 @@ class Root extends Component {
                 <Route path="/" exact component={() => <Home firebase={this.firebase} db={this.db} />} />
                 <Route path="/courses" component={({ location }) => <Courses location={location} firebase={this.firebase} db={this.db} />} />
                 <Route path="/c/:name" component={({ location, match }) => <IndividualCourse firebase={this.firebase} db={this.db} course={decodeURI(match.params.name)} location={location} />} />
-                <Route path="/instructors" component={({ location }) => <Instructors location={location}/>} />
+                <Route path="/instructors" component={({ location }) => <Instructors firebase={this.firebase} db={this.db} location={location}/>} />
                 {/* <Route path="/groups" exact component={Home} /> */}
                 <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />
                 <Route component={NotFound} />

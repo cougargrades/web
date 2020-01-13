@@ -144,7 +144,7 @@ class CGSearchForm extends React.Component {
     render() {
         return (
         <div>
-            <Form id="search" autoComplete="off" onSubmit={e => this.handleSubmit(e)}>
+            <Form id="search" className="cgsearchform" autoComplete="off" onSubmit={e => this.handleSubmit(e)}>
                 <Form.Group>
                     <Form.Label>Add course</Form.Label>
                     <InputGroup>
