@@ -1,4 +1,6 @@
 
+import Subjects from './subjects.json';
+
 class Util {
     
     /**
@@ -20,8 +22,7 @@ class Util {
             default: {
                 return `${termCode}`
             }
-        }
-        
+        }   
     }
 
     /**
@@ -31,6 +32,20 @@ class Util {
      */
     static sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    static subject_str(dict) {
+        let depts = Object.keys(dict)
+        let str = ''
+        for(let i = 0; i < depts.length; i++) {
+            if(i === (depts.length - 1)) {
+                str += Subjects[depts[i]]
+            }
+            else {
+                str += `${str += Subjects[depts[i]]}, `
+            }
+        }
+        return str ? str : 'Instructor';
     }
 }
 

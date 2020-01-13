@@ -1,6 +1,14 @@
 @import '../_common/colors.scss';
 @import '../_common/mixins.scss';
 
+.instructor-link {
+    color: currentColor;
+    text-decoration: unset;
+    &:hover, &:active, &:focus, &:focus-within, &:visited {
+        color: currentColor;
+    }
+}
+
 .instructor-result-card {
     display: inline-block;
     width: 250px;

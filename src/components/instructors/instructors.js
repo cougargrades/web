@@ -80,7 +80,7 @@ class Instructors extends Component {
             <Container>
                 <div>
                     <h2>Instructor search</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dignissim ac urna nec sodales. Proin luctus velit a tincidunt ultrices. </p>
+                    <p>Type in the name of the instructor you're interested in and press <em>Search</em>. This will generate a list of results of the instructors you might be looking for.</p>
                     <Form id="search" autoComplete="off" onSubmit={e => this.handleSubmit(e)}>
                         <Form.Group>
                             <InputGroup>
