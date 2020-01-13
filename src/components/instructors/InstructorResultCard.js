@@ -12,8 +12,16 @@ import './InstructorResultCard.scss';
  * Mathematics, Biology
  */
 
-class InstructorResultCard extends Component {  
-    
+class InstructorResultCard extends Component {
+    constructor(props) {
+        super(props)
+
+        this.style = {
+            opacity: 0.0,
+            transform: 'translateY(25px)'
+        }
+    }
+
     subject_str() {
         let depts = Object.keys(this.props.instructor.departments)
         let str = ''
@@ -32,7 +40,7 @@ class InstructorResultCard extends Component {
         let fN = this.props.instructor.fullName.length;
 
         return (
-            <div className="instructor-result-card">
+            <div className="instructor-result-card" style={this.style}>
                 <div className="body-wrap">
                     <div className="body">
                         <GPABadge value={this.props.instructor.GPA.average} stddev={this.props.instructor.GPA.standardDeviation} />

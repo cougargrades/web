@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
+import anime from 'animejs/lib/anime.es.js';
+
 import InstructorResultCard from './InstructorResultCard'
 
 import './instructors.scss';
@@ -39,6 +41,13 @@ class Instructors extends Component {
                 }
                 this.setState({
                     results: docs
+                }, () => {
+                    anime({
+                        targets: '.instructor-result-card',
+                        translateY: 0,
+                        opacity: 1.0,
+                        delay: anime.stagger(100) // increase delay by 100ms for each elements.
+                    });
                 })
             });
         })();
@@ -88,6 +97,7 @@ class Instructors extends Component {
                         {this.state.results.map(prof => {
                             return <InstructorResultCard key={prof.fullName} instructor={prof}/>
                         })}
+                        {this.state.results.length === 0 ? <small className="text-muted">No results loaded</small> : <></>}
                     </div>
                     
                 </div>
