@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
+import Subjects from '../_common/subjects.json';
 import Util from '../_common/util';
 
 import { Link } from 'react-router-dom';
@@ -17,7 +18,9 @@ class IndividualInstructor extends Component {
     constructor(props) {
         super()
         this.state = {
-            instructor: null
+            instructor: null,
+            courses: [],
+            sections: []
         }
     }
 
@@ -30,12 +33,62 @@ class IndividualInstructor extends Component {
             .then((querySnapshot) => {
                 if(querySnapshot.docs.length > 0) {
                     let doc = querySnapshot.docs[0].data();
+                    // update the interface with the fetched data so far
+                    // TODO: fetch courses and sections here
                     this.setState({
                         instructor: doc
                     });
                 }
             });
         })();
+    }
+    
+    taughtSentence() {
+        let depts = Object.keys(this.state.instructor.departments);
+        let str = '';
+        let taught = [];
+        // generate list of department titles and the number of sections taught
+        for(let i = 0; i < depts.length; i++) {
+            taught.push({
+                title: Subjects[depts[i]],
+                num: this.state.instructor.departments[depts[i]]
+            })
+        }
+        // sort the list
+        taught.sort((a,b) => {
+            // ascending
+            return a.num < b.num;
+        })
+        for(let i = 0; i < taught.length; i++) {
+            // write intro
+            if(i === 0) {
+                str += `${this.state.instructor.fullName} has taught `;
+            }
+            
+            // if not first and list has 3 or more items
+            if(i > 0 && taught.length > 2) {
+                str += ', '
+            }
+            
+            // edge case for 2 items: if end of list AND list is one item
+            if(i === (taught.length-1) && i === 1) {
+                str += ' and '
+            }
+            else if(i === (taught.length-1) && taught.length > 2) {
+                str += 'and '
+            }
+            
+            // always add thing
+            str += `${taught[i].num} ${taught[i].title} course`
+            // plural
+            if(taught[i].num > 1) str += 's'
+            
+            // if end of list AND list is one item
+            if(i === (taught.length-1)) {
+                str += '.'
+            }
+        }
+        return str;
     }
 
     render() {
@@ -58,6 +111,7 @@ class IndividualInstructor extends Component {
                                     <li>Last name: <code>{this.state.instructor.lastName}</code></li>
                                     <li># of unique courses taught: <code>{this.state.instructor.courses_count}</code></li>
                                     <li># of unique sections taught: <code>{this.state.instructor.sections_count}</code></li>
+                                    <li>{this.taughtSentence()}</li>
                                     <hr />
                                     <li>GPA minimum: <code>{this.state.instructor.GPA.minimum}</code></li>
                                     <li>GPA average: <code>{this.state.instructor.GPA.average}</code></li>
