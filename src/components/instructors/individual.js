@@ -6,7 +6,6 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 
-import Subjects from '../_common/subjects.json';
 import Util from '../_common/util';
 
 import { Link } from 'react-router-dom';
@@ -49,11 +48,54 @@ class IndividualInstructor extends Component {
                         this.setState({
                             courses: crs
                         })
-                    })();
-                    
-                    (async () => {
+                        let psums = {};
+                        let pnums = {};
                         for(let i = 0; i < doc.sections.length; i++) {
-                            sctn.push((await doc.sections[i].get()).data())
+                            // Fetch stored data
+                            let d = (await doc.sections[i].get()).data();
+                            // Compute extra data from context
+                            d['_path'] = doc.sections[i].path // "catalog/HIST 1378/sections/laskjdlaksjdha"
+                            d['_course'] = doc.sections[i].path.split('/')[1]
+                            d['_department'] = d['_course'].split(' ')[0]
+                            d['_catalogNumber'] = d['_course'].split(' ')[1]
+
+                            // Prof GPA calculation
+                            if(psums[d['_course']] === undefined) psums[d['_course']] = 0;
+                            if(pnums[d['_course']] === undefined) pnums[d['_course']] = 0;
+                            // sum semesterGPA for all of a course
+                            psums[d['_course']] += d.semesterGPA
+                            // keep count of how many sections of a course
+                            pnums[d['_course']] += 1;
+
+                            // retrieve sectionCount and UH GPA from `crs` (this.state.courses) 
+                            for(let j = 0; j < crs.length; j++) {
+                                if(crs[j].department === d['_department'] && crs[j].catalogNumber === d['_catalogNumber']) {
+                                    d['_sectionCount'] = crs[j].sectionCount;
+                                    d['_GPA.average'] = crs[j].GPA.average;
+                                    break;
+                                }
+                            }
+                            // Save new changes
+                            sctn.push(d)
+                        }
+
+                        //console.log(psums);
+                        //console.log(pnums);
+
+                        // Use computed psums and pnums for Prof GPA calculation
+                        for(let i = 0; i < sctn.length; i++) {
+                            // prevent division by 0
+                            if(pnums[sctn[i]['_course']] > 0) {
+                                // mean formula: sum / n
+                                //console.log(sctn[i])
+                                sctn[i]['_profGPA'] = psums[sctn[i]['_course']] / pnums[sctn[i]['_course']];
+                                // populate `crs` with profGPA (this.state.courses)
+                                for(let j = 0; j < crs.length; j++) {
+                                    if(crs[j].department === sctn[i]['_department'] && crs[j].catalogNumber === sctn[i]['_catalogNumber'] && typeof crs[j].GPA.average === 'number') {
+                                        crs[j]['_profGPA'] = sctn[i]['_profGPA'];
+                                    }
+                                }
+                            }
                         }
                         sctn.sort((a,b) => {
                             // descending a > b
@@ -62,60 +104,13 @@ class IndividualInstructor extends Component {
                             return a.term > b.term
                         })
                         this.setState({
+                            courses: crs,
                             sections: sctn
                         })
                     })();
                 }
             });
         })();
-    }
-    
-    taughtSentence() {
-        let depts = Object.keys(this.state.instructor.departments);
-        let str = '';
-        let taught = [];
-        // generate list of department titles and the number of sections taught
-        for(let i = 0; i < depts.length; i++) {
-            taught.push({
-                title: Subjects[depts[i]],
-                num: this.state.instructor.departments[depts[i]]
-            })
-        }
-        // sort the list
-        taught.sort((a,b) => {
-            // ascending
-            return a.num < b.num;
-        })
-        for(let i = 0; i < taught.length; i++) {
-            // write intro
-            if(i === 0) {
-                str += `${this.state.instructor.fullName} has taught `;
-            }
-            
-            // if not first and list has 3 or more items
-            if(i > 0 && taught.length > 2) {
-                str += ', '
-            }
-            
-            // edge case for 2 items: if end of list AND list is one item
-            if(i === (taught.length-1) && i === 1) {
-                str += ' and '
-            }
-            else if(i === (taught.length-1) && taught.length > 2) {
-                str += 'and '
-            }
-            
-            // always add thing
-            str += `${taught[i].num} ${taught[i].title} course`
-            // plural
-            if(taught[i].num > 1) str += 's'
-            
-            // if end of list AND list is one item
-            if(i === (taught.length-1)) {
-                str += '.'
-            }
-        }
-        return str;
     }
 
     render() {
@@ -138,7 +133,7 @@ class IndividualInstructor extends Component {
                                     <li>Last name: <code>{this.state.instructor.lastName}</code></li>
                                     <li># of unique courses taught: <code>{this.state.instructor.courses_count}</code></li>
                                     <li># of unique sections taught: <code>{this.state.instructor.sections_count}</code></li>
-                                    <li>{this.taughtSentence()}</li>
+                                    <li>{Util.taughtSentence(this.state.instructor.fullName, this.state.instructor.departments)}</li>
                                     <hr />
                                     <li>GPA minimum: <code>{this.state.instructor.GPA.minimum}</code></li>
                                     <li>GPA average: <code>{this.state.instructor.GPA.average}</code></li>
@@ -167,8 +162,8 @@ class IndividualInstructor extends Component {
                                                     <td>{`${item.department} ${item.catalogNumber}`}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.sectionCount}</td>
-                                                    <td>{item.GPA.average}</td>
-                                                    <td></td>
+                                                    <td>{item.GPA.average ? item.GPA.average.toFixed(3) : undefined}</td>
+                                                    <td>{item['_profGPA'] ? item['_profGPA'].toFixed(3) : undefined}</td>
                                                     <td></td>
                                                 </tr>
                                             );
@@ -193,13 +188,13 @@ class IndividualInstructor extends Component {
                                         {this.state.sections.map(item => {
                                             return (
                                                 <tr>
-                                                    <td></td>
+                                                    <td>{item['_course']}</td>
                                                     <td>{item.termString}</td>
                                                     <td>{item.sectionNumber}</td>
-                                                    <td></td>
+                                                    <td>{item['_sectionCount']}</td>
                                                     <td>{item.semesterGPA}</td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{item['_profGPA'] ? item['_profGPA'].toFixed(3) : undefined}</td>
+                                                    <td>{item['_GPA.average'] ? item['_GPA.average'].toFixed(3) : undefined}</td>
                                                 </tr>
                                             );
                                         })}
