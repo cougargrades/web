@@ -7,12 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
+import formatDistance from 'date-fns/formatDistance';
+
 import Util from '../_common/util';
 
-//import * as moment from 'moment';
-
 import './home.scss';
-import moment from 'moment';
 
 class Home extends Component {
     state = {
@@ -108,7 +107,7 @@ class Home extends Component {
                         <ul>
                             {this.state.blog.map(entry => {
                                 return (
-                                    <li key={entry.id}><a href={entry.link}>{entry.title}</a>, <span>{moment(entry.updated).fromNow()}</span></li>
+                                    <li key={entry.id}><a href={entry.link}>{entry.title}</a>, <span>{formatDistance(new Date(entry.updated), new Date(), { addSuffix: true })}</span></li>
                                 )
                             })}
                         </ul>
