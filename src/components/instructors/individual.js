@@ -163,7 +163,7 @@ class IndividualInstructor extends Component {
                                 </ul>
                             </Tab>
                             <Tab className="tab-courses" eventKey="courses" title="Courses" disabled={this.state.courses.length === 0}>
-                                <p>The quick brown fox jumped over the lazy dog.</p>
+                                <p>This table represents all the unique courses that {this.state.instructor.fullName} has taught within our dataset. The <em>UH GPA</em> column represents the GPA for that course across the entire university. The <em>Prof GPA</em> column represents the GPA of {this.state.instructor.fullName}'s grade history for this specific course across only the sections they've taught of it.</p>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
@@ -192,7 +192,7 @@ class IndividualInstructor extends Component {
                                 </Table>
                             </Tab>
                             <Tab className="tab-sections" eventKey="sections" title="Sections" disabled={this.state.sections.length === 0}>
-                                <p>The quick brown fox jumped over the lazy dog.</p>
+                            <p>This table represents all the unique sections that {this.state.instructor.fullName} has taught within our dataset. The <em>UH GPA</em> column represents the GPA for that course across the entire university. The <em>Prof GPA</em> column represents the GPA of {this.state.instructor.fullName}'s grade history for this specific course across only the sections they've taught of it. The <em>Semester GPA</em> column refers to the GPA of only the students registered for that specific section number for that semester.</p>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
