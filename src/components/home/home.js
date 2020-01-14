@@ -98,7 +98,8 @@ class Home extends Component {
                     <hr className="my-4" />
                     <p><em>Not affiliated with the University of Houston. Data is sourced directly from the University of Houston.</em></p>
                     <p><em>Latest semester available: <span id="latestTerm">{this.state.latestTerm}</span></em></p>
-                    <Button variant="primary" className="btn-cg" as={Link} to="/courses">Search Courses</Button>&nbsp;&nbsp;
+                    <Button variant="primary" className="btn-cg" as={Link} to="/courses">Search Courses</Button>
+                    <Button variant="primary" className="btn-cg" as={Link} to="/instructors">Search Instructors</Button>
                     <Button href="https://github.com/search?utf8=%E2%9C%93&q=FOIA-IR+user%3Acougargrades&type=Repositories&ref=advsearch&l=&l=" variant="primary" className="btn-cg">Spreadsheets</Button>
                 </Jumbotron>
                 <Jumbotron>
