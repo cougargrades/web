@@ -11,6 +11,7 @@ import Util from '../_common/util';
 import { Link } from 'react-router-dom';
 
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './individual.scss';
 
@@ -20,12 +21,16 @@ class IndividualInstructor extends Component {
         this.state = {
             instructor: null,
             courses: [],
-            sections: []
+            sections: [],
+            loading: false
         }
     }
 
     componentDidMount() {
         (async () => {
+            this.setState({
+                loading: true,
+            })
             let db = this.props.db;
             db.collection('instructors')
             .where('fullName', '==', this.props.fullName)
@@ -97,15 +102,26 @@ class IndividualInstructor extends Component {
                                 }
                             }
                         }
+                        for(let i = 0; i < crs.length; i++) {
+                            let t = 0;
+                            for(let j = 0; j < sctn.length; j++) {
+                                if(crs[i].department === sctn[j]['_department'] && crs[i].catalogNumber === sctn[j]['_catalogNumber']) {
+                                    t = Math.max(t, sctn[j].term);
+                                }
+                            }
+                            crs[i]['_lastTaught'] = t;
+                        }
+                        
                         sctn.sort((a,b) => {
                             // descending a > b
                             // ascending a < b
                             // TODO: sort by course then date
-                            return a.term > b.term
+                            return a.term < b.term
                         })
                         this.setState({
                             courses: crs,
-                            sections: sctn
+                            sections: sctn,
+                            loading: false
                         })
                     })();
                 }
@@ -126,13 +142,16 @@ class IndividualInstructor extends Component {
                 {this.state.instructor ? 
                     <div>
                         <h5 className="text-muted">{Util.subject_str(this.state.instructor.departments)}</h5>
+                        
+                        {this.state.loading ? <CircularProgress className="individual-spinner" variant="indeterminate" size={30} color="secondary" /> : <></>}
+                        
                         <Tabs defaultActiveKey="stats">
                             <Tab className="tab-stats" eventKey="stats" title="Statistics">
                                 <ul className="list-unstyled">
                                     <li>First name: <code>{this.state.instructor.firstName}</code></li>
                                     <li>Last name: <code>{this.state.instructor.lastName}</code></li>
-                                    <li># of unique courses taught: <code>{this.state.instructor.courses_count}</code></li>
-                                    <li># of unique sections taught: <code>{this.state.instructor.sections_count}</code></li>
+                                    <li>Number of unique courses taught: <code>{this.state.instructor.courses_count}</code></li>
+                                    <li>Number of unique sections taught: <code>{this.state.instructor.sections_count}</code></li>
                                     <li>{Util.taughtSentence(this.state.instructor.fullName, this.state.instructor.departments)}</li>
                                     <hr />
                                     <li>GPA minimum: <code>{this.state.instructor.GPA.minimum}</code></li>
@@ -144,6 +163,7 @@ class IndividualInstructor extends Component {
                                 </ul>
                             </Tab>
                             <Tab className="tab-courses" eventKey="courses" title="Courses" disabled={this.state.courses.length === 0}>
+                                <p>The quick brown fox jumped over the lazy dog.</p>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
@@ -164,7 +184,7 @@ class IndividualInstructor extends Component {
                                                     <td>{item.sectionCount}</td>
                                                     <td>{item.GPA.average ? item.GPA.average.toFixed(3) : undefined}</td>
                                                     <td>{item['_profGPA'] ? item['_profGPA'].toFixed(3) : undefined}</td>
-                                                    <td></td>
+                                                    <td>{item['_lastTaught'] ? Util.termString(item['_lastTaught']) : undefined}</td>
                                                 </tr>
                                             );
                                         })}
@@ -172,6 +192,7 @@ class IndividualInstructor extends Component {
                                 </Table>
                             </Tab>
                             <Tab className="tab-sections" eventKey="sections" title="Sections" disabled={this.state.sections.length === 0}>
+                                <p>The quick brown fox jumped over the lazy dog.</p>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
