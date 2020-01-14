@@ -7,7 +7,7 @@
       "**/node_modules/**"
     ],
     "rewrites": [{
-        "source": "{/,/courses,/about,/c/**}",
+        "source": "{/,/courses,/instructors,/about,/c/**,/i/**}",
         "destination": "/index.html"
       }, {
         "source": "/api/hello",
