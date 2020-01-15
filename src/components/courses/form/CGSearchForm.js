@@ -148,7 +148,7 @@ class CGSearchForm extends React.Component {
                 <Form.Group>
                     <Form.Label>Add course</Form.Label>
                     <InputGroup>
-                        <Form.Control type="text" placeholder="ENGL 1304, CHEM 1331, POLS 1336, ..." defaultValue="HIST 1378" onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
+                        <Form.Control type="text" placeholder="ENGL 1304, CHEM 1331, POLS 1336, ..." onKeyUp={(e) => {if (e.key !== 'Enter') this.updateButtonColor()}}/>
                         <InputGroup.Append>
                             <Button type="submit" className={`btn-cg ${this.state.searchbar}`} disabled={this.state.form_disabled} id="searchbar_btn">
                                 <span className="add-msg">Add to selection</span>
