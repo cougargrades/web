@@ -14,7 +14,7 @@ class CGSearchForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selection: ['MATH 1310'],
+            selection: [],
             searchbar: "default",
             form_disabled: false
         };
