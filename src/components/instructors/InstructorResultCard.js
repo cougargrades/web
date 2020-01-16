@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import GPABadge from './GPABadge';
 
-import Subjects from '../_common/subjects.json';
 import Util from '../_common/util';
 
 import './InstructorResultCard.scss';
@@ -23,20 +22,6 @@ class InstructorResultCard extends Component {
             opacity: 0.0,
             transform: 'translateY(25px)'
         }
-    }
-
-    subject_str() {
-        let depts = Object.keys(this.props.instructor.departments)
-        let str = ''
-        for(let i = 0; i < depts.length; i++) {
-            if(i === (depts.length - 1)) {
-                str += Subjects[depts[i]]
-            }
-            else {
-                str += `${str += Subjects[depts[i]]}, `
-            }
-        }
-        return str ? str : 'Instructor';
     }
 
     render() {
