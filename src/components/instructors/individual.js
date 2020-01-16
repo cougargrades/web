@@ -27,6 +27,7 @@ class IndividualInstructor extends Component {
     }
 
     componentDidMount() {
+        console.time(`Fetch data ${this.props.fullName}`);
         (async () => {
             this.setState({
                 loading: true,
@@ -42,22 +43,33 @@ class IndividualInstructor extends Component {
                     this.setState({
                         instructor: doc
                     });
-                    // TODO: fetch courses and sections here
                     let crs = [];
                     let sctn = [];
                     // run asynchronously
                     (async () => {
+                        //console.log(await doc.courses[0].get())
+                        //console.log((await doc.courses[0].get()).data())
                         for(let i = 0; i < doc.courses.length; i++) {
-                            crs.push((await doc.courses[i].get()).data())
+                            // save Promises for data
+                            crs.push(doc.courses[i].get())
                         }
+                        // wait for all Promises to complete simultaneously
+                        crs = await Promise.all(crs);
+                        // extract data from firestore snapshot
+                        crs = crs.map(item => item.data())
                         this.setState({
                             courses: crs
                         })
                         let psums = {};
                         let pnums = {};
                         for(let i = 0; i < doc.sections.length; i++) {
-                            // Fetch stored data
-                            let d = (await doc.sections[i].get()).data();
+                            // save Promises for data
+                            sctn.push(doc.sections[i].get())
+                        }
+                        sctn = await Promise.all(sctn);
+                        for(let i = 0; i < sctn.length; i++) {
+                            // Extract stored data
+                            let d = sctn[i].data();
                             // Compute extra data from context
                             d['_path'] = doc.sections[i].path // "catalog/HIST 1378/sections/laskjdlaksjdha"
                             d['_course'] = doc.sections[i].path.split('/')[1]
@@ -81,11 +93,8 @@ class IndividualInstructor extends Component {
                                 }
                             }
                             // Save new changes
-                            sctn.push(d)
+                            sctn[i] = d;
                         }
-
-                        //console.log(psums);
-                        //console.log(pnums);
 
                         // Use computed psums and pnums for Prof GPA calculation
                         for(let i = 0; i < sctn.length; i++) {
@@ -118,6 +127,7 @@ class IndividualInstructor extends Component {
                             // TODO: sort by course then date
                             return a.term < b.term
                         })
+                        console.timeEnd(`Fetch data ${this.props.fullName}`);
                         this.setState({
                             courses: crs,
                             sections: sctn,
