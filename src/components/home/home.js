@@ -16,7 +16,8 @@ import './home.scss';
 class Home extends Component {
     state = {
         latestTerm: '...',
-        blog: []
+        blog: [],
+        colorScheme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
     }
 
     /**

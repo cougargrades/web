@@ -90,10 +90,20 @@ div.cg-selected {
 
 div.cg-content {
 
+    
+
     div.card {
         overflow: visible;
         .card-header {
             background-color: #f7f7f7;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            background-color: $dm-fore;
+
+            .card-header {
+                background-color: $dm-fore;
+            }
         }
 
         .collapse {
@@ -159,6 +169,21 @@ div.cg-content {
                 div {
                     display: inline-block
                 }
+                @media (prefers-color-scheme: dark) {
+                    & svg rect {
+                        fill: $dm-text;
+                    }
+                    // make graph background transparent but not the lines
+                    & svg:nth-child(1) > rect:nth-child(2) {
+                        fill: rgba(0,0,0,0);
+                    }
+                    & svg rect [height="1"] {
+                        fill: $dm-text;
+                    }
+                    & svg text {
+                        fill: $dm-text;
+                    }
+                }
             }
 
             .google-visualization-table {
@@ -176,6 +201,17 @@ div.cg-content {
                     }
                     .tableCell {
                         background: rgba(255, 255, 255, 0.95);
+                    }
+
+                    @media (prefers-color-scheme: dark) {
+                        background: rgba(0,0,0,0);
+
+                        .tableRow {
+                            background: $dm-fore;
+                        }
+                        .tableCell {
+                            background: $dm-fore;
+                        }
                     }
                 }
             }

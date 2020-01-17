@@ -1,6 +1,12 @@
 
 @import "../_common/colors.scss";
 
+@media (prefers-color-scheme: dark) {
+    body {
+        color: $dm-text;
+    }
+}
+
 sup.beta {
     color: $uh-red;
 }
@@ -9,7 +15,6 @@ nav.cg-navbar {
     .navbar-nav a.nav-link {
         display: inline-flex;
         vertical-align: middle;
-        
         svg.MuiSvgIcon-root {
             height: 16px;
             width: 16px;

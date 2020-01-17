@@ -26,6 +26,11 @@ import 'firebase/firestore';
 class Root extends Component {
     constructor() {
         super()
+
+        this.state = {
+            colorScheme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
+        }
+
         // Initialize Cloud Firestore through Firebase
         firebase.initializeApp({
             apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -51,7 +56,7 @@ class Root extends Component {
     render() {
         return (
         <Router>
-            <Navbar bg="light" expand="lg" className="cg-navbar">
+            <Navbar bg={this.state.colorScheme} variant={this.state.colorScheme} expand="lg" className="cg-navbar">
                 <Navbar.Brand>
                     <Brand />
                 </Navbar.Brand>

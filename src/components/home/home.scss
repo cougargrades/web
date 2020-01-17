@@ -3,14 +3,31 @@
 h1.cg-hero {
     line-height: 1.2;
     color: $uh-red;
+
+    @media (prefers-color-scheme: dark) {
+        color: $dm-red;
+    }
+
     sup {
         font-size: 0.5em;
         top: -1em;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: $dm-back!important;
+    }
+}
+
 .jumbotron {
     background: #fff;
     margin-top: 1rem;
+
+    @media (prefers-color-scheme: dark) {
+        background: $dm-fore;
+        color: $dm-text;
+    }
 
     .btn-cg {
         color: #212529;
@@ -28,6 +45,20 @@ h1.cg-hero {
         &:focus {
             box-shadow: 0 0 0 0.2rem $uh-ocher;
         }
+
+        @media (prefers-color-scheme: dark) {
+            color: #212529;
+            background-color: darken($uh-gold, 15%);
+            border-color: darken($uh-gold, 15%);
+        
+            &:not(:disabled):not(.disabled):active {
+                background-color: darken($uh-mustard, 15%);
+                border-color: darken($uh-ocher, 15%);
+            }
+            &:focus {
+                box-shadow: 0 0 0 0.2rem darken($uh-ocher, 15%);
+            }
+        }
     }
 }
 
@@ -39,7 +70,7 @@ h1.cg-hero {
     li {
         font-size: 0.9rem;
         span {
-            color: rgba(34,34,34,0.65);
+            color: rgba(255, 255, 255, 0.5);
             font-style: italic;
         }
     }
