@@ -101,7 +101,6 @@ class IndividualInstructor extends Component {
                             // prevent division by 0
                             if(pnums[sctn[i]['_course']] > 0) {
                                 // mean formula: sum / n
-                                //console.log(sctn[i])
                                 sctn[i]['_profGPA'] = psums[sctn[i]['_course']] / pnums[sctn[i]['_course']];
                                 // populate `crs` with profGPA (this.state.courses)
                                 for(let j = 0; j < crs.length; j++) {
@@ -121,7 +120,7 @@ class IndividualInstructor extends Component {
                             crs[i]['_lastTaught'] = t;
                         }
                         
-                        sctn.sort((a,b) => {
+                        sctn = sctn.sort((a,b) => {
                             // descending a > b
                             // ascending a < b
                             // TODO: sort by course then date
@@ -180,8 +179,8 @@ class IndividualInstructor extends Component {
                                             <th>Course</th>
                                             <th>Description</th>
                                             <th>Total sections</th>
-                                            <th>UH GPA</th>
-                                            <th>Prof GPA</th>
+                                            <th>Dr.{this.state.instructor.lastName}'s Avg (GPA)</th>
+                                            <th>All Professors' Avg (GPA)</th>
                                             <th>Last taught</th>
                                         </tr>
                                     </thead>
@@ -192,9 +191,9 @@ class IndividualInstructor extends Component {
                                                     <td>{`${item.department} ${item.catalogNumber}`}</td>
                                                     <td>{item.description}</td>
                                                     <td>{item.sectionCount}</td>
-                                                    <td>{item.GPA.average ? item.GPA.average.toFixed(3) : undefined}</td>
                                                     <td>{item['_profGPA'] ? item['_profGPA'].toFixed(3) : undefined}</td>
-                                                    <td>{item['_lastTaught'] ? Util.termString(item['_lastTaught']) : undefined}</td>
+                                                    <td>{item.GPA.average ? item.GPA.average.toFixed(3) : undefined}</td>
+                                                    <td>{item['_lastTaught'] ? Util.termString(item['_lastTaught']) : <small>Loading...</small>}</td>
                                                 </tr>
                                             );
                                         })}
@@ -210,9 +209,9 @@ class IndividualInstructor extends Component {
                                             <th>Term</th>
                                             <th>Section number</th>
                                             <th>Total sections</th>
-                                            <th>Semester GPA</th>
-                                            <th>Prof GPA</th>
-                                            <th>UH GPA</th>
+                                            <th>Section Avg (GPA)</th>
+                                            <th>Dr.{this.state.instructor.lastName}'s Avg (GPA)</th>
+                                            <th>All Professors' Avg (GPA)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,7 +235,6 @@ class IndividualInstructor extends Component {
                         
                     </div> 
                     : <></>}
-                {/* <CGCourseContent course={this.props.course} onLoaded={(course) => this.handleLoaded(course)} className="text-center" parent="individual" firebase={this.props.firebase} db={this.props.db} /> */}
             </div>
         </Container>
         );
