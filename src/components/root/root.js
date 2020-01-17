@@ -27,9 +27,16 @@ class Root extends Component {
     constructor() {
         super()
 
+        // dark mode
         this.state = {
             colorScheme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
         }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addListener((event) => {
+            this.setState({
+                colorScheme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
+            })
+        });
 
         // Initialize Cloud Firestore through Firebase
         firebase.initializeApp({

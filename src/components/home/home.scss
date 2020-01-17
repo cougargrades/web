@@ -70,8 +70,12 @@ h1.cg-hero {
     li {
         font-size: 0.9rem;
         span {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.5);
             font-style: italic;
+            
+            @media (prefers-color-scheme: dark) {
+                color: rgba(255, 255, 255, 0.5);
+            }
         }
     }
 }
