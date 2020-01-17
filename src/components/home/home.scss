@@ -48,15 +48,15 @@ h1.cg-hero {
 
         @media (prefers-color-scheme: dark) {
             color: #212529;
-            background-color: darken($uh-gold, 15%);
-            border-color: darken($uh-gold, 15%);
+            background-color: darken($uh-gold, 10%);
+            border-color: darken($uh-gold, 10%);
         
             &:not(:disabled):not(.disabled):active {
-                background-color: darken($uh-mustard, 15%);
-                border-color: darken($uh-ocher, 15%);
+                background-color: darken($uh-mustard, 10%);
+                border-color: darken($uh-ocher, 10%);
             }
             &:focus {
-                box-shadow: 0 0 0 0.2rem darken($uh-ocher, 15%);
+                box-shadow: 0 0 0 0.2rem darken($uh-ocher, 10%);
             }
         }
     }

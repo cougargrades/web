@@ -1,3 +1,4 @@
+@import '../_common/colors.scss';
 
 .individual-instructor {
     h3 {
@@ -6,10 +7,33 @@
     h5 {
         margin-top: 0;
         margin-bottom: 1.5rem;
+        color: $dm-text-muted;
     }
 
     .individual-spinner {
         margin-bottom: 1.5rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .nav-tabs {
+            border-bottom-color: $dm-text-muted; // used to be #dee2e6
+            .nav-link {
+                &.active {
+                    color: $dm-text;
+                    background-color: $dm-fore;
+                }
+                &.active, &:hover, &:focus {
+                    border-color: $dm-text-muted $dm-text-muted $dm-text-muted; // used to be #dee2e6 #dee2e6 #fff
+                }
+            }
+        }
+        table.table {
+            color: $dm-text;
+            tr:hover {
+                color: $dm-text;
+                background-color: rgba(255,255,255,0.01);
+            }
+        }
     }
 
     .tab-stats.tab-pane {

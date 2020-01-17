@@ -151,7 +151,7 @@ class IndividualInstructor extends Component {
 
                 {this.state.instructor ? 
                     <div>
-                        <h5 className="text-muted">{Util.subject_str(this.state.instructor.departments)}</h5>
+                        <h5>{Util.subject_str(this.state.instructor.departments)}</h5>
                         
                         {this.state.loading ? <CircularProgress className="individual-spinner" variant="indeterminate" size={30} color="secondary" /> : <></>}
                         

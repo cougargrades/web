@@ -36,7 +36,7 @@ class InstructorResultCard extends Component {
                     <div className="body">
                         <GPABadge value={this.props.instructor.GPA.average} stddev={this.props.instructor.GPA.standardDeviation} />
                         <div className={`name h5 ${fN >= 35 ? 's35' : ''}`}>{this.props.instructor.fullName}</div>
-                        <div className="subjects text-muted">{Util.subject_str(this.props.instructor.departments)}</div>
+                        <div className="subjects">{Util.subject_str(this.props.instructor.departments)}</div>
                         <div className="counts">
                             <span>{this.props.instructor.courses_count} courses &bull; {this.props.instructor.sections_count} sections</span>
                         </div>

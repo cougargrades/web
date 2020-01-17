@@ -20,6 +20,10 @@
     border: 2px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.5rem;
 
+    @media (prefers-color-scheme: dark) {
+        background-color: $dm-fore;
+    }
+
     cursor: pointer;
     @include no-select;
 
@@ -41,8 +45,6 @@
 
         display: table-cell;
         vertical-align: middle;
-        //flex-direction: column;
-        //justify-content: center;
 
         .name {
             margin-top: 0.25rem;
@@ -67,6 +69,7 @@
             margin-bottom: 0.35rem;
             line-height: 1.0;
             font-weight: 500;
+            color: $dm-text-muted;
 
             max-width: 206px;
             text-overflow: ellipsis;
