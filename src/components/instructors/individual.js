@@ -172,7 +172,7 @@ class IndividualInstructor extends Component {
                                 </ul>
                             </Tab>
                             <Tab className="tab-courses" eventKey="courses" title="Courses" disabled={this.state.courses.length === 0}>
-                                <p>This table represents all the unique courses that {this.state.instructor.fullName} has taught within our dataset. The <em>UH GPA</em> column represents the GPA for that course across the entire university. The <em>Prof GPA</em> column represents the GPA of {this.state.instructor.fullName}'s grade history for this specific course across only the sections they've taught of it.</p>
+                                <p>This table represents all the unique courses that {this.state.instructor.fullName} has taught within our dataset. The <em>All Professors' Avg (GPA)</em> column represents the GPA for that course across the entire university. The <em>Dr.{this.state.instructor.lastName}'s Avg (GPA)</em> column represents the GPA of {this.state.instructor.fullName}'s grade history for this specific course across only the sections they've taught of it.</p>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
