@@ -7,7 +7,11 @@
     h5 {
         margin-top: 0;
         margin-bottom: 1.5rem;
-        color: $dm-text-muted;
+        color: $lm-text-muted;
+        
+        @media (prefers-color-scheme: dark) {
+            color: $dm-text-muted;
+        }
     }
 
     .individual-spinner {

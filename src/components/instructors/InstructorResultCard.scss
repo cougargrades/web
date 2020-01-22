@@ -69,7 +69,11 @@
             margin-bottom: 0.35rem;
             line-height: 1.0;
             font-weight: 500;
-            color: $dm-text-muted;
+            color: $lm-text-muted;
+            
+            @media (prefers-color-scheme: dark) {
+                color: $dm-text-muted;
+            }
 
             max-width: 206px;
             text-overflow: ellipsis;
