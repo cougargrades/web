@@ -15,6 +15,9 @@
       }, {
         "source": "/api/catalog",
         "function": "catalog"
+      }, {
+        "source": "/api/instructors",
+        "function": "instructors"
       }
     ],
     "headers": [{
