@@ -10,17 +10,26 @@
         "source": "{/,/courses,/instructors,/about,/c/**,/i/**}",
         "destination": "/index.html"
       }, {
-        "source": "/api/hello",
+        "source": "/api-1.1/hello",
         "function": "hello"
       }, {
-        "source": "/api/catalog",
+        "source": "/api-1.1/catalog",
         "function": "catalog"
       }, {
-        "source": "/api/instructors",
+        "source": "/api-1.1/instructors",
         "function": "instructors"
       }
     ],
     "headers": [{
+      "source": "/api-1.1/**",
+      "headers": [{
+        "key": "Access-Control-Allow-Origin",
+        "value":"*"
+      }, {
+        "key": "Cache-Control",
+        "value": "public, max-age=259200"
+      }]
+    }, {
       "source": "/api/**",
       "headers": [{
         "key": "Access-Control-Allow-Origin",
