@@ -1,6 +1,6 @@
 {
   "name": "@cougargrades/web",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.5",
