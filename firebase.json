@@ -10,6 +10,9 @@
         "source": "{/,/courses,/instructors,/about,/c/**,/i/**}",
         "destination": "/index.html"
       }, {
+        "source": "{/api,/api/**}",
+        "function": "api"
+      }, {
         "source": "/api-1.1/hello",
         "function": "hello"
       }, {
