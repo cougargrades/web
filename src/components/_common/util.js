@@ -1,7 +1,7 @@
 
 import Subjects from './subjects.json';
 
-class Util {
+export default class Util {
     
     /**
      * @param {number} termCode Term code
@@ -101,5 +101,3 @@ class Util {
         return str;
     }
 }
-
-export default Util;

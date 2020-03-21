@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './GPABadge.scss';
 
-class GPABadge extends Component {
+export default class GPABadge extends Component {
 
     color(n) {
         // 4.0 is rarely scored in practice
@@ -67,5 +67,3 @@ class GPABadge extends Component {
         
     }
 }
-
-export default GPABadge;

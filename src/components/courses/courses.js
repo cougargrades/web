@@ -7,7 +7,7 @@ import './courses.scss';
 import CGSearchForm from './form/CGSearchForm';
 import CGCourseResults from './results/CGCourseResults';
 
-class Courses extends Component {
+export default class Courses extends Component {
     constructor(props) {
         super(props);
         if(props.location && props.location.state && props.location.state.selection && props.location.state.selection.length > 0) {
@@ -47,5 +47,3 @@ class Courses extends Component {
         );
     }
 }
-
-export default Courses;

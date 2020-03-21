@@ -34,7 +34,7 @@
 /**
  * Course
  */
-class Course {
+export default class Course {
     /**
      * A processor class used to tabulate NoSQL data
      * @param {firebase.firestore.DocumentSnapshot} courseSnap - Document snapshot of the course
@@ -83,5 +83,3 @@ class Course {
         return product;
     }
 }
-
-export default Course;

@@ -12,7 +12,7 @@ import './individual.scss';
 
 import CGCourseContent from './results/CGCourseContent';
 
-class IndividualCourse extends Component {
+export default class IndividualCourse extends Component {
     constructor(props) {
         super()
         this.state = {
@@ -50,5 +50,3 @@ class IndividualCourse extends Component {
         );
     }
 }
-
-export default IndividualCourse;

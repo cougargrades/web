@@ -12,7 +12,7 @@ import firebase from '../_common/firebase';
 
 import './instructors.scss';
 
-class Instructors extends Component {
+export default class Instructors extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -106,5 +106,3 @@ class Instructors extends Component {
         )
     }
 }
-
-export default Instructors;

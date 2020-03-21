@@ -1,6 +1,6 @@
 import Course from './Course';
 
-class Processor {
+export default class Processor {
     /**
      * A processor class used to tabulate NoSQL data
      * @param {firebase.firestore.Firestore} db - Reference to Firestore instance in case follow-up queries are necessary
@@ -214,5 +214,3 @@ class Processor {
         return JSON.parse(JSON.stringify(graphArray));
     }
 }
-
-export default Processor;

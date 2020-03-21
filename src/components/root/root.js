@@ -20,7 +20,7 @@ import About from '../about/about';
 
 import Lock from '@material-ui/icons/Lock';
 
-class Root extends Component {
+export default class Root extends Component {
     constructor() {
         super()
 
@@ -81,5 +81,3 @@ class Root extends Component {
         );
     }
 }
-
-export default Root;

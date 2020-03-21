@@ -14,7 +14,7 @@ import firebase from '../_common/firebase';
 
 import './home.scss';
 
-class Home extends Component {
+export default class Home extends Component {
     state = {
         latestTerm: '...',
         blog: [],
@@ -120,5 +120,3 @@ class Home extends Component {
         );
     }
 }
-
-export default Home;

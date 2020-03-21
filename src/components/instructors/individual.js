@@ -16,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './individual.scss';
 
-class IndividualInstructor extends Component {
+export default class IndividualInstructor extends Component {
     constructor(props) {
         super()
         this.state = {
@@ -241,5 +241,3 @@ class IndividualInstructor extends Component {
         );
     }
 }
-
-export default IndividualInstructor;
