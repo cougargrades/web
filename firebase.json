@@ -17,11 +17,11 @@
       }
     ],  
     "rewrites": [{
-        "source": "!{/api,/api/**}",
-        "destination": "/index.html"
-      }, {
-        "source": "{/api,/api/**}",
+        "source": "/api/**",
         "function": "api"
+      }, {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "headers": [{

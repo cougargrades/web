@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './root.scss';
 
 import Brand from './brand';
-import NotFound from './notfound';
+import Blurb from './blurb';
 import Home from '../home/home';
 import Courses from '../courses/courses';
 import IndividualCourse from '../courses/individual';
@@ -63,10 +63,19 @@ class Root extends Component {
                 <Route path="/courses" component={({ location }) => <Courses location={location} />} />
                 <Route path="/c/:name" component={({ location, match }) => <IndividualCourse course={decodeURI(match.params.name)} location={location} />} />
                 <Route path="/instructors" component={({ location }) => <Instructors location={location}/>} />
-                <Route path="/i/:name" component={( location, match ) => <IndividualInstructor fullName={location.match.params.name} location={location} /> } />
+                <Route path="/i/:name" component={({ location, match }) => <IndividualInstructor fullName={match.params.name} location={location} /> } />
                 {/* <Route path="/groups" exact component={Home} /> */}
-                <Route path="/about" component={() => <About />} />
-                <Route component={NotFound} />
+                <Route path="/api" exact>
+                    <Blurb>
+                        <p>Did you mean to go to <code><a href="/api/">/api/</a></code> (with the trailing slash)?</p>
+                    </Blurb>
+                </Route>
+                <Route path="/about" component={About} />
+                <Route component={({ location }) =>
+                    <Blurb>
+                        <p>The requested URL <code>{location.pathname}</code> was not found.</p>
+                    </Blurb>
+                } />
             </Switch>
         </Router>
         );
