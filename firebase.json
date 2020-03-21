@@ -7,12 +7,12 @@
       "**/node_modules/**"
     ],
     "redirects": [ {
-        "source": "/blog/:post*",
+        "source": "{/blog,/blog/:post*}",
         "destination": "https://cougargrades.github.io/blog/:post",
         "type": 302
       }, {
-        "source": "/swagger/:post*",
-        "destination": "https://cougargrades.github.io/swagger/:post",
+        "source": "{/swagger,/swagger/**}",
+        "destination": "https://cougargrades.github.io/swagger/",
         "type": 302
       }
     ],  
