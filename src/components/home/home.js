@@ -10,6 +10,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import formatDistance from 'date-fns/formatDistance';
 
 import Util from '../_common/util';
+import firebase from '../_common/firebase';
 
 import './home.scss';
 
@@ -56,7 +57,7 @@ class Home extends Component {
                 blog: JSON.parse(JSON.stringify(entries))
             })
         })();
-        let db = this.props.db; // Firestore reference passed successfully without creating another instance
+        let db = firebase.firestore();
         for(let i in this.styles.body){
             document.body.style[i] = this.styles.body[i];
         }

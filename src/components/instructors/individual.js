@@ -7,6 +7,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 
 import Util from '../_common/util';
+import firebase from '../_common/firebase';
 
 import { Link } from 'react-router-dom';
 
@@ -32,7 +33,7 @@ class IndividualInstructor extends Component {
             this.setState({
                 loading: true,
             })
-            let db = this.props.db;
+            let db = firebase.firestore();
             db.collection('instructors')
             .where('fullName', '==', this.props.fullName)
             .get()

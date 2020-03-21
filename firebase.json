@@ -1,38 +1,30 @@
 {
   "hosting": {
-    "public": "./build/",
+    "public": "./build/prod/",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [ {
+        "source": "/blog/:post*",
+        "destination": "https://cougargrades.github.io/blog/:post",
+        "type": 302
+      }, {
+        "source": "/swagger/:post*",
+        "destination": "https://cougargrades.github.io/swagger/:post",
+        "type": 302
+      }
+    ],  
     "rewrites": [{
-        "source": "{/,/courses,/instructors,/about,/c/**,/i/**}",
+        "source": "!{/api,/api/**}",
         "destination": "/index.html"
       }, {
         "source": "{/api,/api/**}",
         "function": "api"
-      }, {
-        "source": "/api-1.1/hello",
-        "function": "hello"
-      }, {
-        "source": "/api-1.1/catalog",
-        "function": "catalog"
-      }, {
-        "source": "/api-1.1/instructors",
-        "function": "instructors"
       }
     ],
     "headers": [{
-      "source": "/api-1.1/**",
-      "headers": [{
-        "key": "Access-Control-Allow-Origin",
-        "value":"*"
-      }, {
-        "key": "Cache-Control",
-        "value": "public, max-age=259200"
-      }]
-    }, {
       "source": "/api/**",
       "headers": [{
         "key": "Access-Control-Allow-Origin",
@@ -42,6 +34,6 @@
         "value": "public, max-age=259200"
       }]
     }],
-    "predeploy": "npm run build"
+    "predeploy": "npm run predeploy"
   }
 }

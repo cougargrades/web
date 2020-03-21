@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CougarGrades.io",
+  "name": "Analyze grade distribution data for any past University of Houston course",
   "icons": [
     {
       "src": "favicon.ico",
