@@ -9,15 +9,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "animejs": "^3.1.0",
     "bootstrap": "^4.4.1",
     "date-fns": "^2.11.0",
     "firebase": "^7.12.0",
+    "react": "^16.13.1",
     "react-bootstrap": "^1.0.0-beta.17",
+    "react-dom": "^16.13.1",
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2"
   },
@@ -25,7 +25,12 @@
     "@babel/core": "^7.8.7",
     "babel-preset-nano-react-app": "^0.1.0",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.3.1",
     "sass": "^1.26.3"
+  },
+  "staticFiles": {
+    "staticPath": "static",
+    "watcherGlob": "**"
   },
   "babel": {
     "presets": [
