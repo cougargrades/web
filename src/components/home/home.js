@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
-import formatDistance from 'date-fns/formatDistance';
+import TimeAgo from 'timeago-react';
 
 import Util from '../_common/util';
 import firebase from '../_common/firebase';
@@ -110,7 +110,7 @@ export default class Home extends Component {
                         <ul>
                             {this.state.blog.map(entry => {
                                 return (
-                                    <li key={entry.id}><a href={entry.link}>{entry.title}</a>, <span>{formatDistance(new Date(entry.updated), new Date(), { addSuffix: true })}</span></li>
+                                    <li key={entry.id}><a href={entry.link}>{entry.title}</a>, <span><TimeAgo datetime={entry.updated} locale={'en'}/></span></li>
                                 )
                             })}
                         </ul>
