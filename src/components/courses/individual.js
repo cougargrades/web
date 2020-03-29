@@ -12,7 +12,7 @@ import './individual.scss';
 
 import CGCourseContent from './results/CGCourseContent';
 
-class IndividualCourse extends Component {
+export default class IndividualCourse extends Component {
     constructor(props) {
         super()
         this.state = {
@@ -44,11 +44,9 @@ class IndividualCourse extends Component {
                     pathname: '/courses',
                     state: { selection: JSON.parse(JSON.stringify(this.state.selection)) }
                 }}><ArrowBack/><span>Go Back</span></Button></p> : <></>}
-                <CGCourseContent course={this.props.course} onLoaded={(course) => this.handleLoaded(course)} className="text-center" parent="individual" firebase={this.props.firebase} db={this.props.db} />
+                <CGCourseContent course={this.props.course} onLoaded={(course) => this.handleLoaded(course)} className="text-center" parent="individual" />
             </div>
         </Container>
         );
     }
 }
-
-export default IndividualCourse;

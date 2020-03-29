@@ -1,16 +1,13 @@
 import Course from './Course';
 
-class Processor {
+export default class Processor {
     /**
      * A processor class used to tabulate NoSQL data
-     * @param {firebase.firestore.Firestore} db - Reference to Firestore instance in case follow-up queries are necessary
-     * @param {firebase.firestore.DocumentReference} courseRef - Document reference to the course
-     * @param {firebase.firestore.DocumentSnapshot} courseSnap - Document snapshot of the course
-     * @param {firebase.firestore.CollectionReference} sectionsRef - Collection reference of the course's total sections
-     * @param {firebase.firestore.QueryDocumentSnapshot} sectionsSnap - Collection snapshot of all the course's total sections
+     * @param {object} courseData - Document snapshot of the course
+     * @param {array} sectionDataArray - Collection snapshot of all the course's total sections
      */
-    constructor(db, courseRef, courseSnap, sectionsRef, sectionsSnap) {
-        this.sections = sectionsSnap.docs.map(doc => new Course(courseSnap, doc))
+    constructor(courseData, sectionDataArray) {
+        this.sections = sectionDataArray.map(item => new Course(courseData, item))
     }
 
     /**
@@ -99,10 +96,6 @@ class Processor {
             "sectionNumber": "Section #",
             "description": "Course Description",
             "primaryInstructorFullName": "Instructor",
-            "primaryInstructorTermGPA": "Instructor Average GPA",
-            "primaryInstructorTermGPAmax": "Instructor Max GPA",
-            "primaryInstructorTermGPAmin": "Instructor Min GPA",
-            "primaryInstructorTermSectionsTaught": "Instructor # sections taught",
             "A": "A",
             "B": "B",
             "C": "C",
@@ -214,5 +207,3 @@ class Processor {
         return JSON.parse(JSON.stringify(graphArray));
     }
 }
-
-export default Processor;

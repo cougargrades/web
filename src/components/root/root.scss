@@ -1,3 +1,10 @@
+/*
+ *
+ * @cougargrades/web
+ * root.scss
+ *
+ */
+
 
 @import "../_common/colors.scss";
 
@@ -15,9 +22,15 @@ sup.beta {
 }
 
 nav.cg-navbar {
-    .navbar-nav a.nav-link {
+    a.nav-link {
         display: inline-flex;
         vertical-align: middle;
+        //color: rgba(0,0,0,.5);
+
+        @media (prefers-color-scheme: dark) {
+            //color: hsla(0,0%,100%,.5);
+        }
+
         svg.MuiSvgIcon-root {
             height: 16px;
             width: 16px;

@@ -7,6 +7,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 
 import Util from '../_common/util';
+import firebase from '../_common/firebase';
 
 import { Link } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './individual.scss';
 
-class IndividualInstructor extends Component {
+export default class IndividualInstructor extends Component {
     constructor(props) {
         super()
         this.state = {
@@ -32,7 +33,7 @@ class IndividualInstructor extends Component {
             this.setState({
                 loading: true,
             })
-            let db = this.props.db;
+            let db = firebase.firestore();
             db.collection('instructors')
             .where('fullName', '==', this.props.fullName)
             .get()
@@ -240,5 +241,3 @@ class IndividualInstructor extends Component {
         );
     }
 }
-
-export default IndividualInstructor;

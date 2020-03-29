@@ -1,28 +1,27 @@
 {
   "name": "@cougargrades/web",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.9.5",
-    "@material-ui/icons": "^4.9.1",
-    "animejs": "^3.1.0",
-    "bootstrap": "^4.3.1",
-    "date-fns": "^2.11.0",
-    "firebase": "^7.11.0",
-    "node-sass": "^4.13.1",
-    "react": "^16.13.0",
-    "react-bootstrap": "^1.0.0-beta.17",
-    "react-dom": "^16.13.0",
-    "react-google-charts": "^3.0.14",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.4.0"
-  },
   "scripts": {
     "start": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts start",
     "build": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "print-env": "env"
+    "predeploy": "npm run build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@material-ui/icons": "^4.9.1",
+    "animejs": "^3.1.0",
+    "bootstrap": "^4.4.1",
+    "firebase": "^7.12.0",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0-beta.17",
+    "react-dom": "^16.13.1",
+    "react-google-charts": "^3.0.15",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.1",
+    "sass": "^1.26.3",
+    "timeago-react": "^3.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"

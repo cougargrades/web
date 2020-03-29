@@ -6,39 +6,31 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [ {
+        "source": "{/blog,/blog/**}",
+        "destination": "https://cougargrades.github.io/blog/",
+        "type": 302
+      }, {
+        "source": "{/swagger,/swagger/**}",
+        "destination": "https://cougargrades.github.io/swagger/",
+        "type": 302
+      }
+    ],
     "rewrites": [{
-        "source": "{/,/courses,/instructors,/about,/c/**,/i/**}",
+        "source": "/api/**",
+        "function": "api"
+      }, {
+        "source": "**",
         "destination": "/index.html"
-      }, {
-        "source": "/api-1.1/hello",
-        "function": "hello"
-      }, {
-        "source": "/api-1.1/catalog",
-        "function": "catalog"
-      }, {
-        "source": "/api-1.1/instructors",
-        "function": "instructors"
       }
     ],
     "headers": [{
-      "source": "/api-1.1/**",
-      "headers": [{
-        "key": "Access-Control-Allow-Origin",
-        "value":"*"
-      }, {
-        "key": "Cache-Control",
-        "value": "public, max-age=259200"
-      }]
-    }, {
       "source": "/api/**",
       "headers": [{
         "key": "Access-Control-Allow-Origin",
         "value":"*"
-      }, {
-        "key": "Cache-Control",
-        "value": "public, max-age=259200"
       }]
     }],
-    "predeploy": "npm run build"
+    "predeploy": "npm run predeploy"
   }
 }

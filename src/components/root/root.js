@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './root.scss';
 
 import Brand from './brand';
-import NotFound from './notfound';
+import Blurb from './blurb';
 import Home from '../home/home';
 import Courses from '../courses/courses';
 import IndividualCourse from '../courses/individual';
@@ -20,10 +20,7 @@ import About from '../about/about';
 
 import Lock from '@material-ui/icons/Lock';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
-class Root extends Component {
+export default class Root extends Component {
     constructor() {
         super()
 
@@ -37,28 +34,6 @@ class Root extends Component {
                 colorScheme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
             })
         });
-
-        // Initialize Cloud Firestore through Firebase
-        firebase.initializeApp({
-            apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-            authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-            projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID
-        });
-
-        firebase.firestore().enablePersistence().catch(function(err) {
-            if (err.code === 'failed-precondition') {
-                    // Multiple tabs open, persistence can only be enabled
-                    // in one tab at a a time.
-                    // ...
-            } else if (err.code === 'unimplemented') {
-                    // The current browser does not support all of the
-                    // features required to enable persistence
-                    // ...
-            }
-        })
-
-        this.firebase = firebase;
-        this.db = firebase.firestore();
     }
     render() {
         return (
@@ -68,14 +43,14 @@ class Root extends Component {
                     <Brand />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
+                <Navbar.Collapse>
+                    <Nav className="mr-auto navbar-nav">
                         <Nav.Link as={Link} to="/">Home</Nav.Link>
                         <Nav.Link as={Link} to="/courses">Courses</Nav.Link>
                         <Nav.Link as={Link} to="/instructors">Instructors</Nav.Link>
                         <Nav.Link as={Link} to="/groups" disabled={true}><Lock/>Groups</Nav.Link>
                     </Nav>
-                    <Nav className="justify-content-end">
+                    <Nav className="navbar-nav justify-content-end">
                         <Nav.Link href="https://github.com/cougargrades/web/wiki/Feedback">Feedback</Nav.Link>
                         <Nav.Link href="https://cougargrades.github.io/blog/">Updates</Nav.Link>
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
@@ -84,18 +59,25 @@ class Root extends Component {
             </Navbar>
 
             <Switch>
-                <Route path="/" exact component={() => <Home firebase={this.firebase} db={this.db} />} />
-                <Route path="/courses" component={({ location }) => <Courses location={location} firebase={this.firebase} db={this.db} />} />
-                <Route path="/c/:name" component={({ location, match }) => <IndividualCourse firebase={this.firebase} db={this.db} course={decodeURI(match.params.name)} location={location} />} />
-                <Route path="/instructors" component={({ location }) => <Instructors firebase={this.firebase} db={this.db} location={location}/>} />
-                <Route path="/i/:name" component={( location, match ) => <IndividualInstructor firebase={this.firebase} db={this.db} fullName={location.match.params.name} location={location} /> } />
+                <Route path="/" exact component={() => <Home />} />
+                <Route path="/courses" component={({ location }) => <Courses location={location} />} />
+                <Route path="/c/:name" component={({ location, match }) => <IndividualCourse course={decodeURI(match.params.name)} location={location} />} />
+                <Route path="/instructors" component={({ location }) => <Instructors location={location}/>} />
+                <Route path="/i/:name" component={({ location, match }) => <IndividualInstructor fullName={match.params.name} location={location} /> } />
                 {/* <Route path="/groups" exact component={Home} /> */}
-                <Route path="/about" component={() => <About firebase={this.firebase} db={this.db} />} />
-                <Route component={NotFound} />
+                <Route path="/api" exact>
+                    <Blurb>
+                        <p>Did you mean to go to <code><a href="/api/">/api/</a></code> (with the trailing slash)?</p>
+                    </Blurb>
+                </Route>
+                <Route path="/about" component={About} />
+                <Route component={({ location }) =>
+                    <Blurb>
+                        <p>The requested URL <code>{location.pathname}</code> was not found.</p>
+                    </Blurb>
+                } />
             </Switch>
         </Router>
         );
     }
 }
-
-export default Root;

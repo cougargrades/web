@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 import './about.scss';
 
-class About extends Component {
+export default class About extends Component {
     render() {
         return (
             <Container className="about">
@@ -76,5 +76,3 @@ class About extends Component {
         );
     }
 }
-
-export default About;
