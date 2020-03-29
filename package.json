@@ -3,8 +3,8 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
-    "start": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) parcel serve --out-dir build/dev/ public/index.html",
-    "build": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) parcel build --out-dir build/prod/ --detailed-report 10 public/index.html",
+    "start": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts start",
+    "build": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts build",
     "predeploy": "npm run build"
   },
   "license": "MIT",
@@ -19,36 +19,23 @@
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.1",
     "react-google-charts": "^3.0.15",
-    "react-router-dom": "^5.1.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "babel-preset-nano-react-app": "^0.1.0",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-static-files-copy": "^2.3.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.1",
     "sass": "^1.26.3"
   },
-  "staticFiles": {
-    "staticPath": "static",
-    "watcherGlob": "**"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "babel": {
-    "presets": [
-      "nano-react-app"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "@babel/plugin-transform-react-jsx",
-        {
-          "pragmaFrag": "React.Fragment"
-        }
-      ]
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

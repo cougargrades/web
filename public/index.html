@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f8f9fa" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="dns-prefetch" href="https://cougargrades.github.io/">
     <title>CougarGrades.io: Grade distribution data for UH</title>
     <meta name="description" content="Analyze grade distribution data for any past University of Houston course. Compare past instructors, compare multiple courses. Open source data and code.">
@@ -22,16 +22,5 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script src="../src/index.js"></script>
-    <script>
-      const url = () => 'service-worker.js'
-      // Check that service workers are supported
-      if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register(url());
-        });
-      }
-    </script>
   </body>
 </html>

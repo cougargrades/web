@@ -1,21 +1,21 @@
 {
   "hosting": {
-    "public": "./build/prod/",
+    "public": "./build/",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "redirects": [ {
-        "source": "{/blog,/blog/:post*}",
-        "destination": "https://cougargrades.github.io/blog/:post",
+        "source": "{/blog,/blog/**}",
+        "destination": "https://cougargrades.github.io/blog/",
         "type": 302
       }, {
         "source": "{/swagger,/swagger/**}",
         "destination": "https://cougargrades.github.io/swagger/",
         "type": 302
       }
-    ],  
+    ],
     "rewrites": [{
         "source": "/api/**",
         "function": "api"
