@@ -7,7 +7,6 @@ import { Chart } from 'react-google-charts';
 
 import Processor from './Processor';
 import Util from '../../_common/util';
-//import ChartProcessor from './processor/ChartProcessor';
 import firebase from '../../_common/firebase';
 
 class CGCourseContent extends React.Component {
@@ -37,13 +36,12 @@ class CGCourseContent extends React.Component {
 
         // Test for existence
         if(courseSnap.exists) {
-            //console.log(`Found ${this.props.course}`)
-            // fetch the rest of the data
-            let sectionsRef = courseRef.collection('sections');
-            let sectionsSnap = await sectionsRef.get();
+            
+            // parkour one-liner
+            let sectionsDataArray = (await Promise.all(courseSnap.data().sections.map(item => item.get()))).map(item => item.data());
             console.timeEnd(`firestore (${this.props.course})`);
             console.time(`processor (${this.props.course})`)
-            let processed = new Processor(db, courseRef, courseSnap, sectionsRef, sectionsSnap);
+            let processed = new Processor(courseSnap.data(), sectionsDataArray);
 
             this.setState({
                 valid: true,

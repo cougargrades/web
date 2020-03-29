@@ -40,11 +40,12 @@ export default class Course {
      * @param {firebase.firestore.DocumentSnapshot} courseSnap - Document snapshot of the course
      * @param {firebase.firestore.QueryDocumentSnapshot} sectionsSnap - Collection snapshot of all the course's total sections
      */
-    constructor(courseSnap, sectionSnap) {
-        if(courseSnap.exists) {
-            // Merge section data into course data, merge the compounded object into `this`
-            Object.assign(this, Object.assign(courseSnap.data(), sectionSnap.data()));
-        }
+    constructor(courseData, sectionData) {
+        Object.assign(this, Object.assign(courseData, sectionData));
+        // delete cyclic properties (firestore references) that aren't used
+        delete this.instructors;
+        delete this.sections;
+        delete this.course;
     }
 
     /**
@@ -52,10 +53,8 @@ export default class Course {
      * @param {Course} courseArray - An array of courses 
      */
     static expand(courseArray) {
-        let t = courseArray.slice()
-        t.forEach(item => { delete item.instructors })
+        let product = JSON.parse(JSON.stringify(courseArray))
 
-        let product = JSON.parse(JSON.stringify(t))
         // expands sections
         for(let i = 0; i < product.length; i++) {
             // if a course with the same term and sectionNumber has > 1 occurrences
@@ -75,10 +74,6 @@ export default class Course {
             item.primaryInstructorFullName = `${item.primaryInstructor.lastName}, ${item.primaryInstructor.firstName}`;
             item.primaryInstructorFirstName = item.primaryInstructor.firstName;
             item.primaryInstructorLastName = item.primaryInstructor.lastName;
-            item.primaryInstructorTermGPA = item.primaryInstructor.termGPA;
-            item.primaryInstructorTermGPAmax = item.primaryInstructor.termGPAmax;
-            item.primaryInstructorTermGPAmin = item.primaryInstructor.termGPAmin;
-            item.primaryInstructorTermSectionsTaught = item.primaryInstructor.termSectionsTaught;
         }
         return product;
     }
