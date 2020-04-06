@@ -36,19 +36,6 @@ nav > * {
   width: 100%;
   max-width: 888px;
   flex: 1 0 100%;
-  //font-size: calc(var(--fontSize) * 1.25);
-  //line-height: calc(var(--lineHeight) * 1.25);
-}
-
-@media only screen and (max-width: 600px) {
-  :root {
-    //--fontSize: calc(100vw / 30);
-  }
-}
-@media only screen and (max-device-width: 812px) and (orientation: landscape) {
-  :root {
-    //--fontSize: 1.7vw;
-  }
 }
 
 nav.menu {
@@ -111,55 +98,13 @@ nav.menu ul li.nav-home > a {
 
 /* narrow windows */
 @media only screen and (max-width: 565px) {
-  // nav {
-  //   padding-left: 24px;
-  //   padding-right: 24px;
-  // }
-  // nav.menu ul {
-  //   display: grid;
-  //   grid-template-columns: repeat(4, 1fr);
-  //   margin: 0 20px;
-  // }
-  // nav.menu ul {
-  // }
-  // nav.menu ul li {
-  //   display: flex;
-  // }
   nav.menu ul li > a {
-  //   flex: 0 1 100%;
-  //   margin: 0;
-  //   padding-right: 0;
-  //   padding-left: 0;
     box-shadow: inset 1px 0 0 0 rgba(255, 255, 255, 0.1);
   }
   nav.menu ul li:first-child > a {
-  //  margin-right: 0;
     box-shadow: none;
   }
-  // nav.menu ul li.nav-home a {
-  //   text-align: left;
-  // }
 }
-
-// /* progressively hide menu items */
-// @media only screen and (max-width: 680px) {
-//   nav.menu .nav-lab {
-//     display: none;
-//   }
-// }
-// @media only screen and (max-width: 565px) {
-//   nav.menu .nav-download {
-//     display: none;
-//   }
-// }
-// @media only screen and (max-width: 280px) {
-//   nav.menu ul {
-//     grid-template-columns: repeat(3, 1fr);
-//   }
-//   nav.menu .nav-dynmetrics {
-//     display: none;
-//   }
-// }
 
 // Undo the margin-bottom set by <nav>
 nav + header {
