@@ -7,9 +7,15 @@
 
 
 main section {
-    margin-bottom: 60px;
+    margin-bottom: calc(var(--fontSize) * 3.1);
 
     h2 {
         margin-bottom: calc(var(--lineHeight) * 0.65);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    img {
+        filter: Invert()
     }
 }
