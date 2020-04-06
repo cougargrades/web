@@ -1,0 +1,15 @@
+
+@import "base.scss";
+@import "colors.scss";
+@import "navbar.scss";
+@import "header.scss";
+@import "stamps.scss";
+
+
+main section {
+    margin-bottom: 60px;
+
+    h2 {
+        margin-bottom: calc(var(--lineHeight) * 0.65);
+    }
+}

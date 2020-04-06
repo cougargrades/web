@@ -1,0 +1,3 @@
+#!/bin/sh
+
+concurrently "live-server --port=8000 --no-browser" "sass --watch sass/:css/"
