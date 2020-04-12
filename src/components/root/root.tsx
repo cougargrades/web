@@ -5,6 +5,8 @@ import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
 import { Blurb } from './blurb'
 import { Brand } from './brand'
 
+import { Homepage } from '../homepage/homepage'
+
 import '@cougargrades/raster/raster2.css'
 import './raster-overwrite.scss'
 import './root.scss'
@@ -22,13 +24,13 @@ export const Root: React.FC = () => {
           <li><Link to="/instructors">Instructors</Link></li>
           <li><a className="disabled"><span role="img" aria-label="Lock">🔒</span> Groups</a></li>
           <li><a href="https://github.com/cougargrades/web/wiki/Feedback">Feedback</a></li>
-          <li><a href="/https://cougargrades.github.io/blog/">Updates</a></li>
+          <li><a href="https://cougargrades.github.io/blog/">Updates</a></li>
           <li><Link to="/about">About</Link></li>
         </ul>
       </nav>
       <Switch>
         <Route path="/" exact>
-          {/* <Home /> */}
+          <Homepage />
         </Route>
         <Route path="/courses">
           {/* <Courses /> */}

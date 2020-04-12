@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@cougargrades/raster": "^20.0.2",
+    "@cougargrades/raster": "^20.0.3",
     "animejs": "^3.1.0",
     "firebase": "^7.14.0",
     "node-sass": "^4.13.1",

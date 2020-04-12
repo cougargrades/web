@@ -66,6 +66,10 @@ nav.menu ul li {
   margin-bottom: -1px;
   text-indent: -0.5px;
   text-align: center;
+
+  i.material-icons {
+    font-size: inherit;
+  }
 }
 nav.menu ul li > a {
   color: inherit;
