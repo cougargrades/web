@@ -11,18 +11,32 @@
     "@cougargrades/raster": "^20.0.2",
     "animejs": "^3.1.0",
     "firebase": "^7.14.0",
+    "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "@cougargrades/react-scripts": "0.1.0",
     "@types/node": "^13.11.1",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.4",
+    "react-scripts": "^3.4.1",
     "typescript": "^3.8.3"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -1,0 +1,66 @@
+
+:root {
+  /*
+    * UH Official
+    * http://www.uh.edu/marcom/guidelines-policies/brand/visual-identity/#color
+    */
+  --uh-red: #c8102e;
+  --uh-brick: #960C22;
+  --uh-chocolate: #640817;
+
+  --uh-teal: #00b388;
+  --uh-green: #00866C;
+  --uh-forest: #005950;
+
+  --uh-gold: #F6BE00;
+  --uh-mustard: #D89B00;
+  --uh-ocher: #B97800;
+
+  --uh-gray: #888b8d;
+  --uh-grey: var(--uh-gray);
+  --uh-slate: #54585a;
+  --uh-black: #000000;
+
+  --uh-cream: #fff9d9;
+  --uh-white: #ffffff;
+
+  /*
+    * UH Custom
+    */
+  --uh-maya-blue: #65B2FE;
+  --uh-orchid: #DC89DC;
+  
+  /*
+    * Color scheme inspired by aggiescheduler.com
+    */
+  --grade-a: rgb(135, 206, 250);
+  --grade-b: rgb(144, 238, 144);
+  --grade-c: rgb(255, 255, 0);
+  --grade-d: rgb(255, 160, 122);
+  --grade-f: rgb(205, 92, 92);
+  --grade-i: rgb(211, 211, 211);
+  --grade-q: rgb(138, 43, 226);
+  --grade-text: rgba(0, 0, 0, 0.54);
+  --grade-stddev-high: royalblue;
+  --grade-stddev-low: rgb(155, 173, 226);
+}
+
+
+
+
+/*
+  Dark mode stuff
+*/
+$dm-text: #dad7d2;
+$dm-fore: #343a40;
+$dm-back: #181a1b;
+$dm-red:  #f25e76;
+$dm-text-muted: rgba(255, 255, 255, 0.5);
+$lm-text-muted: #65757d;
+
+
+/*
+    Misc
+*/
+$google-softwhite: #efefef;
+$cg-softwhite: #f7f7f7;

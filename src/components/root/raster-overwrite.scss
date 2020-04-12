@@ -1,0 +1,41 @@
+/*
+ * Overwrites some specific styles from raster2.css
+ * Notably:
+ * - Body padding, replaces with <main>
+ * - Dark mode colors for typography
+ */
+
+
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+main {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  padding: calc(var(--lineHeight) * 2);
+  padding-bottom: calc(var(--lineHeight) * 3);
+  max-width: 888px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  main {
+    padding: var(--lineHeight);
+    padding-bottom: calc(var(--lineHeight) * 2);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Colors (Dark Mode) */
+    --foreground-color-rgb: 255,255,255;
+    --foreground-color-a: 1;
+    --foreground-color: rgba(var(--foreground-color-rgb), var(--foreground-color-a));
+    --background-color: black;
+  }
+}
