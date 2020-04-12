@@ -12,7 +12,6 @@
     "animejs": "^3.1.0",
     "firebase": "^7.14.0",
     "react": "^16.13.1",
-    "react-bootstrap-typeahead": "^4.1.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "sass": "^1.26.3"
