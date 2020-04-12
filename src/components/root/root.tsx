@@ -33,16 +33,24 @@ export const Root: React.FC = () => {
           <Homepage />
         </Route>
         <Route path="/courses">
-          {/* <Courses /> */}
+          <Blurb>
+            <p>Courses page</p>
+          </Blurb>
         </Route>
         <Route path="/c/:name">
-          {/* <IndividualCourse course={'none'} /> */}
+          <Blurb>
+            <p>Individual course page</p>
+          </Blurb>
         </Route>
         <Route path="/instructors">
-          {/* <Instructors /> */}
+          <Blurb>
+            <p>Instructors page</p>
+          </Blurb>
         </Route>
         <Route path="/i/:fullName">
-          {/* <IndividualInstructor /> */}
+          <Blurb>
+            <p>Individual instructors page</p>
+          </Blurb>
         </Route>
         <Route path="/api" exact>
           <Blurb>
@@ -50,7 +58,9 @@ export const Root: React.FC = () => {
           </Blurb>
         </Route>
         <Route path="/about">
-          {/* <About /> */}
+          <Blurb>
+            <p>About page</p>
+          </Blurb>
         </Route>
         <Route>
           <Blurb http404 />
