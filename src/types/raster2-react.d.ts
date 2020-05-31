@@ -1,7 +1,13 @@
-namespace JSX {
+declare namespace JSX {
   interface IntrinsicElements {
-    "r-grid": React.DetailedHTMLProps<RasterGridAttributes<RasterGridElement>, RasterGridElement>,
-    "r-cell": React.DetailedHTMLProps<RasterCellAttributes<RasterCellElement>, RasterCellElement>,
+    'r-grid': React.DetailedHTMLProps<
+      RasterGridAttributes<RasterGridElement>,
+      RasterGridElement
+    >;
+    'r-cell': React.DetailedHTMLProps<
+      RasterCellAttributes<RasterCellElement>,
+      RasterCellElement
+    >;
   }
 }
 

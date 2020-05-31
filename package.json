@@ -5,7 +5,8 @@
     "start": "snowpack dev",
     "build": "snowpack build",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "lint": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'"
+    "lint": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
+    "predeploy": "npm run lint && npm run build"
   },
   "license": "MIT",
   "devDependencies": {

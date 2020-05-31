@@ -1,8 +1,7 @@
+import React from 'react';
 
-import React from 'react'
-
-import './stamps.scss'
-import './homepage.scss'
+import './stamps.scss';
+import './homepage.scss';
 
 export const Homepage: React.FC = () => {
   return (
@@ -12,45 +11,67 @@ export const Homepage: React.FC = () => {
           <r-cell span="1-4" span-s="row">
             <section>
               <h2>Find every course.</h2>
-              <p>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</p>
+              <p>
+                The quick brown fox jumped over the lazy dog. The quick brown
+                fox jumped over the lazy dog. The quick brown fox jumped over
+                the lazy dog.
+              </p>
               <div className="stamp-wrap">
-                <div className="stamp teal">92k</div><span>Sections</span>
-                <div className="stamp gold">16k</div><span>Courses</span>
+                <div className="stamp teal">92k</div>
+                <span>Sections</span>
+                <div className="stamp gold">16k</div>
+                <span>Courses</span>
               </div>
               <br />
               <p>
-                <a className="button" href="#">Search Courses</a>
+                <a className="button" href="#">
+                  Search Courses
+                </a>
               </p>
             </section>
           </r-cell>
           <r-cell span="5.." span-s="row">
             <figure>
-              <img src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/area-chart.png" style={{ width: "100%" }} />
+              <img
+                src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/area-chart.png"
+                style={{ width: '100%' }}
+              />
               <figcaption>An elephant at sunset</figcaption>
             </figure>
           </r-cell>
           <r-cell span="1-4" span-s="row">
             <section>
               <h2>Know your instructors.</h2>
-              <p>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</p>
+              <p>
+                The quick brown fox jumped over the lazy dog. The quick brown
+                fox jumped over the lazy dog. The quick brown fox jumped over
+                the lazy dog.
+              </p>
               <div>
-                <div className="stamp blue">29k</div><span>Instructors</span>
-                <div className="stamp orchid">130</div><span>Subjects</span>
+                <div className="stamp blue">29k</div>
+                <span>Instructors</span>
+                <div className="stamp orchid">130</div>
+                <span>Subjects</span>
               </div>
               <br />
               <p>
-                <a className="button" href="#">Search Instructors</a>
+                <a className="button" href="#">
+                  Search Instructors
+                </a>
               </p>
             </section>
           </r-cell>
           <r-cell span="5.." span-s="row">
             <figure>
-              <img src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/line-chart.png" style={{ width: "100%" }} />
+              <img
+                src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/line-chart.png"
+                style={{ width: '100%' }}
+              />
               <figcaption>An elephant at sunset</figcaption>
             </figure>
           </r-cell>
         </r-grid>
       </main>
     </>
-  )
-}
+  );
+};
