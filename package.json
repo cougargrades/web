@@ -1,42 +1,22 @@
 {
-  "name": "@cougargrades/web",
-  "version": "1.0.0",
   "scripts": {
-    "start": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts start",
-    "build": "REACT_APP_GIT_SHA=$(git rev-parse --short HEAD) REACT_APP_VERSION=$npm_package_version REACT_APP_BUILD_DATE=$(date) react-scripts build",
-    "predeploy": "npm run build"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@cougargrades/raster": "^20.0.7",
-    "animejs": "^3.1.0",
-    "firebase": "^7.14.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "sass": "^1.26.3"
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "test": "jest",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "devDependencies": {
-    "@types/node": "^13.11.1",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6",
-    "@types/react-router-dom": "^5.1.4",
-    "react-scripts": "^3.4.1",
-    "typescript": "^3.8.3"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@snowpack/app-scripts-react": "^1.0.6",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "snowpack": "^2.0.0",
+    "typescript": "^3.8.0"
   }
 }

@@ -1,0 +1,58 @@
+/*
+ *
+ * @cougargrades/web
+ * root.scss
+ *
+ */
+
+
+@import "../_common/colors.scss";
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: $dm-text;
+    }
+    hr {
+        border-top-color: rgba(255,255,255,0.1);
+    }
+}
+
+sup.beta {
+    color: $uh-red;
+}
+
+nav.cg-navbar {
+    a.nav-link {
+        display: inline-flex;
+        vertical-align: middle;
+        //color: rgba(0,0,0,.5);
+
+        @media (prefers-color-scheme: dark) {
+            //color: hsla(0,0%,100%,.5);
+        }
+
+        svg.MuiSvgIcon-root {
+            height: 16px;
+            width: 16px;
+            margin-top: calc(1.5rem/2 - 16px/2); // centered vertically
+            line-height: 24px;
+            margin-right: 0.1em;
+    
+            @media (min-width: 992px) {
+                margin-top: calc(1.5rem/2 - 16px/2 + 1px);
+            }
+        }
+    }
+}
+
+// iOS fix
+
+textarea,
+input.text,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+.input-checkbox {
+-webkit-appearance: none;
+border-radius: 0;
+}
