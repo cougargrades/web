@@ -9,5 +9,6 @@
     "build:scss": "sass $FILE"
   },
   "plugins": [
+    ["@snowpack/plugin-webpack", { "sourceMap": true }]
   ]
 }
