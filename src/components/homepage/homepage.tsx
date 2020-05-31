@@ -4,6 +4,7 @@ import { Blog } from '../blog/blog';
 
 import './stamps.scss';
 import './homepage.scss';
+import './footer.scss';
 
 export const Homepage: React.FC = () => {
   return (
@@ -78,7 +79,7 @@ export const Homepage: React.FC = () => {
         </r-grid>
       </main>
       <footer>
-        <h5>@cougargrades/web</h5>
+        <h6>@cougargrades/web</h6>
         <p>
           Version: <code>1.0.0</code>, Commit:{' '}
           <code>

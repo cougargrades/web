@@ -9,7 +9,6 @@ import '@exampledev/new.css';
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
 import './header.scss';
-import './footer.scss';
 
 export const Root: React.FC = () => {
   return (

@@ -16,5 +16,11 @@ footer {
 	margin-right: calc(0px - (50vw - 50%)); */
 	
 	padding-left: calc(50vw - 50%);
-	padding-right: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+	
+	// make footer smaller
+	font-size: 0.75em;
+	code {
+		font-size: 1em;
+	}
 }
