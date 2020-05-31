@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 
 import { Blurb } from './blurb';
 import { Emoji } from '../emoji';
@@ -9,6 +9,7 @@ import '@exampledev/new.css';
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
 import './header.scss';
+import './footer.scss';
 
 export const Root: React.FC = () => {
   return (
@@ -16,36 +17,34 @@ export const Root: React.FC = () => {
       <header className="hero">
         <hgroup>
           <h1>CougarGrades.io</h1>
-          <h3>Analyze grade distribution data</h3>
+          {/* <h3>Analyze grade distribution data</h3> */}
+          <h3>
+            Analyze grade distribution data for any past University of Houston
+            course
+          </h3>
         </hgroup>
         <nav>
-          <Link to="/">
+          <NavLink to="/" exact>
             <Emoji label="home" symbol="🏠" /> Home
-          </Link>{' '}
-          /{' '}
-          <Link to="/courses">
+          </NavLink>
+          <NavLink to="/courses">
             <Emoji label="books" symbol="📚" /> Courses
-          </Link>{' '}
-          /{' '}
-          <Link to="/instructors">
+          </NavLink>
+          <NavLink to="/instructors">
             <Emoji label="teacher" symbol="👩‍🏫" /> Instructors
-          </Link>{' '}
-          /{' '}
+          </NavLink>
           <a href="#" className="disabled" title="Coming soon ™">
             <Emoji label="lock" symbol="🔒" /> Groups
-          </a>{' '}
-          /{' '}
+          </a>
           <a href="https://github.com/cougargrades/web/wiki/Feedback">
             <Emoji label="speech balloon" symbol="💬" /> Feedback
-          </a>{' '}
-          /{' '}
+          </a>
           <a href="https://cougargrades.github.io/blog/">
             <Emoji label="newspaper" symbol="🗞️" /> Updates
-          </a>{' '}
-          /{' '}
-          <Link to="/about">
+          </a>
+          <NavLink to="/about">
             <Emoji label="waving hand" symbol="👋" /> About
-          </Link>
+          </NavLink>
         </nav>
       </header>
       <Switch>

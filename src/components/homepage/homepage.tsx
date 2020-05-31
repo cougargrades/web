@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Blog } from '../blog/blog';
+
 import './stamps.scss';
 import './homepage.scss';
 
@@ -8,6 +10,9 @@ export const Homepage: React.FC = () => {
     <>
       <main>
         <r-grid columns="8">
+          <r-cell span="row">
+            <Blog />
+          </r-cell>
           <r-cell span="1-4" span-s="row">
             <section>
               <h2>Find every course.</h2>
@@ -72,6 +77,23 @@ export const Homepage: React.FC = () => {
           </r-cell>
         </r-grid>
       </main>
+      <footer>
+        <h5>@cougargrades/web</h5>
+        <p>
+          Version: <code>1.0.0</code>, Commit:{' '}
+          <code>
+            <a href="https://github.com/cougargrades/web">abcd123</a>
+          </code>
+          <br />
+          Built: {new Date().toLocaleString()}
+        </p>
+        <p>
+          <em>
+            Not affiliated with the University of Houston. Data is sourced
+            directly from the University of Houston.
+          </em>
+        </p>
+      </footer>
     </>
   );
 };

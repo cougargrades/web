@@ -27,6 +27,8 @@
   "dependencies": {
     "@exampledev/new.css": "^1.1.3",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "swr": "^0.2.2",
+    "timeago-react": "^3.0.0"
   }
 }
