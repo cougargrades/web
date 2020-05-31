@@ -10,14 +10,21 @@
   "license": "MIT",
   "devDependencies": {
     "@snowpack/app-scripts-react": "^1.0.6",
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.3",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router": "^5.1.7",
+    "@types/react-router-dom": "^5.1.5",
+    "postcss-import": "^12.0.1",
     "prettier": "^2.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "sass": "^1.26.7",
     "snowpack": "^2.0.0",
     "typescript": "^3.8.0"
+  },
+  "dependencies": {
+    "@exampledev/new.css": "^1.1.3",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   }
 }

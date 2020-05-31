@@ -43,10 +43,15 @@
   --grade-text: rgba(0, 0, 0, 0.54);
   --grade-stddev-high: royalblue;
   --grade-stddev-low: rgb(155, 173, 226);
+
+  /*
+    * From Raster: https://github.com/rsms/raster/blob/master/src/helpers.css
+    */
+  --red:    rgb(238, 39, 17);
+  --blue:   rgb(24, 113, 233);
+  --green:  rgb(18, 192, 91);
+  --yellow: rgb(249, 191, 15);
 }
-
-
-
 
 /*
   Dark mode stuff

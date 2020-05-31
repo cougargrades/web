@@ -4,30 +4,26 @@ import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
 
 import { Blurb } from './blurb'
 import { Brand } from './brand'
-
+import { Emoji } from '../emoji'
 import { Homepage } from '../homepage/homepage'
 
-import '@cougargrades/raster/raster2.css'
-import './raster-overwrite.scss'
-import './root.scss'
+import '@exampledev/new.css'
+import '../../styles/base.scss'
+import '../../styles/colors.scss'
+import './header.scss'
 
 export const Root: React.FC = () => {
   return (
     <BrowserRouter>
-      <nav className="menu">
-        <ul className="menu">
-          <li className="nav-home">
-            <Link to="/"><Brand /></Link>
-          </li>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/courses">Courses</Link></li>
-          <li><Link to="/instructors">Instructors</Link></li>
-          <li><a className="disabled"><span role="img" aria-label="Lock">🔒</span> Groups</a></li>
-          <li><a href="https://github.com/cougargrades/web/wiki/Feedback">Feedback</a></li>
-          <li><a href="https://cougargrades.github.io/blog/">Updates</a></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-      </nav>
+      <header className="hero">
+        <hgroup>
+          <h1>CougarGrades.io</h1>
+          <h3>Analyze grade distribution data</h3>
+        </hgroup>
+        <nav>
+          <Link to="/"><Emoji label="home" symbol="🏠"/> Home</Link> / <Link to="/courses"><Emoji label="books" symbol="📚"/> Courses</Link> / <Link to="/instructors"><Emoji label="teacher" symbol="👩‍🏫"/> Instructors</Link> / <a href="#" className="disabled" title="Coming soon ™"><Emoji label="lock" symbol="🔒"/> Groups</a> / <a href="https://github.com/cougargrades/web/wiki/Feedback"><Emoji label="speech balloon" symbol="💬"/> Feedback</a> / <a href="https://cougargrades.github.io/blog/"><Emoji label="newspaper" symbol="🗞️"/> Updates</a> / <Link to="/about"><Emoji label="waving hand" symbol="👋"/> About</Link>
+        </nav>
+      </header>
       <Switch>
         <Route path="/" exact>
           <Homepage />

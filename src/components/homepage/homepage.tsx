@@ -1,20 +1,12 @@
 
 import React from 'react'
 
-import '@cougargrades/raster/raster2-react'
+import './stamps.scss'
 import './homepage.scss'
 
 export const Homepage: React.FC = () => {
   return (
     <>
-      <header className="hero">
-        <main>
-          <hgroup>
-            <h1>CougarGrades.io</h1>
-            <h3>Analyze grade distribution data</h3>
-          </hgroup>
-        </main>
-      </header>
       <main>
         <r-grid columns="8">
           <r-cell span="1-4" span-s="row">
