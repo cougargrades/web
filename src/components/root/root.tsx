@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 
 import { Blurb } from './blurb';
-import { Brand } from './brand';
 import { Emoji } from '../emoji';
 import { Homepage } from '../homepage/homepage';
 
