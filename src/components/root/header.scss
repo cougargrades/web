@@ -1,12 +1,16 @@
+@import "../../styles/vars.scss";
 
 header.hero {
     //color: var(--uh-white);
-    background: var(--uh-red);
+    //background: var(--uh-red);
     //padding-top: var(--lineHeight);
 
     hgroup {
+        h1 {
+            color: var(--uh-red);
+        }
         h1, h3 {
-            color: var(--uh-white)
+            //color: var(--uh-white)
         }
         // Subtitle
         h1 + h3 {
@@ -20,25 +24,50 @@ header.hero {
     nav, & + nav {
 
         a {
+            color: transparent!important;
             // undo linky stuff
             display: inline-block;
             text-decoration: none;
-            color: var(--uh-white);
+            //color: var(--uh-white);
 
             // buttony stuff
             padding: 0.25em 0.75em;
             margin: 0.25em 0.25em;
             border-radius: 8px;
-            background-color: rgba(0,0,0, 0.1);
+            //background-color: rgba(0,0,0, 0.1);
+            background-color: darken($color: $default-nc-bg-2, $amount: 5%);
             transition: background-color 200ms;
+
             &:active, &:focus {
                 outline: 0;
             }
             &.active {
-                background-color: rgba(0,0,0, 0.25);
+                background-color: darken($color: $default-nc-bg-2, $amount: 10%);
+                //background-color: rgba(0,0,0, 0.2);
             }
-            &:hover {
-                background-color: rgba(0,0,0, 0.35);
+            &:hover:not(.active) {
+                background-color: darken($color: $default-nc-bg-2, $amount: 8%);
+                //background-color: rgba(0,0,0, 0.3);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                //background-color: $night-nc-bg-3;
+                background-color: lighten($color: $night-nc-bg-2, $amount: 5%);
+
+                &:active, &:focus {
+                    outline: 0;
+                }
+                &.active {
+                    //background-color: $night-nc-bg-3;
+                    background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
+                    //background-color: mix($night-nc-bg-3, $uh-teal, 80%);
+                    //background-color: lighten($color: $night-nc-bg-3, $amount: 5%);
+                }
+                &:hover:not(.active) {
+                    //background-color: mix($night-nc-bg-3, $uh-teal, 95%);
+                    //background-color: lighten($color: $night-nc-bg-3, $amount: 5%);
+                    background-color: lighten($color: $night-nc-bg-2, $amount: 8%);
+                }
             }
             
         }

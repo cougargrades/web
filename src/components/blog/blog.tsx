@@ -38,7 +38,6 @@ async function fetchBlogPosts() {
     }
     return e;
   });
-  console.log(entries);
   return entries;
 }
 
