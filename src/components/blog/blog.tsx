@@ -46,7 +46,7 @@ export const Blog: React.FC = () => {
   const { data, error, isValidating } = useSWR('do a thing', fetchBlogPosts);
 
   return (
-    <details open={true}>
+    <details className="blog">
       <summary>Developer Updates</summary>
       <ul className="blog">
         {isValidating
