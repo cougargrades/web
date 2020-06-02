@@ -2,8 +2,8 @@
   "name": "@cougargrades/web",
   "version": "1.0.0",
   "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
+    "start": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack dev",
+    "build": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack build",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "lint": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
     "predeploy": "npm run lint && npm run build"
@@ -21,7 +21,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "sass": "^1.26.7",
-    "snowpack": "^2.0.0",
+    "snowpack": "^2.2.0",
     "typescript": "^3.8.0"
   },
   "dependencies": {
