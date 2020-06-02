@@ -85,7 +85,7 @@ export const Homepage: React.FC = () => {
         <h6>@cougargrades/web</h6>
         <p>
           Version: <code>{import.meta.env.SNOWPACK_PUBLIC_VERSION}</code>,
-          Commit:{' '} 
+          Commit:{' '}
           <code>
             <a
               href={`https://github.com/cougargrades/web/commit/${
@@ -97,11 +97,15 @@ export const Homepage: React.FC = () => {
           </code>
           <br />
           Built:{' '}
-          <span title={new Date(
-            import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
-          ).toUTCString()}>{new Date(
-            import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
-          ).toLocaleDateString()}</span>
+          <span
+            title={new Date(
+              import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
+            ).toUTCString()}
+          >
+            {new Date(
+              import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
+            ).toLocaleDateString()}
+          </span>
         </p>
         <p>
           <em>
