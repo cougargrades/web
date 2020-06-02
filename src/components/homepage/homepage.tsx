@@ -72,7 +72,7 @@ export const Homepage: React.FC = () => {
             <figure>
               <img
                 title={
-                  'Top 100 instructor lastnames, weighted by number of sections taught.'
+                  'Top 100 unique instructor lastnames, weighted by number of sections taught.'
                 }
                 src={wordcloud}
                 style={{ width: '100%' }}
