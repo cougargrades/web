@@ -6,6 +6,8 @@ import './stamps.scss';
 import './homepage.scss';
 import './footer.scss';
 
+import wordcloud from './wordcloud.svg';
+
 export const Homepage: React.FC = () => {
   return (
     <>
@@ -23,9 +25,9 @@ export const Homepage: React.FC = () => {
                 the lazy dog.
               </p>
               <div className="stamp-wrap">
-                <div className="stamp teal">92k</div>
+                <div className="stamp teal">96k</div>
                 <span>Sections</span>
-                <div className="stamp gold">16k</div>
+                <div className="stamp gold">6.6k</div>
                 <span>Courses</span>
               </div>
               <br />
@@ -42,7 +44,6 @@ export const Homepage: React.FC = () => {
                 src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/area-chart.png"
                 style={{ width: '100%' }}
               />
-              <figcaption>An elephant at sunset</figcaption>
             </figure>
           </r-cell>
           <r-cell span="1-4" span-s="row">
@@ -54,9 +55,9 @@ export const Homepage: React.FC = () => {
                 the lazy dog.
               </p>
               <div>
-                <div className="stamp blue">29k</div>
+                <div className="stamp blue">5k</div>
                 <span>Instructors</span>
-                <div className="stamp orchid">130</div>
+                <div className="stamp orchid">146</div>
                 <span>Subjects</span>
               </div>
               <br />
@@ -70,10 +71,12 @@ export const Homepage: React.FC = () => {
           <r-cell span="5.." span-s="row">
             <figure>
               <img
-                src="https://raw.githubusercontent.com/jesperlekland/react-native-svg-charts/master/screenshots/line-chart.png"
+                title={
+                  'Top 100 instructor lastnames, weighted by number of sections taught.'
+                }
+                src={wordcloud}
                 style={{ width: '100%' }}
               />
-              <figcaption>An elephant at sunset</figcaption>
             </figure>
           </r-cell>
         </r-grid>
