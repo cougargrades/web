@@ -68,22 +68,22 @@
    
 
    #text-col-0 {
-      animation: scrollDown 10s linear infinite;
+      /*animation: scrollDown 10s linear infinite;*/
       cursor: default;
       user-select: none;
    }
    #text-col-1 {
-      animation: scrollUp 10s linear infinite;
+      /*animation: scrollUp 10s linear infinite;*/
       cursor: default;
       user-select: none;
    }
    #text-col-2 {
-      animation: scrollDown 10s linear infinite;
+      /*animation: scrollDown 10s linear infinite;*/
       cursor: default;
       user-select: none;
    }
    #text-col-3 {
-      animation: scrollUp 10s linear infinite;
+      /*animation: scrollUp 10s linear infinite;*/
       cursor: default;
       user-select: none;
    }
@@ -137,7 +137,7 @@
        x="5.1803813"
        y="-158.58002"
        id="text-col-0">
-       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" />
        <tspan
          sodipodi:role="line"
          id="tspan7-81-6"
@@ -362,7 +362,7 @@
        style="font-weight:700;font-size:11.4511px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono Bold Italic';stroke-width:0.268383"
        xml:space="preserve"
        transform="scale(1.0143676,0.98583591)">
-       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" />
        <tspan
          id="tspan888-2"
          style="font-style:italic;stroke-width:0.268383"
@@ -597,7 +597,7 @@
        x="76.922783"
        y="-158.61063"
        id="text-col-1">
-       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" />
        <tspan
          sodipodi:role="line"
          id="tspan7-9-6"
@@ -822,7 +822,7 @@
        x="220.35603"
        y="-158.60925"
        id="text-col-3">
-       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" />
        <tspan
          id="tspan914-2"
          sodipodi:role="line"
