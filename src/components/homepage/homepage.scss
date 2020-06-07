@@ -1,18 +1,37 @@
 
-main section {
-    margin-bottom: calc(var(--fontSize) * 3.1);
-
-    @media (min-width: 589px) {
-        margin-top: calc(var(--fontSize) * 3.1);
+main {
+    details.blog {
+        margin-bottom: calc(var(--fontSize) * 1.8);
     }
+    section {
+        margin-bottom: calc(var(--fontSize) * 3.1);
 
-    h2 {
-        margin-bottom: calc(var(--lineHeight) * 0.65);
+        @media (min-width: 589px) {
+            &.instructors {
+                margin-top: calc(var(--fontSize) * 3.1);
+            }
+        }
+
+        h2 {
+            margin-bottom: calc(var(--lineHeight) * 0.65);
+        }
     }
 }
 
+.hearts {
+    color: #f3899b;
+}
+
+main section p {
+    padding-right: 2em;
+}
+
+figure .visaid {
+    width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
-    img {
-        filter: Invert()
+    img.visaid {
+        filter: invert()
     }
 }

@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="slotmachine_master.svg"
+   inkscape:version="1.0rc1 (09960d6f05, 2020-04-09)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 291.04167 171.97917"
+   height="650"
+   width="1100">
+   <defs>
+   <style type="text/css"> @import url(https://fonts.googleapis.com/css2?family=IBM%20Plex%20Mono:wght@700&amp;display=swap); </style>
+   </defs>
+  <style>
+   @keyframes scrollDown {
+      0% {
+         transform: translateY(0%)
+      }
+      50% {
+         transform: translateY(50%)
+      }
+      100% {
+         transform: translateY(100%)
+      }
+   }
+   @keyframes scrollUp {
+      0% {
+         transform: translateY(0%)
+      }
+      50% {
+         transform: translateY(-50%)
+      }
+      100% {
+         transform: translateY(-100%)
+      }
+   }
+   .math {
+      fill:#b58900
+   }
+   .chem {
+      fill:#cb4b16
+   }
+   .biol, .geol {
+      fill:#dc322f
+   }
+   .pols, .kin, .hist {
+      fill:#d33682
+   }
+   .acct, .stat, .econ, .fina {
+      fill:#6c71c4
+   }
+   .engl, .tels, .genb, .idns {
+      fill:#268bd2
+   }
+   .mark, .thea, .phys, .soc {
+      fill:#2aa198
+   }
+   .psyc, .mis, .scm, .mana, .intb {
+      fill:#859900
+   }
+
+   
+
+   #text-col-0 {
+      animation: scrollDown 10s linear infinite;
+      cursor: default;
+      user-select: none;
+   }
+   #text-col-1 {
+      animation: scrollUp 10s linear infinite;
+      cursor: default;
+      user-select: none;
+   }
+   #text-col-2 {
+      animation: scrollDown 10s linear infinite;
+      cursor: default;
+      user-select: none;
+   }
+   #text-col-3 {
+      animation: scrollUp 10s linear infinite;
+      cursor: default;
+      user-select: none;
+   }
+  </style>
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="27"
+     inkscape:window-x="1920"
+     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     units="px"
+     showgrid="true"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="500.80057"
+     inkscape:cx="988.27361"
+     inkscape:zoom="0.5"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base">
+    <inkscape:grid
+       type="xygrid"
+       id="grid11" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <text
+       transform="scale(1.0143676,0.98583591)"
+       xml:space="preserve"
+       style="font-weight:700;font-size:11.4511px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono Bold Italic';stroke-width:0.268383"
+       x="5.1803813"
+       y="-158.58002"
+       id="text-col-0">
+       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <tspan
+         sodipodi:role="line"
+         id="tspan7-81-6"
+         x="5.1803813"
+         y="-158.58002"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1337</tspan><tspan
+         id="tspan948-7"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-144.26614"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1304</tspan><tspan
+         id="tspan950-5"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-129.95227"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1331</tspan><tspan
+         id="tspan952-3"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-115.63839"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2331</tspan><tspan
+         id="tspan954-5"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-101.32452"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2311</tspan><tspan
+         id="tspan956-6"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-87.010643"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1332</tspan><tspan
+         id="tspan958-2"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-72.696762"
+         class="soc"
+         style="font-style:italic;stroke-width:0.268383">SOC&nbsp;&nbsp;1300</tspan><tspan
+         id="tspan960-9"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-58.382889"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2304</tspan><tspan
+         id="tspan962-1"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-44.069016"
+         class="phys"
+         style="font-style:italic;stroke-width:0.268383">PHYS 1301</tspan><tspan
+         id="tspan964-2"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-29.755138"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1314</tspan><tspan
+         id="tspan966-7"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-15.441262"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1301</tspan><tspan
+         id="tspan968-0"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="-1.1273873"
+         class="mark"
+         style="font-style:italic;stroke-width:0.268383">MARK 3337</tspan><tspan
+         id="tspan946-9"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="13.186488"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1337</tspan><tspan
+         id="tspan844-3"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="27.500364"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1304</tspan><tspan
+         id="tspan846-6"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="41.81424"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1331</tspan><tspan
+         id="tspan848-0"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="56.128113"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2331</tspan><tspan
+         id="tspan850-6"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="70.441986"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2311</tspan><tspan
+         id="tspan852-2"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="84.755867"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1332</tspan><tspan
+         id="tspan854-6"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="99.06974"
+         class="soc"
+         style="font-style:italic;stroke-width:0.268383">SOC&nbsp;&nbsp;1300</tspan><tspan
+         id="tspan856-1"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="113.38361"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2304</tspan><tspan
+         id="tspan858-8"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="127.69749"
+         class="phys"
+         style="font-style:italic;stroke-width:0.268383">PHYS 1301</tspan><tspan
+         id="tspan860-7"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="142.01137"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1314</tspan><tspan
+         id="tspan862-9"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="156.32524"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1301</tspan><tspan
+         id="tspan864-2"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="170.63911"
+         class="mark"
+         style="font-style:italic;stroke-width:0.268383">MARK 3337</tspan><tspan
+         id="tspan1112"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="184.95299"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1337</tspan><tspan
+         id="tspan1114"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="199.26688"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1304</tspan><tspan
+         id="tspan1116"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="213.58075"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1331</tspan><tspan
+         id="tspan1118"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="227.89462"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2331</tspan><tspan
+         id="tspan1120"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="242.2085"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2311</tspan><tspan
+         id="tspan1122"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="256.52237"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1332</tspan><tspan
+         id="tspan1124"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="270.83624"
+         class="soc"
+         style="font-style:italic;stroke-width:0.268383">SOC&nbsp;&nbsp;1300</tspan><tspan
+         id="tspan1126"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="285.15012"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2304</tspan><tspan
+         id="tspan1128"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="299.46399"
+         class="phys"
+         style="font-style:italic;stroke-width:0.268383">PHYS 1301</tspan><tspan
+         id="tspan1130"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="313.77786"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1314</tspan><tspan
+         id="tspan1132"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="328.09174"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1301</tspan><tspan
+         id="tspan1134"
+         sodipodi:role="line"
+         x="5.1803813"
+         y="342.40561"
+         class="mark"
+         style="font-style:italic;stroke-width:0.268383">MARK 3337</tspan></text>
+    <text
+       id="text-col-2"
+       y="-158.60165"
+       x="148.60585"
+       style="font-weight:700;font-size:11.4511px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono Bold Italic';stroke-width:0.268383"
+       xml:space="preserve"
+       transform="scale(1.0143676,0.98583591)">
+       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <tspan
+         id="tspan888-2"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-158.60165"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1431</tspan><tspan
+         id="tspan892-3"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-144.28778"
+         x="148.60585"
+         class="geol"
+         sodipodi:role="line">GEOL 1330</tspan><tspan
+         id="tspan894-7"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-129.97391"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1313</tspan><tspan
+         id="tspan896-5"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-115.66003"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1310</tspan><tspan
+         id="tspan898-9"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-101.34615"
+         x="148.60585"
+         class="mana"
+         sodipodi:role="line">MANA 3335</tspan><tspan
+         id="tspan900-2"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-87.03228"
+         x="148.60585"
+         class="mark"
+         sodipodi:role="line">MARK 3336</tspan><tspan
+         id="tspan902-2"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-72.718399"
+         x="148.60585"
+         class="thea"
+         sodipodi:role="line">THEA 1331</tspan><tspan
+         id="tspan904-8"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-58.404526"
+         x="148.60585"
+         class="fina"
+         sodipodi:role="line">FINA 3332</tspan><tspan
+         id="tspan906-9"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-44.090652"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 3331</tspan><tspan
+         id="tspan908-7"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-29.776775"
+         x="148.60585"
+         class="biol"
+         sodipodi:role="line">BIOL 1362</tspan><tspan
+         id="tspan910-3"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-15.462899"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 1112</tspan><tspan
+         id="tspan912-6"
+         style="font-style:italic;stroke-width:0.268383"
+         y="-1.1490242"
+         x="148.60585"
+         class="psyc"
+         sodipodi:role="line">PSYC 3301</tspan><tspan
+         id="tspan1042-1"
+         style="font-style:italic;stroke-width:0.268383"
+         y="13.164851"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1431</tspan><tspan
+         id="tspan1044-2"
+         style="font-style:italic;stroke-width:0.268383"
+         y="27.478727"
+         x="148.60585"
+         class="geol"
+         sodipodi:role="line">GEOL 1330</tspan><tspan
+         id="tspan1046-9"
+         style="font-style:italic;stroke-width:0.268383"
+         y="41.792603"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1313</tspan><tspan
+         id="tspan1048-3"
+         style="font-style:italic;stroke-width:0.268383"
+         y="56.106476"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1310</tspan><tspan
+         id="tspan1050-1"
+         style="font-style:italic;stroke-width:0.268383"
+         y="70.420349"
+         x="148.60585"
+         class="mana"
+         sodipodi:role="line">MANA 3335</tspan><tspan
+         id="tspan1052-9"
+         style="font-style:italic;stroke-width:0.268383"
+         y="84.73423"
+         x="148.60585"
+         class="mark"
+         sodipodi:role="line">MARK 3336</tspan><tspan
+         id="tspan1054-4"
+         style="font-style:italic;stroke-width:0.268383"
+         y="99.048103"
+         x="148.60585"
+         class="thea"
+         sodipodi:role="line">THEA 1331</tspan><tspan
+         id="tspan1056-7"
+         style="font-style:italic;stroke-width:0.268383"
+         y="113.36198"
+         x="148.60585"
+         class="fina"
+         sodipodi:role="line">FINA 3332</tspan><tspan
+         id="tspan1058-8"
+         style="font-style:italic;stroke-width:0.268383"
+         y="127.67586"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 3331</tspan><tspan
+         id="tspan1060-4"
+         style="font-style:italic;stroke-width:0.268383"
+         y="141.98973"
+         x="148.60585"
+         class="biol"
+         sodipodi:role="line">BIOL 1362</tspan><tspan
+         id="tspan1062-5"
+         style="font-style:italic;stroke-width:0.268383"
+         y="156.3036"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 1112</tspan><tspan
+         id="tspan1064-0"
+         style="font-style:italic;stroke-width:0.268383"
+         y="170.61748"
+         x="148.60585"
+         class="psyc"
+         sodipodi:role="line">PSYC 3301</tspan><tspan
+         id="tspan1160"
+         style="font-style:italic;stroke-width:0.268383"
+         y="184.93135"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1431</tspan><tspan
+         id="tspan1162"
+         style="font-style:italic;stroke-width:0.268383"
+         y="199.24524"
+         x="148.60585"
+         class="geol"
+         sodipodi:role="line">GEOL 1330</tspan><tspan
+         id="tspan1164"
+         style="font-style:italic;stroke-width:0.268383"
+         y="213.55911"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1313</tspan><tspan
+         id="tspan1166"
+         style="font-style:italic;stroke-width:0.268383"
+         y="227.87299"
+         x="148.60585"
+         class="math"
+         sodipodi:role="line">MATH 1310</tspan><tspan
+         id="tspan1168"
+         style="font-style:italic;stroke-width:0.268383"
+         y="242.18686"
+         x="148.60585"
+         class="mana"
+         sodipodi:role="line">MANA 3335</tspan><tspan
+         id="tspan1170"
+         style="font-style:italic;stroke-width:0.268383"
+         y="256.50073"
+         x="148.60585"
+         class="mark"
+         sodipodi:role="line">MARK 3336</tspan><tspan
+         id="tspan1172"
+         style="font-style:italic;stroke-width:0.268383"
+         y="270.81461"
+         x="148.60585"
+         class="thea"
+         sodipodi:role="line">THEA 1331</tspan><tspan
+         id="tspan1174"
+         style="font-style:italic;stroke-width:0.268383"
+         y="285.12848"
+         x="148.60585"
+         class="fina"
+         sodipodi:role="line">FINA 3332</tspan><tspan
+         id="tspan1176"
+         style="font-style:italic;stroke-width:0.268383"
+         y="299.44235"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 3331</tspan><tspan
+         id="tspan1178"
+         style="font-style:italic;stroke-width:0.268383"
+         y="313.75623"
+         x="148.60585"
+         class="biol"
+         sodipodi:role="line">BIOL 1362</tspan><tspan
+         id="tspan1180"
+         style="font-style:italic;stroke-width:0.268383"
+         y="328.0701"
+         x="148.60585"
+         class="chem"
+         sodipodi:role="line">CHEM 1112</tspan><tspan
+         id="tspan1182"
+         style="font-style:italic;stroke-width:0.268383"
+         y="342.38397"
+         x="148.60585"
+         class="psyc"
+         sodipodi:role="line">PSYC 3301</tspan><tspan
+         id="tspan1066-3"
+         style="font-style:italic;stroke-width:0.268383"
+         y="356.69788"
+         x="148.60585"
+         sodipodi:role="line" /><tspan
+         id="tspan994-6"
+         style="font-style:italic;stroke-width:0.268383"
+         y="371.01175"
+         x="148.60585"
+         sodipodi:role="line" /></text>
+    <text
+       transform="scale(1.0143676,0.98583591)"
+       xml:space="preserve"
+       style="font-weight:700;font-size:11.4511px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono Bold Italic';stroke-width:0.268383"
+       x="76.922783"
+       y="-158.61063"
+       id="text-col-1">
+       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <tspan
+         sodipodi:role="line"
+         id="tspan7-9-6"
+         x="76.922783"
+         y="-158.61063"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1304</tspan><tspan
+         id="tspan866-7"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-144.29675"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1378</tspan><tspan
+         id="tspan868-5"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-129.98288"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1303</tspan><tspan
+         id="tspan870-3"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-115.669"
+         class="stat"
+         style="font-style:italic;stroke-width:0.268383">STAT 3331</tspan><tspan
+         id="tspan872-5"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-101.35513"
+         class="psyc"
+         style="font-style:italic;stroke-width:0.268383">PSYC 1300</tspan><tspan
+         id="tspan874-6"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-87.041252"
+         class="idns"
+         style="font-style:italic;stroke-width:0.268383">IDNS 2197</tspan><tspan
+         id="tspan876-2"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-72.727371"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3354</tspan><tspan
+         id="tspan878-9"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-58.413498"
+         class="scm"
+         style="font-style:italic;stroke-width:0.268383">SCM&nbsp;&nbsp;3301</tspan><tspan
+         id="tspan880-1"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-44.099625"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 4350</tspan><tspan
+         id="tspan882-2"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-29.785748"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1352</tspan><tspan
+         id="tspan884-7"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-15.471871"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2433</tspan><tspan
+         id="tspan886-0"
+         sodipodi:role="line"
+         x="76.922783"
+         y="-1.1579964"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2305</tspan><tspan
+         id="tspan970-9"
+         sodipodi:role="line"
+         x="76.922783"
+         y="13.155879"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1304</tspan><tspan
+         id="tspan972-3"
+         sodipodi:role="line"
+         x="76.922783"
+         y="27.469755"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1378</tspan><tspan
+         id="tspan974-6"
+         sodipodi:role="line"
+         x="76.922783"
+         y="41.78363"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1303</tspan><tspan
+         id="tspan976-0"
+         sodipodi:role="line"
+         x="76.922783"
+         y="56.097504"
+         class="stat"
+         style="font-style:italic;stroke-width:0.268383">STAT 3331</tspan><tspan
+         id="tspan978-6"
+         sodipodi:role="line"
+         x="76.922783"
+         y="70.411377"
+         class="psyc"
+         style="font-style:italic;stroke-width:0.268383">PSYC 1300</tspan><tspan
+         id="tspan980-2"
+         sodipodi:role="line"
+         x="76.922783"
+         y="84.725258"
+         class="idns"
+         style="font-style:italic;stroke-width:0.268383">IDNS 2197</tspan><tspan
+         id="tspan982-6"
+         sodipodi:role="line"
+         x="76.922783"
+         y="99.039131"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3354</tspan><tspan
+         id="tspan984-1"
+         sodipodi:role="line"
+         x="76.922783"
+         y="113.353"
+         class="scm"
+         style="font-style:italic;stroke-width:0.268383">SCM&nbsp;&nbsp;3301</tspan><tspan
+         id="tspan986-8"
+         sodipodi:role="line"
+         x="76.922783"
+         y="127.66689"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 4350</tspan><tspan
+         id="tspan988-7"
+         sodipodi:role="line"
+         x="76.922783"
+         y="141.98076"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1352</tspan><tspan
+         id="tspan990-9"
+         sodipodi:role="line"
+         x="76.922783"
+         y="156.29463"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2433</tspan><tspan
+         id="tspan992-2"
+         sodipodi:role="line"
+         x="76.922783"
+         y="170.60851"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2305</tspan><tspan
+         id="tspan1136"
+         sodipodi:role="line"
+         x="76.922783"
+         y="184.92238"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1304</tspan><tspan
+         id="tspan1138"
+         sodipodi:role="line"
+         x="76.922783"
+         y="199.23627"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1378</tspan><tspan
+         id="tspan1140"
+         sodipodi:role="line"
+         x="76.922783"
+         y="213.55014"
+         class="engl"
+         style="font-style:italic;stroke-width:0.268383">ENGL 1303</tspan><tspan
+         id="tspan1142"
+         sodipodi:role="line"
+         x="76.922783"
+         y="227.86401"
+         class="stat"
+         style="font-style:italic;stroke-width:0.268383">STAT 3331</tspan><tspan
+         id="tspan1144"
+         sodipodi:role="line"
+         x="76.922783"
+         y="242.17789"
+         class="psyc"
+         style="font-style:italic;stroke-width:0.268383">PSYC 1300</tspan><tspan
+         id="tspan1146"
+         sodipodi:role="line"
+         x="76.922783"
+         y="256.49176"
+         class="idns"
+         style="font-style:italic;stroke-width:0.268383">IDNS 2197</tspan><tspan
+         id="tspan1148"
+         sodipodi:role="line"
+         x="76.922783"
+         y="270.80563"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3354</tspan><tspan
+         id="tspan1150"
+         sodipodi:role="line"
+         x="76.922783"
+         y="285.11951"
+         class="scm"
+         style="font-style:italic;stroke-width:0.268383">SCM&nbsp;&nbsp;3301</tspan><tspan
+         id="tspan1152"
+         sodipodi:role="line"
+         x="76.922783"
+         y="299.43338"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 4350</tspan><tspan
+         id="tspan1154"
+         sodipodi:role="line"
+         x="76.922783"
+         y="313.74725"
+         class="kin"
+         style="font-style:italic;stroke-width:0.268383">KIN&nbsp;&nbsp;1352</tspan><tspan
+         id="tspan1156"
+         sodipodi:role="line"
+         x="76.922783"
+         y="328.06113"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 2433</tspan><tspan
+         id="tspan1158"
+         sodipodi:role="line"
+         x="76.922783"
+         y="342.375"
+         class="econ"
+         style="font-style:italic;stroke-width:0.268383">ECON 2305</tspan></text>
+    <text
+       transform="scale(1.0143676,0.98583591)"
+       xml:space="preserve"
+       style="font-weight:700;font-size:11.4511px;line-height:1.25;font-family:'IBM Plex Mono';-inkscape-font-specification:'IBM Plex Mono Bold Italic';stroke-width:0.268383"
+       x="220.35603"
+       y="-158.60925"
+       id="text-col-3">
+       <!-- <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0 0" to="0 -171.97917" dur="10s" repeatCount="indefinite" /> -->
+       <tspan
+         id="tspan914-2"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-158.60925"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1336</tspan><tspan
+         id="tspan918-3"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-144.29538"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 3302</tspan><tspan
+         id="tspan920-7"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-129.98151"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1330</tspan><tspan
+         id="tspan924-5"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-115.66763"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1432</tspan><tspan
+         id="tspan928-9"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-101.35375"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 3301</tspan><tspan
+         id="tspan930-2"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-87.039879"
+         class="mis"
+         style="font-style:italic;stroke-width:0.268383">MIS&nbsp;&nbsp;3300</tspan><tspan
+         id="tspan932-2"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-72.725998"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1376</tspan><tspan
+         id="tspan934-8"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-58.412125"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1111</tspan><tspan
+         id="tspan936-9"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-44.098251"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 1361</tspan><tspan
+         id="tspan938-7"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-29.784374"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2332</tspan><tspan
+         id="tspan940-3"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-15.470498"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3355</tspan><tspan
+         id="tspan942-6"
+         sodipodi:role="line"
+         x="220.35603"
+         y="-1.1566231"
+         class="tels"
+         style="font-style:italic;stroke-width:0.268383">TELS 3363</tspan><tspan
+         id="tspan1018-1"
+         sodipodi:role="line"
+         x="220.35603"
+         y="13.157252"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1336</tspan><tspan
+         id="tspan1020-2"
+         sodipodi:role="line"
+         x="220.35603"
+         y="27.471128"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 3302</tspan><tspan
+         id="tspan1022-9"
+         sodipodi:role="line"
+         x="220.35603"
+         y="41.785004"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1330</tspan><tspan
+         id="tspan1024-3"
+         sodipodi:role="line"
+         x="220.35603"
+         y="56.098877"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1432</tspan><tspan
+         id="tspan1026-1"
+         sodipodi:role="line"
+         x="220.35603"
+         y="70.41275"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 3301</tspan><tspan
+         id="tspan1028-9"
+         sodipodi:role="line"
+         x="220.35603"
+         y="84.726631"
+         class="mis"
+         style="font-style:italic;stroke-width:0.268383">MIS&nbsp;&nbsp;3300</tspan><tspan
+         id="tspan1030-4"
+         sodipodi:role="line"
+         x="220.35603"
+         y="99.040504"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1376</tspan><tspan
+         id="tspan1032-7"
+         sodipodi:role="line"
+         x="220.35603"
+         y="113.35438"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1111</tspan><tspan
+         id="tspan1034-8"
+         sodipodi:role="line"
+         x="220.35603"
+         y="127.66826"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 1361</tspan><tspan
+         id="tspan1036-4"
+         sodipodi:role="line"
+         x="220.35603"
+         y="141.98213"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2332</tspan><tspan
+         id="tspan1038-5"
+         sodipodi:role="line"
+         x="220.35603"
+         y="156.29601"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3355</tspan><tspan
+         id="tspan1040-0"
+         sodipodi:role="line"
+         x="220.35603"
+         y="170.60988"
+         class="tels"
+         style="font-style:italic;stroke-width:0.268383">TELS 3363</tspan><tspan
+         id="tspan1184"
+         sodipodi:role="line"
+         x="220.35603"
+         y="184.92375"
+         class="pols"
+         style="font-style:italic;stroke-width:0.268383">POLS 1336</tspan><tspan
+         id="tspan1186"
+         sodipodi:role="line"
+         x="220.35603"
+         y="199.23764"
+         class="genb"
+         style="font-style:italic;stroke-width:0.268383">GENB 3302</tspan><tspan
+         id="tspan1188"
+         sodipodi:role="line"
+         x="220.35603"
+         y="213.55151"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1330</tspan><tspan
+         id="tspan1190"
+         sodipodi:role="line"
+         x="220.35603"
+         y="227.86539"
+         class="math"
+         style="font-style:italic;stroke-width:0.268383">MATH 1432</tspan><tspan
+         id="tspan1192"
+         sodipodi:role="line"
+         x="220.35603"
+         y="242.17926"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 3301</tspan><tspan
+         id="tspan1194"
+         sodipodi:role="line"
+         x="220.35603"
+         y="256.49313"
+         class="mis"
+         style="font-style:italic;stroke-width:0.268383">MIS&nbsp;&nbsp;3300</tspan><tspan
+         id="tspan1196"
+         sodipodi:role="line"
+         x="220.35603"
+         y="270.80701"
+         class="hist"
+         style="font-style:italic;stroke-width:0.268383">HIST 1376</tspan><tspan
+         id="tspan1198"
+         sodipodi:role="line"
+         x="220.35603"
+         y="285.12088"
+         class="chem"
+         style="font-style:italic;stroke-width:0.268383">CHEM 1111</tspan><tspan
+         id="tspan1200"
+         sodipodi:role="line"
+         x="220.35603"
+         y="299.43475"
+         class="biol"
+         style="font-style:italic;stroke-width:0.268383">BIOL 1361</tspan><tspan
+         id="tspan1202"
+         sodipodi:role="line"
+         x="220.35603"
+         y="313.74863"
+         class="acct"
+         style="font-style:italic;stroke-width:0.268383">ACCT 2332</tspan><tspan
+         id="tspan1204"
+         sodipodi:role="line"
+         x="220.35603"
+         y="328.0625"
+         class="intb"
+         style="font-style:italic;stroke-width:0.268383">INTB 3355</tspan><tspan
+         id="tspan1206"
+         sodipodi:role="line"
+         x="220.35603"
+         y="342.37637"
+         class="tels"
+         style="font-style:italic;stroke-width:0.268383">TELS 3363  </tspan></text>
+  </g>
+</svg>
