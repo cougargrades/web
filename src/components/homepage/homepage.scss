@@ -6,12 +6,6 @@ main {
     section {
         margin-bottom: calc(var(--fontSize) * 3.1);
 
-        @media (min-width: 589px) {
-            &.instructors {
-                margin-top: calc(var(--fontSize) * 3.1);
-            }
-        }
-
         h2 {
             margin-bottom: calc(var(--lineHeight) * 0.65);
         }
