@@ -25,6 +25,7 @@ header.hero {
             padding: 0.25em 0.75em;
             margin: 0.25em 0.25em;
             border-radius: 8px;
+            font-weight: 500;
 
             // coloring
             background-color: darken($color: $default-nc-bg-2, $amount: 5%);
@@ -33,24 +34,18 @@ header.hero {
             &:active, &:focus {
                 outline: 0;
             }
-            &.active {
-                background-color: darken($color: $default-nc-bg-2, $amount: 10%);
-            }
-            &:hover:not(.active) {
-                background-color: darken($color: $default-nc-bg-2, $amount: 8%);
+            &:hover, &:hover {
+                background-color: darken($color: $default-nc-bg-2, $amount: 7%);
             }
 
             @media (prefers-color-scheme: dark) {
-                background-color: lighten($color: $night-nc-bg-2, $amount: 5%);
+                background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
 
                 &:active, &:focus {
                     outline: 0;
                 }
-                &.active {
-                    background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
-                }
-                &:hover:not(.active) {
-                    background-color: lighten($color: $night-nc-bg-2, $amount: 8%);
+                &:hover {
+                    background-color: lighten($color: $night-nc-bg-2, $amount: 13%);
                 }
             }
         }
