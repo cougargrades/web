@@ -49,6 +49,7 @@ export default function Homepage() {
                 className="visaid"
                 style={{ width: '100%' }}
               />
+              <figcaption>Top 48 most enrolled courses at UH.</figcaption>
             </figure>
           </r-cell>
           <r-cell span="1-4" span-s="row">
@@ -83,6 +84,7 @@ export default function Homepage() {
                 className="visaid"
                 style={{ width: '100%' }}
               />
+              <figcaption>Top 100 unique instructor lastnames.</figcaption>
             </figure>
           </r-cell>
           <r-cell span="row" span-s="row">

@@ -10,6 +10,14 @@ main {
             margin-bottom: calc(var(--lineHeight) * 0.65);
         }
     }
+
+    figure > img + figcaption {
+        margin-top: -1rem;
+        font-size: 0.8em;
+        font-style: italic;
+        text-align: center;
+        color: var(--uh-gray);
+    }
 }
 
 .hearts {
