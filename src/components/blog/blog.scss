@@ -2,6 +2,11 @@
 details.blog {
   summary {
     outline: 0;
+
+    & .new {
+      background: rgb(255, 209, 70);
+      //margin-left: 1em;
+    }
   }
 }
 

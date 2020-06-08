@@ -2,14 +2,9 @@ import React from 'react';
 import useSWR from 'swr';
 import TimeAgo from 'timeago-react';
 
-import './blog.scss';
+import { Badge } from '../root/badge';
 
-// function Profile () {
-//   const { data, error } = useSWR('/api/user', fetcher)
-//   if (error) return <div>failed to load</div>
-//   if (!data) return <div>loading...</div>
-//   return <div>hello {data.name}!</div>
-// }
+import './blog.scss';
 
 async function fetchBlogPosts() {
   // get blog post data
@@ -45,16 +40,21 @@ export const Blog: React.FC = () => {
   const previewLimit = 3;
   const { data, error, isValidating } = useSWR('do a thing', fetchBlogPosts);
 
+  // Determines if a post has "priority"
+  const hasPriority = () => Array.isArray(data) ? (data.map(e => e.priority ? 1 : 0).reduce(e => e) > 0) : false;
+  // gets the localized date string for the latest post
+  const getLatestPost = () => Array.isArray(data) ? data[0].updated : null
+
   return (
     <details className="blog">
-      <summary>Developer Updates</summary>
+      <summary>Developer Updates {hasPriority() ? <Badge className="new">New {getLatestPost()?.toLocaleDateString()}</Badge> : <></>}</summary>
       <ul className="blog">
         {isValidating
           ? 'Loading...'
           : data?.slice(0, previewLimit).map((e) => (
               <li key={e.id!} className={e.priority ? 'priority' : ''}>
                 <a href={e.link!}>{e.title}</a>,{' '}
-                <span>
+                <span title={e.updated.toLocaleString()}>
                   <TimeAgo datetime={e.updated} locale={'en'} />
                 </span>
               </li>
