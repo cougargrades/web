@@ -7,7 +7,7 @@ import './homepage.scss';
 import './footer.scss';
 
 import wordcloud from './wordcloud.svg';
-import slotmachine from './slotmachine.min.svg';
+import slotmachine from './slotmachine.svg';
 
 export default function Homepage() {
   return (
