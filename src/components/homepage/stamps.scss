@@ -1,4 +1,15 @@
-$stamp-radius: calc(var(--fontSize) * 2.5);
+:root {
+  --stampBase: 12px;
+
+  @media (min-width: 350px) {
+    --stampBase: 14px;
+  }
+  @media (min-width: 390px) {
+    --stampBase: 16px;
+  }
+}
+
+$stamp-radius: calc(var(--stampBase) * 2.5);
 
 div.stamp-wrap {
   height: $stamp-radius;
@@ -10,20 +21,20 @@ div.stamp {
   height: $stamp-radius;
   line-height: $stamp-radius;
   border-radius: 50%;
-  font-size: calc(var(--fontSize) * 0.9);
+  font-size: calc(var(--stampBase) * 0.9);
   font-weight: 700;
   background: var(--uh-grey);
   text-align: center;
   & + span {
     display: inline-block;
-    font-size: calc(var(--fontSize) * 1.1);
+    font-size: calc(var(--stampBase) * 1.1);
     font-weight: 700;
     //--margin: calc((var(--fontSize) * 2.5) - (calc(var(--fontSize) * 1.2)));
     //margin-top: calc(var(--margin) / 2);
     //margin-bottom: calc(var(--margin) / 2);
     //height: calc(var(--fontSize) * 2.5);
-    margin-left: calc(var(--fontSize) * (3 / 6)); // 8px
-    margin-right: calc(var(--fontSize) * (2 / 3)); // 24px
+    margin-left: calc(var(--stampBase) * (3 / 6)); // 8px
+    margin-right: calc(var(--stampBase) * (2 / 3)); // 24px
   }
 
   &.teal {
