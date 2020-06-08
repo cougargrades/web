@@ -1,12 +1,12 @@
 import React, { CSSProperties } from 'react';
 import { useLocation } from 'react-router-dom';
 
-type Props = {
+type BlurbProps = {
   http404?: boolean;
   children?: React.ReactNode;
 };
 
-export const Blurb: React.FC<Props> = (props: Props) => {
+export default function Blurb(props: BlurbProps) {
   const location = useLocation();
   const styles: CSSProperties = {
     textAlign: 'center',
@@ -24,4 +24,4 @@ export const Blurb: React.FC<Props> = (props: Props) => {
       )}
     </div>
   );
-};
+}

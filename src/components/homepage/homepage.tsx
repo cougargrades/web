@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { Blog } from '../blog/blog';
+//import Blog from '../blog/blog';
+const Blog = React.lazy(() => import('../blog/blog'));
 
 import './stamps.scss';
 import './homepage.scss';
@@ -9,13 +10,15 @@ import './footer.scss';
 import wordcloud from './wordcloud.svg';
 import slotmachine from './slotmachine.min.svg';
 
-export const Homepage: React.FC = () => {
+export default function Homepage() {
   return (
     <>
       <main>
         <r-grid columns="8">
           <r-cell span="row">
-            <Blog />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Blog />
+            </Suspense>
           </r-cell>
           <r-cell span="1-4" span-s="row">
             <section>
@@ -161,4 +164,4 @@ export const Homepage: React.FC = () => {
       </footer>
     </>
   );
-};
+}

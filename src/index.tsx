@@ -1,10 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Root } from './components/root/root';
+//import Root from './components/root/root';
+const Root = React.lazy(() => import('./components/root/root'));
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <Root />
+    </React.Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );

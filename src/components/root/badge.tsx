@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import React, { CSSProperties } from 'react';
 
 import './badge.scss';
 
@@ -6,10 +6,17 @@ interface BadgeProps {
   className?: string;
   title?: string;
   style?: CSSProperties;
+  children: any;
 }
 
-export const Badge: React.FC<BadgeProps> = (props) => {
+export default function Badge(props: BadgeProps) {
   return (
-    <span className={`badge ${props.className}`} style={props.style} title={props.title}>{props.children}</span>
-  )
+    <span
+      className={`badge ${props.className}`}
+      style={props.style}
+      title={props.title}
+    >
+      {props.children}
+    </span>
+  );
 }

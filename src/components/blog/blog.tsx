@@ -2,7 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 import TimeAgo from 'timeago-react';
 
-import { Badge } from '../root/badge';
+import Badge from '../root/badge';
 
 import './blog.scss';
 
@@ -36,18 +36,30 @@ async function fetchBlogPosts() {
   return entries;
 }
 
-export const Blog: React.FC = () => {
+export default function Blog() {
   const previewLimit = 3;
   const { data, error, isValidating } = useSWR('do a thing', fetchBlogPosts);
 
   // Determines if a post has "priority"
-  const hasPriority = () => Array.isArray(data) ? (data.map(e => e.priority ? 1 : 0).reduce(e => e) > 0) : false;
+  const hasPriority = () =>
+    Array.isArray(data)
+      ? data.map((e) => (e.priority ? 1 : 0)).reduce((e) => e) > 0
+      : false;
   // gets the localized date string for the latest post
-  const getLatestPost = () => Array.isArray(data) ? data[0].updated : null
+  const getLatestPost = () => (Array.isArray(data) ? data[0].updated : null);
 
   return (
     <details className="blog">
-      <summary>Developer Updates {hasPriority() ? <Badge className="new">New {getLatestPost()?.toLocaleDateString()}</Badge> : <></>}</summary>
+      <summary>
+        Developer Updates{' '}
+        {hasPriority() ? (
+          <Badge className="new">
+            New {getLatestPost()?.toLocaleDateString()}
+          </Badge>
+        ) : (
+          <></>
+        )}
+      </summary>
       <ul className="blog">
         {isValidating
           ? 'Loading...'
@@ -69,4 +81,4 @@ export const Blog: React.FC = () => {
       </ul>
     </details>
   );
-};
+}
