@@ -4,6 +4,7 @@ import { BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 import Blurb from './blurb';
 import Emoji from '../emoji';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
+const About = React.lazy(() => import('../about/about'));
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
@@ -81,9 +82,7 @@ export default function Root() {
             </Blurb>
           </Route>
           <Route path="/about">
-            <Blurb>
-              <p>About page</p>
-            </Blurb>
+            <About />
           </Route>
           <Route>
             <Blurb http404 />

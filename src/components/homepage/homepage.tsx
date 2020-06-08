@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Blog = React.lazy(() => import('../blog/blog'));
+const Footer = React.lazy(() => import('../footer/footer'));
 
 import './stamps.scss';
 import './homepage.scss';
-import './footer.scss';
 
 import wordcloud from './wordcloud.svg';
 import slotmachine from './slotmachine.svg';
@@ -35,9 +36,9 @@ export default function Homepage() {
               </div>
               <br />
               <p>
-                <a className="button" href="#">
+                <NavLink className="button" to="/courses">
                   Search Courses
-                </a>
+                </NavLink>
               </p>
             </section>
           </r-cell>
@@ -68,9 +69,9 @@ export default function Homepage() {
               </div>
               <br />
               <p>
-                <a className="button" href="#">
+                <NavLink className="button" to="/instructors">
                   Search Instructors
-                </a>
+                </NavLink>
               </p>
             </section>
           </r-cell>
@@ -122,47 +123,17 @@ export default function Homepage() {
                 repurposing our code, check us out on Github!
               </p>
               <p>
-                <a
-                  className="button"
-                  href="https://github.com/orgs/cougargrades/people"
-                >
+                <NavLink className="button" to="/about">
                   View Collaborators &rarr;
-                </a>
+                </NavLink>
               </p>
             </section>
           </r-cell>
         </r-grid>
       </main>
-      <footer>
-        <h6>@cougargrades/web</h6>
-        <p>
-          Version: {import.meta.env.SNOWPACK_PUBLIC_VERSION}, Commit:{' '}
-          <a
-            href={`https://github.com/cougargrades/web/commit/${
-              import.meta.env.SNOWPACK_PUBLIC_GIT_SHA
-            }`}
-          >
-            {import.meta.env.SNOWPACK_PUBLIC_GIT_SHA}
-          </a>
-          <br />
-          Built:{' '}
-          <span
-            title={new Date(
-              import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
-            ).toUTCString()}
-          >
-            {new Date(
-              import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
-            ).toLocaleDateString()}
-          </span>
-        </p>
-        <p>
-          <em>
-            Not affiliated with the University of Houston. Data is sourced
-            directly from the University of Houston.
-          </em>
-        </p>
-      </footer>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Footer />
+      </Suspense>
     </>
   );
 }
