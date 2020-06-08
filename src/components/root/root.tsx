@@ -1,13 +1,10 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, NavLink, Switch, Route } from 'react-router-dom';
 
-const Blurb = React.lazy(() => import(/* webpackPrefetch: true */ './blurb'));
-const Emoji = React.lazy(() => import(/* webpackPrefetch: true */ '../emoji'));
-const Homepage = React.lazy(() =>
-  import(/* webpackPrefetch: true */ '../homepage/homepage'),
-);
+import Blurb from './blurb';
+import Emoji from '../emoji';
+const Homepage = React.lazy(() => import('../homepage/homepage'));
 
-//import '@exampledev/new.css';
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
 import './header.scss';

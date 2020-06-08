@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 
-//import Blog from '../blog/blog';
 const Blog = React.lazy(() => import('../blog/blog'));
 
 import './stamps.scss';
