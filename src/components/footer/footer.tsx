@@ -8,8 +8,9 @@ interface FooterProps {
 
 export default function Footer(props: FooterProps) {
   const commitHash =
-    import.meta.env.SNOWPACK_PUBLIC_GIT_SHA ||
-    import.meta.env.SNOWPACK_PUBLIC_GIT_SHA_GIVEN;
+    import.meta.env.SNOWPACK_PUBLIC_GIT_SHA === ''
+      ? import.meta.env.SNOWPACK_PUBLIC_GIT_SHA_GIVEN
+      : import.meta.env.SNOWPACK_PUBLIC_GIT_SHA;
 
   return (
     <footer>
