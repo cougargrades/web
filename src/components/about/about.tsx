@@ -11,7 +11,7 @@ export default function About() {
   const fetcher = (url: RequestInfo) => fetch(url).then((r) => r.json());
   // TODO: placeholder
   //const { data: members, error, isValidating } = useSWR('https://api.github.com/orgs/cougargrades/members', fetcher);
-
+  
   const me = {
     login: 'au5ton',
     id: 4109551,
