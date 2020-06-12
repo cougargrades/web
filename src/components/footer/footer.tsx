@@ -10,7 +10,7 @@ export default function Footer(props: FooterProps) {
   const commitHash =
     import.meta.env.SNOWPACK_PUBLIC_IS_VERCEL === '1'
       ? import.meta.env.SNOWPACK_PUBLIC_VERCEL_COMMIT_SHA
-      : import.meta.env.SNOWPACK_PUBLIC_GIT_SHA;
+      : import.meta.env.SNOWPACK_PUBLIC_GIT_SHA; // hopefully works
 
   return (
     <footer>
