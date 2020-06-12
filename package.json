@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack dev",
-    "build": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack build",
+    "build": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_GIT_SHA_GIVEN=$VERCEL_GITHUB_COMMIT_SHA SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack build",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "lint": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
     "predeploy": "npm run lint && npm run build"

@@ -7,17 +7,19 @@ interface FooterProps {
 }
 
 export default function Footer(props: FooterProps) {
+  const commitHash =
+    import.meta.env.SNOWPACK_PUBLIC_GIT_SHA ||
+    import.meta.env.SNOWPACK_PUBLIC_GIT_SHA_GIVEN;
+
   return (
     <footer>
       <h6>@cougargrades/web</h6>
       <p>
         Version: {import.meta.env.SNOWPACK_PUBLIC_VERSION}, Commit:{' '}
-        <a
-          href={`https://github.com/cougargrades/web/commit/${
-            import.meta.env.SNOWPACK_PUBLIC_GIT_SHA
-          }`}
-        >
-          {import.meta.env.SNOWPACK_PUBLIC_GIT_SHA}
+        <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
+          {typeof commitHash === 'string'
+            ? commitHash.substring(0, 7)
+            : commitHash}
         </a>
         <br />
         Built:{' '}
