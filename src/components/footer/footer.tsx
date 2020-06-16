@@ -23,7 +23,7 @@ export default function Footer(props: FooterProps) {
             : commitHash}
         </a>
         <br />
-        Built:{' '}
+        Build date:{' '}
         <span
           title={new Date(
             import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
