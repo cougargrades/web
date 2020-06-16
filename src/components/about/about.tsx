@@ -1,44 +1,22 @@
 import React, { Suspense } from 'react';
 import useSWR from 'swr';
 
-import Collaborator from '../collaborator/collaborator';
+import Collaborator, { CollaboratorProps } from '../collaborator/collaborator';
 import Footer from '../footer/footer';
 
 import './about.scss';
 
 export default function About() {
   const isSingle = () => Array.isArray(members) && members.length === 1;
-  const fetcher = (url: RequestInfo) => fetch(url).then((r) => r.json());
-  // TODO: placeholder
-  //const { data: members, error, isValidating } = useSWR('https://api.github.com/orgs/cougargrades/members', fetcher);
-
-  const me = {
-    login: 'au5ton',
-    id: 4109551,
-    node_id: 'MDQ6VXNlcjQxMDk1NTE=',
-    avatar_url: 'https://avatars0.githubusercontent.com/u/4109551?v=4',
-    gravatar_id: '',
-    url: 'https://api.github.com/users/au5ton',
-    html_url: 'https://github.com/au5ton',
-    followers_url: 'https://api.github.com/users/au5ton/followers',
-    following_url: 'https://api.github.com/users/au5ton/following{/other_user}',
-    gists_url: 'https://api.github.com/users/au5ton/gists{/gist_id}',
-    starred_url: 'https://api.github.com/users/au5ton/starred{/owner}{/repo}',
-    subscriptions_url: 'https://api.github.com/users/au5ton/subscriptions',
-    organizations_url: 'https://api.github.com/users/au5ton/orgs',
-    repos_url: 'https://api.github.com/users/au5ton/repos',
-    events_url: 'https://api.github.com/users/au5ton/events{/privacy}',
-    received_events_url: 'https://api.github.com/users/au5ton/received_events',
-    type: 'User',
-    site_admin: false,
-  };
-
-  const members: any = [];
-  for (let i = 0; i < 2; i++) {
-    let temp = Object.assign({}, me);
-    temp.id = Math.random();
-    members.push(temp);
-  }
+  const members: CollaboratorProps[] = [
+    {
+      id: 4109551,
+      name: 'Austin Jackson',
+      login: 'au5ton',
+      html_url: 'https://github.com/au5ton',
+      avatar_url: 'https://avatars0.githubusercontent.com/u/4109551?v=4',
+    },
+  ];
 
   return (
     <>
@@ -65,7 +43,9 @@ export default function About() {
           members.map((e: any) => (
             <Collaborator
               key={e.id}
+              name={e.name}
               login={e.login}
+              html_url={e.html_url}
               avatar_url={e.avatar_url}
             />
           ))}
