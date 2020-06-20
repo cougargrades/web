@@ -7,6 +7,7 @@ on:
 
 jobs:
   prep:
+    name: Cancel Previous Runs
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -47,3 +48,4 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
