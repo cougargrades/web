@@ -35,15 +35,12 @@ parserOptions:
 #- '@typescript-eslint'
 # https://www.npmjs.com/package/eslint-config-react-app#usage-outside-of-create-react-app
 plugins:
-  - 'eslint-config-react-app' 
-  - '@typescript-eslint/eslint-plugin@2.x' 
-  - '@typescript-eslint/parser@2.x'
-  - 'babel-eslint@10.x' 
-  - 'eslint-plugin-flowtype@4.x' 
-  - 'eslint-plugin-import@2.x' 
-  - 'eslint-plugin-jsx-a11y@6.x' 
-  - 'eslint-plugin-react@7.x' 
-  - 'eslint-plugin-react-hooks@2.x'
+  - '@typescript-eslint' 
+  - 'flowtype@4.x' 
+  - 'import@2.x' 
+  - 'jsx-a11y@6.x' 
+  - 'react@7.x' 
+  - 'react-hooks@2.x'
 
 #########
 # Rules #
