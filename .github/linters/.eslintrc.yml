@@ -48,4 +48,4 @@ plugins:
 #########
 # Rules #
 #########
-rules: { "extends": "react-app" }
+rules: {}
