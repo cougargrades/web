@@ -33,6 +33,10 @@ export default function Footer(props: FooterProps) {
             import.meta.env.SNOWPACK_PUBLIC_BUILD_DATE,
           ).toLocaleDateString()}
         </span>
+        <br />
+        <a href="https://github.com/cougargrades/web/wiki/Feedback">
+          Got feedback?
+        </a>
       </p>
       {props.hideDisclaimer ? (
         <></>

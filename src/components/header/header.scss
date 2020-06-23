@@ -1,7 +1,20 @@
 @import "../../styles/vars.scss";
 
 header.hero {
+    &.mini {
+        hgroup {
+            h1 {
+                display: inline-block;
+                font-size: 1.75rem;
+            }
+            h3 {
+                display: none;
+            }
+        }
+    }
+
     hgroup {
+        //transition: all 2s;
         h1 {
             color: var(--uh-red);
         }
