@@ -1,39 +1,38 @@
-
 main {
-    details.blog {
-        margin-bottom: calc(var(--fontSize) * 1.8);
-    }
-    section {
-        margin-bottom: calc(var(--fontSize) * 3.1);
+  details.blog {
+    margin-bottom: calc(var(--fontSize) * 1.8);
+  }
+  section {
+    margin-bottom: calc(var(--fontSize) * 3.1);
 
-        h2 {
-            margin-bottom: calc(var(--lineHeight) * 0.65);
-        }
+    h2 {
+      margin-bottom: calc(var(--lineHeight) * 0.65);
     }
+  }
 
-    figure > img + figcaption {
-        margin-top: -1rem;
-        font-size: 0.8em;
-        font-style: italic;
-        text-align: center;
-        color: var(--uh-gray);
-    }
+  figure > img + figcaption {
+    margin-top: -1rem;
+    font-size: 0.8em;
+    font-style: italic;
+    text-align: center;
+    color: var(--uh-gray);
+  }
 }
 
 .hearts {
-    color: #ff8fbc;
+  color: #ff8fbc;
 }
 
 main section p {
-    padding-right: 2em;
+  padding-right: 2em;
 }
 
 figure .visaid {
-    width: 100%;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
-    img.visaid {
-        filter: Invert()
-    }
+  img.visaid {
+    filter: Invert();
+  }
 }

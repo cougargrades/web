@@ -1,77 +1,79 @@
 @import "../../styles/vars.scss";
 
 header.hero {
-    &.mini {
-        hgroup {
-            h1 {
-                display: inline-block;
-                font-size: 1.75rem;
-            }
-            h3 {
-                display: none;
-            }
-        }
-    }
-
+  &.mini {
     hgroup {
-        //transition: all 2s;
-        h1 {
-            color: var(--uh-red);
+      h1 {
+        display: inline-block;
+        font-size: 1.75rem;
+      }
+      h3 {
+        display: none;
+      }
+    }
+  }
+
+  hgroup {
+    //transition: all 2s;
+    h1 {
+      color: var(--uh-red);
+    }
+    // Subtitle
+    h1 + h3 {
+      // Undo margin-bottom for <h1>
+      padding-top: calc(var(--lineHeight) * -1);
+      //font-variation-settings: 'wght' 300;
+      font-weight: 300;
+    }
+  }
+
+  nav,
+  & + nav {
+    a {
+      // undo linky stuff
+      display: inline-block;
+      text-decoration: none;
+
+      // buttony stuff
+      padding: 0.25em 0.75em;
+      margin: 0.25em 0.25em;
+      border-radius: 8px;
+      font-weight: 500;
+
+      // coloring
+      background-color: darken($color: $default-nc-bg-2, $amount: 5%);
+      transition: background-color 200ms;
+
+      &:active,
+      &:focus {
+        outline: 0;
+      }
+      &:hover,
+      &:hover {
+        background-color: darken($color: $default-nc-bg-2, $amount: 7%);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
+
+        &:active,
+        &:focus {
+          outline: 0;
         }
-        // Subtitle
-        h1 + h3 {
-            // Undo margin-bottom for <h1>
-            padding-top: calc(var(--lineHeight) * -1);
-            //font-variation-settings: 'wght' 300;
-            font-weight: 300;
+        &:hover {
+          background-color: lighten($color: $night-nc-bg-2, $amount: 13%);
         }
+      }
     }
 
-    nav, & + nav {
-
-        a {
-            // undo linky stuff
-            display: inline-block;
-            text-decoration: none;
-
-            // buttony stuff
-            padding: 0.25em 0.75em;
-            margin: 0.25em 0.25em;
-            border-radius: 8px;
-            font-weight: 500;
-
-            // coloring
-            background-color: darken($color: $default-nc-bg-2, $amount: 5%);
-            transition: background-color 200ms;
-
-            &:active, &:focus {
-                outline: 0;
-            }
-            &:hover, &:hover {
-                background-color: darken($color: $default-nc-bg-2, $amount: 7%);
-            }
-
-            @media (prefers-color-scheme: dark) {
-                background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
-
-                &:active, &:focus {
-                    outline: 0;
-                }
-                &:hover {
-                    background-color: lighten($color: $night-nc-bg-2, $amount: 13%);
-                }
-            }
-        }
-
-        a.disabled {
-            color: grey;
-            text-decoration: line-through;
-            cursor: default;
-        }
+    a.disabled {
+      color: grey;
+      text-decoration: line-through;
+      cursor: default;
     }
+  }
 
-    & + nav {
-        margin-bottom: 32px;
-    }
-
+  & + nav {
+    margin-bottom: 32px;
+  }
 }
