@@ -12,38 +12,33 @@ import '../../styles/colors.scss';
 export default function Root() {
   return (
     <BrowserRouter>
+      <Header />
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route path="/" exact>
-            <Header />
             <Homepage />
           </Route>
           <Route path="/courses">
-            <Header />
             <Blurb>
               <p>Courses page</p>
             </Blurb>
           </Route>
           <Route path="/c/:name">
-            <Header />
             <Blurb>
               <p>Individual course page</p>
             </Blurb>
           </Route>
           <Route path="/instructors">
-            <Header />
             <Blurb>
               <p>Instructors page</p>
             </Blurb>
           </Route>
           <Route path="/i/:fullName">
-            <Header />
             <Blurb>
               <p>Individual instructors page</p>
             </Blurb>
           </Route>
           <Route path="/api" exact>
-            <Header />
             <Blurb>
               <p>
                 Did you mean to go to{' '}
@@ -55,11 +50,9 @@ export default function Root() {
             </Blurb>
           </Route>
           <Route path="/about">
-            <Header />
             <About />
           </Route>
           <Route>
-            <Header />
             <Blurb http404 />
           </Route>
         </Switch>
