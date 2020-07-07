@@ -123,9 +123,12 @@ export default function Homepage() {
                 repurposing our code, check us out on Github!
               </p>
               <p>
-                <NavLink className="button" to="/about">
+                <a
+                  className="button"
+                  href="https://github.com/orgs/cougargrades/people"
+                >
                   View Collaborators &rarr;
-                </NavLink>
+                </a>
               </p>
             </section>
           </r-cell>

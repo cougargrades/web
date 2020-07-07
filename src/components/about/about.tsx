@@ -74,6 +74,25 @@ export default function About() {
           registered trademarks of their respective owners.
         </em>
       </p>
+      <h4>DMCA + Business</h4>
+      <p>
+        <a
+          href="#"
+          className="cryptedmail"
+          data-name="contact"
+          data-domain="cougargrades"
+          data-tld="io"
+          onClick={(e) => {
+            const s = (k: any, v: any) =>
+              (e.target as HTMLElement).setAttribute(k, v);
+            const g = (k: any) => (e.target as HTMLElement).getAttribute(k);
+            s(
+              'href',
+              `mailto:${g('data-name')}@${g('data-domain')}.${g('data-tld')}`,
+            );
+          }}
+        ></a>
+      </p>
       <h4>License</h4>
       <p>
         This software is{' '}

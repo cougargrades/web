@@ -2,4 +2,4 @@
 React app that powers cougargrades.io
 
 
-## ⚠ In-development version of PoC-4
+## ⚠ In-development version of PoC4
