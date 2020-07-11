@@ -3,6 +3,14 @@
   align-items: center;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+
+  & > a {
+    width: 75px;
+    height: 75px;
+    border-radius: 6px;
+    background: rgba(136, 139, 141, 0.20);
+  }
+
   img {
     width: 75px;
     border-radius: 6px;

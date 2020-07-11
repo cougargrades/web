@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@snowpack/app-scripts-react": "^1.1.0",
-    "@snowpack/plugin-webpack": "^1.1.0",
+    "@snowpack/app-scripts-react": "^1.4.0",
+    "@snowpack/plugin-webpack": "^1.5.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-router": "^5.1.7",
@@ -18,12 +18,12 @@
     "dotenv-expand": "^5.1.0",
     "postcss-import": "^12.0.1",
     "preload-webpack-plugin": "^2.3.0",
-    "prettier": "^2.0.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "sass": "^1.26.7",
-    "snowpack": "^2.2.0",
-    "typescript": "^3.8.0"
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sass": "^1.26.10",
+    "snowpack": "^2.6.4",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@exampledev/new.css": "^1.1.3",
