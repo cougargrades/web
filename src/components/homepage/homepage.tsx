@@ -29,9 +29,9 @@ export default function Homepage() {
                 section taught at UH.
               </p>
               <div className="stamp-wrap">
-                <div className="stamp teal">92k</div>
+                <div className="stamp teal">103k</div>
                 <span>Sections</span>
-                <div className="stamp gold">6.6k</div>
+                <div className="stamp gold">6.9k</div>
                 <span>Courses</span>
               </div>
               <br />
@@ -62,9 +62,9 @@ export default function Homepage() {
                 their students received.
               </p>
               <div>
-                <div className="stamp blue">5k</div>
+                <div className="stamp blue">5.4k</div>
                 <span>Instructors</span>
-                <div className="stamp orchid">146</div>
+                <div className="stamp orchid">149</div>
                 <span>Departments</span>
               </div>
               <br />
