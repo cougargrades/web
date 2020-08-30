@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import useSWR from 'swr';
+import React from 'react';
 
 import Collaborator, { CollaboratorProps } from '../collaborator/collaborator';
 import Footer from '../footer/footer';
@@ -23,7 +22,7 @@ export default function About() {
       <h3>Resources</h3>
       <p>
         <a className="button" href="https://github.com/cougargrades">
-          Github
+          Github Organization
         </a>
         &nbsp;
         <a className="button" href="https://cougargrades.github.io/swagger/">
