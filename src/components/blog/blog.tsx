@@ -8,7 +8,7 @@ import './blog.scss';
 
 async function fetchBlogPosts() {
   // get blog post data
-  let res = await fetch('https://cougargrades.github.io/blog/atom.xml');
+  let res = await fetch('https://blog.cougargrades.io/atom.xml');
   let data = await res.text();
   let parser = new DOMParser();
   let xml = parser.parseFromString(data, 'text/xml');
