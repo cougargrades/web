@@ -72,7 +72,7 @@ export default function Blog() {
               </li>
             ))}
         <li>
-          <a href="https://cougargrades.github.io/blog/">
+          <a href="https://blog.cougargrades.io">
             {Array.isArray(data)
               ? `View ${data!.length - previewLimit} more posts →`
               : ''}
