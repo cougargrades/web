@@ -35,14 +35,14 @@ See https://cougargrades.io/about
 
 - Now, you'll need to update the `.env.development` file to include the API key you retrieved:
     ```env
-    REACT_APP_FIREBASE_API_KEY=abcdefghijklmnopqrstuvwxyz123456789
+    REACT_APP_API_KEY=abcdefghijklmnopqrstuvwxyz123456789
     ```
 - This is the API key that is given to browsers when they visit https://cougargrades.io and it is the same one the local webserver will use for development purposes.
 - If you're interested in using your own Firebase project instance instead, make changes to the other lines:
 
     ```env
-    REACT_APP_FIREBASE_AUTH_DOMAIN=myproject-erf88.firebaseapp.com
-    REACT_APP_FIREBASE_PROJECT_ID=myproject-erf88
+    REACT_APP_AUTH_DOMAIN=myproject-erf88.firebaseapp.com
+    REACT_APP_PROJECT_ID=myproject-erf88
     ```
 
 ##### Step 3: Running
