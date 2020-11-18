@@ -52,7 +52,10 @@ export default function About() {
       <h4>Acknowledgement</h4>
       <p>Some other great projects we found inspiration in:</p>
       <ul>
-        <li>anex.us/grades/ (author unknown)</li>
+        <li>
+          anex.us/grades/ (
+          <a href="https://github.com/heydabop/grades">@heydabop</a>)
+        </li>
         <li>
           AggieScheduler (
           <a href="https://github.com/jake-leland">@jake-leland</a>)
