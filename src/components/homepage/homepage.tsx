@@ -29,7 +29,7 @@ export default function Homepage() {
                 section taught at UH.
               </p>
               <div className="stamp-wrap">
-                <div className="stamp teal">103k</div>
+                <div className="stamp teal bignumber">103k</div>
                 <span>Sections</span>
                 <div className="stamp gold">6.9k</div>
                 <span>Courses</span>

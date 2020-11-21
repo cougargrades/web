@@ -53,4 +53,8 @@ div.stamp {
     color: black;
     background: var(--uh-orchid);
   }
+  
+  &.bignumber {
+    font-size: calc(var(--stampBase) * 0.85);
+  }
 }
