@@ -2,6 +2,8 @@ name: Mirroring
 
 on: [push, delete]
 
+# test commit to sync
+
 jobs:
   to_gitlab:
     runs-on: ubuntu-18.04
