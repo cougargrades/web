@@ -1,6 +1,6 @@
 # @cougargrades/web
 
-![Build and Deploy - Testing](https://github.com/cougargrades/web/workflows/Build%20and%20Deploy%20-%20Testing/badge.svg)
+![Build and Deploy - Testing](https://github.com/cougargrades/web/workflows/Build%20and%20Deploy%20-%20Testing/badge.svg) ![Build and Deploy - Production](https://github.com/cougargrades/web/workflows/Build%20and%20Deploy%20-%20Production/badge.svg) ![CodeQL](https://github.com/cougargrades/web/workflows/CodeQL/badge.svg) ![Mirroring](https://github.com/cougargrades/web/workflows/Mirroring/badge.svg)
 
 React app that powers cougargrades.io
 
