@@ -4,6 +4,10 @@
 
 React app that powers cougargrades.io
 
+## Project Board
+
+See: https://github.com/orgs/cougargrades/projects/2
+
 ## Project Status
 
 Currently, the entire CougarGrades.io stack near finished with a major site overhaul. This means that the code you find here may not look like the live website.
