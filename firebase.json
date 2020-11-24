@@ -30,7 +30,6 @@
         "key": "Access-Control-Allow-Origin",
         "value":"*"
       }]
-    }],
-    "predeploy": "npm run predeploy"
+    }]
   }
 }

@@ -116,3 +116,7 @@ firebaseadminsdk.json
 .env.development.local
 .env.test.local
 .env.production.local
+
+.build
+build
+web_modules
