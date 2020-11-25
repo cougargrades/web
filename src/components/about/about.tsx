@@ -44,9 +44,9 @@ export default function About() {
       </div>
       {isValidating === false
         && !error
-        && data?.contributors.length === 0
-        ? <></>
-        :
+        && data
+        && data.contributors.length > 0
+        ? 
         <>
           <h4>Contributors</h4>
           <div
@@ -67,6 +67,8 @@ export default function About() {
                 )}
           </div>
         </>
+        :
+        <></>
         }
       <h4>Acknowledgement</h4>
       <p>Some other great projects we found inspiration in:</p>
