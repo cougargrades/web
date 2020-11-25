@@ -38,6 +38,16 @@ export default function Root() {
               <p>Individual instructors page</p>
             </Blurb>
           </Route>
+          <Route path="/groups">
+            <Blurb>
+              <p>Groups page</p>
+            </Blurb>
+          </Route>
+          <Route path="/g/:groupName">
+            <Blurb>
+              <p>Individual groups page</p>
+            </Blurb>
+          </Route>
           <Route path="/api" exact>
             <Blurb>
               <p>

@@ -33,9 +33,9 @@ export default function Header() {
         <NavLink to="/instructors">
           <Emoji label="teacher" symbol="👩‍🏫" /> Instructors
         </NavLink>
-        <a href="#" className="disabled" title="Coming soon ™">
-          <Emoji label="lock" symbol="🔒" /> Groups
-        </a>
+        <NavLink to="/groups">
+          <Emoji label="card file box" symbol="🗃️" /> Groups
+        </NavLink>
         <NavLink to="/about">
           <Emoji label="waving hand" symbol="👋" /> About
         </NavLink>

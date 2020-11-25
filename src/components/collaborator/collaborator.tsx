@@ -3,7 +3,7 @@ import React from 'react';
 import './collaborator.scss';
 
 export interface CollaboratorProps {
-  id?: number;
+  id: number;
   name: string;
   login: string;
   html_url: string;

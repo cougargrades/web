@@ -1,4 +1,5 @@
 import React from 'react';
+import useSWR from 'swr';
 
 import Collaborator, { CollaboratorProps } from '../collaborator/collaborator';
 import Footer from '../footer/footer';
@@ -6,49 +7,67 @@ import Footer from '../footer/footer';
 import './about.scss';
 
 export default function About() {
-  const isSingle = () => Array.isArray(members) && members.length === 1;
-  const members: CollaboratorProps[] = [
-    {
-      id: 4109551,
-      name: 'Austin Jackson',
-      login: 'au5ton',
-      html_url: 'https://github.com/au5ton',
-      avatar_url: 'https://avatars0.githubusercontent.com/u/4109551?v=4',
-    },
-  ];
+  const isSingle = (x?: any[]) => Array.isArray(x) && x.length === 1;
+  const { data, error, isValidating } = useSWR<CollaboratorResponse>('https://github-org-stats.au5ton.vercel.app/api/cougargrades');
 
   return (
     <>
       <h3>Resources</h3>
       <p>
-        <a className="button" href="https://github.com/cougargrades">
-          Github Organization
+        <a className="button" href="https://github.com/cougargrades/web">
+          Source Code
         </a>
-        &nbsp;
-        <a className="button" href="https://cougargrades.github.io/swagger/">
-          Public API
+        <a className="button" href="https://github.com/cougargrades/api">
+          Developer API
         </a>
-        &nbsp;
         <a className="button" href="https://github.com/cougargrades/publicdata">
           Public Data
         </a>
       </p>
-      <h3>Collaborators</h3>
+      <h3>Developers</h3>
       <div
         className="collaborators-wrap"
-        style={isSingle() ? { justifyContent: 'flex-start' } : {}}
+        style={isSingle(data?.public_members) ? { justifyContent: 'flex-start' } : {}}
       >
-        {Array.isArray(members) &&
-          members.map((e: any) => (
-            <Collaborator
-              key={e.id}
-              name={e.name}
-              login={e.login}
-              html_url={e.html_url}
-              avatar_url={e.avatar_url}
-            />
-          ))}
+        {isValidating
+          ? 'Loading...'
+          : data?.public_members?.map(e =>
+              <Collaborator
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                login={e.login}
+                html_url={e.html_url}
+                avatar_url={e.avatar_url}
+              />
+            )}
       </div>
+      {isValidating === false
+        && !error
+        && data?.contributors.length === 0
+        ? <></>
+        :
+        <>
+          <h4>Contributors</h4>
+          <div
+            className="collaborators-wrap"
+            style={isSingle(data?.contributors) ? { justifyContent: 'flex-start' } : {}}
+          >
+            {isValidating
+              ? 'Loading...'
+              : data?.contributors?.map(e =>
+                  <Collaborator
+                    key={e.id}
+                    id={e.id}
+                    name={e.name}
+                    login={e.login}
+                    html_url={e.html_url}
+                    avatar_url={e.avatar_url}
+                  />
+                )}
+          </div>
+        </>
+        }
       <h4>Acknowledgement</h4>
       <p>Some other great projects we found inspiration in:</p>
       <ul>
@@ -106,4 +125,13 @@ export default function About() {
       <Footer hideDisclaimer={true} />
     </>
   );
+}
+
+interface CollaboratorResponse {
+  public_members: CollaboratorProps[],
+  contributors: CollaboratorProps[]
+}
+
+async function fetcher(url: string) {
+  return await (await fetch(url)).json();
 }
