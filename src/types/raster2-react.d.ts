@@ -1,3 +1,5 @@
+// https://rsms.me/raster/
+
 declare namespace JSX {
   interface IntrinsicElements {
     'r-grid': React.DetailedHTMLProps<
