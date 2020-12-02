@@ -10,7 +10,7 @@ See: https://github.com/orgs/cougargrades/projects/2
 
 ## Project Status
 
-Currently, the entire CougarGrades.io is stack near finished with a major site overhaul. This means that the code you find here may not look like the live website.
+Currently, the entire CougarGrades.io stack is near finished with a major site overhaul. This means that the code you find here may not look like the live website.
 
 | Project                                                                              	| Version 	| Status                                                              	| URL                                       	|
 |--------------------------------------------------------------------------------------	|---------	|---------------------------------------------------------------------	|-------------------------------------------	|
