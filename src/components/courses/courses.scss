@@ -159,63 +159,66 @@ div.cg-content {
         }
     }
 
-    div.card-body {
-        overflow-x: scroll;
-        text-align: center;
-        z-index: 1;
-        
-        div.cg-charts {
-            .cg-chart-wrap, .cg-table-wrap {
-                div {
-                    display: inline-block
+    div.cg-charts {
+        .cg-chart-wrap, .cg-table-wrap {
+            div {
+                display: inline-block
+            }
+            @media (prefers-color-scheme: dark) {
+                & svg rect {
+                    fill: $dm-text;
                 }
-                @media (prefers-color-scheme: dark) {
-                    & svg rect {
-                        fill: $dm-text;
-                    }
-                    // make graph background transparent but not the lines
-                    & svg:nth-child(1) > rect:nth-child(2) {
-                        fill: rgba(0,0,0,0);
-                    }
-                    & svg rect [height="1"] {
-                        fill: $dm-text;
-                    }
-                    & svg text {
-                        fill: $dm-text;
-                    }
+                // make graph background transparent but not the lines
+                & svg:nth-child(1) > rect:nth-child(2) {
+                    fill: rgba(0,0,0,0);
+                }
+                & svg rect [height="1"] {
+                    fill: $dm-text;
+                }
+                & svg text {
+                    fill: $dm-text;
+                }
+                .google-visualization-tooltip path {
+                    fill: $dm-fore;
                 }
             }
+        }
 
-            .google-visualization-table {
-                .google-visualization-table-table {
-                    width: 100%;
-                    .headerCell {
-                        cursor: pointer;
-                        &:hover {
-                            background-color: rgba(110,110,110,0.1);
-                            transition: background-color 250ms;
-                        }
+        .google-visualization-table {
+            .google-visualization-table-table {
+                width: 100%;
+                .headerCell {
+                    cursor: pointer;
+                    &:hover {
+                        background-color: rgba(110,110,110,0.1);
+                        transition: background-color 250ms;
                     }
+                }
+                .tableRow {
+                    background: #78909c;
+                }
+                .tableCell {
+                    background: rgba(255, 255, 255, 0.95);
+                }
+
+                @media (prefers-color-scheme: dark) {
+                    background: rgba(0,0,0,0);
+
                     .tableRow {
-                        background: #78909c;
+                        background: $dm-fore;
                     }
                     .tableCell {
-                        background: rgba(255, 255, 255, 0.95);
-                    }
-
-                    @media (prefers-color-scheme: dark) {
-                        background: rgba(0,0,0,0);
-
-                        .tableRow {
-                            background: $dm-fore;
-                        }
-                        .tableCell {
-                            background: $dm-fore;
-                        }
+                        background: $dm-fore;
                     }
                 }
             }
         }
+    }
+
+    div.card-body {
+        overflow-x: scroll;
+        text-align: center;
+        z-index: 1;
     }
 
     // Fix for Bootstrap 4 CSS when accordions only contain one .card

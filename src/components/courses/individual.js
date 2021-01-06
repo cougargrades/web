@@ -38,7 +38,7 @@ class IndividualCourse extends Component {
     render() {
         return (
         <Container>
-            <div>
+            <div className="cg-content">
                 <h3>{this.props.course} <small className="text-muted">{this.state.course.description}</small></h3>
                 {this.state.selection && this.state.selection.length > 0 ? <p className="back-to-search"><Button as={Link} to={{
                     pathname: '/courses',
