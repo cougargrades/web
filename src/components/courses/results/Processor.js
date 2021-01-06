@@ -31,11 +31,42 @@ class Processor {
                         .sort((a,b) => self.enabledColumns.indexOf(a) - self.enabledColumns.indexOf(b))
                         // add extra info for the keys we're keeping
                         .map(key => {
-                            return {
-                                type: typeof(expanded[0][key]), // presumes that first index doesn't have null values
-                                label: self.friendlyColumnNames[key],
-                                key: key // not used by Google Charts
-                            };
+                            let string_columns = [
+                                'termString',
+                                'primaryInstructorFullName'
+                            ];
+                            let numeric_columns = [
+                                'sectionNumber',
+                                'A',
+                                'B',
+                                'C',
+                                'D',
+                                'F',
+                                'Q',
+                                'semesterGPA'
+                            ];
+
+                            if(string_columns.includes(key)) {
+                                return {
+                                    type: 'string', // presumes that first index doesn't have null values
+                                    label: self.friendlyColumnNames[key],
+                                    key: key // not used by Google Charts
+                                };
+                            }
+                            else if(numeric_columns.includes(key)) {
+                                return {
+                                    type: 'number', // presumes that first index doesn't have null values
+                                    label: self.friendlyColumnNames[key],
+                                    key: key // not used by Google Charts
+                                };
+                            }
+                            else {
+                                return {
+                                    type: typeof(expanded[0][key]), // presumes that first index doesn't have null values
+                                    label: self.friendlyColumnNames[key],
+                                    key: key // not used by Google Charts
+                                };
+                            }
                         });
             })(),
             rows: (() => {
