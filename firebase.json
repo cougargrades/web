@@ -39,6 +39,6 @@
         "value": "public, max-age=259200"
       }]
     }],
-    "predeploy": "/bin/true"
+    "predeploy": "npm run build"
   }
 }
