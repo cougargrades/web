@@ -158,7 +158,7 @@ class Processor {
 
         let graphArray = []
         graphArray.push(cols)
-        
+
         let colsMap = new Map()
         for(let i = 0; i < cols.length; ++i) {
             colsMap.set(cols[i], i); //map prof name to column index
@@ -209,6 +209,12 @@ class Processor {
                     graphArray[i][j] = parseFloat(graphArray[i][j].toFixed(3)) //round to 3 (for cleanliness in tooltip)
                 }
             }
+        }
+
+        // include the "type" in the header row, fixes #7 and #32
+        // see: https://stackoverflow.com/a/48722007
+        for(let j = 1; j < graphArray[0].length; j++) {
+            graphArray[0][j] = { label: graphArray[0][j], type: 'number' };
         }
         // return a deepcopy of graphArray
         return JSON.parse(JSON.stringify(graphArray));
