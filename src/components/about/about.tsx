@@ -8,7 +8,7 @@ import './about.scss';
 
 export default function About() {
   const isSingle = (x?: any[]) => Array.isArray(x) && x.length === 1;
-  const { data, error, isValidating } = useSWR<CollaboratorResponse>('https://github-org-stats.au5ton.vercel.app/api/cougargrades');
+  const { data, error, isValidating } = useSWR<CollaboratorResponse>('https://github-org-stats-au5ton.vercel.app/api/cougargrades');
 
   return (
     <>
