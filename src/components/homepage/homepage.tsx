@@ -44,11 +44,10 @@ export default function Homepage() {
           </r-cell>
           <r-cell span="5.." span-s="row">
             <figure>
-              <img
+              <div
                 title={'Top 48 most enrolled courses at UH.'}
-                src={slotmachine}
-                className="visaid"
-                style={{ width: '100%' }}
+                className="visaid slotmachine"
+                style={{ backgroundImage: `url("${slotmachine}")` }}
               />
               <figcaption>Top 48 most enrolled courses at UH.</figcaption>
             </figure>
@@ -77,13 +76,12 @@ export default function Homepage() {
           </r-cell>
           <r-cell span="5.." span-s="row">
             <figure>
-              <img
+              <div
                 title={
                   'Top 100 unique instructor lastnames, weighted by number of sections taught.'
                 }
-                src={wordcloud}
-                className="visaid"
-                style={{ width: '100%' }}
+                className="visaid wordcloud"
+                style={{ backgroundImage: `url("${wordcloud}")` }}
               />
               <figcaption>Top 100 unique instructor lastnames.</figcaption>
             </figure>

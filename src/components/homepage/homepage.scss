@@ -10,7 +10,7 @@ main {
     }
   }
 
-  figure > img + figcaption {
+  figure > .visaid + figcaption {
     margin-top: -1rem;
     font-size: 0.8em;
     font-style: italic;
@@ -28,11 +28,26 @@ main section p {
 }
 
 figure .visaid {
-  width: 100%;
+  // recreate <img> styles from new.css
+  max-width: 100%;
+  margin-bottom: 1rem;
+
+  // Prevent dramatic layout changes as the SVG image loads
+  // See: https://css-tricks.com/aspect-ratio-boxes/
+  overflow: hidden;
+  height: 0;
+  background-size: cover;
+  
+  &.slotmachine {
+    padding-top: calc(650 / 1100 * 100%);
+  }
+  &.wordcloud {
+    padding-top: calc(768 / 1024 * 100%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-  img.visaid {
+  .visaid {
     filter: Invert();
   }
 }

@@ -16,24 +16,13 @@ module.exports = {
     {"match": "routes", "src": ".*", "dest": "/index.html"},
   ],
   optimize: {
-    /* Example: Bundle your final build: */
-    // "bundle": true,
-    preload: true,
-    bundle: false,
+    /*
+      See: https://www.snowpack.dev/guides/optimize-and-bundle
+    */
+    preload: false,
+    bundle: true,
     minify: true,
     target: 'es2020'
-    // {
-    //   entrypoints: 'auto' | string[] | ((options: { files: string[] }) => string[]);
-    //   preload: boolean;
-    //   bundle: boolean;
-    //   splitting: boolean;
-    //   treeshake: boolean;
-    //   manifest: boolean;
-    //   minify: boolean;
-    //   target: 'es2020' | 'es2019' | 'es2018' | 'es2017';
-    // }
-    
-    
   },
   packageOptions: {
     /* ... */
