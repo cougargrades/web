@@ -13,9 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <FirebaseAppProvider firebaseConfig={firebaseConfig} >
       <SuspenseWithPerf fallback={<div>Loading...</div>} traceId="index">
-        {/* <React.Suspense fallback={<div>Loading...</div>}> */}
-          <Root />
-        {/* </React.Suspense> */}
+        <Root />
       </SuspenseWithPerf>
     </FirebaseAppProvider>
   </React.StrictMode>,
