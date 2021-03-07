@@ -133,7 +133,3 @@ interface CollaboratorResponse {
   public_members: CollaboratorProps[],
   contributors: CollaboratorProps[]
 }
-
-async function fetcher(url: string) {
-  return await (await fetch(url)).json();
-}

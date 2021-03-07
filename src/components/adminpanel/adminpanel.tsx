@@ -4,7 +4,7 @@ import { auth as fbAuth, AuthCheck, useAuth, useFirestore, useFirestoreDocData, 
 
 import { LoginForm } from './signin';
 
-export function AdminPanel() {
+export default function AdminPanel() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <AuthCheck fallback={<LoginForm />}>

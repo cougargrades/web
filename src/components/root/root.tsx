@@ -6,7 +6,7 @@ import Blurb from './blurb';
 import Header from '../header/header';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
-import { AdminPanel } from '../adminpanel/adminpanel';
+const AdminPanel = React.lazy(() => import('../adminpanel/adminpanel'));
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
