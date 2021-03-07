@@ -18,8 +18,8 @@ module.exports = {
     /*
       See: https://www.snowpack.dev/guides/optimize-and-bundle
     */
-    preload: false,
-    bundle: true,
+    preload: true,
+    bundle: false,
     minify: true,
     target: 'es2020'
   },
