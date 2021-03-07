@@ -10,7 +10,7 @@ export default function Footer(props: FooterProps) {
   const commitHash = import.meta.env.SNOWPACK_PUBLIC_GIT_SHA; // hopefully works
   return (
     <footer>
-      <h6>@cougargrades/web ({import.meta.env.SNOWPACK_PUBLIC_PROJECT_ID})</h6>
+      <h6>@cougargrades/web</h6>
       <p>
         Version: {import.meta.env.SNOWPACK_PUBLIC_VERSION}, Commit:{' '}
         <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
