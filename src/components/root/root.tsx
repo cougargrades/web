@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import firebase from '../firebase';
+
 import Blurb from './blurb';
 import Header from '../header/header';
 const Homepage = React.lazy(() => import('../homepage/homepage'));

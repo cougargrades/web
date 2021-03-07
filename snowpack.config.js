@@ -8,7 +8,6 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
-    //['@snowpack/plugin-optimize', { target: 'es2017', preloadModules: true }],
     '@snowpack/plugin-sass'
   ],
   routes: [

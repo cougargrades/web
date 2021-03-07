@@ -10,10 +10,6 @@
         "source": "{/blog,/blog/**}",
         "destination": "https://cougargrades.github.io/blog/",
         "type": 302
-      }, {
-        "source": "{/swagger,/swagger/**}",
-        "destination": "https://cougargrades.github.io/swagger/",
-        "type": 302
       }
     ],
     "rewrites": [{
