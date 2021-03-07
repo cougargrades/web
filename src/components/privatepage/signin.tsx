@@ -48,6 +48,8 @@ export function PrivateChild() {
 export function LoginForm() {
   const auth = useAuth();
   const provider = new fbAuth.GoogleAuthProvider();
+  provider.addScope('profile');
+  provider.addScope('email');
 
   const signIn = () => {
     auth.signInWithPopup(provider)
