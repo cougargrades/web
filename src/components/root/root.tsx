@@ -1,15 +1,35 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
+import { useAnalytics } from 'reactfire';
 
 import Blurb from './blurb';
 import Header from '../header/header';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
+import { AdminPanel } from '../adminpanel/adminpanel';
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
 
+// Useful for Google Analytics
+// Inspired by: https://github.com/FirebaseExtended/reactfire/blob/9d96d92d212fbd616506848180e02e84d4866409/docs/use.md#log-page-views-to-google-analytics-for-firebase-with-react-router
+function MyPageViewLogger() {
+  const analytics = useAnalytics();
+  const location = useLocation();
+
+  // By passing `location.pathname` to the second argument of `useEffect`,
+  // we only log on first render and when the `pathname` changes
+  useEffect(() => {
+    console.log(`event logged: ${location.pathname}`);
+    analytics.logEvent('page-view', { path_name: location.pathname });
+  }, [location.pathname]);
+
+  return null;
+}
+
 export default function Root() {
+  const analytics = useAnalytics();
+
   return (
     <BrowserRouter>
       <Header />
@@ -62,11 +82,15 @@ export default function Root() {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/admin">
+            <AdminPanel />
+          </Route>
           <Route>
             <Blurb http404 />
           </Route>
         </Switch>
       </Suspense>
+      <MyPageViewLogger />
     </BrowserRouter>
   );
 }

@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import 'firebase/performance';
+import 'firebase/analytics';
+import 'firebase/auth';
+import 'firebase/firestore';
+import { FirebaseAppProvider, SuspenseWithPerf } from 'reactfire';
+import { firebaseConfig } from './components/firebase';
+
 //import Root from './components/root/root';
 const Root = React.lazy(() => import('./components/root/root'));
 
 ReactDOM.render(
   <React.StrictMode>
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <Root />
-    </React.Suspense>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <SuspenseWithPerf fallback={<div>Loading...</div>} traceId="index">
+        <Root />
+      </SuspenseWithPerf>
+    </FirebaseAppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
