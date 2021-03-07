@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
-import firebase from 'firebase';
-import { AuthCheck, useAuth, useFirestore, useFirestoreDocData, useUser } from 'reactfire';
+import { auth as fbAuth, AuthCheck, useAuth, useFirestore, useFirestoreDocData, useUser } from 'reactfire';
 
 interface Scientist {
   firstName: string;
@@ -48,7 +47,7 @@ export function PrivateChild() {
 
 export function LoginForm() {
   const auth = useAuth();
-  const provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new fbAuth.GoogleAuthProvider();
 
   const signIn = () => {
     auth.signInWithPopup(provider)
