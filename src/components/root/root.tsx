@@ -6,7 +6,7 @@ import Blurb from './blurb';
 import Header from '../header/header';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
-import { PrivatePage } from '../privatepage/signin';
+import { AdminPanel } from '../adminpanel/adminpanel';
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
@@ -62,7 +62,6 @@ export default function Root() {
             <Blurb>
               <p>Groups page</p>
             </Blurb>
-            <PrivatePage />
           </Route>
           <Route path="/g/:groupName">
             <Blurb>
@@ -82,6 +81,9 @@ export default function Root() {
           </Route>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/admin">
+            <AdminPanel />
           </Route>
           <Route>
             <Blurb http404 />
