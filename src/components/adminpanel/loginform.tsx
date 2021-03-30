@@ -2,8 +2,6 @@ import React from 'react';
 import { auth as fbAuth, useAuth } from 'reactfire';
 import Collaborator from '../collaborator/collaborator';
 
-import './loginform.scss';
-
 export function LoginForm() {
   const auth = useAuth();
   const provider = new fbAuth.GoogleAuthProvider();
@@ -31,7 +29,7 @@ export function LoginForm() {
           avatar_url={auth.currentUser.photoURL!}
         />
       </div>
-      <div className="button-spread">
+      <div>
         <button onClick={signOut}>Sign Out</button>
       </div>
     </div>
