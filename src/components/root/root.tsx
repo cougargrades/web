@@ -1,12 +1,14 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
-import { useAnalytics } from 'reactfire';
+import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
+import { AuthCheck, useAnalytics } from 'reactfire';
 
 import Blurb from './blurb';
 import Header from '../header/header';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
 const AdminPanel = React.lazy(() => import('../adminpanel/adminpanel'));
+const LoginForm = React.lazy(() => import('../adminpanel/loginform'));
+const Uploader = React.lazy(() => import('../uploader/uploader'));
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
@@ -68,7 +70,7 @@ export default function Root() {
               <p>Individual groups page</p>
             </Blurb>
           </Route>
-          <Route path="/api" exact>
+          <Route exact path="/api">
             <Blurb>
               <p>
                 Did you mean to go to{' '}
@@ -82,8 +84,23 @@ export default function Root() {
           <Route path="/about">
             <About />
           </Route>
-          <Route path="/admin">
-            <AdminPanel />
+          <Route exact path="/admin">
+            <Redirect to="/admin/info"></Redirect>
+          </Route>
+          <Route path="/admin/info">
+            <Suspense fallback={<div>Loading...</div>}>
+              <AuthCheck fallback={<LoginForm />}>
+                <LoginForm />
+                <AdminPanel />
+              </AuthCheck>
+            </Suspense>
+          </Route>
+          <Route path="/admin/uploader">
+            <Suspense fallback={<div>Loading...</div>}>
+              <AuthCheck fallback={<LoginForm />}>
+                <Uploader />
+              </AuthCheck>
+            </Suspense>
           </Route>
           <Route>
             <Blurb http404 />

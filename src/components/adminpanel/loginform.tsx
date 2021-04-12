@@ -4,7 +4,7 @@ import Collaborator from '../collaborator/collaborator';
 
 import './loginform.scss';
 
-export function LoginForm() {
+export default function LoginForm() {
   const auth = useAuth();
   const provider = new fbAuth.GoogleAuthProvider();
   provider.addScope('profile');
