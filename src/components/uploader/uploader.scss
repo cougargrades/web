@@ -1,17 +1,2 @@
 
-.dropzone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem; // 20px
-  border-radius: 0.5rem; // 2
-  border: 2px dashed rgb(200, 200, 200, 0.4);
-  background: rgba(200,200,200,0.2);
-  color: #a5a5a5;
-  outline: none;
-  transition: border .24s ease-in-out;
-
-  &:active {
-    border-color:  red;
-  }
-}
+//

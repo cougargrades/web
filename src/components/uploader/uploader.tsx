@@ -1,61 +1,80 @@
-import React, { useCallback, useMemo } from 'react';
-//import { useUser, useIdTokenResult, useFirestore, useFirestoreDocData } from 'reactfire';
-import { useDropzone } from 'react-dropzone';
+import React, { useCallback, useState } from 'react';
+import { Dropzone } from './dropzone';
 
-import './uploader.scss';
+//import './uploader.scss';
 
 export default function Uploader() {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Do something with files
-    console.log(acceptedFiles)
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader()
 
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
-      reader.onload = () => {
-      // Do whatever you want with the file contents
-        const binaryStr = reader.result
-        console.log(binaryStr)
+  const [recordsFile, setRecordsFile] = useState<File>();
+  const [patchFiles, setPatchFiles] = useState<File[]>([]);
+
+  const handleDrop = useCallback((acceptedFiles: File[]) => {
+    /**
+     * we identify what a file is depending on its name,
+     * because we don't have access to its full path
+     * see: 
+     * - https://stackoverflow.com/a/23005925/2275818
+     * - https://developer.mozilla.org/en-US/docs/Web/API/File
+     * 
+     * then we save references to the native File so we can read it later
+     */
+
+    // Save reference to records
+    acceptedFiles.forEach(file => {
+      if(file.name === 'records.csv') {
+        setRecordsFile(file);
       }
-      //reader.readAsText(file)
-    })
+    });
+
+    // Save references to patchfiles
+    setPatchFiles(pf => [
+      // Set only the patchfiles, and in the correct order
+      ...acceptedFiles
+        .filter(e => e.name.startsWith('patch-') && e.name.endsWith('.json'))
+        .sort((a,b) => a.name.localeCompare(b.name))
+    ]);
+    
+    
+    // How to read
+    // acceptedFiles.forEach((file) => {
+    //   const reader = new FileReader()
+
+    //   reader.onabort = () => console.log('file reading was aborted')
+    //   reader.onerror = () => console.log('file reading has failed')
+    //   reader.onload = () => {
+    //   // Do whatever you want with the file contents
+    //     const binaryStr = reader.result
+    //     console.log(binaryStr)
+    //   }
+    //   //reader.readAsText(file)
+    // })
   }, []);
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ onDrop });
-
-  const activeStyle: React.CSSProperties = {
-    borderColor: '#2196f3'
-  };
   
-  const acceptStyle: React.CSSProperties = {
-    borderColor: '#00e676'
-  };
-  
-  const rejectStyle: React.CSSProperties = {
-    borderColor: '#ff1744'
-  };
-
-  const style = useMemo<React.CSSProperties>(() => ({
-    ...(isDragActive ? activeStyle : {}),
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {})
-  }), [ isDragActive, isDragAccept, isDragReject]);
 
   return (
     <div>
       <h3>Database Uploader</h3>
       <p>To use, grab the latest <a href="https://github.com/cougargrades/publicdata/releases/latest">public data bundle</a>, unzip it, and drop the files onto this webpage.</p>
       <p>Public data bundles have <em>a lot</em> of files, so this will likely lag your web browser.</p>
-      <div className="dropzone" {...getRootProps({ style })}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <div className="droploc">Drop the files here</div> :
-            <div className="droploc">Drag 'n' drop some files here, or click to select files</div>
-        }
-      </div>
+      <Dropzone onDrop={handleDrop} />
       <h4>Bundle info</h4>
-      <p>Bundle info</p>
+      {
+        patchFiles.length > 0 ?
+        <div>
+          <h5>Primary files</h5>
+          <ul>
+            <li><code>{recordsFile?.name}</code>, File size: {recordsFile?.size}</li>
+          </ul>
+          <h5>Seconary files</h5>
+          <p>There are {patchFiles.length} Patchfiles.</p>
+          <ul>
+            {patchFiles.map(e => 
+              <li key={e.name}>{e.name}</li>
+            )}
+          </ul>
+        </div> 
+        : <></>
+      }
       <h4>Upload progress</h4>
       <p>Upload progress</p>
     </div>
