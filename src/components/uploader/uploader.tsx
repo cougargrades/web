@@ -3,7 +3,7 @@ import prettyBytes from 'pretty-bytes';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 
-//import './uploader.scss';
+import './uploader.scss';
 
 export default function Uploader() {
 
@@ -73,6 +73,10 @@ export default function Uploader() {
       </ul>
       <h4>Upload progress</h4>
       <progress value={progress} max={max}></progress>
+      <br />
+      <div className="progress">
+        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{width: '10%'}}></div>
+      </div>
     </div>
   );
 }
