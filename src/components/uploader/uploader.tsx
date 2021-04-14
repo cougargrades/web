@@ -2,8 +2,9 @@ import React, { useCallback, useState } from 'react';
 import prettyBytes from 'pretty-bytes';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
+import { Progress } from './progress';
 
-import './uploader.scss';
+//import './uploader.scss';
 
 export default function Uploader() {
 
@@ -74,9 +75,7 @@ export default function Uploader() {
       <h4>Upload progress</h4>
       <progress value={progress} max={max}></progress>
       <br />
-      <div className="progress">
-        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={{width: '10%'}}></div>
-      </div>
+      <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
     </div>
   );
 }
