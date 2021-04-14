@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import prettyBytes from 'pretty-bytes';
+import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 
 //import './uploader.scss';
@@ -7,6 +9,9 @@ export default function Uploader() {
 
   const [recordsFile, setRecordsFile] = useState<File>();
   const [patchFiles, setPatchFiles] = useState<File[]>([]);
+
+  const [progress, setProgress] = useState<number>(0);
+  const max = 100;
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
     /**
@@ -50,6 +55,10 @@ export default function Uploader() {
     // })
   }, []);
   
+  // do this every 100 ms
+  useInterval(() => {
+    setProgress((current) => current + 1 === max ? 0 : current + 1);
+  }, 100);
 
   return (
     <div>
@@ -58,25 +67,12 @@ export default function Uploader() {
       <p>Public data bundles have <em>a lot</em> of files, so this will likely lag your web browser.</p>
       <Dropzone onDrop={handleDrop} />
       <h4>Bundle info</h4>
-      {
-        patchFiles.length > 0 ?
-        <div>
-          <h5>Primary files</h5>
-          <ul>
-            <li><code>{recordsFile?.name}</code>, File size: {recordsFile?.size}</li>
-          </ul>
-          <h5>Seconary files</h5>
-          <p>There are {patchFiles.length} Patchfiles.</p>
-          <ul>
-            {patchFiles.map(e => 
-              <li key={e.name}>{e.name}</li>
-            )}
-          </ul>
-        </div> 
-        : <></>
-      }
+      <ul>
+        <li><code>{recordsFile?.name}</code>, File size: {prettyBytes(recordsFile ? recordsFile.size : 0)}</li>
+        <li>Loaded {patchFiles.length} Patchfiles</li>
+      </ul>
       <h4>Upload progress</h4>
-      <p>Upload progress</p>
+      <progress value={progress} max={max}></progress>
     </div>
   );
 }

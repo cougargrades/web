@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import './dropzone.scss';
 
 export function Dropzone(props: { onDrop: (acceptedFiles: File[]) => void }) {
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, isFileDialogActive } = useDropzone({ onDrop: props.onDrop });
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({ onDrop: props.onDrop });
 
   const activeStyle: React.CSSProperties = {
     borderColor: '#2196f3'
