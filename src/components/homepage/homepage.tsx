@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Blog = React.lazy(() => import('../blog/blog'));
 const Footer = React.lazy(() => import('../footer/footer'));
 
+import './button.scss';
 import './stamps.scss';
 import './homepage.scss';
 
@@ -36,7 +37,7 @@ export default function Homepage() {
               </div>
               <br />
               <p>
-                <NavLink className="button" to="/courses">
+                <NavLink className="btn btn-adaptive" to="/courses">
                   Search Courses
                 </NavLink>
               </p>
@@ -68,7 +69,7 @@ export default function Homepage() {
               </div>
               <br />
               <p>
-                <NavLink className="button" to="/instructors">
+                <NavLink className="btn btn-adaptive" to="/instructors">
                   Search Instructors
                 </NavLink>
               </p>
@@ -101,7 +102,7 @@ export default function Homepage() {
               </p>
               <p>
                 <a
-                  className="button"
+                  className="btn btn-adaptive"
                   href="https://github.com/cougargrades/publicdata"
                 >
                   View Resources &rarr;
@@ -122,7 +123,7 @@ export default function Homepage() {
               </p>
               <p>
                 <a
-                  className="button"
+                  className="btn btn-adaptive"
                   href="https://github.com/orgs/cougargrades/people"
                 >
                   View Collaborators &rarr;

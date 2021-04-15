@@ -24,3 +24,16 @@ export function Button(props: ButtonProps & Partial<React.DetailedHTMLProps<Reac
     </button>
   );
 }
+
+/**
+ * React wrapper for Bootstrap@5.0.0 button
+ * Adapted from: https://getbootstrap.com/docs/5.0/components/buttons/
+ */
+export function LinkButton(props: ButtonProps & Partial<React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>>) {
+  const { variant, size } = props;
+  return (
+    <a {...props} className={`btn btn-${variant}${size !== undefined ? ` btn-${size}` : ''}`} role="button">
+      {props.children}
+    </a>
+  );
+}

@@ -3,6 +3,7 @@ import useSWR from 'swr';
 
 import Collaborator, { CollaboratorProps } from '../collaborator/collaborator';
 import Footer from '../footer/footer';
+import { LinkButton } from '../homepage/button';
 
 import './about.scss';
 
@@ -13,16 +14,16 @@ export default function About() {
   return (
     <>
       <h3>Resources</h3>
-      <p>
-        <a className="button" href="https://github.com/cougargrades/web">
+      <p className="links">
+        <LinkButton variant="adaptive" href="https://github.com/cougargrades/web">
           Source Code
-        </a>
-        <a className="button" href="https://github.com/cougargrades/api">
+        </LinkButton>
+        <LinkButton variant="adaptive" href="https://github.com/cougargrades/api">
           Developer API
-        </a>
-        <a className="button" href="https://github.com/cougargrades/publicdata">
+        </LinkButton>
+        <LinkButton variant="adaptive" href="https://github.com/cougargrades/publicdata">
           Public Data
-        </a>
+        </LinkButton>
       </p>
       <h3>Developers</h3>
       <div
