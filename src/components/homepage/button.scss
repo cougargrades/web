@@ -1,0 +1,66 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+// From: https://getbootstrap.com/docs/5.0/customize/sass/
+
+@use "sass:map";
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// 4. Include any optional Bootstrap components as you like
+// @import "../node_modules/bootstrap/scss/root";
+// @import "../node_modules/bootstrap/scss/reboot";
+// @import "../node_modules/bootstrap/scss/type";
+// @import "../node_modules/bootstrap/scss/images";
+// @import "../node_modules/bootstrap/scss/containers";
+// @import "../node_modules/bootstrap/scss/grid";
+@import "bootstrap/scss/buttons";
+
+.btn {
+  font-weight: 500;
+}
+
+.btn.btn-adaptive {
+  $color: map.get($theme-colors, "dark");
+  @include button-variant(
+    $color,
+    $color,
+    $hover-background: tint-color($color, $btn-hover-bg-tint-amount),
+    $hover-border: tint-color($color, $btn-hover-bg-tint-amount),
+    $hover-color: color-contrast(tint-color($color, $btn-hover-bg-tint-amount)),
+    $active-background: tint-color($color, $btn-active-bg-tint-amount),
+    $active-border: tint-color($color, $btn-active-border-tint-amount),
+    $active-color: color-contrast(tint-color($color, $btn-active-bg-tint-amount)),
+    $disabled-background: $color,
+    $disabled-border: $color,
+    $disabled-color: color-contrast($color)
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn.btn-adaptive {
+    $color: map.get($theme-colors, "light");
+    @include button-variant(
+      $color,
+      $color,
+      $hover-background: shade-color($color, $btn-hover-bg-shade-amount),
+      $hover-border: shade-color($color, $btn-hover-bg-shade-amount),
+      $hover-color: color-contrast(shade-color($color, $btn-hover-bg-shade-amount)),
+      $active-background: shade-color($color, $btn-active-bg-shade-amount),
+      $active-border: shade-color($color, $btn-active-border-shade-amount),
+      $active-color: color-contrast(shade-color($color, $btn-active-bg-shade-amount)),
+      $disabled-background: $color,
+      $disabled-border: $color,
+      $disabled-color: color-contrast($color)
+    );
+  }
+}
+
+
+// 5. Add additional custom code here

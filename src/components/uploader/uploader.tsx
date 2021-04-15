@@ -1,18 +1,28 @@
 import React, { useCallback, useState } from 'react';
 import prettyBytes from 'pretty-bytes';
+import TimeAgo from 'timeago-react';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
+import { Button } from '../homepage/button';
 
 import './uploader.scss';
 
 export default function Uploader() {
 
+  // UI
+  const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
+  const [progress, setProgress] = useState<number>(0);
+  const max = 10000;
+
+  // Upload logic
   const [recordsFile, setRecordsFile] = useState<File>();
   const [patchFiles, setPatchFiles] = useState<File[]>([]);
 
-  const [progress, setProgress] = useState<number>(0);
-  const max = 10000;
+  const handleClick = useCallback(() => {
+    setUploadStartedAt(new Date());
+    console.log('button was clicked')!
+  }, []);
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
     /**
@@ -67,14 +77,33 @@ export default function Uploader() {
       <p>To use, grab the latest <a href="https://github.com/cougargrades/publicdata/releases/latest">public data bundle</a>, unzip it, and drop the files onto this webpage.</p>
       <p>Public data bundles have <em>a lot</em> of files, so this will likely lag your web browser.</p>
       <Dropzone onDrop={handleDrop} />
-      <h4>Bundle info</h4>
-      <ul>
-        <li><code>{recordsFile?.name}</code>, File size: {prettyBytes(recordsFile ? recordsFile.size : 0)}</li>
-        <li>Loaded {patchFiles.length} Patchfiles</li>
-      </ul>
-      <h4>Upload progress</h4>
-      <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
-      <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
+      {
+        false ? <></> :
+        <>
+        <h4>Bundle info</h4>
+        <ul>
+          <li><code>{recordsFile?.name}</code>, File size: {prettyBytes(recordsFile ? recordsFile.size : 0)}</li>
+          <li>Loaded {patchFiles.length} Patchfiles</li>
+        </ul>
+        <p>
+          <Button variant="adaptive" onClick={handleClick} disabled={uploadStartedAt.valueOf() > 0}>Start Upload</Button>
+        </p>
+        {
+          uploadStartedAt.valueOf() === 0 ? <></> :
+          <>
+          <p>
+            Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).
+          </p>
+          <h4>Uploading records</h4>
+          <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
+          <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
+          <h4>Executing Patchfiles</h4>
+          <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
+          <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
+          </>
+        }
+        </>
+      }
     </div>
   );
 }

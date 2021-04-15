@@ -1,11 +1,6 @@
 import React from 'react';
 
-interface EmojiProps {
-  label: string;
-  symbol: string;
-}
-
-export default function Emoji(props: EmojiProps) {
+export default function Emoji(props: { label: string, symbol: string }) {
   return (
     <span
       className="emoji"
