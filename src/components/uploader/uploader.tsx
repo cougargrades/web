@@ -4,7 +4,7 @@ import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 
-//import './uploader.scss';
+import './uploader.scss';
 
 export default function Uploader() {
 
@@ -12,7 +12,7 @@ export default function Uploader() {
   const [patchFiles, setPatchFiles] = useState<File[]>([]);
 
   const [progress, setProgress] = useState<number>(0);
-  const max = 100;
+  const max = 10000;
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
     /**
@@ -59,7 +59,7 @@ export default function Uploader() {
   // do this every 100 ms
   useInterval(() => {
     setProgress((current) => current + 1 === max ? 0 : current + 1);
-  }, 100);
+  }, 10);
 
   return (
     <div>
@@ -73,9 +73,8 @@ export default function Uploader() {
         <li>Loaded {patchFiles.length} Patchfiles</li>
       </ul>
       <h4>Upload progress</h4>
-      <progress value={progress} max={max}></progress>
-      <br />
       <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
+      <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
     </div>
   );
 }
