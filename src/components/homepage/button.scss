@@ -5,13 +5,13 @@
 @use "sass:map";
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-@import "bootstrap/scss/functions";
+@import "bootstrap/scss/_functions.scss";
 
 // 2. Include any default variable overrides here
 
 // 3. Include remainder of required Bootstrap stylesheets
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/_variables.scss";
+@import "bootstrap/scss/_mixins.scss";
 
 // 4. Include any optional Bootstrap components as you like
 // @import "../node_modules/bootstrap/scss/root";
@@ -20,7 +20,7 @@
 // @import "../node_modules/bootstrap/scss/images";
 // @import "../node_modules/bootstrap/scss/containers";
 // @import "../node_modules/bootstrap/scss/grid";
-@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/_buttons.scss";
 
 .btn {
   font-weight: 700;
