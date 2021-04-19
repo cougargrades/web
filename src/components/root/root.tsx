@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
-import { AuthCheck, useAnalytics } from 'reactfire';
+import { AuthCheck, useAnalytics } from 'reactfire/dist/index';
 
 import Blurb from './blurb';
 import Header from '../header/header';

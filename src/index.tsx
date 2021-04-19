@@ -5,7 +5,7 @@ import 'firebase/performance';
 import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { FirebaseAppProvider, SuspenseWithPerf } from 'reactfire';
+import { FirebaseAppProvider, SuspenseWithPerf } from 'reactfire/dist/index';
 import { firebaseConfig } from './components/firebase';
 
 //import Root from './components/root/root';

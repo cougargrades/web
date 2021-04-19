@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser, useIdTokenResult } from 'reactfire';
+import { useUser, useIdTokenResult } from 'reactfire/dist/index';
 
 export default function AdminPanel() {
   // get the current user, identified by the SDK-managed JWT 

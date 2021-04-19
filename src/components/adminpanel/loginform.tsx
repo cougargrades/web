@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth as fbAuth, useAuth } from 'reactfire';
+import { auth as fbAuth, useAuth } from 'reactfire/dist/index';
 import Collaborator from '../collaborator/collaborator';
 
 import './loginform.scss';
