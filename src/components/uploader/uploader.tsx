@@ -1,10 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import prettyBytes from 'pretty-bytes';
 import TimeAgo from 'timeago-react';
+import Papa from 'papaparse';
+import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 import { Button } from '../homepage/button';
+import * as is from '@cougargrades/types/dist/is';
 
 import './uploader.scss';
 
@@ -19,10 +22,28 @@ export default function Uploader() {
   const [recordsFile, setRecordsFile] = useState<File>();
   const [patchFiles, setPatchFiles] = useState<File[]>([]);
 
+  const stepRow = useCallback(() => {
+
+  }, []);
+
   const handleClick = useCallback(() => {
     setUploadStartedAt(new Date());
-    console.log('button was clicked')!
-  }, []);
+    console.log('button was clicked!');
+
+    console.log(recordsFile)
+
+    if(recordsFile) {
+      console.log('foo')
+      Papa.parse<GradeDistributionCSVRow>(recordsFile, {
+        worker: true,
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        step: row => console.log('is?', is.GradeDistributionCSVRow(row), 'data: ', row), // TODO: needs some shaping
+        complete: () => console.log('All done!'),
+      });
+    }
+  }, [ recordsFile, patchFiles ]);
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
     /**
@@ -67,9 +88,9 @@ export default function Uploader() {
   }, []);
   
   // do this every 100 ms
-  useInterval(() => {
-    setProgress((current) => current + 1 === max ? 0 : current + 1);
-  }, 10);
+  // useInterval(() => {
+  //   setProgress((current) => current + 1 === max ? 0 : current + 1);
+  // }, 10);
 
   return (
     <div>
