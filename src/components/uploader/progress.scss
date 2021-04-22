@@ -18,6 +18,10 @@
 // @import "../node_modules/bootstrap/scss/images";
 // @import "../node_modules/bootstrap/scss/containers";
 // @import "../node_modules/bootstrap/scss/grid";
+@import "bootstrap/scss/_utilities.scss";
+@import "bootstrap/scss/_helpers.scss";
+@import "bootstrap/scss/utilities/_api.scss";
+
 @import "bootstrap/scss/_progress.scss";
 
 // 5. Add additional custom code here
