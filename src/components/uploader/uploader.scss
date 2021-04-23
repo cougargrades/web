@@ -4,3 +4,36 @@
   font-style: italic;
   color: var(--uh-gray);
 }
+
+@import "bootstrap/scss/_functions.scss";
+@import "bootstrap/scss/_variables.scss";
+@import "bootstrap/scss/_mixins.scss";
+
+@import "bootstrap/scss/_forms.scss";
+
+.form-control, .form-control:focus {
+  background: var(--nc-bg-2);
+  color: var(--nc-tx-2);
+  border: 1px solid var(--nc-bg-3);
+}
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  opacity: 1;
+  color: green;
+  background: rgba(0,255,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 500ms ease-in;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  color: red;
+  background: rgba(255,0,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 500ms ease-in;
+}
