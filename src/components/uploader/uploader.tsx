@@ -22,6 +22,7 @@ export default function Uploader() {
   const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
+  const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
 
   /**
    * Upload logic
@@ -53,7 +54,15 @@ export default function Uploader() {
    */
   const firestore = useFirestore();
   useEffect(() => {
-    // subscribe to the upload_queue collection
+    /**
+     * Subscribe to the upload_queue collection
+     * 
+     * We only want to subscribe once because we don't want to miss uploads. However, in order for React to
+     * only run something once, we need to do `useEffect(..., [])` with an empty array. This means that whenever
+     * `.onShapshot()` is called, we're reading the old/out-of-date values of the state. This means that in
+     * `onCollectionSnapshot` we can only do WRITE operations, but no read operations. To respond to these write
+     * operations with current/up-to-date state data, we use a separate `useEffect()` hook.
+     */
     const unsubscribe = firestore.collection('upload_queue_backlog').onSnapshot(onCollectionSnapshot);
 
     return () => { unsubscribe() };
@@ -65,13 +74,10 @@ export default function Uploader() {
 
   // What happens when the Upload button is clicked
   const handleClick = useCallback(() => {
-    console.log(uploadStartedAt.valueOf());
+    // This allows us to benchmark upload times
     setUploadStartedAt(new Date());
+    // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     setAllowUploading(true);
-    console.log('button was clicked!');
-    console.log(loadedRecords);
-
-    // TODO: "pop record queue" or start queue otherwise
   }, [ recordsFile, patchFiles ]);
 
   // What happens when files are dropped into the page
@@ -88,11 +94,14 @@ export default function Uploader() {
 
     // Update UI
     setIsButtonEnabled(false);
+    setShowBundleInfo(true);
 
     // Save reference to records
     acceptedFiles.forEach(file => {
+      // identify primary CSV data source
       if(file.name === 'records.csv') {
         setRecordsFile(_ => {
+          // parse CSV file
           Papa.parse(file, {
             worker: true,
             header: true,
@@ -109,13 +118,12 @@ export default function Uploader() {
               setUploadQueueMax(validated.length);
               setIsButtonEnabled(true);
     
-              console.log(validated);
-              console.log('All done!')
+              // console.log(validated);
+              // console.log('All done!')
             },
           });
           return file;
         });
-
       }
     });
 
@@ -128,6 +136,7 @@ export default function Uploader() {
     ]);
   }, []);
 
+  // Return a random entry from the loaded records, then delete it from our memory
   const popRecordFromQueue = (): GradeDistributionCSVRow => {
     // generate random index
     let idx = Math.floor(Math.random() * loadedRecords.length);
@@ -141,10 +150,11 @@ export default function Uploader() {
 
   /**
    * What happens whenever a new file enters or leaves the server-side processing queue
-   * NOTE: ALL STATE READS FROM THIS CONTEXT WILL BE OUT OF DATE
+   * NOTE: ALL STATE READS FROM THIS CONTEXT WILL BE OUT OF DATE.
+   * (see "Firebase stuff" above for details)
    */ 
   const onCollectionSnapshot = (snapshot: firebase.default.firestore.QuerySnapshot<firebase.default.firestore.DocumentData>) => {
-    console.log('collection snapshot!');
+    // get the document IDs of the additions and removals
     let removals = snapshot.docChanges().filter(e => e.type === 'removed').map(e => e.doc.id);
     let additions = snapshot.docChanges().filter(e => e.type === 'added').map(e => e.doc.id);
     // adjust pending upload queue
@@ -164,15 +174,24 @@ export default function Uploader() {
     setInitialSnapshotLoaded(true);
   };
 
-  // Ran whenever one of these state values change
+  /**
+   * Ran whenever one of these state values change
+   * Respond to vacancies in the upload_queue
+   */
   useEffect(() => {
-    // we might be able to do something here
+    // if the first snapshot has loaded already, then it's safe to trust the state data we have access to
     if(initialSnapshotLoaded) {
       // computes number of times we can add to the current queue
       console.log('recordConcurrencyLimit: ', recordConcurrencyLimit);
       console.log('recordConcurrencyCount: ', recordConcurrencyCount);
       const can_upload_next = recordConcurrencyLimit - recordConcurrencyCount;
       console.log('can_upload_next: ', can_upload_next);
+      /**
+       * if:
+       * - there is room in the upload_queue
+       * - if we have records loaded
+       * - if we're allowed to upload
+       */
       if(can_upload_next > 0 && loadedRecords.length > 0 && allowUploading) {
         // actually do the firestore upload
         firestore.collection('upload_queue_backlog').doc().set(popRecordFromQueue());
@@ -181,17 +200,6 @@ export default function Uploader() {
     }
   }, [recordConcurrencyCount, recordConcurrencyLimit, initialSnapshotLoaded, allowUploading]);
 
-  // Simulates queue traversal
-  // useInterval(() => {
-  //   // remove from beginning
-  //   // setPendingUploads([...pendingUploads.slice(1), uuid()]);
-  //   // generate random index
-  //   let idx = Math.floor(Math.random()*pendingUploads.length);
-  //   // remove random index, append new to end
-  //   setPendingUploads([...pendingUploads.slice(0,idx).concat(pendingUploads.slice(idx+1)), uuid()])
-  //   setUploadQueueProcessed(x => x + 1);
-  // }, 100);
-
   return (
     <div>
       <h3>Database Uploader</h3>
@@ -199,7 +207,7 @@ export default function Uploader() {
       <p>Public data bundles have <em>a lot</em> of files, so this will likely lag your web browser.</p>
       <Dropzone onDrop={handleDrop} />
       {
-        false ? <></> :
+        ! showBundleInfo ? <></> :
         <>
         {/* File info area */}
         <h4>Bundle info</h4>
@@ -218,13 +226,13 @@ export default function Uploader() {
           Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once.
         </div>
         <br />
-        <div className="d-flex flex-row align-items-center" style={{ rowGap: '1rem' }}>
+        <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem' }}>
           <Button variant="adaptive" onClick={handleClick} disabled={!isButtonEnabled}>Start Upload</Button>
           <p className="mb-0">{uploadStartedAt.valueOf() > 0 ? <>Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).</> : <></> }</p>
         </div>
         {/* Upload status area */}
         {
-          uploadStartedAt.valueOf() === 0 && false ? <></> :
+          uploadStartedAt.valueOf() === 0 ? <></> :
           <>
           <h4>Uploading records</h4>
           <Progress value={uploadQueueProcessed} max={uploadQueueMax}>{`${Math.round(uploadQueueProcessed/uploadQueueMax*100)}%`}</Progress>
