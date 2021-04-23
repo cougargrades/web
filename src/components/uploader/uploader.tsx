@@ -3,11 +3,11 @@ import prettyBytes from 'pretty-bytes';
 import TimeAgo from 'timeago-react';
 import Papa from 'papaparse';
 import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
+import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
-import { Progress } from './progress';
+import { MultiProgress, Progress } from './progress';
 import { Button } from '../homepage/button';
-import * as is from '@cougargrades/types/dist/is';
 
 import './uploader.scss';
 
@@ -15,8 +15,9 @@ export default function Uploader() {
 
   // UI
   const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
-  const [progress, setProgress] = useState<number>(0);
-  const max = 10000;
+  const [goodRead, setGoodRead] = useState<number>(0);
+  const [badRead, setBadRead] = useState<number>(0);
+  const [totalRead, setTotalRead] = useState<number>(0);
 
   // Upload logic
   const [recordsFile, setRecordsFile] = useState<File>();
@@ -33,14 +34,43 @@ export default function Uploader() {
     console.log(recordsFile)
 
     if(recordsFile) {
-      console.log('foo')
       Papa.parse<GradeDistributionCSVRow>(recordsFile, {
         worker: true,
         header: true,
-        dynamicTyping: true,
+        dynamicTyping: false,
         skipEmptyLines: true,
-        step: row => console.log('is?', is.GradeDistributionCSVRow(row), 'data: ', row), // TODO: needs some shaping
-        complete: () => console.log('All done!'),
+        // step: row => {
+        //   if(tryFromRaw(row.data) !== null) {
+        //     setGoodRead(x => x + 1);
+        //   }
+        //   else {
+        //     setBadRead(x => x + 1);
+        //   }
+        //   setTotalRead(x => x + 1);
+        //   //console.log('formatted: ', tryFromRaw(row.data), 'raw: ', row)
+        // },
+        complete: results => {
+          let g = goodRead;
+          let b = badRead;
+          let t = totalRead;
+          let bads = [];
+          for(let i = 0; i < results.data.length; i++) {
+            if(tryFromRaw(results.data[i]) !== null) {
+              g++;
+            }
+            else {
+              bads.push(results.data[i]);
+              b++;
+            }
+            t++;
+          }
+          setGoodRead(g);
+          setBadRead(b);
+          setTotalRead(t);
+
+          console.log(bads);
+          console.log('All done!')
+        },
       });
     }
   }, [ recordsFile, patchFiles ]);
@@ -116,11 +146,11 @@ export default function Uploader() {
             Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).
           </p>
           <h4>Uploading records</h4>
+          <MultiProgress bars={[{ key: 'passes', value: goodRead, variant: 'bg-success'}, { key: 'fails', value: badRead, variant: 'bg-danger' }]} max={totalRead} />
+          <label>Row {Number(0).toLocaleString()} of {Number(totalRead).toLocaleString()}</label>
+          {/* <h4>Executing Patchfiles</h4>
           <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
-          <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
-          <h4>Executing Patchfiles</h4>
-          <Progress value={progress} max={max}>{`${Math.round(progress/max*100)}%`}</Progress>
-          <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label>
+          <label>Row {Number(progress).toLocaleString()} of {Number(max).toLocaleString()}</label> */}
           </>
         }
         </>
