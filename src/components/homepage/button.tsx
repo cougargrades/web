@@ -8,7 +8,7 @@ type ButtonSizes = 'lg' | 'sm' | undefined;
 type ButtonProps = {
   variant: ButtonVariants,
   size?: ButtonSizes,
-  loading?: boolean,
+  //loading?: boolean,
   children?: React.ReactNode
 }
 
