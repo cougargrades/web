@@ -13,6 +13,7 @@ const Uploader = React.lazy(() => import('../uploader/uploader'));
 
 import '../../styles/base.scss';
 import '../../styles/colors.scss';
+import TinyNav from '../adminpanel/tinynav';
 
 // Useful for Google Analytics
 // Inspired by: https://github.com/FirebaseExtended/reactfire/blob/9d96d92d212fbd616506848180e02e84d4866409/docs/use.md#log-page-views-to-google-analytics-for-firebase-with-react-router
@@ -32,6 +33,12 @@ function MyPageViewLogger() {
 
 export default function Root() {
   const analytics = useAnalytics();
+
+  const admin_title = 'Admin Navigation';
+  const admin_links = [
+    { text: 'User Info', to: '/admin/info'},
+    { text: 'Database Uploader', to: '/admin/uploader'}
+  ];
 
   return (
     <BrowserRouter>
@@ -90,6 +97,7 @@ export default function Root() {
           </Route>
           <Route path="/admin/info">
             <Suspense fallback={<div>Loading...</div>}>
+              <TinyNav title={admin_title} links={admin_links} />
               <AuthCheck fallback={<LoginForm />}>
                 <LoginForm />
                 <AdminPanel />
@@ -98,6 +106,7 @@ export default function Root() {
           </Route>
           <Route path="/admin/uploader">
             <Suspense fallback={<div>Loading...</div>}>
+              <TinyNav title={admin_title} links={admin_links} />
               <AuthCheck fallback={<LoginForm />}>
                 <ClaimsCheckWrap requiredClaims={{ admin: true }}>
                   <Uploader />
