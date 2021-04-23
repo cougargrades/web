@@ -8,6 +8,7 @@ type ButtonSizes = 'lg' | 'sm' | undefined;
 type ButtonProps = {
   variant: ButtonVariants,
   size?: ButtonSizes,
+  loading?: boolean,
   children?: React.ReactNode
 }
 
@@ -20,6 +21,7 @@ export function Button(props: ButtonProps & Partial<React.DetailedHTMLProps<Reac
   const { variant, size } = props;
   return (
     <button {...props} className={`btn btn-${variant}${size !== undefined ? ` btn-${size}` : ''}`} type="button">
+      {/* { props.loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : <></> } */}
       {props.children}
     </button>
   );
@@ -33,6 +35,7 @@ export function LinkButton(props: ButtonProps & Partial<React.DetailedHTMLProps<
   const { variant, size } = props;
   return (
     <a {...props} className={`btn btn-${variant}${size !== undefined ? ` btn-${size}` : ''}`} role="button">
+      {/* { props.loading ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : <></> } */}
       {props.children}
     </a>
   );
