@@ -40,7 +40,7 @@ export default function Uploader() {
   // total number of PF
   //const [patchfilesMax, setPatchfilesMax] = useState<number>(0);
   // max number to do in parallel
-  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(2);
+  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(8);
   // current amount pending
   const [recordConcurrencyCount, setRecordConcurrencyCount] = useState<number>(0);
   const [initialSnapshotLoaded, setInitialSnapshotLoaded] = useState<boolean>(false);
@@ -220,8 +220,9 @@ export default function Uploader() {
           <li>Loaded {patchFiles.length} Patchfiles</li>
         </ul>
         {/* Input area */}
-        <label className="form-label">Concurrency Limit</label>
-        <input className="form-control" type="number" min={1} max={10} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
+        <label>Concurrency Limit</label>
+        <br />
+        <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
         <div className="form-text">
           Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once.
         </div>

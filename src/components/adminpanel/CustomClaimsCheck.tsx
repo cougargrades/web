@@ -4,8 +4,6 @@ import Emoji from '../emoji';
 
 /**
  * Re-implementation of: https://github.com/FirebaseExtended/reactfire/blob/b4f22bc0a84729245db87861d5190a0483b19348/src/auth.tsx#L74-L95
- * @param props 
- * @returns 
  */
 export default function CustomClaimsCheck(props: { requiredClaims: { [key: string]: any; }, children: React.ReactNode, fallback?: React.ReactNode}) {
   const { status, data: user} = useUser();
