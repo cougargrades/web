@@ -63,7 +63,7 @@ export default function Uploader() {
      * `onCollectionSnapshot` we can only do WRITE operations, but no read operations. To respond to these write
      * operations with current/up-to-date state data, we use a separate `useEffect()` hook.
      */
-    const unsubscribe = firestore.collection('upload_queue_backlog').onSnapshot(onCollectionSnapshot);
+    const unsubscribe = firestore.collection('upload_queue').onSnapshot(onCollectionSnapshot);
 
     return () => { unsubscribe() };
   }, []);
@@ -194,7 +194,7 @@ export default function Uploader() {
        */
       if(can_upload_next > 0 && loadedRecords.length > 0 && allowUploading) {
         // actually do the firestore upload
-        firestore.collection('upload_queue_backlog').doc().set(popRecordFromQueue());
+        firestore.collection('upload_queue').doc().set(popRecordFromQueue());
       }
       console.log('---');
     }
