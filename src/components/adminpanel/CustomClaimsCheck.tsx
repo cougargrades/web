@@ -42,7 +42,7 @@ export default function CustomClaimsCheck(props: { requiredClaims: { [key: strin
       <ul>
         {Object.keys(missingClaims).map(e => 
           <li key={e}>
-            admin
+            {e}
             <ul>
               <li>expected: <code>{`${missingClaims[e].expected}`}</code></li>
               <li>actual: <code>{`${missingClaims[e].actual}`}</code></li>
