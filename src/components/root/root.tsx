@@ -1,9 +1,10 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useLocation, Redirect } from 'react-router-dom';
-import { AuthCheck, useAnalytics } from 'reactfire/dist/index';
+import { AuthCheck, ClaimsCheck, useAnalytics, useUser } from 'reactfire/dist/index';
 
 import Blurb from './blurb';
 import Header from '../header/header';
+import ClaimsCheckWrap from '../adminpanel/CustomClaimsCheck';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
 const AdminPanel = React.lazy(() => import('../adminpanel/adminpanel'));
@@ -98,7 +99,9 @@ export default function Root() {
           <Route path="/admin/uploader">
             <Suspense fallback={<div>Loading...</div>}>
               <AuthCheck fallback={<LoginForm />}>
-                <Uploader />
+                <ClaimsCheckWrap requiredClaims={{ admin: true }}>
+                  <Uploader />
+                </ClaimsCheckWrap>
               </AuthCheck>
             </Suspense>
           </Route>
