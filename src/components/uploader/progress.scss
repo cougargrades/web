@@ -2,6 +2,8 @@
 // Option B: Include parts of Bootstrap
 // From: https://getbootstrap.com/docs/5.0/customize/sass/
 
+@use "sass:meta";
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "bootstrap/scss/_functions.scss";
 
@@ -25,3 +27,24 @@
 @import "bootstrap/scss/_progress.scss";
 
 // 5. Add additional custom code here
+
+// From: https://getbootstrap.com/docs/5.0/customize/color/
+$extra-colors: (
+  "blue": $blue, 
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan
+);
+
+@each $name, $color in $extra-colors {
+  .bg-#{$name} {
+    background-color: $color !important;
+  }
+}
+
