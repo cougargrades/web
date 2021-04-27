@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@cougargrades/types": "0.0.59",
+    "@au5ton/snooze": "^1.0.3",
+    "@cougargrades/types": "0.0.62",
     "@exampledev/new.css": "^1.1.3",
     "bootstrap": "^5.0.0-beta3",
     "firebase": "^8.2.10",

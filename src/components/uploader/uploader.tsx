@@ -4,15 +4,21 @@ import TimeAgo from 'timeago-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { v4 as uuid } from 'uuid';
 import Papa from 'papaparse';
-import { useFirestore, useFirestoreCollection } from 'reactfire/dist/index';
+import { useFirestore } from 'reactfire/dist/index';
 import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
+//import { PatchfileUtil } from '@cougargrades/types/dist/PatchfileUtil';
+// import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil';
+//import * as PatchfileUtil from '@cougargrades/types/dist/PatchfileUtil';
+import { snooze } from '@au5ton/snooze';
 import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 import { Button } from '../homepage/button';
 
 import './uploader.scss';
+import { readFileAsText, readPatchfile } from '../asyncfilereader';
+import { AsyncSemaphore } from '../asyncsemaphore';
 
 export default function Uploader() {
 
@@ -36,11 +42,16 @@ export default function Uploader() {
   // total number of rows
   const [uploadQueueMax, setUploadQueueMax] = useState<number>(100);
   // number of PF processed so far
-  const [patchfilesProcessed, setPatchfilesProcessed] = useState<number>(50);
+  const [patchfilesProcessed, setPatchfilesProcessed] = useState<number>(0);
   // total number of PF
-  const [patchfilesMax, setPatchfilesMax] = useState<number>(100);
+  const [patchfilesMax, setPatchfilesMax] = useState<number>(0);
+  // current phase of patchfiles
+  const [patchfilesPhase, setPatchfilesPhase] = useState<number>(-1);
   // max number to do in parallel
-  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(64);
+  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
+
+  // max number to do in parallel
+  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(0);
   // current amount pending
   const [recordConcurrencyCount, setRecordConcurrencyCount] = useState<number>(0);
   // has the original snapshot loaded?
@@ -79,6 +90,14 @@ export default function Uploader() {
     setUploadStartedAt(new Date());
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     setAllowUploading(true);
+
+    // TODO: for debugging
+    setPatchfilesPhase(0);
+
+    (async () => {
+      console.log(await readPatchfile(patchFiles[0]));
+    })();
+
   }, [ recordsFile, patchFiles ]);
 
   // What happens when files are dropped into the page
@@ -128,13 +147,14 @@ export default function Uploader() {
       }
     });
 
+    // Set only the patchfiles, and in the correct order
+    const temp = acceptedFiles
+      .filter(e => e.name.startsWith('patch-') && e.name.endsWith('.json'))
+      .sort((a,b) => a.name.localeCompare(b.name));
+
     // Save references to patchfiles
-    setPatchFiles(pf => [
-      // Set only the patchfiles, and in the correct order
-      ...acceptedFiles
-        .filter(e => e.name.startsWith('patch-') && e.name.endsWith('.json'))
-        .sort((a,b) => a.name.localeCompare(b.name))
-    ]);
+    setPatchFiles(pf => [ ...temp ]);
+    setPatchfilesMax(temp.length)
   }, []);
 
   // Return a random entry from the loaded records, then delete it from our memory
@@ -202,13 +222,56 @@ export default function Uploader() {
   }, [recordConcurrencyCount, recordConcurrencyLimit, initialSnapshotLoaded, allowUploading]);
 
   /**
-   * Detect when an upload is completed
+   * Detect when records upload is completed
    */
   useEffect(() => {
-    if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed === uploadQueueMax) {
+    if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed > 0 && uploadQueueProcessed === uploadQueueMax) {
       console.log('UPLOAD FINISHED MAYBE?');
     }
-  }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ])
+  }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ]);
+
+  /**
+   * Execute an individual patchfile
+   */
+  const processPatchfile = async (file: File) => {
+    console.log(`reading: ${file.name}`);
+    const contents = await readPatchfile(file);
+    console.log(`read: ${file.name}`);
+    if(contents !== null) {
+      // console.log(`executing: ${file.name}`);
+      // await executePatchFile(firestore, contents);
+      // console.log(`DONE: ${file.name}`);
+    }
+  }
+
+  /**
+   * Execute each Patchfile phase
+   */
+  useEffect(() => {
+    (async () => {
+      // phases start at 0
+      if(patchfilesPhase >= 0) {
+        console.log(patchFiles);
+
+        const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
+
+        // patchfileConcurrencyLimit
+        const semaphore = new AsyncSemaphore(1);
+
+        async function dummy(file: File): Promise<void> {
+          console.log(await readPatchfile(file));
+        }
+
+        for(let file of filesForCurrentPhase) {
+          await semaphore.withLockRunAndForget(() => dummy(file));
+        }
+        
+        await semaphore.awaitTerminate();
+        console.log('queue done!');
+      }
+    })();
+    // do nothing if phase == -1
+  }, [ patchfilesPhase ])
 
   return (
     <div>
@@ -227,7 +290,7 @@ export default function Uploader() {
             <li>File size: {prettyBytes(recordsFile ? recordsFile.size : 0)}</li>
             <li>Number of rows: {Number(uploadQueueMax).toLocaleString()}</li>
           </ul>
-          <li>Loaded {patchFiles.length} Patchfiles</li>
+          <li>Loaded {patchfilesMax} Patchfiles</li>
         </ul>
         {/* Input area */}
         <label>Concurrency Limit</label>
@@ -254,6 +317,7 @@ export default function Uploader() {
           <h5>Debugging</h5>
           <ul>
             <li>recordConcurrencyCount: {recordConcurrencyCount}</li>
+            <li>patchfilesPhase: {patchfilesPhase}</li>
           </ul>
           <h4>Active Uploads</h4>
           <ul>
