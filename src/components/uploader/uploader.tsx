@@ -19,7 +19,7 @@ export default function Uploader() {
   /**
    * UI
    */
-  const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
+  const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(1));
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
   const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
@@ -34,15 +34,16 @@ export default function Uploader() {
   // number of rows processed so far
   const [uploadQueueProcessed, setUploadQueueProcessed] = useState<number>(0);
   // total number of rows
-  const [uploadQueueMax, setUploadQueueMax] = useState<number>(0);
+  const [uploadQueueMax, setUploadQueueMax] = useState<number>(100);
   // number of PF processed so far
-  //const [patchfilesProcessed, setPatchfilesProcessed] = useState<number>(0);
+  const [patchfilesProcessed, setPatchfilesProcessed] = useState<number>(50);
   // total number of PF
-  //const [patchfilesMax, setPatchfilesMax] = useState<number>(0);
+  const [patchfilesMax, setPatchfilesMax] = useState<number>(100);
   // max number to do in parallel
-  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(8);
+  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(64);
   // current amount pending
   const [recordConcurrencyCount, setRecordConcurrencyCount] = useState<number>(0);
+  // has the original snapshot loaded?
   const [initialSnapshotLoaded, setInitialSnapshotLoaded] = useState<boolean>(false);
   // firebase document IDs of the pending uploads
   const [pendingUploads, setPendingUploads] = useState<string[]>([]);
@@ -200,6 +201,15 @@ export default function Uploader() {
     }
   }, [recordConcurrencyCount, recordConcurrencyLimit, initialSnapshotLoaded, allowUploading]);
 
+  /**
+   * Detect when an upload is completed
+   */
+  useEffect(() => {
+    if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed === uploadQueueMax) {
+      console.log('UPLOAD FINISHED MAYBE?');
+    }
+  }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ])
+
   return (
     <div>
       <h3>Database Uploader</h3>
@@ -236,8 +246,11 @@ export default function Uploader() {
           uploadStartedAt.valueOf() === 0 ? <></> :
           <>
           <h4>Uploading records</h4>
-          <Progress value={uploadQueueProcessed} max={uploadQueueMax}>{`${Math.round(uploadQueueProcessed/uploadQueueMax*100)}%`}</Progress>
+          <Progress value={uploadQueueProcessed} max={uploadQueueMax} variant="bg-blue">{`${Math.round(uploadQueueProcessed/uploadQueueMax*100)}%`}</Progress>
           <label>Row {Number(uploadQueueProcessed).toLocaleString()} of {Number(uploadQueueMax).toLocaleString()}</label>
+          <h4>Executing Patchfiles</h4>
+          <Progress value={patchfilesProcessed} max={patchfilesMax} variant="bg-purple">{`${Math.round(patchfilesProcessed/patchfilesMax*100)}%`}</Progress>
+          <label>Patchfile {Number(patchfilesProcessed).toLocaleString()} of {Number(patchfilesMax).toLocaleString()}</label>
           <h5>Debugging</h5>
           <ul>
             <li>recordConcurrencyCount: {recordConcurrencyCount}</li>
@@ -246,7 +259,7 @@ export default function Uploader() {
           <ul>
             <TransitionGroup>
               {pendingUploads.map(id => (
-                <CSSTransition key={id} classNames="item" timeout={1000}>
+                <CSSTransition key={id} classNames="item" timeout={200}>
                   <li>{id}</li>
                 </CSSTransition>
               ))}

@@ -1,5 +1,5 @@
 
-.progress + label {
+.progress ~ label {
   font-size: 0.8em;
   font-style: italic;
   color: var(--uh-gray);
@@ -34,7 +34,7 @@ input[type=number] {
   color: green;
   background: rgba(0,255,0,0.1);
   border-radius: 0.25rem;
-  transition: opacity 500ms ease-in;
+  transition: opacity 100ms ease-in;
 }
 .item-exit {
   opacity: 1;
@@ -44,5 +44,5 @@ input[type=number] {
   color: red;
   background: rgba(255,0,0,0.1);
   border-radius: 0.25rem;
-  transition: opacity 500ms ease-in;
+  transition: opacity 100ms ease-in;
 }
