@@ -21,7 +21,7 @@ export default function Uploader() {
   /**
    * UI
    */
-  const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(1));
+  const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
   const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
@@ -43,6 +43,8 @@ export default function Uploader() {
   const [patchfilesMax, setPatchfilesMax] = useState<number>(0);
   // current phase of patchfiles
   const [patchfilesPhase, setPatchfilesPhase] = useState<number>(-1);
+  // max number of phases
+  const [patchfilesMaxPhase, setPatchfilesMaxPhase] = useState<number>(-1);
   // max number to do in parallel
   const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
 
@@ -87,12 +89,8 @@ export default function Uploader() {
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     setAllowUploading(true);
 
-    // TODO: for debugging
+    // TODO: this should start when upload finished, but is added here for debugging. remove later.
     setPatchfilesPhase(0);
-
-    (async () => {
-      console.log(await readPatchfile(patchFiles[0]));
-    })();
 
   }, [ recordsFile, patchFiles ]);
 
@@ -147,6 +145,14 @@ export default function Uploader() {
     const temp = acceptedFiles
       .filter(e => e.name.startsWith('patch-') && e.name.endsWith('.json'))
       .sort((a,b) => a.name.localeCompare(b.name));
+
+    // get final patchfile phase
+    setPatchfilesMaxPhase(x => Number( // convert to a number
+      temp[temp.length - 1] // last patchfile after sorting
+      .name // access name
+      .split('-') // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]
+      [1] // access phase
+    ));
 
     // Save references to patchfiles
     setPatchFiles(pf => [ ...temp ]);
@@ -223,6 +229,8 @@ export default function Uploader() {
   useEffect(() => {
     if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed > 0 && uploadQueueProcessed === uploadQueueMax) {
       console.log('UPLOAD FINISHED MAYBE?');
+
+      // TODO: update patchFile phase to begin processing patchfiles
     }
   }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ]);
 
@@ -234,9 +242,10 @@ export default function Uploader() {
     const contents = await readPatchfile(file);
     console.log(`read: ${file.name}`);
     if(contents !== null) {
-      // console.log(`executing: ${file.name}`);
-      // await executePatchFile(firestore, contents);
-      // console.log(`DONE: ${file.name}`);
+      console.log(`executing: ${file.name}`);
+      await executePatchFile(firestore, contents);
+      setPatchfilesProcessed(x => x + 1);
+      console.log(`DONE: ${file.name}`);
     }
   }
 
@@ -246,28 +255,36 @@ export default function Uploader() {
   useEffect(() => {
     (async () => {
       // phases start at 0
-      if(patchfilesPhase >= 0) {
+      if(patchfilesPhase >= 0 && patchfilesPhase <= patchfilesMaxPhase) {
         console.log(patchFiles);
 
         const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
 
         // patchfileConcurrencyLimit
-        const semaphore = new AsyncSemaphore(1);
-
-        async function dummy(file: File): Promise<void> {
-          console.log(await readPatchfile(file));
-        }
+        const semaphore = new AsyncSemaphore(16);
 
         for(let file of filesForCurrentPhase) {
-          await semaphore.withLockRunAndForget(() => dummy(file));
+          await semaphore.withLockRunAndForget(() => processPatchfile(file));
         }
         
         await semaphore.awaitTerminate();
         console.log('queue done!');
+
+        // remove current phase to prevent double executions
+        setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
+
+        // kick off to process next phase
+        if(patchfilesPhase < patchfilesMaxPhase) {
+          console.log('attempting kick off of next phase: ', patchfilesPhase + 1);
+          setPatchfilesPhase(x => x + 1);
+        }
+        else {
+          console.log('no more phases!');
+        }
       }
     })();
     // do nothing if phase == -1
-  }, [ patchfilesPhase ])
+  }, [ patchfilesPhase, patchfilesMaxPhase ])
 
   return (
     <div>
@@ -314,6 +331,7 @@ export default function Uploader() {
           <ul>
             <li>recordConcurrencyCount: {recordConcurrencyCount}</li>
             <li>patchfilesPhase: {patchfilesPhase}</li>
+            <li>patchfilesMaxPhase: {patchfilesMaxPhase}</li>
           </ul>
           <h4>Active Uploads</h4>
           <ul>
