@@ -7,13 +7,12 @@ import { useFirestore } from 'reactfire/dist/index';
 import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil';
-import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 import { Button } from '../homepage/button';
 
 import './uploader.scss';
-import { readFileAsText, readPatchfile } from '../asyncfilereader';
+import { readPatchfile } from '../asyncfilereader';
 import { AsyncSemaphore } from '../asyncsemaphore';
 
 export default function Uploader() {
@@ -264,7 +263,7 @@ export default function Uploader() {
         }
         
         await semaphore.awaitTerminate();
-        console.log('queue done!');
+        console.log(`phase ${patchfilesPhase} queue done!`);
 
         // remove current phase to prevent double executions
         setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
@@ -294,31 +293,29 @@ export default function Uploader() {
         ! showBundleInfo ? <></> :
         <>
         {/* File info area */}
-        <h4>Bundle info</h4>
-        <ul>
-          <li><code>{recordsFile?.name}</code></li>
-          <ul>
-            <li>File size: {prettyBytes(recordsFile ? recordsFile.size : 0)}</li>
-            <li>Number of rows: {Number(uploadQueueMax).toLocaleString()}</li>
-          </ul>
-          <li>Loaded {patchfilesMax} Patchfiles</li>
-        </ul>
+        <div className="form-text">{Number(uploadQueueMax).toLocaleString()} rows ({prettyBytes(recordsFile ? recordsFile.size : 0)}), {patchfilesMax} Patchfiles ({prettyBytes(patchFiles.length > 0 ? patchFiles.map(e => e.size).reduce((sum, x) => sum + x) : 0)})</div>
+        <br />
         {/* Input area */}
-        <label>Record Concurrency Limit</label>
-        <br />
-        <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
-        <div className="form-text">
-          Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once. <br />
-          Default: <code>64</code>
-        </div>
-        <br />
-        <label>Patchfile Concurrency Limit</label>
-        <br />
-        <input className="mb-0" type="number" min={1} max={32} value={patchfileConcurrencyLimit} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
-        <div className="form-text">
-          Maximum number of patchfiles to process concurrently (the initial value of the semaphore). <br />
-          Default: <code>32</code>
-        </div>
+        <r-grid columns="8">
+          <r-cell span="1-4" span-s="row">
+            <label><strong>Record Concurrency Limit</strong></label>
+            <br />
+            <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
+            <div className="form-text">
+              Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once. <br />
+              Default: <code>64</code>
+            </div>
+          </r-cell>
+          <r-cell span="5.." span-s="row">
+            <label>Patchfile Concurrency Limit</label>
+            <br />
+            <input className="mb-0" type="number" min={1} max={32} value={patchfileConcurrencyLimit} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
+            <div className="form-text">
+              Maximum number of patchfiles to process concurrently (the initial value of the semaphore). <br />
+              Default: <code>32</code>
+            </div>
+          </r-cell>
+        </r-grid>
         <br />
         <div className="form-check form-switch">
           <input className="form-check-input" type="checkbox" checked={showPendingUploads} onChange={e => setShowPendingUploads(e.target.checked)} />

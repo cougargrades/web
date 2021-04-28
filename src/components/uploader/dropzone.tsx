@@ -31,7 +31,7 @@ export function Dropzone(props: { onDrop: (acceptedFiles: File[]) => void }) {
       {
         isDragActive ?
           <div className="droploc">Drop the files here</div> :
-          <div className="droploc">Drag 'n' drop some files here, or click to select files</div>
+          <div className="droploc">Drag and drop some files here, or click to select files</div>
       }
     </div>
   );
