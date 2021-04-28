@@ -9,7 +9,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@au5ton/snooze": "^1.0.3",
     "@cougargrades/types": "0.0.67",
     "@exampledev/new.css": "^1.1.3",
     "bootstrap": "^5.0.0-beta3",
@@ -24,8 +23,7 @@
     "react-transition-group": "^4.4.1",
     "reactfire": "^3.0.0-rc.0",
     "swr": "^0.4.2",
-    "timeago-react": "^3.0.0",
-    "uuid": "^8.3.2"
+    "timeago-react": "^3.0.0"
   },
   "devDependencies": {
     "@snowpack/plugin-dotenv": "^2.1.0",
