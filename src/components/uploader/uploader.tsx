@@ -25,6 +25,7 @@ export default function Uploader() {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
   const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
+  const [showPendingUploads, setShowPendingUploads] = useState<boolean>(false);
 
   /**
    * Upload logic
@@ -36,7 +37,7 @@ export default function Uploader() {
   // number of rows processed so far
   const [uploadQueueProcessed, setUploadQueueProcessed] = useState<number>(0);
   // total number of rows
-  const [uploadQueueMax, setUploadQueueMax] = useState<number>(100);
+  const [uploadQueueMax, setUploadQueueMax] = useState<number>(0);
   // number of PF processed so far
   const [patchfilesProcessed, setPatchfilesProcessed] = useState<number>(0);
   // total number of PF
@@ -46,10 +47,10 @@ export default function Uploader() {
   // max number of phases
   const [patchfilesMaxPhase, setPatchfilesMaxPhase] = useState<number>(-1);
   // max number to do in parallel
-  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
+  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(32);
 
   // max number to do in parallel
-  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(0);
+  const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(64);
   // current amount pending
   const [recordConcurrencyCount, setRecordConcurrencyCount] = useState<number>(0);
   // has the original snapshot loaded?
@@ -88,10 +89,6 @@ export default function Uploader() {
     setUploadStartedAt(new Date());
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     setAllowUploading(true);
-
-    // TODO: this should start when upload finished, but is added here for debugging. remove later.
-    setPatchfilesPhase(0);
-
   }, [ recordsFile, patchFiles ]);
 
   // What happens when files are dropped into the page
@@ -131,9 +128,6 @@ export default function Uploader() {
               setLoadedRecords(v => [...validated]);
               setUploadQueueMax(validated.length);
               setIsButtonEnabled(true);
-    
-              // console.log(validated);
-              // console.log('All done!')
             },
           });
           return file;
@@ -230,7 +224,8 @@ export default function Uploader() {
     if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed > 0 && uploadQueueProcessed === uploadQueueMax) {
       console.log('UPLOAD FINISHED MAYBE?');
 
-      // TODO: update patchFile phase to begin processing patchfiles
+      // update patchFile phase to begin processing patchfiles
+      setPatchfilesPhase(0);
     }
   }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ]);
 
@@ -238,14 +233,14 @@ export default function Uploader() {
    * Execute an individual patchfile
    */
   const processPatchfile = async (file: File) => {
-    console.log(`reading: ${file.name}`);
+    //console.log(`reading: ${file.name}`);
     const contents = await readPatchfile(file);
-    console.log(`read: ${file.name}`);
+    //console.log(`read: ${file.name}`);
     if(contents !== null) {
-      console.log(`executing: ${file.name}`);
+      //console.log(`executing: ${file.name}`);
       await executePatchFile(firestore, contents);
       setPatchfilesProcessed(x => x + 1);
-      console.log(`DONE: ${file.name}`);
+      //console.log(`DONE: ${file.name}`);
     }
   }
 
@@ -306,11 +301,25 @@ export default function Uploader() {
           <li>Loaded {patchfilesMax} Patchfiles</li>
         </ul>
         {/* Input area */}
-        <label>Concurrency Limit</label>
+        <label>CSV Concurrency Limit</label>
         <br />
         <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
         <div className="form-text">
-          Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once.
+          Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once. <br />
+          Default: <code>64</code>
+        </div>
+        <br />
+        <label>Patchfile Concurrency Limit</label>
+        <br />
+        <input className="mb-0" type="number" min={1} max={32} value={patchfileConcurrencyLimit} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
+        <div className="form-text">
+          Maximum number of patchfiles to process concurrently (the initial value of the semaphore). <br />
+          Default: <code>32</code>
+        </div>
+        <br />
+        <div className="form-check form-switch">
+          <input className="form-check-input" type="checkbox" checked={showPendingUploads} onChange={e => setShowPendingUploads(e.target.checked)} />
+          <label className="form-check-label">Show pending uploads animation</label>
         </div>
         <br />
         <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem' }}>
@@ -333,16 +342,21 @@ export default function Uploader() {
             <li>patchfilesPhase: {patchfilesPhase}</li>
             <li>patchfilesMaxPhase: {patchfilesMaxPhase}</li>
           </ul>
-          <h4>Active Uploads</h4>
-          <ul>
-            <TransitionGroup>
-              {pendingUploads.map(id => (
-                <CSSTransition key={id} classNames="item" timeout={200}>
-                  <li>{id}</li>
-                </CSSTransition>
-              ))}
-            </TransitionGroup>
-          </ul>
+          {
+            ! showPendingUploads ? <></> : 
+            <>
+            <h4>Active Uploads</h4>
+            <ul>
+              <TransitionGroup>
+                {pendingUploads.map(id => (
+                  <CSSTransition key={id} classNames="item" timeout={200}>
+                    <li>{id}</li>
+                  </CSSTransition>
+                ))}
+              </TransitionGroup>
+            </ul>
+            </>
+          }
           </>
         }
         </>
