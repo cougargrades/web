@@ -8,8 +8,11 @@ import './button.scss';
 import './stamps.scss';
 import './homepage.scss';
 
-import wordcloud from './wordcloud.svg';
-import slotmachine from './slotmachine.svg';
+// TODO: Remove when this is resolved: https://github.com/snowpackjs/snowpack/issues/3109
+// import wordcloud from './wordcloud.svg';
+// import slotmachine from './slotmachine.svg';
+const wordcloud = '/_dist_/components/homepage/wordcloud.svg';
+const slotmachine = '/_dist_/components/homepage/slotmachine.svg';
 
 export default function Homepage() {
   return (
