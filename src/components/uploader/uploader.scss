@@ -5,6 +5,10 @@
   color: var(--uh-gray);
 }
 
+r-cell[x-class="inputbox"] {
+  padding: 0.25rem;
+}
+
 input, select, textarea {
   // For whatever reason, this can default to 0.6875rem even if Firefox says it is supposed to be 1.03rem (set by New.css)
   font-size: 1rem;

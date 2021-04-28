@@ -140,13 +140,15 @@ export default function Uploader() {
       .filter(e => e.name.startsWith('patch-') && e.name.endsWith('.json'))
       .sort((a,b) => a.name.localeCompare(b.name));
 
-    // get final patchfile phase
-    setPatchfilesMaxPhase(x => Number( // convert to a number
-      temp[temp.length - 1] // last patchfile after sorting
-      .name // access name
-      .split('-') // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]
-      [1] // access phase
-    ));
+    if(temp.length > 0) {
+      // get final patchfile phase
+      setPatchfilesMaxPhase(x => Number( // convert to a number
+        temp[temp.length - 1] // last patchfile after sorting
+        .name // access name
+        .split('-') // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]
+        [1] // access phase
+      ));
+    }
 
     // Save references to patchfiles
     setPatchFiles(pf => [ ...temp ]);
@@ -297,8 +299,8 @@ export default function Uploader() {
         <br />
         {/* Input area */}
         <r-grid columns="8">
-          <r-cell span="1-4" span-s="row">
-            <label><strong>Record Concurrency Limit</strong></label>
+          <r-cell span="1-4" span-s="row" x-class="inputbox">
+            <label>Record Concurrency Limit</label>
             <br />
             <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
             <div className="form-text">
@@ -306,7 +308,7 @@ export default function Uploader() {
               Default: <code>64</code>
             </div>
           </r-cell>
-          <r-cell span="5.." span-s="row">
+          <r-cell span="5.." span-s="row" x-class="inputbox">
             <label>Patchfile Concurrency Limit</label>
             <br />
             <input className="mb-0" type="number" min={1} max={32} value={patchfileConcurrencyLimit} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
