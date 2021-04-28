@@ -22,6 +22,7 @@ export default function Uploader() {
    * UI
    */
   const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
+  const [uploadFinishedAt, setUploadFinishedAt] = useState<Date>(new Date(0));
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
   const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
@@ -275,6 +276,8 @@ export default function Uploader() {
         }
         else {
           console.log('no more phases!');
+          // mark all uploads as finished
+          setUploadFinishedAt(new Date());
         }
       }
     })();
@@ -301,7 +304,7 @@ export default function Uploader() {
           <li>Loaded {patchfilesMax} Patchfiles</li>
         </ul>
         {/* Input area */}
-        <label>CSV Concurrency Limit</label>
+        <label>Record Concurrency Limit</label>
         <br />
         <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
         <div className="form-text">
@@ -324,7 +327,21 @@ export default function Uploader() {
         <br />
         <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem' }}>
           <Button variant="adaptive" onClick={handleClick} disabled={!isButtonEnabled}>Start Upload</Button>
-          <p className="mb-0">{uploadStartedAt.valueOf() > 0 ? <>Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).</> : <></> }</p>
+          <p className="mb-0">
+            {
+              uploadStartedAt.valueOf() === 0 || uploadFinishedAt.valueOf() > 0 ? <></> :
+              <>
+                Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).
+                <br />
+              </> 
+            }
+            {
+              uploadFinishedAt.valueOf() === 0 ? <></> :
+              <>
+                Upload finished <TimeAgo datetime={uploadFinishedAt} opts={{ relativeDate: uploadStartedAt }} locale={'en'} />.
+              </> 
+            }
+          </p>
         </div>
         {/* Upload status area */}
         {
