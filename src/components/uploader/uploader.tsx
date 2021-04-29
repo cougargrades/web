@@ -1,19 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import prettyBytes from 'pretty-bytes';
 import TimeAgo from 'timeago-react';
+import * as timeago from 'timeago.js';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Papa from 'papaparse';
 import { useFirestore } from 'reactfire/dist/index';
 import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil';
+import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 import { Button } from '../homepage/button';
-
-import './uploader.scss';
 import { readPatchfile } from '../asyncfilereader';
 import { AsyncSemaphore } from '../asyncsemaphore';
+import { localeFunc } from './customlocale';
+
+timeago.register('en_US_custom', localeFunc);
+
+import './uploader.scss';
 
 export default function Uploader() {
 
@@ -22,6 +27,12 @@ export default function Uploader() {
    */
   const [uploadStartedAt, setUploadStartedAt] = useState<Date>(new Date(0));
   const [uploadFinishedAt, setUploadFinishedAt] = useState<Date>(new Date(0));
+  const [recordProcessingStartedAt, setRecordProcessingStartedAt] = useState<Date>(new Date(0));
+  const [recordProcessingEstimate, setRecordProcessingEstimate] = useState<Date>(new Date(0));
+  const [recordProcessingFinishedAt, setRecordProcessingFinishedAt] = useState<Date>(new Date(0));
+  const [patchfileProcessingStartedAt, setPatchfileProcessingStartedAt] = useState<Date>(new Date(0));
+  const [patchfileProcessingEstimate, setPatchfileProcessingEstimate] = useState<Date>(new Date(0));
+  const [patchfileProcessingFinishedAt, setPatchfileProcessingFinishedAt] = useState<Date>(new Date(0));
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [allowUploading, setAllowUploading] = useState<boolean>(false);
   const [showBundleInfo, setShowBundleInfo] = useState<boolean>(false);
@@ -87,6 +98,7 @@ export default function Uploader() {
   const handleClick = useCallback(() => {
     // This allows us to benchmark upload times
     setUploadStartedAt(new Date());
+    setRecordProcessingStartedAt(new Date());
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     setAllowUploading(true);
   }, [ recordsFile, patchFiles ]);
@@ -223,13 +235,25 @@ export default function Uploader() {
    * Detect when records upload is completed
    */
   useEffect(() => {
+    // estimate when upload will be completed
+    // (TimeTaken / linesProcessed) * linesLeft = timeLeft
+    const now = new Date().valueOf();
+    const timeTaken = now - recordProcessingStartedAt.valueOf();
+    const itemsRemaining = uploadQueueMax - uploadQueueProcessed;
+    const timeRemaining = (timeTaken / uploadQueueProcessed) * itemsRemaining;
+    setRecordProcessingEstimate(new Date(now + timeRemaining));
+
     if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed > 0 && uploadQueueProcessed === uploadQueueMax) {
       console.log('UPLOAD FINISHED MAYBE?');
 
+      // mark records as completed
+      setRecordProcessingFinishedAt(new Date());
+
       // update patchFile phase to begin processing patchfiles
       setPatchfilesPhase(0);
+      setPatchfileProcessingStartedAt(new Date());
     }
-  }, [ uploadQueueProcessed, uploadQueueProcessed, uploadStartedAt ]);
+  }, [ uploadQueueProcessed, uploadStartedAt ]);
 
   /**
    * Execute an individual patchfile
@@ -279,11 +303,24 @@ export default function Uploader() {
           console.log('no more phases!');
           // mark all uploads as finished
           setUploadFinishedAt(new Date());
+          setPatchfileProcessingFinishedAt(new Date());
         }
       }
     })();
     // do nothing if phase == -1
   }, [ patchfilesPhase, patchfilesMaxPhase ])
+
+  /**
+   * Estimate when Patchfile queue will be completed
+   */
+  useEffect(() => {
+    // (TimeTaken / linesProcessed) * linesLeft = timeLeft
+    const now = new Date().valueOf();
+    const timeTaken = now - patchfileProcessingStartedAt.valueOf();
+    const itemsRemaining = patchfilesMax - patchfilesProcessed;
+    const timeRemaining = (timeTaken / patchfilesProcessed) * itemsRemaining;
+    setPatchfileProcessingEstimate(new Date(now + timeRemaining));
+  }, [patchfilesProcessed, patchfilesMax, patchfileProcessingStartedAt])
 
   return (
     <div>
@@ -330,14 +367,14 @@ export default function Uploader() {
             {
               uploadStartedAt.valueOf() === 0 || uploadFinishedAt.valueOf() > 0 ? <></> :
               <>
-                Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en'} />).
+                Upload started at {uploadStartedAt.toLocaleString()} (<TimeAgo datetime={uploadStartedAt!} locale={'en_US'} />).
                 <br />
               </> 
             }
             {
               uploadFinishedAt.valueOf() === 0 ? <></> :
               <>
-                Upload finished <TimeAgo datetime={uploadFinishedAt} opts={{ relativeDate: uploadStartedAt }} locale={'en'} />.
+                Upload finished <TimeAgo datetime={uploadFinishedAt} opts={{ relativeDate: uploadStartedAt }} locale={'en_US'} />.
               </> 
             }
           </p>
@@ -348,10 +385,26 @@ export default function Uploader() {
           <>
           <h4>Uploading records</h4>
           <Progress value={uploadQueueProcessed} max={uploadQueueMax} variant="bg-blue">{`${Math.round(uploadQueueProcessed/uploadQueueMax*100)}%`}</Progress>
-          <label>Row {Number(uploadQueueProcessed).toLocaleString()} of {Number(uploadQueueMax).toLocaleString()}</label>
+          <label>
+            Row {Number(uploadQueueProcessed).toLocaleString()} of {Number(uploadQueueMax).toLocaleString()}
+            {
+              recordProcessingFinishedAt.valueOf() > 0 ? <></> :
+              <>
+                , ETA <TimeAgo datetime={recordProcessingEstimate} opts={{ relativeDate: new Date() }} locale={'en_US_custom'} />
+              </>
+            }
+          </label>
           <h4>Executing Patchfiles</h4>
           <Progress value={patchfilesProcessed} max={patchfilesMax} variant="bg-purple">{`${Math.round(patchfilesProcessed/patchfilesMax*100)}%`}</Progress>
-          <label>Patchfile {Number(patchfilesProcessed).toLocaleString()} of {Number(patchfilesMax).toLocaleString()}</label>
+          <label>
+            Patchfile {Number(patchfilesProcessed).toLocaleString()} of {Number(patchfilesMax).toLocaleString()}
+            {
+              patchfileProcessingFinishedAt.valueOf() > 0 ? <></> :
+              <>
+                , ETA <TimeAgo datetime={patchfileProcessingEstimate} opts={{ relativeDate: new Date() }} locale={'en_US_custom'} />
+              </>
+            }
+          </label>
           <h5>Debugging</h5>
           <ul>
             <li>recordConcurrencyCount: {recordConcurrencyCount}</li>
