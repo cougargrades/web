@@ -58,7 +58,7 @@ export default function Uploader() {
   // max number of phases
   const [patchfilesMaxPhase, setPatchfilesMaxPhase] = useState<number>(-1);
   // max number to do in parallel
-  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(32);
+  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
 
   // max number to do in parallel
   const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(64);
@@ -281,8 +281,7 @@ export default function Uploader() {
 
         const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
 
-        // patchfileConcurrencyLimit
-        const semaphore = new AsyncSemaphore(16);
+        const semaphore = new AsyncSemaphore(patchfileConcurrencyLimit);
 
         for(let file of filesForCurrentPhase) {
           await semaphore.withLockRunAndForget(() => processPatchfile(file));
@@ -337,28 +336,32 @@ export default function Uploader() {
         {/* Input area */}
         <r-grid columns="8">
           <r-cell span="1-4" span-s="row" x-class="inputbox">
-            <label>Record Concurrency Limit</label>
-            <br />
-            <input className="mb-0" type="number" min={1} max={100} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
+            <label>
+              Record Concurrency Limit
+              <input className="mb-0" type="number" min={1} max={128} value={recordConcurrencyLimit} onChange={e => setRecordConcurrencyLimit(e.target.valueAsNumber)} />
+            </label>
             <div className="form-text">
               Maximum number of documents allowed to be inside the <code>upload_queue</code> Firestore collection at once. <br />
               Default: <code>64</code>
             </div>
           </r-cell>
           <r-cell span="5.." span-s="row" x-class="inputbox">
-            <label>Patchfile Concurrency Limit</label>
-            <br />
-            <input className="mb-0" type="number" min={1} max={32} value={patchfileConcurrencyLimit} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
+            <label>
+              Patchfile Concurrency Limit
+              <input className="mb-0" type="number" min={1} max={128} value={patchfileConcurrencyLimit} disabled={patchfileProcessingStartedAt.valueOf() > 0} onChange={e => setPatchfileConcurrencyLimit(e.target.valueAsNumber)} />
+            </label>
             <div className="form-text">
               Maximum number of patchfiles to process concurrently (the initial value of the semaphore). <br />
-              Default: <code>32</code>
+              Default: <code>64</code>
             </div>
           </r-cell>
         </r-grid>
         <br />
         <div className="form-check form-switch">
-          <input className="form-check-input" type="checkbox" checked={showPendingUploads} onChange={e => setShowPendingUploads(e.target.checked)} />
-          <label className="form-check-label">Show pending uploads animation</label>
+          <label className="form-check-label">
+            Show pending uploads animation
+            <input className="form-check-input" type="checkbox" checked={showPendingUploads} onChange={e => setShowPendingUploads(e.target.checked)} />
+          </label>
         </div>
         <br />
         <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem' }}>

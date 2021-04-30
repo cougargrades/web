@@ -14,7 +14,7 @@ export function Progress(props: { value: number, max: number, variant: ProgressC
   const { value, max, variant } = props;
   return (
     <div className="progress">
-      <div className={`progress-bar progress-bar-striped progress-bar-animated ${variant}`} role="progressbar" style={{width: `${value/max * 100}%`}}>
+      <div className={`progress-bar progress-bar-striped progress-bar-animated ${variant}`} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} style={{width: `${value/max * 100}%`}}>
         {props.children}
       </div>
     </div>
@@ -33,7 +33,7 @@ export type MultiBar = { key: React.Key, value: number, variant: ProgressColorVa
     <div className="progress">
       {
         bars.map(e => 
-          <div key={e.key} className={`progress-bar progress-bar-striped progress-bar-animated ${e.variant}`} role="progressbar" style={{width: `${e.value/max * 100}%`}}>
+          <div key={e.key} className={`progress-bar progress-bar-striped progress-bar-animated ${e.variant}`} role="progressbar" aria-valuenow={e.value} aria-valuemin={0} aria-valuemax={max} style={{width: `${e.value/max * 100}%`}}>
             {e.value}
           </div>
         )
