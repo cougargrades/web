@@ -75,7 +75,6 @@ export default function Uploader() {
    * Firebase stuff
    */
   const firestore = useFirestore();
-  firestore.settings({ ignoreUndefinedProperties: true });
   useEffect(() => {
     /**
      * Subscribe to the upload_queue collection
