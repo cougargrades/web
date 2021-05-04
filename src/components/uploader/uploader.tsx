@@ -450,7 +450,7 @@ export default function Uploader() {
             <h4>Active Uploads</h4>
             <ul>
               <TransitionGroup>
-                {pendingUploads.map(id => (
+                {pendingUploads.slice().sort().map(id => (
                   <CSSTransition key={id} classNames="item" timeout={200}>
                     <li>{id}</li>
                   </CSSTransition>
