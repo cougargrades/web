@@ -89,6 +89,14 @@ export default function Uploader() {
 
     return () => { unsubscribe() };
   }, []);
+  useEffect(() => {
+    /**
+     * Do the same thing as above, but for the backlog
+     */
+    const unsubscribe = firestore.collection('upload_queue_backlog').onSnapshot(onAddedToBacklog);
+
+    return () => { unsubscribe() };
+  }, []);
 
   /**
    * Methods
@@ -203,6 +211,28 @@ export default function Uploader() {
     setRecordConcurrencyCount(x => x + additions.length - removals.length);
     setUploadQueueProcessed(x => x + removals.length);
     setInitialSnapshotLoaded(true);
+  };
+
+  /**
+   * Same as above
+   */
+  const onAddedToBacklog = async (snapshot: firebase.default.firestore.QuerySnapshot<firebase.default.firestore.DocumentData>) => {
+    // we want all the additions
+    let additions = snapshot.docChanges().filter(e => e.type === 'added');
+
+    // validate additions by attempting to map back to GradeDistributionCSVRow
+    let validated = additions
+      .map(e => tryFromRaw(e))
+      .filter((e): e is GradeDistributionCSVRow => e !== null);
+
+    // actually attempt to delete these from the upload_queue_backlog, because we've already staged them to be added again
+    for(let item of additions) {
+      await item.doc.ref.delete();
+    }
+
+    // Update state
+    setLoadedRecords(v => [...v, ...validated]); // add backlogged records to end of loaded records
+    setUploadQueueMax(x => x + validated.length); // expand the length of the queue because we're executing these again
   };
 
   /**
