@@ -8,7 +8,12 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
-    ['@snowpack/plugin-sass', { compilerOptions: { loadPath: ['node_modules'] } }]
+    ['@snowpack/plugin-sass', { compilerOptions: { loadPath: ['node_modules'] } }],
+    ['@canarise/snowpack-eslint-plugin', {
+      globs: ['src/**/*.tsx', 'src/**/*.ts'], // You should provide this
+      options: { /* any eslint options here */ },
+      formatter: 'codeframe' /* default: 'stylish' */
+    }],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
