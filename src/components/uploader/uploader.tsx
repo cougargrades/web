@@ -361,7 +361,7 @@ export default function Uploader() {
         ! showBundleInfo ? <></> :
         <>
         {/* File info area */}
-        <div className="form-text">{Number(uploadQueueMax).toLocaleString()} rows ({prettyBytes(recordsFile ? recordsFile.size : 0)}), {patchfilesMax} Patchfiles ({prettyBytes(patchFiles.length > 0 ? patchFiles.map(e => e.size).reduce((sum, x) => sum + x) : 0)})</div>
+        <div className="form-text">{Number(uploadQueueMax).toLocaleString()} rows ({prettyBytes(recordsFile ? recordsFile.size : 0)}), {Number(patchfilesMax).toLocaleString()} Patchfiles ({prettyBytes(patchFiles.length > 0 ? patchFiles.map(e => e.size).reduce((sum, x) => sum + x) : 0)})</div>
         <br />
         {/* Input area */}
         <r-grid columns="8">
