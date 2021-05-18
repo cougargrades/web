@@ -4,7 +4,7 @@
   "scripts": {
     "start": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack dev",
     "build": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack build",
-    "lint": "eslint --format codeframe src/",
+    "lint": "eslint --format codeframe --ext '.tsx,.ts' src/",
     "format:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
     "format:write": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
@@ -43,7 +43,13 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.26.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.7.2",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.0.5",
     "snowpack": "^3.4.0",
