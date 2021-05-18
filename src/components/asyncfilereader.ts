@@ -1,10 +1,11 @@
 import type { Patchfile } from '@cougargrades/types/dist/Patchfile';
 import * as is from '@cougargrades/types/dist/is';
 
-export type mode = 'text' | 'dataURL' | 'binaryString' | 'arrayBuffer';
+export type FileReaderMode = 'text' | 'dataURL' | 'binaryString' | 'arrayBuffer';
+export type FileReaderResult = string | ArrayBuffer | null;
 
-export function readFile(file: File, mode: mode): Promise<string | ArrayBuffer | null> {
-  return new Promise<any>((resolve, reject) => {
+export function readFile(file: File, mode: FileReaderMode): Promise<FileReaderResult> {
+  return new Promise<FileReaderResult>((resolve, reject) => {
     // make file reader
     const reader = new FileReader();
     
@@ -40,7 +41,7 @@ export async function readPatchfile(file: File): Promise<Patchfile | null> {
   try {
     const contents = await readFileAsText(file);
     if(typeof contents === 'string') {
-      let decoded = JSON.parse(contents);
+      const decoded = JSON.parse(contents);
       return is.Patchfile(decoded) ? decoded : null;
     }
     else {

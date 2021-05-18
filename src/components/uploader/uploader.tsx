@@ -8,7 +8,6 @@ import { useFirestore } from 'reactfire/dist/index';
 import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil';
-import { useInterval } from '../useinterval';
 import { Dropzone } from './dropzone';
 import { Progress } from './progress';
 import { Button } from '../homepage/button';
@@ -16,9 +15,9 @@ import { readPatchfile } from '../asyncfilereader';
 import { AsyncSemaphore } from '../asyncsemaphore';
 import { localeFunc } from './customlocale';
 
-timeago.register('en_US_custom', localeFunc);
-
 import './uploader.scss';
+
+timeago.register('en_US_custom', localeFunc);
 
 export default function Uploader() {
 

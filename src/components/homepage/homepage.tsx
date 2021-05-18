@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Blog = React.lazy(() => import('../blog/blog'));
-const Footer = React.lazy(() => import('../footer/footer'));
-
 import './button.scss';
 import './stamps.scss';
 import './homepage.scss';
+
+const Blog = React.lazy(() => import('../blog/blog'));
+const Footer = React.lazy(() => import('../footer/footer'));
 
 // TODO: Remove when this is resolved: https://github.com/snowpackjs/snowpack/issues/3109
 // import wordcloud from './wordcloud.svg';

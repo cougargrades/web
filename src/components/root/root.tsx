@@ -5,15 +5,15 @@ import { AuthCheck, preloadFirestore, useAnalytics, useFirebaseApp } from 'react
 import Blurb from './blurb';
 import Header from '../header/header';
 import ClaimsCheckWrap from '../adminpanel/CustomClaimsCheck';
+
+import '../../styles/base.scss';
+import '../../styles/colors.scss';
+import TinyNav from '../adminpanel/tinynav';
 const Homepage = React.lazy(() => import('../homepage/homepage'));
 const About = React.lazy(() => import('../about/about'));
 const AdminPanel = React.lazy(() => import('../adminpanel/adminpanel'));
 const LoginForm = React.lazy(() => import('../adminpanel/loginform'));
 const Uploader = React.lazy(() => import('../uploader/uploader'));
-
-import '../../styles/base.scss';
-import '../../styles/colors.scss';
-import TinyNav from '../adminpanel/tinynav';
 
 // Useful for Google Analytics
 // Inspired by: https://github.com/FirebaseExtended/reactfire/blob/9d96d92d212fbd616506848180e02e84d4866409/docs/use.md#log-page-views-to-google-analytics-for-firebase-with-react-router
@@ -48,8 +48,6 @@ function MyPageViewLogger() {
 }
 
 export default function Root() {
-  const analytics = useAnalytics();
-
   const admin_title = 'Admin Navigation';
   const admin_links = [
     { text: 'User Info', to: '/admin/info'},

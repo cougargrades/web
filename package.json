@@ -4,7 +4,7 @@
   "scripts": {
     "start": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack dev",
     "build": "SNOWPACK_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) SNOWPACK_PUBLIC_VERSION=$npm_package_version SNOWPACK_PUBLIC_BUILD_DATE=$(date) snowpack build",
-    "lint": "eslint --format codeframe --ext '.tsx,.ts' src/",
+    "lint": "eslint --format codeframe 'src/**/*.{ts,tsx}'",
     "format:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
     "format:write": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
   },
