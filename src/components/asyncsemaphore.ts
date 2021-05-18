@@ -6,8 +6,8 @@
  */
 export class AsyncSemaphore {
   private _available: number
-  private _upcoming: Function[]
-  private _heads: Function[]
+  private _upcoming: (() => void)[]
+  private _heads: (() => void)[]
 
   private _completeFn!: () => void
   private _completePr!: Promise<void>
@@ -45,7 +45,7 @@ export class AsyncSemaphore {
     }
   }
 
-  private _queue(): Function[] {
+  private _queue(): (() => void)[] {
     if (!this._heads.length) {
       this._heads = this._upcoming.reverse()
       this._upcoming = []
@@ -58,7 +58,7 @@ export class AsyncSemaphore {
       this._available -= 1
       return undefined
     } else {
-      let fn: Function = () => {/***/}
+      let fn: () => void = () => {/***/}
       const p = new Promise<void>(ref => { fn = ref })
       this._upcoming.push(fn)
       return p
