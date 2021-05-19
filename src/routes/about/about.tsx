@@ -100,6 +100,7 @@ export default function About() {
       </p>
       <h4>DMCA + Business</h4>
       <p>
+        {/* eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid */}
         <a
           href="#"
           className="cryptedmail"
