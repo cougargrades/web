@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
 
-import './badge.scss';
+import './Badge.scss';
 
 interface BadgeProps {
   className?: string;
@@ -9,7 +9,7 @@ interface BadgeProps {
   children: any;
 }
 
-export default function Badge(props: BadgeProps) {
+export function Badge(props: BadgeProps) {
   return (
     <span
       className={`badge ${props.className}`}

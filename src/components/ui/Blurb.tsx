@@ -6,7 +6,7 @@ type BlurbProps = {
   children?: React.ReactNode;
 };
 
-export default function Blurb(props: BlurbProps) {
+export function Blurb(props: BlurbProps) {
   const location = useLocation();
   const styles: CSSProperties = {
     textAlign: 'center',

@@ -2,7 +2,7 @@ import React from 'react';
 import useSWR from 'swr';
 import TimeAgo from 'timeago-react';
 
-import Badge from '../root/badge';
+import { Badge } from '~/components/ui/Badge';
 
 import './blog.scss';
 

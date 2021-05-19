@@ -1,9 +1,9 @@
 import React from 'react';
 import useSWR from 'swr';
 
-import Collaborator, { CollaboratorProps } from '../collaborator/collaborator';
-import Footer from '../footer/footer';
-import { LinkButton } from '../homepage/button';
+import Footer from '~/components/footer/footer';
+import { Collaborator, CollaboratorProps } from '~/components/ui/Collaborator';
+import { LinkButton } from '~/components/ui/Button';
 
 import './about.scss';
 

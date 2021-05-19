@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './collaborator.scss';
+import './Collaborator.scss';
 
 export interface CollaboratorProps {
   id: number;
@@ -10,11 +10,11 @@ export interface CollaboratorProps {
   avatar_url: string;
 }
 
-export default function Collaborator(props: CollaboratorProps) {
+export function Collaborator(props: CollaboratorProps) {
   return (
     <div className="collaborator">
       <a href={props.html_url}>
-        <img src={props.avatar_url} />
+        <img alt={`${props.name}'s avatar`} src={props.avatar_url} />
       </a>
       <div className="user">
         <span className="name">{props.name}</span>

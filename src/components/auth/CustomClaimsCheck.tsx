@@ -1,12 +1,12 @@
 import React from 'react';
-import { ClaimsCheck, useIdTokenResult, useUser } from 'reactfire/dist/index';
-import Emoji from '../emoji';
+import { useIdTokenResult, useUser } from 'reactfire/dist/index';
+import { Emoji } from '~/components/ui/Emoji';
 
 /**
  * Re-implementation of: https://github.com/FirebaseExtended/reactfire/blob/b4f22bc0a84729245db87861d5190a0483b19348/src/auth.tsx#L74-L95
  */
-export default function CustomClaimsCheck(props: { requiredClaims: { [key: string]: any; }, children: React.ReactNode, fallback?: React.ReactNode}) {
-  const { status, data: user} = useUser();
+export function CustomClaimsCheck(props: { requiredClaims: { [key: string]: any; }, children: React.ReactNode, fallback?: React.ReactNode}) {
+  const { data: user} = useUser();
   const { data: jwt, error } = useIdTokenResult(user, true);
   const { requiredClaims, children } = props;
   

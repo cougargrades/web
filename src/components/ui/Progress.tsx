@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './progress.scss';
+import './Progress.scss';
 
 // See: https://getbootstrap.com/docs/5.0/customize/color/
 export type ProgressColorVariants = 'bg-primary' | 'bg-secondary' | 'bg-success' | 'bg-danger' | 'bg-warning' | 'bg-info' | 'bg-light' | 'bg-dark' |

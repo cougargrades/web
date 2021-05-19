@@ -9,10 +9,10 @@ import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDist
 import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow';
 import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil';
 import { Dropzone } from './dropzone';
-import { Progress } from './progress';
-import { Button } from '../homepage/button';
-import { readPatchfile } from '../asyncfilereader';
-import { AsyncSemaphore } from '../asyncsemaphore';
+import { Progress } from '~/components/ui/Progress';
+import { Button } from '~/components/ui/Button';
+import { readPatchfile } from '~/util/AsyncFileReader';
+import { AsyncSemaphore } from '~/util/AsyncSemaphore';
 import { localeFunc } from './customlocale';
 
 import './uploader.scss';
@@ -84,10 +84,13 @@ export default function Uploader() {
      * `onCollectionSnapshot` we can only do WRITE operations, but no read operations. To respond to these write
      * operations with current/up-to-date state data, we use a separate `useEffect()` hook.
      */
+
+    console.log('another!', firestore);
+
     const unsubscribe = firestore.collection('upload_queue').onSnapshot(onCollectionSnapshot);
 
     return () => { unsubscribe() };
-  }, []);
+  }, [ firestore ]);
   useEffect(() => {
     /**
      * Do the same thing as above, but for the backlog

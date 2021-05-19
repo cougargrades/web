@@ -1,6 +1,7 @@
 import React from 'react';
 import { useUser, useIdTokenResult } from 'reactfire/dist/index';
 import { CustomClaimNames as isCustomClaim } from '@cougargrades/types/dist/is'
+import UserAccountControl from '~/components/auth/UserAccountControl';
 
 export default function AdminPanel() {
   // get the current user, identified by the SDK-managed JWT 
@@ -24,6 +25,7 @@ export default function AdminPanel() {
 
   return (
     <div>
+      <UserAccountControl />
       <table>
         <caption>Custom Claims</caption>
         <thead>

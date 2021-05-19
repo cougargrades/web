@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
+import { usePageViewLogger } from '../../hooks/usePageViewLogger';
 
-import Emoji from '../emoji';
+import { Emoji } from '~/components/ui/Emoji';
 
 import './header.scss';
 
-export default function Header() {
+export function Header() {
+  usePageViewLogger();
   const match = useRouteMatch();
   const isMini = [
     '/courses',

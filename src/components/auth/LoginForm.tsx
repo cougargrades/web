@@ -1,8 +1,7 @@
 import React from 'react';
 import { auth as fbAuth, useAuth } from 'reactfire/dist/index';
-import Collaborator from '../collaborator/collaborator';
 
-import './loginform.scss';
+import './LoginForm.scss';
 
 export default function LoginForm() {
   const auth = useAuth();
@@ -14,38 +13,10 @@ export default function LoginForm() {
     auth.signInWithPopup(provider)
   };
 
-  const signOut = () => {
-    auth.signOut();
-  }
-
-  const deleteAccount = async () => {
-    if(auth.currentUser) {
-      // this is a sensitive operation so we want to revalidate their identity
-      const cred = await auth.currentUser.reauthenticateWithPopup(provider);
-      // if reauthentication was successful
-      if(cred.credential) {
-        await auth.currentUser.delete();
-      }
-    }
-  };
-
   // If already signed in, offer account options
   if (auth.currentUser) return (
     <div>
-      <div>
-        <h4>Signed in as:</h4>
-        <Collaborator
-          id={0}
-          name={auth.currentUser.displayName!}
-          login={auth.currentUser.email!}
-          html_url="#"
-          avatar_url={auth.currentUser.photoURL!}
-        />
-      </div>
-      <div className="button-spread">
-        <button onClick={signOut}>Sign Out</button>
-        <button onClick={deleteAccount} disabled={auth.currentUser === null}>Delete account</button>
-      </div>
+      <p>You're already signed in!</p>
     </div>
   );
 

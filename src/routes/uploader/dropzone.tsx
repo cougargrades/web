@@ -23,7 +23,7 @@ export function Dropzone(props: { onDrop: (acceptedFiles: File[]) => void }) {
     ...(isDragActive ? activeStyle : {}),
     ...(isDragAccept ? acceptStyle : {}),
     ...(isDragReject ? rejectStyle : {})
-  }), [ isDragActive, isDragAccept, isDragReject]);
+  }), [ isDragActive, isDragAccept, isDragReject ]);
 
   return (
     <div className="dropzone" {...getRootProps({ style })}>

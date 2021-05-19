@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './button.scss';
+import './Button.scss';
 
 type ButtonVariants = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link' | 'adaptive';
 type ButtonSizes = 'lg' | 'sm' | undefined;

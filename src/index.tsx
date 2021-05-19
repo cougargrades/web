@@ -6,10 +6,10 @@ import 'firebase/analytics';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { FirebaseAppProvider, SuspenseWithPerf } from 'reactfire/dist/index';
-import { firebaseConfig } from './components/firebase';
+import { firebaseConfig } from '~/util/firebaseConfig';
 
 //import Root from './components/root/root';
-const Root = React.lazy(() => import('./components/root/root'));
+const Root = React.lazy(() => import('~/components/root'));
 
 ReactDOM.render(
   <React.StrictMode>
