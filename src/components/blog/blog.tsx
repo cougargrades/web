@@ -1,60 +1,31 @@
+import { AtomEntry, useAtomFeed } from '@au5ton/use-atom-feed/dist/index';
 import React from 'react';
-import useSWR from 'swr';
 import TimeAgo from 'timeago-react';
 
 import { Badge } from '~/components/ui/Badge';
 
 import './blog.scss';
 
-async function fetchBlogPosts() {
-  // get blog post data
-  let res = await fetch('https://blog.cougargrades.io/atom.xml');
-  let data = await res.text();
-  let parser = new DOMParser();
-  let xml = parser.parseFromString(data, 'text/xml');
-  let entries = [];
-  for (const entry of xml.querySelectorAll('entry')) {
-    entries.push({
-      title: entry.querySelector('title')?.textContent,
-      link: entry.querySelector('link')?.getAttribute('href'),
-      updated: new Date(entry.querySelector('updated')?.textContent || 0),
-      id: entry.querySelector('id')?.textContent,
-      content: entry.querySelector('content')?.innerHTML,
-      priority: false,
-    });
-  }
-  entries.sort((a, b) => {
-    return b.updated.valueOf() - a.updated.valueOf();
-  });
-  entries = entries.map((e) => {
-    const weekMs = 6.048e8;
-    if (Date.now().valueOf() - e.updated.valueOf() < weekMs) {
-      e.priority = true;
-    }
-    return e;
-  });
-  return entries;
-}
-
 export default function Blog() {
   const previewLimit = 3;
-  const { data, error, isValidating } = useSWR('do a thing', fetchBlogPosts);
+  const { data, isValidating } = useAtomFeed('https://blog.cougargrades.io/atom.xml');
+  // Condition for determining if a post "has priority" or not
+  const postHasPriority = (post: AtomEntry) => (new Date().valueOf() - post.updated.valueOf() < 6.048e8);
+  // Has a blog entry been posted within the last week?
+  const isPriorityBlogPosted = data !== undefined ? data.entries.findIndex(e => postHasPriority(e)) >= 0 : false;
+  // The most recent blog post (entries are pre-sorted)
+  const latestBlogPost = data !== undefined ? (data.entries.length > 0 ? data.entries[0] : undefined) : undefined;
 
-  // Determines if a post has "priority"
-  const hasPriority = () =>
-    Array.isArray(data)
-      ? data.map((e) => (e.priority ? 1 : 0)).reduce((e) => e) > 0
-      : false;
-  // gets the localized date string for the latest post
-  const getLatestPost = () => (Array.isArray(data) ? data[0].updated : null);
+  console.log(data);
+  console.log(data?.entries.slice(0, previewLimit));
 
   return (
     <details className="blog">
       <summary>
         Developer Updates{' '}
-        {hasPriority() ? (
+        {isPriorityBlogPosted ? (
           <Badge className="new">
-            New {getLatestPost()?.toLocaleDateString()}
+            New {latestBlogPost?.updated.toLocaleDateString()}
           </Badge>
         ) : (
           <></>
@@ -63,9 +34,9 @@ export default function Blog() {
       <ul className="blog">
         {isValidating
           ? 'Loading...'
-          : data?.slice(0, previewLimit).map((e) => (
-              <li key={e.id!} className={e.priority ? 'priority' : ''}>
-                <a href={e.link!}>{e.title}</a>,{' '}
+          : data?.entries.slice(0, previewLimit).map((e) => (
+              <li key={e.id} className={postHasPriority(e) ? 'priority' : ''}>
+                <a href={e.link![0].href}>{e.title.value}</a>,{' '}
                 <span title={e.updated.toLocaleString()}>
                   <TimeAgo datetime={e.updated} locale={'en'} />
                 </span>
