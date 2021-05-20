@@ -16,9 +16,6 @@ export default function Blog() {
   // The most recent blog post (entries are pre-sorted)
   const latestBlogPost = data !== undefined ? (data.entries.length > 0 ? data.entries[0] : undefined) : undefined;
 
-  console.log(data);
-  console.log(data?.entries.slice(0, previewLimit));
-
   return (
     <details className="blog">
       <summary>
