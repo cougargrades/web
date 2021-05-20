@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 
-//import './button.scss';
+import '~/components/ui/Button.scss';
 import './stamps.scss';
 import './homepage.scss';
 
