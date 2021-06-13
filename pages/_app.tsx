@@ -1,7 +1,13 @@
-import Head from 'next/head';
+import Head from 'next/head'
+import { FirebaseAppProvider } from 'reactfire'
+import { firebaseConfig } from '../lib/environment';
+import '@cougargrades/raster/raster.grid.css'
+import 'normalize.css/normalize.css'
+import '@exampledev/new.css/new.css'
 import '../styles/globals.scss'
+import '../styles/colors.scss'
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
@@ -12,6 +18,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" href="/favicon.ico" />
         {/* Verification */}
         <meta name="google-site-verification" content="6Ci3V-jOwFCqFvntbRrkdoxF7MB4DC5gI_wWNz9fNTI" />
         {/* SEO */}
@@ -37,9 +44,9 @@ function MyApp({ Component, pageProps }) {
         <meta name="twitter:creator" content="@author_handle" />
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg" />  */}
       </Head>
-      <Component {...pageProps} />
+      <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+        <Component {...pageProps} />
+      </FirebaseAppProvider>
     </>
   );
 }
-
-export default MyApp

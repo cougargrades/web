@@ -1,0 +1,53 @@
+main {
+  details.blog {
+    margin-bottom: calc(var(--fontSize) * 1.8);
+  }
+  section {
+    margin-bottom: calc(var(--fontSize) * 3.1);
+
+    h2 {
+      margin-bottom: calc(var(--lineHeight) * 0.65);
+    }
+  }
+
+  figure > .visaid + figcaption {
+    margin-top: -1rem;
+    font-size: 0.8em;
+    font-style: italic;
+    text-align: center;
+    color: var(--uh-gray);
+  }
+}
+
+.hearts {
+  color: #ff8fbc;
+}
+
+main section p {
+  padding-right: 2em;
+}
+
+figure .visaid {
+  // recreate <img> styles from new.css
+  max-width: 100%;
+  margin-bottom: 1rem;
+
+  // Prevent dramatic layout changes as the SVG image loads
+  // See: https://css-tricks.com/aspect-ratio-boxes/
+  overflow: hidden;
+  height: 0;
+  background-size: cover;
+  
+  &.slotmachine {
+    padding-top: calc(650 / 1100 * 100%);
+  }
+  &.wordcloud {
+    padding-top: calc(768 / 1024 * 100%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .visaid {
+    filter: Invert();
+  }
+}

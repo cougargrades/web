@@ -1,16 +1,79 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+/*
+ * Big boi font sizes
+ */
+:root {
+  --fontSize: calc(100vw / 80);
+}
+@media (min-width: 1429px) {
+  :root {
+    --fontSize: 18px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  :root {
+    --fontSize: calc(100vw / 30);
+  }
+}
+@media only screen and (max-device-width: 812px) and (orientation: landscape) {
+  :root {
+    --fontSize: 1.7vw;
+  }
 }
 
-a {
-  color: inherit;
+/*
+ * Buttons
+ */
+a.button {
+  display: inline-block;
+  color: white;
+  background: black;
+  font-weight: 700;
+  font-size: 16px;
+  //line-height: calc(var(--fontSize) * 1.1);
+  padding: 6px 15px;
+  border-radius: 5px;
   text-decoration: none;
+  margin: 2px;
+
+  &:hover, &:active {
+    color: white;
+    background: var(--blue);
+    text-decoration: underline dashed;
+  }
+
+
+  @media (prefers-color-scheme: dark) {
+    color: black;
+    background: white;
+  }
 }
 
-* {
-  box-sizing: border-box;
+// Borrowed from raster2.css
+// See: https://github.com/rsms/raster/blob/master/src/elements.css
+html {
+  letter-spacing: -0.01em;
+  text-size-adjust: 100%;
+  font-variant-ligatures: contextual common-ligatures;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'cv10' 1; /* G */
+}
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  word-break: break-word;
+}
+h2 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+h5, h6 {
+  font-weight: 670;
+  letter-spacing: -0.015em;
 }
