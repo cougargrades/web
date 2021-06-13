@@ -18,9 +18,55 @@
 
       gtag('config', 'UA-50814720-3');
     </script>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      .content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #root {
+        flex: 1 0 auto;
+      }
+
+      footer {
+        flex-shrink: none;
+      }
+
+      footer .container {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      #vercel {
+        display: inline-block;
+        float: right;
+        margin: 0;
+      }
+
+      #vercel-img {
+        width: 80%;
+        max-width: 50vw;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div class="content">
+      <div id="root"></div>
+      <footer class="footer py-3">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">CougarGrades.io <span class="beta2">Beta</span></small>
+            <figure id="vercel"><a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss"><img id="vercel-img" class="float-right" src="%PUBLIC_URL%/powered-by-vercel.svg"></a></figure>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

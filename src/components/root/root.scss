@@ -1,6 +1,14 @@
 
 @import "../_common/colors.scss";
 
+footer {
+    background-color: #fff;
+}
+
+.beta2 {
+    color: $uh-red;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         color: $dm-text;
@@ -8,9 +16,15 @@
     hr {
         border-top-color: rgba(255,255,255,0.1);
     }
+    footer {
+        background-color: $dm-fore;
+    }
+    .beta2 {
+        color: $dm-red;
+    }
 }
 
-sup.beta {
+.beta {
     color: $uh-red;
 }
 
