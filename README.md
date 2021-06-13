@@ -1,6 +1,6 @@
 # @cougargrades/web
 
-![Build and Deploy - Testing](https://github.com/cougargrades/web/workflows/Build%20and%20Deploy%20-%20Testing/badge.svg) ![Build and Deploy - Production](https://github.com/cougargrades/web/workflows/Build%20and%20Deploy%20-%20Production/badge.svg) ![ESLint](https://github.com/cougargrades/web/workflows/ESLint/badge.svg) ![Mirroring](https://github.com/cougargrades/web/workflows/Mirroring/badge.svg)
+![Placeholder](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 
 React app that powers cougargrades.io
 
@@ -21,7 +21,9 @@ Currently, the entire CougarGrades.io stack is near finished with a major site o
 
 ### Continuous Deployment
 
-Active commits are automatically deployed to https://cougargrades-testing.web.app for preview.
+~~Active commits are automatically deployed to https://cougargrades-testing.web.app for preview.~~
+
+This is actively being changed.
 
 ---
 
