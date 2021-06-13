@@ -1,0 +1,52 @@
+@import "../styles/vars.scss";
+
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  padding: 0.25em 0;
+  margin-bottom: 32px;
+  a {
+    // undo linky stuff
+    text-decoration: none;
+
+    // buttony stuff
+    padding: 0.25em 0.75em;
+    border-radius: 8px;
+    font-weight: 500;
+
+    // coloring
+    background-color: darken($color: $default-nc-bg-2, $amount: 5%);
+    transition: background-color 200ms;
+
+    &:active,
+    &:focus {
+      outline: 0;
+    }
+    &:hover,
+    &:hover {
+      background-color: darken($color: $default-nc-bg-2, $amount: 7%);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background-color: lighten($color: $night-nc-bg-2, $amount: 10%);
+
+      &:active,
+      &:focus {
+        outline: 0;
+      }
+      &:hover {
+        background-color: lighten($color: $night-nc-bg-2, $amount: 13%);
+      }
+    }
+  }
+
+  a.disabled {
+    color: grey;
+    text-decoration: line-through;
+    cursor: default;
+  }
+}
+
