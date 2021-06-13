@@ -54,3 +54,7 @@ See https://cougargrades.io/about
     `npm start`
 
 - The development server will watch the project files for changes, automatically recompile the source code, and refresh the browser. Compile-time errors are printed to the console. [React DevTools](https://reactjs.org/blog/2019/08/15/new-react-devtools.html) is also enabled in this mode.
+
+---
+
+[![Powered by Vercel](public/powered-by-vercel.svg)](https://vercel.com/?utm_source=cougargrades&utm_campaign=oss)
