@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src", "../types", "../raster2-react.d.ts"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",

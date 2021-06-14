@@ -11,11 +11,11 @@
 
 $stamp-radius: calc(var(--stampBase) * 2.5);
 
-div.stamp-wrap {
+.stamp-wrap {
   height: $stamp-radius;
 }
 
-div.stamp {
+.stamp {
   display: inline-block;
   width: $stamp-radius;
   height: $stamp-radius;

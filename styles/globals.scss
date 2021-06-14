@@ -20,6 +20,17 @@
   }
 }
 
+:root {
+  --stampBase: 12px;
+
+  @media (min-width: 350px) {
+    --stampBase: 14px;
+  }
+  @media (min-width: 390px) {
+    --stampBase: 16px;
+  }
+}
+
 /*
  * Buttons
  */
