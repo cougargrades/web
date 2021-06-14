@@ -19,41 +19,43 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
 
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
-    <footer className={styles.footer}>
-      <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
-      <p>
-        Version: {version}, Commit:{' '}
-        <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
-          {typeof commitHash === 'string'
-            ? commitHash.substring(0, 7)
-            : commitHash}
-        </a>
-        <br />
-        Build date:{' '}
-        <span
-          title={new Date(
-            buildDate,
-          ).toUTCString()}
-        >
-          {new Date(
-            buildDate,
-          ).toLocaleDateString()}
-        </span>
-        <br />
-        <a href="https://github.com/cougargrades/web/wiki/Feedback">
-          Got feedback?
-        </a>
-      </p>
-      {props.hideDisclaimer ? (
-        <></>
-      ) : (
+    // <div className={styles.sticky_footer_wrap}>
+      <footer className={styles.footer}>
+        <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
         <p>
-          <em>
-            Not affiliated with the University of Houston. Data is sourced
-            directly from the University of Houston.
-          </em>
+          Version: {version}, Commit:{' '}
+          <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
+            {typeof commitHash === 'string'
+              ? commitHash.substring(0, 7)
+              : commitHash}
+          </a>
+          <br />
+          Build date:{' '}
+          <span
+            title={new Date(
+              buildDate,
+            ).toUTCString()}
+          >
+            {new Date(
+              buildDate,
+            ).toLocaleDateString()}
+          </span>
+          <br />
+          <a href="https://github.com/cougargrades/web/wiki/Feedback">
+            Got feedback?
+          </a>
         </p>
-      )}
-    </footer>
+        {props.hideDisclaimer ? (
+          <></>
+        ) : (
+          <p>
+            <em>
+              Not affiliated with the University of Houston. Data is sourced
+              directly from the University of Houston.
+            </em>
+          </p>
+        )}
+      </footer>
+    // </div>
   );
 }

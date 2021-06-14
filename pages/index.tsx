@@ -1,15 +1,12 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Layout from '../components/layout'
 import Blog from '../components/blog'
 import styles from '../styles/Homepage.module.scss'
 
 export default function Home() {
   return (
-    <>
-      <Header />
+    <Layout>
       <main className={styles.main}>
         <r-grid columns="8">
           <r-cell span="row">
@@ -125,7 +122,6 @@ export default function Home() {
           </r-cell>
         </r-grid>
       </main>
-      <Footer />
-    </>
+    </Layout>
   )
 }

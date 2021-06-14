@@ -1,17 +1,16 @@
 import Head from 'next/head'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Layout from '../components/layout'
 
 export default function Courses() {
   return (
     <>
       <Head>
-      <title>Courses - CougarGrades.io</title>
+        <title>Courses - CougarGrades.io</title>
         <meta name="description" content="Courses page" />
       </Head>
-      <Header />
-      <div>Courses</div>
-      <Footer />
+      <Layout>
+        <div>Courses</div>
+      </Layout>
     </>
   );
 }

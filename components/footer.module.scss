@@ -3,7 +3,7 @@
 .footer {
   background: var(--nc-bg-2);
   border-top: 1px solid var(--nc-bg-3);
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 
   /* This sets the right and left margins to cancel out the body's margins. It's width is still the same, but the background stretches across the page's width. */
 
@@ -23,4 +23,6 @@
   code {
     font-size: 1em;
   }
+
+  flex-shrink: 0;
 }
