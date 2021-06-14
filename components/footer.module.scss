@@ -26,3 +26,14 @@
 
   flex-shrink: 0;
 }
+
+.sponsor {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  img {
+    width: 80%;
+    max-width: 50vw;
+  }
+}
