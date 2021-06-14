@@ -1,5 +1,5 @@
 
-details.blog {
+.blog {
   summary {
     outline: 0;
 
@@ -8,24 +8,24 @@ details.blog {
       //margin-left: 1em;
     }
   }
-}
-
-ul.blog {
-  list-style-type: none;
-  li {
-    font-size: 0.9em;
-    line-height: 1.0;
-    a {
-      text-decoration: none;
-    }
-    time {
-      color: grey;
-      font-style: italic;
-    }
-
-    &.priority {
-      font-size: 1.1em;
-      font-weight: 700;
+  ul {
+    list-style-type: none;
+    li {
+      font-size: 0.9em;
+      line-height: 1.0;
+      a {
+        text-decoration: none;
+      }
+      time {
+        color: grey;
+        font-style: italic;
+      }
+      &.priority {
+        font-size: 1.1em;
+        font-weight: 700;
+      }
     }
   }
 }
+
+

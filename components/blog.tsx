@@ -17,7 +17,7 @@ export default function Blog() {
   const latestBlogPost = data !== undefined ? (data.entries.length > 0 ? data.entries[0] : undefined) : undefined;
 
   return (
-    <details className="blog">
+    <details className={styles.blog}>
       <summary>
         Developer Updates{' '}
         {isPriorityBlogPosted ? (
@@ -28,7 +28,7 @@ export default function Blog() {
           <></>
         )}
       </summary>
-      <ul className="blog">
+      <ul>
         {isValidating
           ? 'Loading...'
           : data?.entries.slice(0, previewLimit).map((e) => (
