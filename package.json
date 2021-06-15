@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
     "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@au5ton/use-atom-feed": "^1.0.3",
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.11",
+    "eslint": "^7.28.0",
+    "eslint-config-next": "^11.0.0",
     "typescript": "^4.3.2"
   }
 }

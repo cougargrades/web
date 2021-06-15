@@ -84,7 +84,7 @@ export default function Home() {
                   Office of the General Counsel
                 </a>
                 , among other official sources. To promote trust and
-                collaboration, we've published all the data used by our site so
+                collaboration, we&apos;ve published all the data used by our site so
                 anyone can inspect it and use it in their own creative ways.
               </p>
               <p>
@@ -105,7 +105,7 @@ export default function Home() {
               </h3>
               <p>
                 CougarGrades is open-source and developed by students past and
-                present. Whether you're interested in contributing to or
+                present. Whether you&apos;re interested in contributing to or
                 repurposing our code, check us out on Github!
               </p>
               <p>
