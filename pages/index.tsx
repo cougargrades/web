@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Layout from '../components/layout'
 import Blog from '../components/blog'
+import slotmachine from '../public/slotmachine.svg'
+import wordcloud from '../public/wordcloud.svg'
 import styles from '../styles/Homepage.module.scss'
 
 export default function Home() {
@@ -33,13 +35,11 @@ export default function Home() {
             </section>
           </r-cell>
           <r-cell span="5.." span-s="row">
-            <figure className={styles.visaid}>
+            <figure>
               <Image
-                src="/slotmachine.svg"
+                src={slotmachine}
                 alt="Top 48 most enrolled courses at UH."
-                className="visaid slotmachine"
-                width={550}
-                height={325}
+                className={styles.visaid}
               />
               <figcaption>Top 48 most enrolled courses at UH.</figcaption>
             </figure>
@@ -67,11 +67,9 @@ export default function Home() {
           <r-cell span="5.." span-s="row">
             <figure>
               <Image
-                src="/wordcloud.svg"
+                src={wordcloud}
                 alt="Top 100 unique instructor lastnames, weighted by number of sections taught."
-                className="visaid slotmachine"
-                width={512}
-                height={384}
+                className={styles.visaid}
               />
               <figcaption>Top 100 unique instructor lastnames.</figcaption>
             </figure>

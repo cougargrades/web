@@ -21,6 +21,14 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
+      <div className="row">
+        <div className="col">
+          1 of 2
+        </div>
+        <div className="col">
+          2 of 2
+        </div>
+      </div>
       <r-grid columns="8">
         <r-cell span="1-6" span-s="row">
           <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
