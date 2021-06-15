@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { FirebaseAppProvider } from 'reactfire'
 import { firebaseConfig } from '../lib/environment';
-import '@cougargrades/raster/raster.grid.css' // TODO: comment
 import 'normalize.css/normalize.css'
 import '@exampledev/new.css/new.css'
 import '../styles/globals.scss'

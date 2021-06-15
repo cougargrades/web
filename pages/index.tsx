@@ -10,11 +10,9 @@ export default function Home() {
   return (
     <Layout>
       <main className={styles.main}>
-        <r-grid columns="8">
-          <r-cell span="row">
-            <Blog />
-          </r-cell>
-          <r-cell span="1-4" span-s="row">
+        <Blog />
+        <div className="row g-0">
+          <div className="col-sm-6">
             <section>
               <h2>Find every course.</h2>
               <p>
@@ -33,8 +31,8 @@ export default function Home() {
                 <Link href="/courses"><a className="btn btn-adaptive">Search Courses</a></Link>
               </p>
             </section>
-          </r-cell>
-          <r-cell span="5.." span-s="row">
+          </div>
+          <div className="col-sm-6">
             <figure>
               <Image
                 src={slotmachine}
@@ -43,8 +41,8 @@ export default function Home() {
               />
               <figcaption>Top 48 most enrolled courses at UH.</figcaption>
             </figure>
-          </r-cell>
-          <r-cell span="1-4" span-s="row">
+          </div>
+          <div className="col-sm-6">
             <section className="instructors">
               <h2>Know your instructors.</h2>
               <p>
@@ -63,8 +61,8 @@ export default function Home() {
                 <Link href="/instructors"><a className="btn btn-adaptive">Search Instructors</a></Link>
               </p>
             </section>
-          </r-cell>
-          <r-cell span="5.." span-s="row">
+          </div>
+          <div className="col-sm-6">
             <figure>
               <Image
                 src={wordcloud}
@@ -73,52 +71,48 @@ export default function Home() {
               />
               <figcaption>Top 100 unique instructor lastnames.</figcaption>
             </figure>
-          </r-cell>
-          <r-cell span="row" span-s="row">
-            <section>
-              <h3>Public data. Open data.</h3>
-              <p>
-                We use data sourced via the{' '}
-                <em>Texas Public Information Act</em> and provided by the UH{' '}
-                <a href="https://www.uh.edu/legal-affairs/general-counsel/texas-public-information/">
-                  Office of the General Counsel
-                </a>
-                , among other official sources. To promote trust and
-                collaboration, we&apos;ve published all the data used by our site so
-                anyone can inspect it and use it in their own creative ways.
-              </p>
-              <p>
-                <a
-                  className="btn btn-adaptive"
-                  href="https://github.com/cougargrades/publicdata"
-                >
-                  View Resources &rarr;
-                </a>
-              </p>
-            </section>
-          </r-cell>
-          <r-cell span="row" span-s="row">
-            <section>
-              <h3>
-                By students. For students.{' '}
-                <span className={styles.hearts}>&hearts;</span>
-              </h3>
-              <p>
-                CougarGrades is open-source and developed by students past and
-                present. Whether you&apos;re interested in contributing to or
-                repurposing our code, check us out on Github!
-              </p>
-              <p>
-                <a
-                  className="btn btn-adaptive"
-                  href="https://github.com/orgs/cougargrades/people"
-                >
-                  View Collaborators &rarr;
-                </a>
-              </p>
-            </section>
-          </r-cell>
-        </r-grid>
+          </div>
+          <section>
+            <h3>Public data. Open data.</h3>
+            <p>
+              We use data sourced via the{' '}
+              <em>Texas Public Information Act</em> and provided by the UH{' '}
+              <a href="https://www.uh.edu/legal-affairs/general-counsel/texas-public-information/">
+                Office of the General Counsel
+              </a>
+              , among other official sources. To promote trust and
+              collaboration, we&apos;ve published all the data used by our site so
+              anyone can inspect it and use it in their own creative ways.
+            </p>
+            <p>
+              <a
+                className="btn btn-adaptive"
+                href="https://github.com/cougargrades/publicdata"
+              >
+                View Resources &rarr;
+              </a>
+            </p>
+          </section>
+          <section>
+            <h3>
+              By students. For students.{' '}
+              <span className={styles.hearts}>&hearts;</span>
+            </h3>
+            <p>
+              CougarGrades is open-source and developed by students past and
+              present. Whether you&apos;re interested in contributing to or
+              repurposing our code, check us out on Github!
+            </p>
+            <p>
+              <a
+                className="btn btn-adaptive"
+                href="https://github.com/orgs/cougargrades/people"
+              >
+                View Collaborators &rarr;
+              </a>
+            </p>
+          </section>
+        </div>
       </main>
     </Layout>
   )

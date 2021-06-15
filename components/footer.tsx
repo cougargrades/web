@@ -29,8 +29,8 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
           2 of 2
         </div>
       </div>
-      <r-grid columns="8">
-        <r-cell span="1-6" span-s="row">
+      <div className="row g-0">
+        <div className="col-sm-10">
           <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
           <p>
             Version: {version}, Commit:{' '}
@@ -65,8 +65,8 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               </em>
             </p>
           )} */}
-        </r-cell>
-        <r-cell className={styles.sponsor} span="7.." span-s="row">
+        </div>
+        <div className={`col-sm-2 ${styles.sponsor}`}>
           <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
             <Image 
               src="/powered-by-vercel.svg"
@@ -75,8 +75,8 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               height={44}
             />
           </a>
-        </r-cell>
-      </r-grid>
+        </div>
+      </div>
     </footer>
   );
 }
