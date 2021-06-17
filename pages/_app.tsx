@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { FirebaseAppProvider } from 'reactfire'
-import { firebaseConfig } from '../lib/environment';
+import { firebaseConfig } from '../lib/environment'
 import 'normalize.css/normalize.css'
 import '@exampledev/new.css/new.css'
 import '../styles/globals.scss'
