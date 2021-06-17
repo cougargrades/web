@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 import rosetta from 'rosetta'
 import * as config from '../i18n/config'
 
+/**
+ * See: https://github.com/lukeed/rosetta
+ */
 export function useRosetta() {
   // get the locale defined by Next.js
   const locale = useRouter().locale;
