@@ -11,7 +11,7 @@ export function useRosetta() {
   // create and maintain an instance of rosetta
   const [stone, _] = useState(rosetta(config));
   // set the default locale, but replace hyphens with underscores because variable names cant contain hyphens in JS
-  if(locale) stone.locale(locale.replaceAll('-','_'));
+  stone.locale(locale.replace('-','_'));
   // return the instance
   return stone;
 }
