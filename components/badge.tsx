@@ -6,7 +6,7 @@ interface BadgeProps {
   className?: string;
   title?: string;
   style?: CSSProperties;
-  children: any;
+  children: React.ReactNode;
 }
 
 export function Badge(props: BadgeProps) {
