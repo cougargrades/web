@@ -9,7 +9,9 @@ export default function About() {
         <meta name="description" content="About page" />
       </Head>
       <Layout>
-        <div>About</div>
+        <div className="new-container">
+          <h2>About</h2>
+        </div>
       </Layout>
     </>
   );

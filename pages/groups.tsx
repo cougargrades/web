@@ -9,7 +9,9 @@ export default function Groups() {
         <meta name="description" content="Groups page" />
       </Head>
       <Layout>
-        <div>Groups</div>
+        <div className="new-container">
+          <h2>Groups</h2>
+        </div>
       </Layout>
     </>
   );

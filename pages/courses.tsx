@@ -9,7 +9,9 @@ export default function Courses() {
         <meta name="description" content="Courses page" />
       </Head>
       <Layout>
-        <div>Courses</div>
+        <div className="new-container">
+          <h2>Courses</h2>
+        </div>
       </Layout>
     </>
   );

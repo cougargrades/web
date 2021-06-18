@@ -19,17 +19,16 @@ export const NavBubble = withStyles(theme => ({
     lineHeight: 1.5,
     
     color: '#0070f3',
-    backgroundColor: '#e6ebf1',
-    //transition: 'background-color 200ms',
+    backgroundColor: theme.palette.type === 'dark' ? '#2b2b2b' : '#e6ebf1',
     '&:active': {
       outline: 0,
     },
     '&:focus': {
       outline: 0,
-      backgroundColor: '#dfe6ed', 
+      backgroundColor: theme.palette.type === 'dark' ? '##323232' : '#dfe6ed', 
     },
     '&:hover': {
-      backgroundColor: '#dfe6ed'
+      backgroundColor: theme.palette.type === 'dark' ? '#323232' : '#dfe6ed',
     },
   },
 }))(Button);

@@ -9,7 +9,9 @@ export default function Instructors() {
         <meta name="description" content="Instructors page" />
       </Head>
       <Layout>
-        <div>Instructors</div>
+        <div className="new-container">
+          <h2>Instructors</h2>
+        </div>
       </Layout>
     </>
   );
