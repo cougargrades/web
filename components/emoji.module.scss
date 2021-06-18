@@ -1,5 +1,10 @@
 
 // see: https://gitlab.com/gitlab-org/gitlab-foss/-/issues/29557#note_25544684
 .emoji {
+  display: inline;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  // Emojis render differently across browsers
+  // I actually answered my first question on StackOverflow because of this issue
+  // See: https://stackoverflow.com/a/68041550/4852536
+  letter-spacing: 0.5em;
 }

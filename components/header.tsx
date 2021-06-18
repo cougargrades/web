@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
+import { Emoji } from './emoji'
 import styles from './header.module.scss'
 
 export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation>{children}</Button></Link>
@@ -16,12 +17,12 @@ export default function Header() {
           </h3>
         </hgroup>
         <nav className={styles.nav}>
-          <NavLink href="/">🏠 Home</NavLink>
-          <NavLink href="/courses">📚 Courses</NavLink>
-          <NavLink href="/instructors">👩‍🏫 Instructors</NavLink>
-          <NavLink href="/groups">🗃️ Groups</NavLink>
-          <NavLink href="/about">👋 About</NavLink>
-          <Button variant="contained" disabled disableElevation>🔥 Disabled</Button>
+          <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
+          <NavLink href="/courses"><Emoji label="books" symbol="📚" />Courses</NavLink>
+          <NavLink href="/instructors"><Emoji label="teacher" symbol="👩‍🏫" />Instructors</NavLink>
+          <NavLink href="/groups"><Emoji label="file box" symbol="🗃️" />Groups</NavLink>
+          <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
+          <Button variant="contained" disabled disableElevation><Emoji label="fire" symbol="🔥" />Disabled</Button>
         </nav>
       </div>
     </header>

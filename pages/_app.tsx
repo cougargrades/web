@@ -18,7 +18,7 @@ export default function MyApp({ Component, pageProps }) {
       <Head>
         {/* Core */}
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         {/* Iconography */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
