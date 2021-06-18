@@ -1,14 +1,28 @@
-export default function Error({ statusCode }) {
+import { NextPageContext } from 'next'
+import styles from '../styles/Error.module.scss'
+
+interface ErrorProps {
+  statusCode: number;
+  title: string;
+}
+
+export default function ErrorPage(props: ErrorProps) {
+  const { statusCode, title } = props
   return (
-    <p>
-      {statusCode
-        ? `An error ${statusCode} occurred on server`
-        : 'An error occurred on client'}
-    </p>
+    <div className={styles.error}>
+      <div>
+        <h1>{statusCode}</h1>
+        <div className={styles.title}>
+          <h2>{title}</h2>
+        </div>
+      </div>
+    </div>
   )
 }
 
-Error.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
+ErrorPage.getInitialProps = (ctx: NextPageContext): ErrorProps => {
+  const { res, err } = ctx;
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+  const title = (res && res.statusMessage) ? res.statusMessage : err ? err.message : 'This page could not be found.';
+  return { statusCode, title }
 }
