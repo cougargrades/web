@@ -26,6 +26,7 @@ export function Collaborator(props: CollaboratorProps) {
           placeholder="blur"
           blurDataURL={props.avatar_blurhash.dataURI}
         />
+        {/* <img alt={`${props.name}'s avatar`} src={props.avatar_url} /> */}
       </a>
       <div className={styles.user}>
         <span className={styles.name}>{props.name}</span>

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import { ExternalLink } from '../components/link'
 import { Collaborator, CollaboratorProps } from '../components/collaborator'
+import styles from '../styles/About.module.scss'
 
 export default function About() {
   const isSingle = (x?: any[]) => Array.isArray(x) && x.length === 1;
@@ -15,21 +16,14 @@ export default function About() {
       <div className="new-container">
         <h2>About</h2>
         <h3>Resources</h3>
-        <p className="links">
-          <ExternalLink href="#">Source Code</ExternalLink>
-          {/* <LinkButton variant="adaptive" href="https://github.com/cougargrades/web">
-             Source Code
-          </LinkButton>
-          <LinkButton variant="adaptive" href="https://github.com/cougargrades/api">
-            Developer API
-          </LinkButton>
-          <LinkButton variant="adaptive" href="https://github.com/cougargrades/publicdata">
-            Public Data
-          </LinkButton> */}
+        <p className={styles.links}>
+          <ExternalLink href="https://github.com/cougargrades/web">Source Code</ExternalLink>
+          <ExternalLink href="https://github.com/cougargrades/api">Developer API</ExternalLink>
+          <ExternalLink href="https://github.com/cougargrades/publicdata">Public Data</ExternalLink>
         </p>
         <h3>Developers</h3>
         <div
-          className="collaborators-wrap"
+          className={styles.collaborators_wrap}
           style={isSingle(data?.public_members) ? { justifyContent: 'flex-start' } : {}}
         >
           {isValidating
@@ -107,7 +101,7 @@ export default function About() {
           {/* eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid */}
           <a
             href="#"
-            className="cryptedmail"
+            className={styles.cryptedmail}
             data-name="contact"
             data-domain="cougargrades"
             data-tld="io"
