@@ -1,8 +1,6 @@
 import Image from 'next/image'
-import Link from 'next/link'
-import Button from '@material-ui/core/Button'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import Blog from '../components/blog'
+import { InternalLink, ExternalLink } from '../components/link'
 import slotmachine from '../public/slotmachine.svg'
 import wordcloud from '../public/wordcloud.svg'
 import styles from '../styles/Homepage.module.scss'
@@ -108,7 +106,3 @@ export default function Home() {
     </div>
   )
 }
-
-export const InternalLink = ({ href, children }) => <Link href={href} passHref><Button className={styles.linkbutton} color="primary" variant="contained">{children}</Button></Link>
-
-export const ExternalLink = ({ href, children }) => <Link href={href} passHref><Button className={styles.linkbutton} color="primary" variant="contained" endIcon={<ArrowForwardIcon />}>{children}</Button></Link>
