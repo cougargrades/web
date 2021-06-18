@@ -1,3 +1,5 @@
+@import "../styles/vars.scss";
+
 .hero {
   margin-top: 0;
   margin-left: 0;
@@ -25,6 +27,24 @@
       padding-top: calc(var(--lineHeight) * -1);
       //font-variation-settings: 'wght' 300;
       font-weight: 300;
+    }
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0.25em 0;
+  margin-bottom: 32px;
+
+  a, button {
+    // positioning
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+
+    @media (prefers-color-scheme: light) {
+      background-color: #e9e9ef;
     }
   }
 }
