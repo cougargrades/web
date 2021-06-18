@@ -12,6 +12,8 @@
   "dependencies": {
     "@au5ton/use-atom-feed": "^1.0.3",
     "@exampledev/new.css": "^1.1.3",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "bootstrap": "^5.0.1",
     "firebase": "^8.6.7",
     "next": "11.0.0",

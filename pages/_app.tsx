@@ -1,5 +1,7 @@
 import Head from 'next/head'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { FirebaseAppProvider } from 'reactfire'
+import { useTheme } from '../lib/theme'
 import { firebaseConfig } from '../lib/environment'
 import 'normalize.css/normalize.css'
 import '@exampledev/new.css/new.css'
@@ -9,6 +11,7 @@ import '../styles/globals.scss'
 import '../styles/colors.scss'
 
 export default function MyApp({ Component, pageProps }) {
+  const theme = useTheme();
   return (
     <>
       <Head>
@@ -45,9 +48,11 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="twitter:creator" content="@author_handle" />
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg" />  */}
       </Head>
-      <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-        <Component {...pageProps} />
-      </FirebaseAppProvider>
+      <ThemeProvider theme={theme}>
+        <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+          <Component {...pageProps} />
+        </FirebaseAppProvider>
+      </ThemeProvider>
     </>
   );
 }

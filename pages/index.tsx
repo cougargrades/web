@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Button from '@material-ui/core/Button'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Layout from '../components/layout'
 import Blog from '../components/blog'
 import slotmachine from '../public/slotmachine.svg'
@@ -29,7 +31,7 @@ export default function Home() {
                 </div>
                 <br />
                 <p>
-                  <Link href="/courses"><a className="btn btn-adaptive">Search Courses</a></Link>
+                  <InternalLink href="/courses">Search Courses</InternalLink>
                 </p>
               </section>
             </div>
@@ -59,7 +61,7 @@ export default function Home() {
                 </div>
                 <br />
                 <p>
-                  <Link href="/instructors"><a className="btn btn-adaptive">Search Instructors</a></Link>
+                  <InternalLink href="/instructors">Search Instructors</InternalLink>
                 </p>
               </section>
             </div>
@@ -86,12 +88,7 @@ export default function Home() {
                 anyone can inspect it and use it in their own creative ways.
               </p>
               <p>
-                <a
-                  className="btn btn-adaptive"
-                  href="https://github.com/cougargrades/publicdata"
-                >
-                  View Resources &rarr;
-                </a>
+                <ExternalLink href="https://github.com/cougargrades/publicdata">View Resources</ExternalLink>
               </p>
             </section>
             <section>
@@ -105,12 +102,7 @@ export default function Home() {
                 repurposing our code, check us out on Github!
               </p>
               <p>
-                <a
-                  className="btn btn-adaptive"
-                  href="https://github.com/orgs/cougargrades/people"
-                >
-                  View Collaborators &rarr;
-                </a>
+                <ExternalLink href="https://github.com/orgs/cougargrades/people">View Collaborators</ExternalLink>
               </p>
             </section>
           </div>
@@ -119,3 +111,7 @@ export default function Home() {
     </Layout>
   )
 }
+
+export const InternalLink = ({ href, children }) => <Link href={href} passHref><Button className={styles.linkbutton} color="primary" variant="contained">{children}</Button></Link>
+
+export const ExternalLink = ({ href, children }) => <Link href={href} passHref><Button className={styles.linkbutton} color="primary" variant="contained" endIcon={<ArrowForwardIcon />}>{children}</Button></Link>
