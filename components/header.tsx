@@ -1,7 +1,40 @@
 import Link from 'next/link'
-import { Emoji } from './emoji'
+import Button from '@material-ui/core/Button'
+//import Icon from '@material-ui/core/Icon'
+import { withStyles } from '@material-ui/core/styles'
+//import { Emoji } from './emoji'
 import styles from './header.module.scss'
 import navbubble from './navbubble.module.scss'
+
+
+export const NavBubble = withStyles(theme => ({
+  root: {
+    textDecoration: 'none' ,
+    textTransform: 'none',
+    padding: '0.25em 0.75em',
+    paddingLeft: 'calc(0.75em + 4px)',
+    borderRadius: '8px',
+    fontWeight: 500,
+    fontSize: 'inherit',
+    lineHeight: 1.5,
+    
+    color: '#0070f3',
+    backgroundColor: '#e6ebf1',
+    //transition: 'background-color 200ms',
+    '&:active': {
+      outline: 0,
+    },
+    '&:focus': {
+      outline: 0,
+      backgroundColor: '#dfe6ed', 
+    },
+    '&:hover': {
+      backgroundColor: '#dfe6ed'
+    },
+  },
+}))(Button);
+
+export const NavBubbleLink = ({ href, children }) => <Link href={href} passHref><NavBubble>{children}</NavBubble></Link>
 
 export default function Header() {
   return (
@@ -15,21 +48,11 @@ export default function Header() {
           </h3>
         </hgroup>
         <nav className={navbubble.nav}>
-          <Link href="/">
-            <a><Emoji label="home" symbol="🏠" /> Home</a>
-          </Link>
-          <Link href="/courses">
-            <a><Emoji label="books" symbol="📚" /> Courses</a>
-          </Link>
-          <Link href="/instructors">
-            <a><Emoji label="teacher" symbol="👩‍🏫" /> Instructors</a>
-          </Link>
-          <Link href="/groups">
-            <a><Emoji label="card file box" symbol="🗃️" /> Groups</a>
-          </Link>
-          <Link href="/about">
-            <a><Emoji label="waving hand" symbol="👋" /> About</a>
-          </Link>
+          <NavBubbleLink href="/">🏠 Home</NavBubbleLink>
+          <NavBubbleLink href="/courses">📚 Courses</NavBubbleLink>
+          <NavBubbleLink href="/instructors">👩‍🏫 Instructors</NavBubbleLink>
+          <NavBubbleLink href="/groups">🗃️ Groups</NavBubbleLink>
+          <NavBubbleLink href="/about">👋 About</NavBubbleLink>
         </nav>
       </div>
     </header>

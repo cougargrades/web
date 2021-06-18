@@ -21,7 +21,7 @@ export default function Blog() {
       <summary>
         Developer Updates{' '}
         {isPriorityBlogPosted ? (
-          <Badge className={styles.new}>
+          <Badge extraClassNames={styles.new}>
             New {latestBlogPost?.updated.toLocaleDateString()}
           </Badge>
         ) : (

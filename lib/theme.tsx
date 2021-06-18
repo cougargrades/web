@@ -38,7 +38,7 @@ export function useTheme() {
             main: UHColors.uh_red,
           },
           secondary: {
-            main: '#f44336',
+            main: UHColors.uh_gold,
           },
           type: prefersDarkMode ? 'dark' : 'light',
         },

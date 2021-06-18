@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Tooltip from '@material-ui/core/Tooltip'
 import { buildArgs } from '../lib/environment'
 import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
@@ -25,7 +26,9 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
       <div className="new-container">
         <div className="row g-0">
           <div className="col-sm">
-            <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
+            <Tooltip title={`vercel env: ${vercelEnv}`} placement="top-start">
+              <h6>@cougargrades/web</h6>
+            </Tooltip>
             <p>
               Version: {version}, Commit:{' '}
               <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
@@ -62,12 +65,14 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
           </div>
           <div className="col-sm">
             <div className={styles.sponsor}>
-              <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
-                <Image 
-                  src={sponsor}
-                  alt="Powered by Vercel"
-                />
-              </a>
+              <Tooltip title="CougarGrades.io is sponsored by Vercel">
+                <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
+                  <Image 
+                    src={sponsor}
+                    alt="Powered by Vercel"
+                  />
+                </a>
+              </Tooltip>
             </div>
           </div>
         </div>
