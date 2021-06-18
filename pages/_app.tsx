@@ -3,6 +3,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { FirebaseAppProvider } from 'reactfire'
 import { useTheme } from '../lib/theme'
 import { firebaseConfig } from '../lib/environment'
+import Layout from '../components/layout'
 import 'normalize.css/normalize.css'
 import '@exampledev/new.css/new.css'
 import 'bootstrap/dist/css/bootstrap-grid.css'
@@ -50,7 +51,9 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </FirebaseAppProvider>
       </ThemeProvider>
     </>
