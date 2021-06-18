@@ -12,7 +12,7 @@ interface BadgeProps {
 export function Badge(props: BadgeProps) {
   return (
     <span
-      className={styles.badge}
+      className={`${styles.badge} ${props.className}`}
       style={props.style}
       title={props.title}
     >
