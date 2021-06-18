@@ -3,6 +3,8 @@ import { FirebaseAppProvider } from 'reactfire'
 import { firebaseConfig } from '../lib/environment'
 import 'normalize.css/normalize.css'
 import '@exampledev/new.css/new.css'
+import 'bootstrap/dist/css/bootstrap-grid.css'
+import 'bootstrap/dist/css/bootstrap-utilities.css'
 import '../styles/globals.scss'
 import '../styles/colors.scss'
 

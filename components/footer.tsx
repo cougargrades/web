@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { buildArgs } from '../lib/environment'
+import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 
 export default function Footer(props: { hideDisclaimer?: boolean }) {
@@ -21,60 +22,54 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
-      <div className="row">
-        <div className="col">
-          1 of 2
-        </div>
-        <div className="col">
-          2 of 2
-        </div>
-      </div>
-      <div className="row g-0">
-        <div className="col-sm-10">
-          <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
-          <p>
-            Version: {version}, Commit:{' '}
-            <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
-              {typeof commitHash === 'string'
-                ? commitHash.substring(0, 7)
-                : commitHash}
-            </a>
-            <br />
-            Build date:{' '}
-            <span
-              title={new Date(
-                buildDate,
-              ).toUTCString()}
-            >
-              {new Date(
-                buildDate,
-              ).toLocaleDateString()}
-            </span>
-            <br />
-            <a href="https://github.com/cougargrades/web/wiki/Feedback">
-              Got feedback?
-            </a>
-          </p>
-          {/* {props.hideDisclaimer ? (
-            <></>
-          ) : (
+      <div className="new-container">
+        <div className="row g-0">
+          <div className="col-sm">
+            <h6 title={`vercel env: ${vercelEnv}`}>@cougargrades/web</h6>
             <p>
-              <em>
-                Not affiliated with the University of Houston. Data is sourced
-                directly from the University of Houston.
-              </em>
+              Version: {version}, Commit:{' '}
+              <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
+                {typeof commitHash === 'string'
+                  ? commitHash.substring(0, 7)
+                  : commitHash}
+              </a>
+              <br />
+              Build date:{' '}
+              <span
+                title={new Date(
+                  buildDate,
+                ).toUTCString()}
+              >
+                {new Date(
+                  buildDate,
+                ).toLocaleDateString()}
+              </span>
+              <br />
+              <a href="https://github.com/cougargrades/web/wiki/Feedback">
+                Got feedback?
+              </a>
             </p>
-          )} */}
-        </div>
-        <div className={`col-sm-2 ${styles.sponsor}`}>
-          <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
-            <Image 
-              src="/powered-by-vercel.svg"
-              alt="Powered by Vercel"
-              width={212}
-              height={44}
-            />
-          </a>
+            {/* {props.hideDisclaimer ? (
+              <></>
+            ) : (
+              <p>
+                <em>
+                  Not affiliated with the University of Houston. Data is sourced
+                  directly from the University of Houston.
+                </em>
+              </p>
+            )} */}
+          </div>
+          <div className="col-sm">
+            <div className={styles.sponsor}>
+              <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
+                <Image 
+                  src={sponsor}
+                  alt="Powered by Vercel"
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,4 +1,5 @@
 
+
 // Adapted from: https://github.com/xz/new.css/blob/7bec731d34c09a21434b242c333e95d2f7268cee/new.css#L172-L191
 .footer {
   background: var(--nc-bg-2);
@@ -7,7 +8,7 @@
 
   /* This sets the right and left margins to cancel out the body's margins. It's width is still the same, but the background stretches across the page's width. */
 
-  margin: 2rem calc(0px - (50vw - 50%)) -2rem;
+  margin: 0;
 
   /* Shorthand for:
   margin-top: -2rem;
@@ -29,11 +30,16 @@
 
 .sponsor {
   display: flex;
-  justify-content: flex-end;
+  height: 100%;
+  justify-content: flex-start;
   align-items: center;
 
-  img {
+  @media (min-width: 576px) {
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  a > * {
     width: 80%;
-    max-width: 50vw;
   }
 }
