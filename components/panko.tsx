@@ -22,7 +22,7 @@ export function PankoRow() {
 }
 
 export function generateBreadcrumbs(path: string) {
-  return path.split('/').map((value, index) => {
+  return path.split('/').map((value, index, array) => {
     const key = `${index}|${value}`
     if(index === 0) {
       return <span key={key}>Home</span>
@@ -38,6 +38,11 @@ export function generateBreadcrumbs(path: string) {
         return <span key={key}><Emoji label="file box" symbol="🗃️" />Groups</span>
       }
     }
-    return <span key={key}>{value}</span>
+    if(index === 2) {
+      if(array[1].toLowerCase() === 'g') {
+        return <span key={key}>Group ID #{decodeURI(value)}</span>
+      }
+    }
+    return <span key={key}>{decodeURI(value)}</span>
   })
 }

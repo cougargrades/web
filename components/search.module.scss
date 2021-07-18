@@ -1,5 +1,33 @@
 .textField {
   div {
     background-color: #fff;
+    @media (prefers-color-scheme: dark) {
+      background-color: #1A1A1A;
+    }
   }
+}
+
+.groupLabel {
+  //
+}
+
+.searchListItem {
+  display: flex;
+  overflow: hidden;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.badgeList {
+  span {
+    margin-left: 0.25rem;
+  }
+}
+
+.highlight {
+  font-weight: 700;
+  /* Overwrite new.css <mark> */
+  padding: 0;
+  background-color: unset;
+  color: unset;
 }
