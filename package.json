@@ -29,6 +29,7 @@
     "timeago-react": "^3.0.2"
   },
   "devDependencies": {
+    "@au5ton/snooze": "^1.0.3",
     "@types/react": "^17.0.11",
     "eslint": "^7.28.0",
     "eslint-config-next": "^11.0.0",
