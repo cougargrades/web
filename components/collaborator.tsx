@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from './collaborator.module.scss';
+import styles from './collaborator.module.scss'
 
 export interface CollaboratorProps {
   id: number;
