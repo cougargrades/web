@@ -11,6 +11,7 @@ import { searchInputAtom } from '../lib/recoil'
 import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
 import { Emoji } from './emoji'
 import { Badge } from './badge'
+import { isMobile } from '../lib/util'
 import styles from './search.module.scss'
 
 type SearchListItemProps = React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
@@ -56,7 +57,7 @@ export default function SearchBar() {
   const handleSelect = () => {
     if(elementRef.current !== null) {
       // improve mobile UX by moving input field to the top of the viewport
-      window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top)
+      if(isMobile) window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top)
     }
   }
 
