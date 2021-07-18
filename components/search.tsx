@@ -47,9 +47,18 @@ export default function SearchBar() {
   const router = useRouter();
   useEffect(() => {
     if(value !== null) {
+      // unselect the searchbar after choosing a result
+      elementRef.current.blur();
       router.push(value.href)
     }
   }, [value])
+
+  const handleSelect = () => {
+    if(elementRef.current !== null) {
+      // improve mobile UX by moving input field to the top of the viewport
+      window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top)
+    }
+  }
 
   // For creating search result items
   const SearchListItem = (props: SearchListItemProps) => {
@@ -101,6 +110,7 @@ export default function SearchBar() {
           {...params}
           inputRef={elementRef}
           className={styles.textField}
+          onSelect={handleSelect}
           label="🔍 Search"
           helperText="Please enter course or instructor. Example: ENGL 1304, Renu Khator"
           type="search"
