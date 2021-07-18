@@ -39,6 +39,8 @@
   margin-bottom: 32px;
 
   a, button {
+    color: rgba(0, 0, 0, 0.87);
+    
     // positioning
     margin-bottom: 0.5em;
     margin-right: 0.5em;
@@ -46,6 +48,15 @@
 
     @media (prefers-color-scheme: light) {
       background-color: #e9e9ef;
+      &:hover {
+        background-color: #e9e9ef;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      background-color: #e0e0e0;
+      &:hover {
+        background-color: #e0e0e0;
+      }
     }
   }
 }

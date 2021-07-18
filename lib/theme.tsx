@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@material-ui/core/styles'
 import red from '@material-ui/core/colors/red';
 
 export function useTheme() {
@@ -8,7 +8,7 @@ export function useTheme() {
 
   const theme = useMemo(
     () =>
-      createMuiTheme({
+      createTheme({
         typography: {
           fontFamily: `'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
           h1: {
@@ -40,7 +40,7 @@ export function useTheme() {
           secondary: {
             main: UHColors.uh_gold,
           },
-          type: prefersDarkMode ? 'dark' : 'light',
+          mode: prefersDarkMode ? 'dark' : 'light',
         },
       }),
     [prefersDarkMode],

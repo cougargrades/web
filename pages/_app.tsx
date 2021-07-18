@@ -1,11 +1,14 @@
+import { useEffect } from 'react'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { FirebaseAppProvider } from 'reactfire'
+import { RecoilRoot } from 'recoil'
 import { useTheme } from '../lib/theme'
 import { firebaseConfig } from '../lib/environment'
 import Layout from '../components/layout'
 import 'normalize.css/normalize.css'
-import '@exampledev/new.css/new.css'
+//import '@exampledev/new.css/new.css'
+import '../styles/new.css';
 import 'bootstrap/dist/css/bootstrap-grid.css'
 import 'bootstrap/dist/css/bootstrap-utilities.css'
 import '../styles/globals.scss'
@@ -51,9 +54,11 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <RecoilRoot>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </RecoilRoot>
         </FirebaseAppProvider>
       </ThemeProvider>
     </>

@@ -1,11 +1,22 @@
 import Image from 'next/image'
+import { useRecoilState } from 'recoil'
 import Blog from '../components/blog'
-import { InternalLink, ExternalLink } from '../components/link'
+import { ExternalLink } from '../components/link'
+import { searchInputAtom } from '../lib/recoil'
+import Button from '@material-ui/core/Button'
 import slotmachine from '../public/slotmachine.svg'
 import wordcloud from '../public/wordcloud.svg'
 import styles from '../styles/Homepage.module.scss'
 
 export default function Home() {
+  const [searchInputRef, _] = useRecoilState(searchInputAtom)
+
+  const focusSearchInput = () => {
+    if(searchInputRef !== null) {
+      searchInputRef.focus();
+    }
+  }
+
   return (
     <div className="new-container">
       <main className={styles.main}>
@@ -27,7 +38,7 @@ export default function Home() {
               </div>
               <br />
               <p>
-                <InternalLink href="/courses">Search Courses</InternalLink>
+                <Button color="primary" variant="contained" onClick={focusSearchInput}>Search Courses</Button>
               </p>
             </section>
           </div>
@@ -57,7 +68,7 @@ export default function Home() {
               </div>
               <br />
               <p>
-                <InternalLink href="/instructors">Search Instructors</InternalLink>
+                <Button color="primary" variant="contained" onClick={focusSearchInput}>Search Instructors</Button>
               </p>
             </section>
           </div>

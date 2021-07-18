@@ -14,7 +14,6 @@ export interface CollaboratorProps {
 }
 
 export function Collaborator(props: CollaboratorProps) {
-  console.log(props)
   return (
     <div className={styles.collaborator}>
       <a href={props.html_url}>
