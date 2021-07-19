@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container'
 import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
+import { useRosetta } from '../../lib/i18n'
 
 export interface CourseProps {
   courseName: string,
@@ -12,11 +13,12 @@ export interface CourseProps {
 }
 
 export default function IndividualCourse({ courseName, description }: CourseProps) {
+  const stone = useRosetta()
   return (
     <>
     <Head>
       <title>{courseName} / CougarGrades.io</title>
-      <meta name="description" content={`${courseName} (${description}) is a course at the University of Houston. View grade distribution data at CougarGrades.io.`} />
+      <meta name="description" content={stone.t('meta.course.description', { courseName, description })} />
     </Head>
     <Container>
       <PankoRow />
