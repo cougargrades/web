@@ -54,7 +54,7 @@ export function group2Result(data: Group): SearchResult {
     href: `/g/${data.identifier}`,
     type: 'group',
     group: '🗃️ Groups',
-    title: data.name,
+    title: `${data.name} (${data.identifier})`,
     badges: [],
   };
 }
