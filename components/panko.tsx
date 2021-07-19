@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import IosShareIcon from '@material-ui/icons/IosShare'
 import { copyText } from '../lib/clipboard'
+import { isMobile } from '../lib/util'
 import { Emoji } from './emoji'
 import styles from './panko.module.scss'
 
@@ -54,7 +55,7 @@ export function PankoRow() {
           autoHideDuration={10*6000}
           onClose={() => setOpen(false)}
           message="✓ Copied link"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          anchorOrigin={{ vertical: isMobile() ? 'bottom' : 'top', horizontal: 'right' }}
           action={<>
           <IconButton
             size="small"

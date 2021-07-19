@@ -47,13 +47,16 @@ export default function SearchBar() {
 
   // For responding to searches and redirecting
   const router = useRouter();
-  useEffect(() => {
-    if(value !== null) {
+  const handleChange = (_, x: string | SearchResult) => {
+    if(typeof x !== 'string' && x !== null) {
+      // update the state
+      setValue(x)
       // unselect the searchbar after choosing a result
-      elementRef.current.blur();
-      router.push(value.href)
+      elementRef.current.blur()
+      // redirect to the selected result
+      router.push(x.href)
     }
-  }, [value])
+  }
 
   // improve mobile UX by moving input field to the top of the viewport
   const handleSelect = () => {
@@ -88,15 +91,15 @@ export default function SearchBar() {
   }
 
   return (
-    <Autocomplete
+    <Autocomplete<SearchResult>
       openOnFocus
       autoHighlight
-      freeSolo
+      //freeSolo
       classes={{ groupLabel: styles.groupLabel }}
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
-      onChange={(_, x) => { if(typeof x !== 'string') setValue(x) }}
+      onChange={handleChange}
       onInputChange={(_, x) => setInputValue(x)}
       value={value}
       inputValue={inputValue}
