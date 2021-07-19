@@ -1,11 +1,14 @@
-import { useEffect } from 'react'
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import { ThemeProvider } from '@material-ui/core/styles'
-import { FirebaseAppProvider } from 'reactfire'
-import { RecoilRoot } from 'recoil'
+//import { FirebaseAppProvider } from 'reactfire'
+const FirebaseAppProvider = dynamic(() => import('../lib/lazy').then((mod) => mod.FirebaseAppProviderWrapper))
+//import { RecoilRoot } from 'recoil'
+const RecoilRoot = dynamic(() => import('recoil').then((mod) => mod.RecoilRoot))
 import { useTheme } from '../lib/theme'
-import { firebaseConfig } from '../lib/environment'
-import Layout from '../components/layout'
+
+//import Layout from '../components/layout'
+const Layout = dynamic(() => import('../components/layout'))
 import 'normalize.css/normalize.css'
 //import '@exampledev/new.css/new.css'
 import '../styles/new.css';
@@ -53,7 +56,7 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg" />  */}
       </Head>
       <ThemeProvider theme={theme}>
-        <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+        <FirebaseAppProvider>
           <RecoilRoot>
             <Layout>
               <Component {...pageProps} />
