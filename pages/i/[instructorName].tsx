@@ -1,14 +1,11 @@
 import React from 'react'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
-import { getQueryValue } from '../../lib/query'
+import { onlyOne, getPathsData } from '../../lib/ssg'
 
-export default function IndividualInstructor() {
-  const router = useRouter()
-  const instructorName = getQueryValue(router, 'instructorName')
-
+export default function IndividualInstructor({ instructorName }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
     <Head>
@@ -21,4 +18,20 @@ export default function IndividualInstructor() {
     </Container>
     </>
   )
+}
+
+// See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
+export const getStaticPaths: GetStaticPaths = async () => {
+  //const data = await getPathsData('instructors-getAllInstructorNames')
+
+  return {
+    paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
+    fallback: true
+  }
+}
+
+export const getStaticProps: GetStaticProps<{ instructorName: string }> = async (context) => {
+  const { params } = context;
+  const { instructorName } = params
+  return { props: { instructorName: onlyOne(instructorName) }};
 }
