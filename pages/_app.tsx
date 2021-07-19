@@ -14,6 +14,8 @@ import 'normalize.css/normalize.css'
 import '../styles/new.css';
 import 'bootstrap/dist/css/bootstrap-grid.css'
 import 'bootstrap/dist/css/bootstrap-utilities.css'
+import 'nprogress/nprogress.css'
+import '../styles/nprogress-custom.scss'
 import '../styles/globals.scss'
 import '../styles/colors.scss'
 

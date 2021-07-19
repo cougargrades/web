@@ -10,7 +10,6 @@ import { searchInputAtom } from '../lib/recoil'
 import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
-import 'nprogress/nprogress.css'
 import styles from './search.module.scss'
 
 type SearchListItemProps = React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
