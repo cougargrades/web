@@ -122,6 +122,7 @@ export default function SearchBar() {
       onClose={() => setOpen(false)}
       onChange={handleChange}
       onInputChange={(_, x) => setInputValue(x)}
+      onHighlightChange={(_, x) => { if(x !== null) router.prefetch(x.href) }}
       value={value}
       inputValue={inputValue}
       isOptionEqualToValue={(option, value) => option.key === value.key}
