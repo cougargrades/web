@@ -9,12 +9,14 @@ import { copyText } from '../lib/clipboard'
 import { Emoji } from './emoji'
 import styles from './panko.module.scss'
 
+const strip = (path: string) => path.split(/[?|#]/).slice(0,1).join('')
+
 export default function Panko() {
   const router = useRouter();
 
   return (
     <Breadcrumbs  aria-label="breadcrumb">
-      {generateBreadcrumbs(router.asPath)}
+      {generateBreadcrumbs(strip(router.asPath))}
     </Breadcrumbs>
   )
 }
