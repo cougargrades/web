@@ -1,7 +1,13 @@
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import IosShareIcon from '@material-ui/icons/IosShare'
+import { copyText } from '../lib/clipboard'
 import { Emoji } from './emoji'
-
+import styles from './panko.module.scss'
 
 export default function Panko() {
   const router = useRouter();
@@ -14,9 +20,51 @@ export default function Panko() {
 }
 
 export function PankoRow() {
+  const [open, setOpen] = useState(false);
+
+  const handleShare = async () => {
+    const isMac = navigator.userAgent.toLowerCase().indexOf('macintosh') >= 0;
+    if(navigator.share && ! isMac) {
+      // Web Share API is supported
+      navigator.share({
+        title: document.title,
+        url: window.location.href
+      })
+      .then(() => {})
+      .catch(() => {})
+    }
+    else {
+      // Fallback
+      await copyText(window.location.href);
+      setOpen(true);
+    }
+  }
+
   return (
-    <div className="new-container">
+    <div className={`new-container ${styles.pankoRow}`}>
       <Panko />
+      <div>
+        <IconButton color="primary" aria-label="Share" onClick={handleShare}>
+          <IosShareIcon />
+        </IconButton>
+        <Snackbar
+          open={open}
+          autoHideDuration={10*6000}
+          onClose={() => setOpen(false)}
+          message="✓ Copied link"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          action={<>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+          </>}
+        />
+      </div>
     </div>
   )
 }
