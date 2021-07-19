@@ -71,7 +71,8 @@ export default function SearchBar() {
   const handleChange = (_, x: string | SearchResult) => {
     if(typeof x !== 'string' && x !== null) {
       // update the state
-      setValue(x)
+      setInputValue(x.title)
+      setValue(null)
       // unselect the searchbar after choosing a result
       elementRef.current.blur()
       // redirect to the selected result
@@ -112,10 +113,10 @@ export default function SearchBar() {
   }
 
   return (
-    <Autocomplete<SearchResult>
+    <Autocomplete<SearchResult, undefined, undefined, boolean | undefined>
       openOnFocus
       autoHighlight
-      //freeSolo
+      freeSolo
       classes={{ groupLabel: styles.groupLabel }}
       open={open}
       onOpen={() => setOpen(true)}
@@ -138,7 +139,7 @@ export default function SearchBar() {
           className={styles.textField}
           onSelect={handleSelect}
           label="🔍 Search"
-          helperText="Please enter course or instructor. Example: ENGL 1304, Renu Khator"
+          helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, First Year Writing`}
           type="search"
           variant="outlined"
           fullWidth
