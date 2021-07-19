@@ -3,13 +3,13 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
-import { getQueryValue } from '../../lib/query'
 
 export default function IndividualCourse() {
   // router.query is inaccessible on the first render, bad for SEO
   // See: https://github.com/vercel/next.js/discussions/11484#discussioncomment-60563
-  const router = useRouter()
-  const courseName = getQueryValue(router, 'courseName')
+  const { query, isReady } = useRouter()
+  const { courseName } = query
+  if(!isReady) return <></>;
 
   return (
     <>
