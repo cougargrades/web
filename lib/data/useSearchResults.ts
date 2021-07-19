@@ -1,7 +1,9 @@
-import React, { useState, useEffect, CSSProperties } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useFirestore, useFirestoreCollectionData } from 'reactfire'
+import { Course, Instructor, Group } from '@cougargrades/types'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { randRange } from '../util'
-import { SWRResponse } from './SWRResponse'
+import { Observable } from './Observable'
 
 export interface SearchResultBadge {
   key: string;
@@ -18,84 +20,70 @@ export interface SearchResult {
   badges: SearchResultBadge[]
 }
 
-export function useSearchResults(inputValue: string): SWRResponse<SearchResult[]> {
-  const [isLoading, setIsLoading] = useState(true)
-  
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000)
-  }, [])
-  
+export function course2Result(data: Course): SearchResult {
   return {
-    data: isLoading ? [] : data.filter(e => e.title.toLowerCase().includes(inputValue.toLowerCase())),
-    error: undefined,
-    isValidating: isLoading
-  }
+    key: data._path,
+    href: `/c/${data._id}`,
+    type: 'course',
+    group: '📚 Courses',
+    title: `${data._id}: ${data.description}`,
+    badges: [
+      { key: 'gpa', text: `${data.GPA.average.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) },
+      { key: 'sd', text: `${data.GPA.standardDeviation.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }
+    ],
+  };
 }
 
-const gpa_1 = randRange(1.0, 4.0);
-const gpa_2 = randRange(1.0, 4.0);
-const sd_1 = randRange(0.14, 0.43);
-const sd_2 = randRange(0.14, 0.43);
+export function instructor2Result(data: Instructor): SearchResult {
+  return {
+    key: data._path,
+    href: `/i/${data._id}`,
+    type: 'instructor',
+    group: '👩‍🏫 Instructors',
+    title: data._id,
+    badges: [
+      { key: 'gpa', text: `${data.GPA.average.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) },
+      { key: 'sd', text: `${data.GPA.standardDeviation.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }
+    ],
+  };
+}
 
-const data: SearchResult[] = [
-  {
-    key: '/catalog/COSC 2430',
-    href: '/c/COSC 2430',
-    type: 'course',
-    group: '📚 Courses',
-    title: 'COSC 2430',
-    badges: [
-      { key: 'gpa', text: `${gpa_1.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(gpa_1)) },
-      { key: 'sd', text: `${sd_1.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(sd_1)) }
-    ],
-  },
-  {
-    key: '/catalog/MATH 3336',
-    href: '/c/MATH 3336',
-    type: 'course',
-    group: '📚 Courses',
-    title: 'MATH 3336',
-    badges: [
-      { key: 'gpa', text: `${gpa_2.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(gpa_2)) },
-      { key: 'sd', text: `${sd_2.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(sd_2)) }
-    ],
-  },
-  {
-    key: '/instructor/Reynolds, Ryan',
-    href: '/i/Reynolds, Ryan',
-    type: 'instructor',
-    group: '👩‍🏫 Instructors',
-    title: 'Reynolds, Ryan',
-    badges: [
-      { key: 'gpa', text: `${gpa_1.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(gpa_1)) },
-      { key: 'sd', text: `${sd_1.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(sd_1)) }
-    ],
-  },
-  {
-    key: '/instructor/Johansson, Scarlett',
-    href: '/i/Johansson, Scarlett',
-    type: 'instructor',
-    group: '👩‍🏫 Instructors',
-    title: 'Johansson, Scarlett',
-    badges: [
-      { key: 'gpa', text: `${gpa_2.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(gpa_2)) },
-      { key: 'sd', text: `${sd_2.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(sd_2)) }
-    ],
-  },
-  {
-    key: '/groups/10',
-    href: '/g/10',
+export function group2Result(data: Group): SearchResult {
+  return {
+    key: data.identifier,
+    href: `/g/${data.identifier}`,
     type: 'group',
-    group:  '🗃️ Groups',
-    title: 'Communication',
+    group: '🗃️ Groups',
+    title: data.name,
     badges: [],
-  },
-  {
-    key: '/groups/20',
-    href: '/g/20',
-    type: 'group',
-    group:  '🗃️ Groups',
-    title: 'Mathematics',
-    badges: [],
+  };
+}
+
+function getFirst<T>(arr: (T | undefined)[]): T | undefined {
+  const subset = arr.filter(e => e !== undefined);
+  if(subset.length > 0) {
+    return subset[0]
   }
-];
+  return undefined
+}
+
+export function useSearchResults(inputValue: string): Observable<SearchResult[]> {
+  const SEARCH_RESULT_LIMIT = 3;
+  const db = useFirestore()
+  const courseQuery = db.collection('catalog').where('keywords', 'array-contains', inputValue.toLowerCase()).orderBy('_id').limit(SEARCH_RESULT_LIMIT)
+  const courseData = useFirestoreCollectionData<Course>(courseQuery)
+  const instructorQuery = db.collection('instructors').where('keywords', 'array-contains', inputValue.toLowerCase()).orderBy('lastName').limit(SEARCH_RESULT_LIMIT)
+  const instructorData = useFirestoreCollectionData<Instructor>(instructorQuery)
+  const groupQuery = db.collection('groups').where('keywords', 'array-contains', inputValue.toLowerCase()).orderBy('name').limit(SEARCH_RESULT_LIMIT)
+  const groupData = useFirestoreCollectionData<Group>(groupQuery)
+
+  return {
+    data: [
+      ...(courseData.status === 'success' ? courseData.data.map(e => course2Result(e)) : []),
+      ...(instructorData.status === 'success' ? instructorData.data.map(e => instructor2Result(e)) : []),
+      ...(groupData.status === 'success' ? groupData.data.map(e => group2Result(e)) : []),
+    ],
+    error: getFirst([courseData.error, instructorData.error, groupData.error]),
+    status: inputValue === '' ? 'success' : [courseData.status, instructorData.status, groupData.status].some(e => e === 'loading') ? 'loading' : 'success'
+  }
+}

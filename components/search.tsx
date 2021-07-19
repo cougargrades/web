@@ -42,9 +42,10 @@ export default function SearchBar() {
   const [value, setValue] = useState<SearchResult>(null);
   const [inputValue, setInputValue] = useState<string>('');
   // For actually performing searches
-  const { data: options, isValidating: loading } = useSearchResults(inputValue)
+  const { data, status } = useSearchResults(inputValue)
+  const loading = status !== 'success'
 
-  // For responding to searches
+  // For responding to searches and redirecting
   const router = useRouter();
   useEffect(() => {
     if(value !== null) {
@@ -54,9 +55,9 @@ export default function SearchBar() {
     }
   }, [value])
 
+  // improve mobile UX by moving input field to the top of the viewport
   const handleSelect = () => {
     if(elementRef.current !== null) {
-      // improve mobile UX by moving input field to the top of the viewport
       if(isMobile()) window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top)
     }
   }
@@ -102,10 +103,10 @@ export default function SearchBar() {
       isOptionEqualToValue={(option, value) => option.title === value.title}
       getOptionLabel={(option) => option.title}
       groupBy={(option) => option.group}
-      options={options}
+      options={data}
       loading={loading}
-      //filterOptions={(x) => x}
-      renderOption={(props, option) => <SearchListItem {...props} option={option} />}
+      filterOptions={(x) => x}
+      renderOption={(props, option) => <SearchListItem {...props} key={option.key} option={option} />}
       renderInput={(params) => (
         <TextField 
           {...params}
