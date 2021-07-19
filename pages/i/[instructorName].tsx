@@ -1,16 +1,25 @@
 import React from 'react'
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
+import { Instructor } from '@cougargrades/types'
+import abbreviationMap from '@cougargrades/publicdata/bundle/com.collegescheduler.uh.subjects/dictionary.json'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getStaticData } from '../../lib/ssg'
+import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
+import { useRosetta } from '../../lib/i18n'
 
-export default function IndividualInstructor({ instructorName }: InferGetStaticPropsType<typeof getStaticProps>) {
+export interface InstructorProps {
+  instructorName: string,
+  departmentText: string,
+}
+
+export default function IndividualInstructor({ instructorName, departmentText }: InstructorProps) {
+  const stone = useRosetta()
   return (
     <>
     <Head>
       <title>{instructorName} / CougarGrades.io</title>
-      <meta name="description" content={`${instructorName} is an instructor at the University of Houston. View grade distribution data at CougarGrades.io.`} />
+      <meta name="description" content={stone.t('meta.instructor.description', { instructorName, departmentText })} />
     </Head>
     <Container>
       <PankoRow />
@@ -30,8 +39,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<{ instructorName: string }> = async (context) => {
+export const getStaticProps: GetStaticProps<InstructorProps> = async (context) => {
+  console.time('ssg')
   const { params } = context;
   const { instructorName } = params
-  return { props: { instructorName: onlyOne(instructorName) }};
+  const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
+  const departmentText = getDepartmentText(instructorData)
+  console.timeEnd('ssg')
+
+  return {
+    props: {
+      instructorName: onlyOne(instructorName),
+      departmentText: departmentText,
+    }
+  };
+}
+
+function getDepartmentText(data: Instructor | undefined) {
+  // sort department entries in descending by value
+  const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
+  if(entries.length > 0) {
+    const departmentName: string | undefined = abbreviationMap[entries[0][0]];
+    if(departmentName !== undefined) {
+      return departmentName
+    }
+  }
+  return ''
 }
