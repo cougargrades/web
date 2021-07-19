@@ -2,16 +2,15 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import TextField from '@material-ui/core/TextField'
-import Autocomplete, { AutocompleteChangeReason, AutocompleteInputChangeReason } from '@material-ui/core/Autocomplete'
-import Tooltip from '@material-ui/core/Tooltip'
+import Autocomplete from '@material-ui/core/Autocomplete'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Highlighter from 'react-highlight-words'
-import { snooze } from '@au5ton/snooze'
+import NProgress from 'nprogress'
 import { searchInputAtom } from '../lib/recoil'
 import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
-import { Emoji } from './emoji'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
+import 'nprogress/nprogress.css'
 import styles from './search.module.scss'
 
 type SearchListItemProps = React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
@@ -47,6 +46,28 @@ export default function SearchBar() {
 
   // For responding to searches and redirecting
   const router = useRouter();
+  // Used for displaying rerouting progress bar
+  useEffect(() => {
+    const handleStart = (url) => {
+      console.time('reroute')
+      NProgress.start()
+    }
+    const handleStop = () => {
+      NProgress.done()
+      console.timeEnd('reroute')
+    }
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+  }, [router])
+  // Used for actually issuing the redirect
   const handleChange = (_, x: string | SearchResult) => {
     if(typeof x !== 'string' && x !== null) {
       // update the state
@@ -54,7 +75,7 @@ export default function SearchBar() {
       // unselect the searchbar after choosing a result
       elementRef.current.blur()
       // redirect to the selected result
-      router.push(x.href)
+      router.push(x.href, undefined, { scroll: false })
     }
   }
 
@@ -103,7 +124,7 @@ export default function SearchBar() {
       onInputChange={(_, x) => setInputValue(x)}
       value={value}
       inputValue={inputValue}
-      isOptionEqualToValue={(option, value) => option.title === value.title}
+      isOptionEqualToValue={(option, value) => option.key === value.key}
       getOptionLabel={(option) => option.title}
       groupBy={(option) => option.group}
       options={data}

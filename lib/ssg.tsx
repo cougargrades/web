@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+import 'firebase/firestore';
 import { firebaseConfig } from '../lib/environment'
 
 export const onlyOne = (value: string | string[]) => Array.isArray(value) ? value[0] : value;
@@ -12,4 +14,11 @@ export async function getStaticData<T>(func: string, fallback: T = undefined) {
   catch(err) {
     return fallback
   }
+}
+
+export async function getFirestoreDocument<T>(documentPath: string): Promise<T | undefined> {
+  const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+  const db = app.firestore()
+  const snap = await db.doc(documentPath).get();
+  return snap.exists ? snap.data() as T : undefined
 }

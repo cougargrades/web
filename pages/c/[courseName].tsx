@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
 import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getStaticData } from '../../lib/ssg'
+import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 
 export interface CourseProps {
   courseName: string,
@@ -37,10 +37,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
+  console.time('ssg')
   const { params } = context;
   const { courseName } = params
-  const courseData = await getStaticData<Course>(`catalog-getCourseByName?courseName=${courseName}`, undefined)
+  const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
   const description = courseData !== undefined ? courseData.description : ''
+  console.timeEnd('ssg')
 
   return { 
     props: { 
