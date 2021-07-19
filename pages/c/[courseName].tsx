@@ -1,16 +1,22 @@
 import React from 'react'
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
+import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getPathsData } from '../../lib/ssg'
+import { onlyOne, getStaticData } from '../../lib/ssg'
 
-export default function IndividualCourse({ courseName }: InferGetStaticPropsType<typeof getStaticProps>) {
+export interface CourseProps {
+  courseName: string,
+  description: string,
+}
+
+export default function IndividualCourse({ courseName, description }: CourseProps) {
   return (
     <>
     <Head>
       <title>{courseName} / CougarGrades.io</title>
-      <meta name="description" content={`${courseName} is a course at the University of Houston. View grade distribution data at CougarGrades.io.`} />
+      <meta name="description" content={`${courseName} (${description}) is a course at the University of Houston. View grade distribution data at CougarGrades.io.`} />
     </Head>
     <Container>
       <PankoRow />
@@ -22,7 +28,7 @@ export default function IndividualCourse({ courseName }: InferGetStaticPropsType
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  //const data = await getPathsData('catalog-getAllCourseNames')
+  //const data = await getStaticData<string[]>('catalog-getAllCourseNames')
   
   return {
     paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
@@ -30,8 +36,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<{ courseName: string }> = async (context) => {
+export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   const { params } = context;
   const { courseName } = params
-  return { props: { courseName: onlyOne(courseName) }};
+  const courseData = await getStaticData<Course>(`catalog-getCourseByName?courseName=${courseName}`, undefined)
+  const description = courseData !== undefined ? courseData.description : ''
+
+  return { 
+    props: { 
+      courseName: onlyOne(courseName),
+      description,
+    }
+  };
 }

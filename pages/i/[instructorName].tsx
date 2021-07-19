@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getPathsData } from '../../lib/ssg'
+import { onlyOne, getStaticData } from '../../lib/ssg'
 
 export default function IndividualInstructor({ instructorName }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -22,7 +22,7 @@ export default function IndividualInstructor({ instructorName }: InferGetStaticP
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  //const data = await getPathsData('instructors-getAllInstructorNames')
+  //const data = await getStaticData<string[]>('instructors-getAllInstructorNames')
 
   return {
     paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
