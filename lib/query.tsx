@@ -22,3 +22,29 @@ export const useNextQueryParams = (): { [key: string]: string } => {
 
   return value;
 };
+
+// router.query is inaccessible on the first render, bad for SEO
+// See: https://github.com/vercel/next.js/discussions/11484#discussioncomment-60563
+// This is a shitty workaround
+
+export const useSlug = (slugName: string): { slug: string, [key: string ]: string } => {
+  const router = useRouter();
+  const value = useMemo(() => {
+    const slug = typeof window !== 'undefined' ? decodeURI(window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)) : ''
+    let obj: any = {
+      slug
+    };
+    obj[slugName] = router.query[slugName]
+    return obj
+  }, [router.asPath])
+  return value;
+}
+
+export const useOnlySlug = () => {
+  const router = useRouter();
+  const value = useMemo(() => (
+    typeof window !== 'undefined' ? decodeURI(window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1)) : ''
+  ), [router.asPath])
+  return value;
+}
+

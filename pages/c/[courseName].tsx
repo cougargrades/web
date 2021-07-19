@@ -3,18 +3,23 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
-import { useNextQueryParams } from '../../lib/query'
+import { useSlug } from '../../lib/query'
 
 export default function IndividualCourse() {
-  // router.query is inaccessible on the first render, bad for SEO
-  // See: https://github.com/vercel/next.js/discussions/11484#discussioncomment-60563
-  const { courseName } = useNextQueryParams()
+  
+  //const { courseName } = useRouter().query
+  const { slug, courseName } = useSlug('courseName')
+  console.log('router', courseName)
+  console.log('slug', slug)
+  // console.log(router)
+  // console.log
+
 
   return (
     <>
     <Head>
-      <title>{courseName} / CougarGrades.io</title>
-      <meta name="description" content={`${courseName} is a course at the University of Houston. View grade distribution data at CougarGrades.io.`} />
+      <title>{slug} / CougarGrades.io</title>
+      <meta name="description" content={`${slug} is a course at the University of Houston. View grade distribution data at CougarGrades.io.`} />
     </Head>
     <Container>
       <PankoRow />
