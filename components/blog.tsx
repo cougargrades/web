@@ -41,8 +41,8 @@ export default function Blog() {
             ))}
         <li>
           <a href="https://blog.cougargrades.io">
-            {Array.isArray(data)
-              ? `View ${data!.length - previewLimit} more posts →`
+            {data && Array.isArray(data.entries)
+              ? `View ${data.entries.length - previewLimit} more posts →`
               : ''}
           </a>
         </li>
