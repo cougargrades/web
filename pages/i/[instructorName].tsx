@@ -3,9 +3,11 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
+import { getQueryValue } from '../../lib/query'
 
 export default function IndividualInstructor() {
-  const { instructorName } = useRouter().query;
+  const router = useRouter()
+  const instructorName = getQueryValue(router, 'instructorName')
 
   return (
     <>
