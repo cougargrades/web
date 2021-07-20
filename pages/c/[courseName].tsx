@@ -37,6 +37,16 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
   const isMissingProps = staticCourseName === undefined || false
   //console.log(data)
 
+  if(status === 'success') {
+    // preload referenced areas
+    for(let item of data.relatedGroups) {
+      router.prefetch(item.href)
+    }
+    for(let item of data.relatedInstructors) {
+      router.prefetch(item.href)
+    }
+  }
+
   return (
     <>
     <Head>
