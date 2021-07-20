@@ -66,6 +66,14 @@ export default function SearchBar() {
       router.events.off('routeChangeError', handleStop)
     }
   }, [router])
+
+  // Used for prefetching all options which are presented
+  useEffect(() => {
+    for(let item of data) {
+      router.prefetch(item.href);
+    }
+  }, [data]);
+
   // Used for actually issuing the redirect
   const handleChange = (_, x: string | SearchResult) => {
     if(typeof x !== 'string' && x !== null) {
@@ -122,7 +130,6 @@ export default function SearchBar() {
       onClose={() => setOpen(false)}
       onChange={handleChange}
       onInputChange={(_, x) => setInputValue(x)}
-      onHighlightChange={(_, x) => { if(x !== null) router.prefetch(x.href) }}
       value={value}
       inputValue={inputValue}
       isOptionEqualToValue={(option, value) => option.key === value.key}

@@ -22,3 +22,10 @@ export async function getFirestoreDocument<T>(documentPath: string): Promise<T |
   const snap = await db.doc(documentPath).get();
   return snap.exists ? snap.data() as T : undefined
 }
+
+export async function getDocumentList(collectionPath: string): Promise<string[]> {
+  const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+  const db = app.firestore()
+  const docs = await db.collection(collectionPath).get()
+  return docs.docs.map(e => e.id);
+}

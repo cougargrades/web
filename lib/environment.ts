@@ -11,9 +11,14 @@ export const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
 };
 
-export const buildArgs = {
+export const buildArgs: {
+  commitHash: string,
+  version: string,
+  buildDate: string,
+  vercelEnv: 'production' | 'preview' | 'development' | 'local'
+} = {
   commitHash: process.env.NEXT_PUBLIC_GIT_SHA,
   version: process.env.NEXT_PUBLIC_VERSION,
   buildDate: process.env.NEXT_PUBLIC_BUILD_DATE,
-  vercelEnv: process.env.NEXT_PUBLIC_VERCEL_ENV ?? 'local'
+  vercelEnv: (process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'local'
 };

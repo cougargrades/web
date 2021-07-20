@@ -57,11 +57,13 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
 
 function getDepartmentText(data: Instructor | undefined) {
   // sort department entries in descending by value
-  const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
-  if(entries.length > 0) {
-    const departmentName: string | undefined = abbreviationMap[entries[0][0]];
-    if(departmentName !== undefined) {
-      return departmentName
+  if(data !== undefined) {
+    const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
+    if(entries.length > 0) {
+      const departmentName: string | undefined = abbreviationMap[entries[0][0]];
+      if(departmentName !== undefined) {
+        return departmentName
+      }
     }
   }
   return ''
