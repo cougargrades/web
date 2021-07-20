@@ -1,17 +1,22 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react'
+import Skeleton from '@material-ui/core/Skeleton'
+import styles from './badge.module.scss'
 
-import styles from './badge.module.scss';
-
-interface BadgeProps {
+type BadgeProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & {
   extraClassNames?: string;
   title?: string;
   style?: CSSProperties;
   children: React.ReactNode;
 }
 
+type SkeletonProps = {
+  style?: CSSProperties
+}
+
 export function Badge(props: BadgeProps) {
   return (
     <span
+      {...props}
       className={`${styles.badge} ${props.extraClassNames}`}
       style={props.style}
       title={props.title}
@@ -21,9 +26,13 @@ export function Badge(props: BadgeProps) {
   );
 }
 
+export function BadgeSkeleton({ style }: SkeletonProps) {
+  return (
+    <Skeleton variant="rectangular" className={styles.skeleton} width={80} height={20} style={style} />
+  )
+}
 
-
-export type Grade = 'A' | 'B' | 'C' | 'D' | 'F' | 'I' | 'Q';
+export type Grade = 'A' | 'B' | 'C' | 'D' | 'F' | 'I' | 'Q' | 'S' | 'U' | 'NCR';
 
 export const grade2Color = new Map<Grade, string>([
   ['A', '#87cefa'],
@@ -32,7 +41,12 @@ export const grade2Color = new Map<Grade, string>([
   ['D', '#ffa07a'],
   ['F', '#cd5c5c'],
   ['I', '#d3d3d3'],
-  ['Q', '#8a2be2'],
+  //['Q', '#8a2be2'],
+  //['Q', '#4169e1'],
+  ['Q', '#9370D8'],
+  ['S', '#8fbc8f'],
+  ['U', '#d87093'],
+  ['NCR', '#808080'],
 ]);
 
 // Based on https://github.com/cougargrades/web/blob/3d511fc56b0a90f2038883a71852245b726af7e3/src/components/instructors/GPABadge.js

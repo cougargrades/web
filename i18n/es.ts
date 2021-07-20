@@ -9,5 +9,10 @@ export const es = {
     "instructor": {
       "description": ({instructorName, departmentText}) => isEmpty(instructorName) ? `Instructora de la Universidad de Houston. Vea los datos de distribución de calificaciones en CougarGrades.io.` : `${instructorName} es instructor ${departmentText !== '' ? `de ${departmentText} ` : ''}en la Universidad de Houston. Vea los datos de distribución de calificaciones en CougarGrades.io.`
     }
+  },
+  "season": {
+    "01": "Primavera",
+    "02": "Verano",
+    "03": "Otoño"
   }
 }
