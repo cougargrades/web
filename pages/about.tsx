@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import useSWR from 'swr'
 import { ExternalLink } from '../components/link'
-import { Collaborator, CollaboratorProps } from '../components/collaborator'
+import { Collaborator, CollaboratorProps, CollaboratorSkeleton } from '../components/collaborator'
 import styles from '../styles/About.module.scss'
 
 export default function About() {
@@ -24,10 +24,10 @@ export default function About() {
         <h3>Developers</h3>
         <div
           className={styles.collaborators_wrap}
-          style={isSingle(data?.public_members) ? { justifyContent: 'flex-start' } : {}}
+          style={isSingle(data?.public_members) || isValidating || error ? { justifyContent: 'flex-start' } : {}}
         >
           {isValidating
-            ? 'Loading...'
+            ? [1].map(e => <CollaboratorSkeleton key={e} />)
             : data?.public_members?.map(e =>
                 <Collaborator
                   key={e.id}

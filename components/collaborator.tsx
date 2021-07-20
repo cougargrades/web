@@ -1,4 +1,6 @@
+import React, { useState } from 'react'
 import Image from 'next/image'
+import Skeleton from '@material-ui/core/Skeleton'
 import styles from './collaborator.module.scss'
 
 export interface CollaboratorProps {
@@ -25,11 +27,24 @@ export function Collaborator(props: CollaboratorProps) {
           placeholder="blur"
           blurDataURL={props.avatar_blurhash.dataURI}
         />
-        {/* <img alt={`${props.name}'s avatar`} src={props.avatar_url} /> */}
       </a>
       <div className={styles.user}>
         <span className={styles.name}>{props.name}</span>
         <span className={styles.login}>{props.login}</span>
+      </div>
+    </div>
+  );
+}
+
+export function CollaboratorSkeleton() {
+  return (
+    <div className={styles.collaborator}>
+      <a>
+        <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+      </a>
+      <div className={styles.user}>
+        <span className={styles.name}><Skeleton variant="text" width={140} /></span>
+        <span className={styles.login}><Skeleton variant="text" width={60} /></span>
       </div>
     </div>
   );
