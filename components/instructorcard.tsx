@@ -19,6 +19,7 @@ import ListSubheader from '@material-ui/core/ListSubheader'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import { ReactFitty } from 'react-fitty'
+import { useSwipeable } from 'react-swipeable'
 import { Badge } from './badge'
 import { CustomSkeleton } from './skeleton'
 import { CourseInstructorResult } from '../lib/data/useCourseData'
@@ -26,6 +27,7 @@ import styles from './instructorcard.module.scss'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
+
 
 
 interface InstructorCardProps {
@@ -77,6 +79,10 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [open, setOpen] = useState(false)
+  const handlers = useSwipeable({
+    onSwipedDown: () => open ? setOpen(false) : null,
+    preventDefaultTouchmoveEvent: true,
+  })
   const firstLetters = Array.from(new Set(data.map(e => e.meta.lastName.charAt(0).toUpperCase()))).sort()
   const sortedData = data.slice().sort((a,b) => b.meta._id.localeCompare(a.meta._id))
 
@@ -99,7 +105,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
         onClose={() => setOpen(false)}
         TransitionComponent={fullScreen ? Transition : undefined}
       >
-        <DialogTitle>
+        <DialogTitle {...handlers}>
           <IconButton
             edge="start"
             color="inherit"
@@ -110,7 +116,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
           </IconButton>
           All {courseName} instructors
         </DialogTitle>
-        <DialogContent>
+        <DialogContent className={styles.showMoreContent}>
           <List
             sx={{
               //position: 'relative',
@@ -126,7 +132,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
                 {/* <Divider /> */}
                 {sortedData.filter(e => e.meta.lastName.startsWith(lastInitial)).map(item => (
                   <React.Fragment key={`item-${lastInitial}-${item.meta._id}`}>
-                    <ListItem button onClick={() => router.push(item.href)} secondaryAction={
+                    <ListItem button className={styles.badgeStackListItem} onClick={() => router.push(item.href)} secondaryAction={
                       <Box className={styles.badgeStack}>
                         {item.badges.map(e => (
                           <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em' }}>{e.text}</Badge>

@@ -25,12 +25,16 @@
   margin-bottom: 5px;
 }
 
+.badgeStackListItem {
+  padding-right: 140px!important;
+}
+
 .badgeStack {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   flex-wrap: wrap;
-  max-width: 150px;
+  max-width: 140px;
   gap: 3px;
 }
 
@@ -39,4 +43,8 @@
   font-weight: 300;
   //font-style: italic;
   text-align: center;
+}
+
+.showMoreContent {
+  padding: 0!important;
 }
