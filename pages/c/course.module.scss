@@ -106,8 +106,8 @@
 }
 
 .chip {
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-right: 0.25rem!important;
+  margin-bottom: 0.25rem!important;
   &:hover {
     color: unset;
   }
