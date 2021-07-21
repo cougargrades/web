@@ -23,9 +23,9 @@ export async function getFirestoreDocument<T>(documentPath: string): Promise<T |
   return snap.exists ? snap.data() as T : undefined
 }
 
-export async function getDocumentList(collectionPath: string): Promise<string[]> {
+export async function getFirestoreCollection<T>(collectionPath: string): Promise<T[]> {
   const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
   const db = app.firestore()
   const docs = await db.collection(collectionPath).get()
-  return docs.docs.map(e => e.id);
+  return docs.docs.filter(e => e.exists).map(e => e.data() as T);
 }

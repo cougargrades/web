@@ -7,23 +7,16 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
-import { CardActionArea } from '@material-ui/core'
 import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { useCourseData } from '../../lib/data/useCourseData'
-import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
+import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
-import { CustomSkeleton } from '../../components/skeleton'
-import styles from './course.module.scss'
-import Grid from '@material-ui/core/Grid'
-//import { ReactFitty } from 'react-fitty'
-//import fitty from 'fitty'
 import { Carousel, InstructorCard } from '../../components/instructorcard'
+import { CustomSkeleton } from '../../components/skeleton'
+import { buildArgs } from '../../lib/environment'
+import styles from './course.module.scss'
 
 export interface CourseProps {
   staticCourseName: string,
@@ -108,20 +101,25 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  //const data = await getStaticData<string[]>('catalog-getAllCourseNames')
+  // console.time('getStaticPaths')
+  // const data = await getFirestoreCollection<Course>('catalog');
+  // console.timeEnd('getStaticPaths')
   return {
-    paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
+    paths: [
+      //{ params: { courseName: '' } },
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e._id }})) : [])
+    ],
     fallback: true
   }
 }
 
 export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
-  console.time('ssg')
+  //console.time('getStaticProps')
   const { params } = context;
   const { courseName } = params
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
   const description = courseData !== undefined ? courseData.description : ''
-  console.timeEnd('ssg')
+  //console.timeEnd('getStaticProps')
 
   return { 
     props: { 

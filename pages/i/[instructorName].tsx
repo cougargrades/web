@@ -5,8 +5,9 @@ import Container from '@material-ui/core/Container'
 import { Instructor } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/com.collegescheduler.uh.subjects/dictionary.json'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
+import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
+import { buildArgs } from '../../lib/environment'
 
 export interface InstructorProps {
   instructorName: string,
@@ -31,21 +32,25 @@ export default function IndividualInstructor({ instructorName, departmentText }:
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  //const data = await getStaticData<string[]>('instructors-getAllInstructorNames')
-
+  // console.time('getStaticPaths')
+  // const data = await getFirestoreCollection<Instructor>('instructors');
+  // console.timeEnd('getStaticPaths')
   return {
-    paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
+    paths: [
+      //{ params: { courseName: '' } },
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e._id }})) : [])
+    ],
     fallback: true
   }
 }
 
 export const getStaticProps: GetStaticProps<InstructorProps> = async (context) => {
-  console.time('ssg')
+  //console.time('getStaticProps')
   const { params } = context;
   const { instructorName } = params
   const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
   const departmentText = getDepartmentText(instructorData)
-  console.timeEnd('ssg')
+  //console.timeEnd('getStaticProps')
 
   return {
     props: {

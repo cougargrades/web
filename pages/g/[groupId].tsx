@@ -1,11 +1,17 @@
 import React from 'react'
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
+import { Group } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { onlyOne, getStaticData } from '../../lib/ssg'
+import { onlyOne, getFirestoreCollection } from '../../lib/ssg'
+import { buildArgs } from '../../lib/environment'
 
-export default function IndividualGroup({ groupId }: InferGetStaticPropsType<typeof getStaticProps>) {
+export interface GroupProps {
+  groupId: string;
+}
+
+export default function IndividualGroup({ groupId }: GroupProps) {
   return (
     <>
     <Head>
@@ -22,15 +28,19 @@ export default function IndividualGroup({ groupId }: InferGetStaticPropsType<typ
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  //const data = await getStaticData<string[]>('groups-getAllGroups')
-
+  // console.time('getStaticPaths')
+  // const data = await getFirestoreCollection<Group>('groups');
+  // console.timeEnd('getStaticPaths')
   return {
-    paths: [], // we want to intentionally leave this blank so that pages can be incrementally generated and stored
+    paths: [
+      //{ params: { courseName: '' } },
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
+    ],
     fallback: true
   }
 }
 
-export const getStaticProps: GetStaticProps<{ groupId: string }> = async (context) => {
+export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const { params } = context;
   const { groupId } = params
   return { props: { groupId: onlyOne(groupId) }};
