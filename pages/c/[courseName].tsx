@@ -96,18 +96,24 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Visualization</h3>
         <Box component="div" width={'100%'} height={400} style={{ backgroundColor: 'silver' }} />
         <h3>Data</h3>
-        <Box component="div" width={'100%'} height={600}>
+        <Box component="div" width={'100%'}>
           <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
             {/* <div style={{ width: sum(columns.map(e => e.width))+10 }}> */}
             <div style={{ flexGrow: 1 }}>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                //pageSize={5}
-                //rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]}
-                //checkboxSelection
-                disableSelectionOnClick
-              />
+              { status === 'success' ? 
+                <DataGrid
+                  columns={data.dataGrid.columns}
+                  rows={data.dataGrid.rows}
+                  density="compact"
+                  autoHeight
+                  //pageSize={5}
+                  //rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]}
+                  //checkboxSelection
+                  disableSelectionOnClick
+                />
+                :
+                <CustomSkeleton width={'100%'} height={'100%'} />
+              }
             </div>
           </div>
         </Box>
@@ -149,48 +155,3 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   };
 }
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 120 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    editable: true,
-    ...(isMobile() ? { width: 160 } : { flex: 1 }), // occupy horizontal space appropriately on desktop browsers, but use a fixed size on mobile
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    editable: true,
-    ...(isMobile() ? { width: 160 } : { flex: 1 }),
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    editable: true,
-    ...(isMobile() ? { width: 160 } : { flex: 1 }),
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    ...(isMobile() ? { width: 160 } : { flex: 1 }),
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.getValue(params.id, 'firstName') || ''} ${
-        params.getValue(params.id, 'lastName') || ''
-      }`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];

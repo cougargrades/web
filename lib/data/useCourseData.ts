@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Course, Group, Instructor, PublicationInfo, Util } from '@cougargrades/types'
+import { GridColDef, GridValueFormatterParams, GridValueGetterParams } from '@material-ui/data-grid'
+import { Course, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/com.collegescheduler.uh.subjects/dictionary.json'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
+import { useIsMobile } from '../hook'
+
+type SectionPlus = Section & { id: string };
 
 export interface CourseResult {
   course: Course;
@@ -16,6 +20,10 @@ export interface CourseResult {
   lastTaught: string;
   relatedGroups: CourseGroupResult[];
   relatedInstructors: CourseInstructorResult[];
+  dataGrid: {
+    columns: GridColDef[];
+    rows: SectionPlus[];
+  }
 }
 
 export interface CourseGroupResult {
@@ -72,18 +80,22 @@ function generateSubjectString(data: Instructor | undefined): string {
 
 export function useCourseData(courseName: string): Observable<CourseResult> {
   const stone = useRosetta()
+  const isMobile = useIsMobile();
   const db = useFirestore()
   const { data, error, status } = useFirestoreDocData<Course>(db.doc(`/catalog/${courseName}`))
   const didLoadCorrectly = status === 'success' && data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
   const [instructorData, setInstructorData] = useState<Instructor[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
+  const [sectionData, setSectionData] = useState<Section[]>([]);
+  console.log(sectionData)
   const sharedStatus = status === 'success' ? isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
   // Remove previously stored instructors whenever we reroute
   useEffect(() => {
     setInstructorData([]);
     setGroupData([]);
+    setSectionData([]);
   }, [courseName])
 
   // Resolve the group data document references
@@ -105,6 +117,18 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
       (async () => {
         if(Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors)) {
           setInstructorData(await Util.populate<Instructor>(data.instructors))
+        }
+      })();
+    }
+  }, [data, status])
+
+  // Resolve the section document references
+  useEffect(() => {
+    const didLoadCorrectly = status === 'success' && data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
+    if(didLoadCorrectly) {
+      (async () => {
+        if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
+          setSectionData(await Util.populate<Section>(data.sections))
         }
       })();
     }
@@ -152,6 +176,48 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
       relatedInstructors: [
         ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])
       ],
+      dataGrid: {
+        columns: [
+          {
+            field: 'term',
+            headerName: 'Term',
+            type: 'number',
+            valueFormatter: (params: GridValueFormatterParams) => `${stone.t(`season.${seasonCode(params.value as number)}`)} ${getYear(params.value as number)}`,
+            ...(isMobile ? { width: 160 } : { flex: 1 }), // occupy horizontal space appropriately on desktop browsers, but use a fixed size on mobile
+          },
+          {
+            field: 'sectionNumber',
+            headerName: 'Section #',
+            type: 'number',
+            ...(isMobile ? { width: 160 } : { flex: 1 }),
+          },
+          {
+            field: 'instructorNames',
+            headerName: 'Instructor',
+            type: 'string',
+            valueGetter: (params: GridValueGetterParams) => `${params.value[0].lastName}, ${params.value[0].firstName}`,
+            ...(isMobile ? { width: 160 } : { flex: 1 }),
+          },
+          ...(['A','B','C','D','F','Q',].map<GridColDef>(e => ({
+            field: e,
+            headerName: e,
+            type: 'number',
+            ...(isMobile ? { width: 30 } : { flex: 0.65 }),
+          }))),
+          {
+            field: 'semesterGPA',
+            headerName: 'GPA',
+            type: 'number',
+            ...(isMobile ? { width: 60 } : { flex: 0.8 }),
+          },
+        ],
+        rows: [
+          ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
+            id: e._id,
+            ...e,
+          })) : [])
+        ],
+      }
     },
     error,
     status: sharedStatus,
