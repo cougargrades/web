@@ -31,7 +31,8 @@ export interface CourseInstructorResult {
   title: string; // typically the instructor's full name (ex: Tyler James Beck)
   subtitle: string; // typically the instructor's associated departments (ex: Applied Music, Music)
   caption: string; // typically the number of courses and sections (ex: 4 courses • 5 sections)
-  badges: SearchResultBadge[]
+  badges: SearchResultBadge[];
+  meta: Instructor;
 }
 
 export function group2Result(data: Group): CourseGroupResult {
@@ -55,6 +56,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
       ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
       ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalQ/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`, color: grade2Color.get('Q') }] : []),
     ],
+    meta: data,
   };
 }
 
@@ -77,7 +79,6 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
   const [instructorData, setInstructorData] = useState<Instructor[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
   const sharedStatus = status === 'success' ? isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
-  const RELATED_INSTRUCTOR_LIMIT = 6;
 
   // Remove previously stored instructors whenever we reroute
   useEffect(() => {
@@ -149,7 +150,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
         ...(didLoadCorrectly ? groupData.map(e => group2Result(e)) : [])
       ],
       relatedInstructors: [
-        ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => instructor2Result(e)) : [])
+        ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])
       ],
     },
     error,

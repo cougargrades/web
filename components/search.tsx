@@ -12,6 +12,7 @@ import { Badge } from './badge'
 import { isMobile } from '../lib/util'
 import styles from './search.module.scss'
 
+
 type SearchListItemProps = React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> & {
   option: SearchResult;
 }

@@ -5,15 +5,19 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
 import Tooltip from '@material-ui/core/Tooltip'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
+import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid'
 import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
+import { isMobile, sum } from '../../lib/util'
+import { useIsMobile } from '../../lib/hook'
 import { Badge, BadgeSkeleton } from '../../components/badge'
-import { Carousel, InstructorCard } from '../../components/instructorcard'
+import { Carousel, InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
@@ -28,6 +32,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
   const isMissingProps = staticCourseName === undefined || false
+  const RELATED_INSTRUCTOR_LIMIT = 4;
   //console.log(data)
 
   if(status === 'success') {
@@ -70,7 +75,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h6>Sources:</h6>
         { status === 'success' ? data.publications.map(e => (
           <Chip key={e.key} label={e.title} className={styles.chip} component="a" href={e.url} clickable />
-        )) : ''}
+        )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
+        <hr />
         <h3>Basic Information</h3>
         <ul>
           <li>Earliest record: { status === 'success' ? data.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
@@ -79,20 +85,33 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
           <Chip key={e.key} label={e.title} className={styles.chip} onClick={() => router.push(e.href)} />
-        )) : ''}
+        )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>
         <Carousel>
-          { status === 'success' ? data.relatedInstructors.map(e => <InstructorCard key={e.key} data={e} />) : ''}
+          { status === 'success' ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <InstructorCard key={e.key} data={e} />
+          ) : [1,2,3,4,5].map(e => <InstructorCardSkeleton key={e} />)}
+          { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
-        {/* <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          gap={1}
-        >
-          
-        </Grid> */}
+        <h3>Visualization</h3>
+        <Box component="div" width={'100%'} height={400} style={{ backgroundColor: 'silver' }} />
+        <h3>Data</h3>
+        <Box component="div" width={'100%'} height={600}>
+          <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+            {/* <div style={{ width: sum(columns.map(e => e.width))+10 }}> */}
+            <div style={{ flexGrow: 1 }}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                //pageSize={5}
+                //rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]}
+                //checkboxSelection
+                disableSelectionOnClick
+              />
+            </div>
+          </div>
+        </Box>
+        {/* Intentionally empty */}
+        <Box component="div" width={'100%'} height={30} />
       </main>
     </Container>
     </>
@@ -128,3 +147,49 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
     }
   };
 }
+
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', width: 120 },
+  {
+    field: 'firstName',
+    headerName: 'First name',
+    editable: true,
+    ...(isMobile() ? { width: 160 } : { flex: 1 }), // occupy horizontal space appropriately on desktop browsers, but use a fixed size on mobile
+  },
+  {
+    field: 'lastName',
+    headerName: 'Last name',
+    editable: true,
+    ...(isMobile() ? { width: 160 } : { flex: 1 }),
+  },
+  {
+    field: 'age',
+    headerName: 'Age',
+    type: 'number',
+    editable: true,
+    ...(isMobile() ? { width: 160 } : { flex: 1 }),
+  },
+  {
+    field: 'fullName',
+    headerName: 'Full name',
+    description: 'This column has a value getter and is not sortable.',
+    sortable: false,
+    ...(isMobile() ? { width: 160 } : { flex: 1 }),
+    valueGetter: (params: GridValueGetterParams) =>
+      `${params.getValue(params.id, 'firstName') || ''} ${
+        params.getValue(params.id, 'lastName') || ''
+      }`,
+  },
+];
+
+const rows = [
+  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+];

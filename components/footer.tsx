@@ -26,9 +26,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
       <div className="new-container">
         <div className="row g-0">
           <div className="col-sm">
-            <Tooltip title={`vercel env: ${vercelEnv}`} placement="top-start">
-              <h6>@cougargrades/web</h6>
-            </Tooltip>
+            <h6>@cougargrades/web</h6>
             <p>
               Version: {version}, Commit:{' '}
               <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>

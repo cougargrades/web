@@ -12,3 +12,5 @@ export const seasonCode = (termCode: number): string => {
 }
 
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
+
+export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)

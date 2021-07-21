@@ -5,7 +5,8 @@
   flex-wrap: nowrap;
   align-items: center;
   column-gap: 10px;
-  padding: 10px 0;
+  //gap: 10px;
+  padding: 10px 5px;
 }
 
 .instructorCard {
@@ -32,4 +33,20 @@
 
 .badgeRow {
   margin-bottom: 5px;
+}
+
+.badgeStack {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  max-width: 150px;
+  gap: 3px;
+}
+
+.showMore {
+  font-size: 18px;
+  font-weight: 300;
+  //font-style: italic;
+  text-align: center;
 }
