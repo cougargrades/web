@@ -17,6 +17,7 @@ import { useRosetta } from '../../lib/i18n'
 import { isMobile, sum } from '../../lib/util'
 import { useIsMobile } from '../../lib/hook'
 import { Badge, BadgeSkeleton } from '../../components/badge'
+import { EnhancedTable } from '../../components/datatable'
 import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { CustomSkeleton } from '../../components/skeleton'
@@ -96,27 +97,24 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Visualization</h3>
         <Box component="div" width={'100%'} height={400} style={{ backgroundColor: 'silver' }} />
         <h3>Data</h3>
-        <Box component="div" width={'100%'}>
-          <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
-            {/* <div style={{ width: sum(columns.map(e => e.width))+10 }}> */}
-            <div style={{ flexGrow: 1 }}>
-              { status === 'success' ? 
-                <DataGrid
-                  columns={data.dataGrid.columns}
-                  rows={data.dataGrid.rows}
-                  density="compact"
-                  autoHeight
-                  //pageSize={5}
-                  //rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]}
-                  //checkboxSelection
-                  disableSelectionOnClick
-                />
-                :
-                <CustomSkeleton width={'100%'} height={'100%'} />
-              }
-            </div>
-          </div>
-        </Box>
+        <EnhancedTable />
+        {/* <Box component="div" className={styles.dataTableWrap}>
+          { status === 'success' ? 
+            // <DataGrid
+            //   columns={data.dataGrid.columns}
+            //   rows={data.dataGrid.rows}
+            //   density="compact"
+            //   autoHeight
+            //   //pageSize={5}
+            //   //rowsPerPageOptions={[10, 50, { value: -1, label: 'All' }]}
+            //   //checkboxSelection
+            //   disableSelectionOnClick
+            // />
+            
+            :
+            <CustomSkeleton width={'100%'} height={'100%'} />
+          }
+        </Box> */}
         {/* Intentionally empty */}
         <Box component="div" width={'100%'} height={30} />
       </main>

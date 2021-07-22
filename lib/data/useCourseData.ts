@@ -104,7 +104,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups)) {
-          setGroupData(await Util.populate<Group>(data.groups))
+          //setGroupData(await Util.populate<Group>(data.groups))
         }
       })();
     }
@@ -116,7 +116,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors)) {
-          setInstructorData(await Util.populate<Instructor>(data.instructors))
+          //setInstructorData(await Util.populate<Instructor>(data.instructors))
         }
       })();
     }
@@ -128,7 +128,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections))
+          //setSectionData(await Util.populate<Section>(data.sections))
         }
       })();
     }

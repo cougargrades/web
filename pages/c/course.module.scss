@@ -120,9 +120,10 @@
   gap: 10px;
 }
 
-.instructorCard {
-  //display: inline-block;
-  button {
-    white-space: normal;
+.dataTableWrap {
+  width: 600px;
+  overflow: hidden;
+  @media (min-width: 576px) {
+    width: 100%;
   }
 }
