@@ -95,7 +95,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Visualization</h3>
-        <Box component="div" width={'100%'} height={400} style={{ backgroundColor: 'silver' }} />
+        <Box component="div" width={'100%'} height={150} style={{ backgroundColor: 'silver' }} />
         <h3>Data</h3>
         <EnhancedTable />
         {/* <Box component="div" className={styles.dataTableWrap}>
