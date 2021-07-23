@@ -9,9 +9,9 @@ import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Tilty from 'react-tilty'
-import { Course } from '@cougargrades/types'
+import { Course, Group, Instructor, Section, Util } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
+import { CourseResult, getCourseData, SectionPlus, useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
@@ -21,16 +21,19 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
+import { ObservableStatus } from '../../lib/data/Observable'
 
 export interface CourseProps {
   staticCourseName: string,
   staticDescription: string,
+  data: CourseResult,
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, data }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useCourseData(staticCourseName)
+  //const { data, status } = useCourseData(staticCourseName)
+  const status: ObservableStatus = data !== undefined ? 'success' : 'loading';
   const isMissingProps = staticCourseName === undefined || false
   const RELATED_INSTRUCTOR_LIMIT = 4;
   //console.log(data)
@@ -97,10 +100,10 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Data</h3>
         <EnhancedTable<SectionPlus>
           title="Past Sections"
-          columns={data.dataGrid.columns}
-          rows={data.dataGrid.rows}
+          columns={status === 'success' ? data.dataGrid.columns : []}
+          rows={status === 'success' ? data.dataGrid.rows : []}
           defaultOrderBy="term"
-          minWidth={1010}
+          //minWidth={1010}
         />
         {/* Intentionally empty */}
         <Box component="div" width={'100%'} height={30} />
@@ -125,18 +128,56 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
-  //console.time('getStaticProps')
-  const { params } = context;
+  console.time('getStaticProps')
+  const { params, locale } = context;
   const { courseName } = params
-  const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
-  const description = courseData !== undefined ? courseData.description : ''
-  //console.timeEnd('getStaticProps')
+  try {
+    const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
+    const description = courseData !== undefined ? courseData.description : ''
+    const data = await getCourseData(locale, onlyOne(courseName));
+    /**
+     * temporary until https://github.com/cougargrades/types/issues/20
+     * is fixed
+     */
+    // if(Array.isArray(data.course.sections)) {
+    //   data.course.sections = data.course.sections.map(e => Util.sanitizeSection(e)) as Section[];
+    //   data.course.sections.forEach(e => delete e['firestore']);
+    //   data.course.sections.forEach(e => delete e['_delegate']);
+    //   console.log(data.course.sections[0])
+    // }
+    // if(Array.isArray(data.course.instructors)) {
+    //   data.course.instructors = data.course.instructors.map(e => Util.sanitizeInstructor(e)) as Instructor[];
+    //   data.course.instructors.forEach(e => delete e['firestore']);
+    //   data.course.instructors.forEach(e => delete e['_delegate']);
+    // }
+    // if(Array.isArray(data.course.groups)) {
+    //   data.course.groups = data.course.groups.map(e => Util.sanitizeGroup(e)) as Group[];
+    //   data.course.groups.forEach(e => delete e['firestore']);
+    //   data.course.groups.forEach(e => delete e['_delegate']);
+    // }
+    // data.course.sections = [];
+    // data.course.instructors = [];
+    // data.course.groups = [];
+    
+    
+    console.timeEnd('getStaticProps')
 
-  return { 
-    props: { 
-      staticCourseName: onlyOne(courseName),
-      staticDescription: description,
+    return { 
+      props: { 
+        staticCourseName: onlyOne(courseName),
+        staticDescription: description,
+        data,
+      }
+    };
+  }
+  catch(err) {
+    return {
+      props: {
+        staticCourseName: onlyOne(courseName),
+        staticDescription: '',
+        data: undefined,
+      }
     }
-  };
+  }
 }
 

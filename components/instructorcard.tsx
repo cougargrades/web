@@ -83,8 +83,8 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
     onSwipedDown: () => open ? setOpen(false) : null,
     preventDefaultTouchmoveEvent: true,
   })
-  const firstLetters = Array.from(new Set(data.map(e => e.meta.lastName.charAt(0).toUpperCase()))).sort()
-  const sortedData = data.slice().sort((a,b) => b.meta._id.localeCompare(a.meta._id))
+  const firstLetters = Array.from(new Set(data.map(e => e.lastInitial))).sort()
+  const sortedData = data.slice().sort((a,b) => b.id.localeCompare(a.id))
 
   return (
     <>
@@ -130,8 +130,8 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
               <ul>
                 <ListSubheader>{lastInitial}</ListSubheader>
                 {/* <Divider /> */}
-                {sortedData.filter(e => e.meta.lastName.startsWith(lastInitial)).map(item => (
-                  <React.Fragment key={`item-${lastInitial}-${item.meta._id}`}>
+                {sortedData.filter(e => e.lastInitial === lastInitial).map(item => (
+                  <React.Fragment key={`item-${lastInitial}-${item.id}`}>
                     <ListItem button className={styles.badgeStackListItem} onClick={() => router.push(item.href)} secondaryAction={
                       <Box className={styles.badgeStack}>
                         {item.badges.map(e => (
@@ -139,7 +139,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
                         ))}
                       </Box>
                     }>
-                      <ListItemText primary={item.meta._id} secondary={item.caption} />
+                      <ListItemText primary={item.id} secondary={item.caption} />
                     </ListItem>
                     { index !== (array.length - 1) ? <Divider /> : ''}
                   </React.Fragment>

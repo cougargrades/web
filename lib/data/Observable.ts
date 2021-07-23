@@ -5,9 +5,11 @@
 //   isValidating: boolean;
 // }
 
+export type ObservableStatus = 'loading' | 'error' | 'success'
+
 // From reactfire
 export interface Observable<T> {
-  status: 'loading' | 'error' | 'success';
+  status: ObservableStatus;
   //hasEmitted: boolean;
   //isComplete: boolean;
   data: T;
