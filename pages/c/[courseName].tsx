@@ -11,7 +11,7 @@ import Skeleton from '@material-ui/core/Skeleton'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid'
 import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { useCourseData } from '../../lib/data/useCourseData'
+import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { isMobile, sum } from '../../lib/util'
@@ -222,12 +222,19 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Visualization</h3>
         <Box component="div" width={'100%'} height={150} style={{ backgroundColor: 'silver' }} />
         <h3>Data</h3>
-        <EnhancedTable<Data>
+        <EnhancedTable<SectionPlus>
+          title="Past Sections"
+          columns={data.dataGrid.columns}
+          rows={data.dataGrid.rows}
+          defaultOrderBy="term"
+          minWidth={1010}
+        />
+        {/* <EnhancedTable<Data>
           title="Nutrition"
           columns={columns}
           rows={rows}
           defaultOrder="calories"
-        />
+        /> */}
         {/* <Box component="div" className={styles.dataTableWrap}>
           { status === 'success' ? 
             // <DataGrid

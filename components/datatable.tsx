@@ -80,12 +80,14 @@ export interface EnhancedTableProps<T> {
   title: string;
   columns: Column<T>[];
   rows: T[];
-  defaultOrder: keyof T;
+  defaultOrder?: Order;
+  defaultOrderBy: keyof T;
+  minWidth?: number;
 }
 
-export function EnhancedTable<T extends { id: string | number }>({ title, columns, rows, defaultOrder }: EnhancedTableProps<T>) {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof T>(defaultOrder);
+export function EnhancedTable<T extends { id: string | number }>({ title, columns, rows, defaultOrder, defaultOrderBy, minWidth }: EnhancedTableProps<T>) {
+  const [order, setOrder] = React.useState<Order>(defaultOrder ?? 'asc');
+  const [orderBy, setOrderBy] = React.useState<keyof T>(defaultOrderBy);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof T) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -104,6 +106,7 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
         <TableContainer>
           <Table
             className={styles.table}
+            style={{ width: '100%', minWidth: minWidth ?? 600 }}
             aria-labelledby="tableTitle"
             size={'small'}
             aria-label="enhanced table"
@@ -166,9 +169,11 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
 
 // Util functions
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return b[orderBy] < a[orderBy] ? -1 : b[orderBy] > a[orderBy] ? 1 : 0;
 }
+
+export const defaultComparator = (a: string | number, b: string | number) => b < a ? -1 : b > a ? 1 : 0;
 
 type Order = 'asc' | 'desc';
 

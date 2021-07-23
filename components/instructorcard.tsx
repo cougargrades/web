@@ -150,7 +150,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Close</Button>
+          <Button variant="contained" color="info" onClick={() => setOpen(false)}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

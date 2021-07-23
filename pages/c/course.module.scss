@@ -121,9 +121,9 @@
 }
 
 .dataTableWrap {
-  width: 600px;
   overflow: hidden;
-  @media (min-width: 576px) {
-    width: 100%;
-  }
+  // width: 600px;
+  // @media (min-width: 576px) {
+  //   width: 100%;
+  // }
 }
