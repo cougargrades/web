@@ -5,35 +5,31 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Container from '@material-ui/core/Container'
 import Tooltip from '@material-ui/core/Tooltip'
 import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Tilty from 'react-tilty'
-import { Course, Group, Instructor, Section, Util } from '@cougargrades/types'
+import { Course } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { CourseResult, getCourseData, SectionPlus, useCourseData } from '../../lib/data/useCourseData'
+import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
-import { Column, EnhancedTable } from '../../components/datatable'
+import { EnhancedTable } from '../../components/datatable'
 import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
-import { ObservableStatus } from '../../lib/data/Observable'
 
 export interface CourseProps {
   staticCourseName: string,
   staticDescription: string,
-  //data: CourseResult,
 }
 
 export default function IndividualCourse({ staticCourseName, staticDescription }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
-  //const status: ObservableStatus = data !== undefined ? 'success' : 'loading';
   const isMissingProps = staticCourseName === undefined || false
   const RELATED_INSTRUCTOR_LIMIT = 4;
 
@@ -129,29 +125,17 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   //console.time('getStaticProps')
   const { params, locale } = context;
   const { courseName } = params
-  try {
-    const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
-    const description = courseData !== undefined ? courseData.description : ''
-    //const data = await getCourseData(locale, onlyOne(courseName));    
-    
-    //console.timeEnd('getStaticProps')
+  const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
+  const description = courseData !== undefined ? courseData.description : ''
+  
+  //console.timeEnd('getStaticProps')
 
-    return { 
-      props: { 
-        staticCourseName: onlyOne(courseName),
-        staticDescription: description,
-        //data,
-      }
-    };
-  }
-  catch(err) {
-    return {
-      props: {
-        staticCourseName: onlyOne(courseName),
-        staticDescription: '',
-        //data: undefined,
-      }
+  return { 
+    props: { 
+      staticCourseName: onlyOne(courseName),
+      staticDescription: description,
     }
-  }
+  };
+
 }
 
