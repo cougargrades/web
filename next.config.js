@@ -1,4 +1,4 @@
-const withTM = require('next-transpile-modules')(['fitty', 'react-fitty']);
+const withTM = require('next-transpile-modules')(['fitty', 'react-fitty', 'react-tilty']);
 
 /** @type {import('next/dist/next-server/server/config').NextConfig} */
 module.exports = withTM({
