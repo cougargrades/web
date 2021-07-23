@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
+import { AuthCheck } from 'reactfire'
+import { CustomClaimsCheck } from './auth/CustomClaimsCheck'
 import Search from './search'
-import Panko from './panko'
 import { Emoji } from './emoji'
 
 import styles from './header.module.scss'
@@ -24,6 +25,12 @@ export default function Header() {
           <NavLink href="/groups"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="newspaper" symbol="🗞️" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
+          <AuthCheck fallback={<></>}>
+            <CustomClaimsCheck requiredClaims={{ admin: true }} fallback={<></>}>
+              <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>
+              <NavLink href="/upload"><Emoji label="hammer and wrench" symbol="🛠️" />Upload</NavLink>
+            </CustomClaimsCheck>
+          </AuthCheck>
         </nav>
         <Search />
       </div>

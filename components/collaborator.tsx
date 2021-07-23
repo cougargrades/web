@@ -9,7 +9,7 @@ export interface CollaboratorProps {
   login: string;
   html_url: string;
   avatar_url: string;
-  avatar_blurhash: {
+  avatar_blurhash?: {
     blurhash: string;
     dataURI: string;
   }
@@ -24,8 +24,8 @@ export function Collaborator(props: CollaboratorProps) {
           alt={`${props.name}'s avatar`}
           width={460}
           height={460}
-          placeholder="blur"
-          blurDataURL={props.avatar_blurhash.dataURI}
+          placeholder={props.avatar_blurhash ? "blur" : undefined}
+          blurDataURL={props.avatar_blurhash?.dataURI}
         />
       </a>
       <div className={styles.user}>
