@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Toolbar from '@material-ui/core/Toolbar'
+import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import { visuallyHidden } from '@material-ui/utils'
@@ -43,6 +44,15 @@ export type Column<T> = { [K in keyof T]: ({
    * @default 'inherit'
    */
   align?: TableCellProps['align'];
+  /**
+   * The exact width of this column. Setting this value on at least 1 column will change the CSS from "table-layout: auto;" to "table-layout: fixed;"
+   */
+  width?: number;
+  /**
+   * The horizontal padding of the header.
+   * @default 16
+   */
+  padding?: number
   /**
    * The type of the column as a string
    * @default typeof T[K]
@@ -106,33 +116,35 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
         <TableContainer>
           <Table
             className={styles.table}
-            style={{ width: '100%', minWidth: minWidth ?? 600 }}
+            style={{ width: '100%', minWidth: columns.some(e => e.width) ? undefined : minWidth ?? 600, tableLayout: columns.some(e => e.width) ? 'fixed' : 'auto' }}
             aria-labelledby="tableTitle"
             size={'small'}
             aria-label="enhanced table"
           >
             <TableHead>
               <TableRow>
-                {columns.map(headCell => (
-                  <TableCell
-                    key={headCell.field}
-                    align={headCell.align}
-                    //padding={headCell.disablePadding ? 'none' : 'normal'}
-                    sortDirection={orderBy === headCell.field ? order : false}
-                  >
-                    <TableSortLabel
-                      active={orderBy === headCell.field}
-                      direction={orderBy === headCell.field ? order : 'asc'}
-                      onClick={(event) => handleRequestSort(event, headCell.field)}
+                {columns.map(col => (
+                  <Tooltip key={col.field} title={col.description || ''} placement="top-start" arrow>
+                    <TableCell
+                      align={col.align}
+                      //padding={headCell.disablePadding ? 'none' : 'normal'}
+                      sortDirection={orderBy === col.field ? order : false}
+                      style={{ width: col.width, paddingLeft: col.padding ?? 16, paddingRight: col.padding ?? 16 }}
                     >
-                      {headCell.headerName}
-                      {orderBy === headCell.field ? (
-                        <Box component="span" sx={visuallyHidden}>
-                          {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                        </Box>
-                      ) : null}
-                    </TableSortLabel>
-                  </TableCell>
+                      <TableSortLabel
+                        active={orderBy === col.field}
+                        direction={orderBy === col.field ? order : 'asc'}
+                        onClick={(event) => handleRequestSort(event, col.field)}
+                      >
+                        {col.headerName}
+                        {orderBy === col.field ? (
+                          <Box component="span" sx={visuallyHidden}>
+                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                          </Box>
+                        ) : null}
+                      </TableSortLabel>
+                    </TableCell>
+                  </Tooltip>
                 ))}
               </TableRow>
             </TableHead>
@@ -154,8 +166,8 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
                     key={row.id}
                     tabIndex={-1}
                   >
-                    {columns.map(({ field, align, valueFormatter }) => (
-                      <TableCell key={field} align={align}>{valueFormatter ? valueFormatter(row[field]) : row[field]}</TableCell>
+                    {columns.map(({ field, align, padding, valueFormatter }) => (
+                      <TableCell key={field} align={align} style={{ paddingLeft: padding ?? 16, paddingRight: padding ?? 16 }}>{valueFormatter ? valueFormatter(row[field]) : row[field]}</TableCell>
                     ))}
                   </TableRow>
                 ))}
