@@ -9,7 +9,7 @@ import { Column, defaultComparator } from '../../components/datatable'
 import { getRosetta, useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { useRouter } from 'next/router'
-import { getFirestoreDocument } from '../ssg'
+//import { getFirestoreDocument } from '../ssg'
 
 export type SectionPlus = Section & { id: string };
 
@@ -43,7 +43,6 @@ export interface CourseInstructorResult {
   badges: SearchResultBadge[];
   id: string;
   lastInitial: string;
-  //meta: Instructor;
 }
 
 export function group2Result(data: Group): CourseGroupResult {
@@ -69,7 +68,6 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     ],
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
-    //meta: data,
   };
 }
 
@@ -257,14 +255,14 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
  * @param courseName 
  * @returns 
  */
-export async function getCourseData(locale: string, courseName: string): Promise<CourseResult> {
-  const data = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
+// export async function getCourseData(locale: string, courseName: string): Promise<CourseResult> {
+//   const data = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
 
-  return composeCourseData(
-    locale,
-    data,
-    Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors) ? await Util.populate<Instructor>(data.instructors) : [],
-    Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups) ? await Util.populate<Group>(data.groups) : [],
-    Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections) ? await Util.populate<Section>(data.sections) : [],
-    );
-}
+//   return composeCourseData(
+//     locale,
+//     data,
+//     Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors) ? await Util.populate<Instructor>(data.instructors) : [],
+//     Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups) ? await Util.populate<Group>(data.groups) : [],
+//     Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections) ? await Util.populate<Section>(data.sections) : [],
+//     );
+// }
