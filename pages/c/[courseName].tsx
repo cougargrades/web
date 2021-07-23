@@ -17,12 +17,137 @@ import { useRosetta } from '../../lib/i18n'
 import { isMobile, sum } from '../../lib/util'
 import { useIsMobile } from '../../lib/hook'
 import { Badge, BadgeSkeleton } from '../../components/badge'
-import { EnhancedTable } from '../../components/datatable'
+import { Column, EnhancedTable } from '../../components/datatable'
 import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
+
+interface Data {
+  id: string;
+  name: string;
+  calories: number;
+  carbs: number;
+  fat: number;
+  protein: number;
+  nested: {
+    value: number;
+  }
+}
+
+const columns: Column<Data>[] = [
+  { field: 'name', headerName: 'Dessert (100g serving)', type: 'string' },
+  { field: 'calories', headerName: 'Calories', type: 'number' },
+  { field: 'fat', headerName: 'Fat (g)', type: 'number' },
+  { field: 'carbs', headerName: 'Carbs (g)', type: 'number' },
+  { field: 'protein', headerName: 'Protein (g)', type: 'number' },
+  { 
+    field: 'nested', headerName: 'Protein (mg)', type: 'object', 
+    sortComparator: (a, b) => b.nested.value < a.nested.value ? -1 : b.nested.value > a.nested.value ? 1 : 0,
+    valueFormatter: x => x.value.toExponential()
+  }
+];
+
+const rows: Data[] = ([
+  {
+    "name": "Cupcake",
+    "calories": 305,
+    "fat": 3.7,
+    "carbs": 67,
+    "protein": 4.3
+  },
+  {
+    "name": "Donut",
+    "calories": 452,
+    "fat": 25,
+    "carbs": 51,
+    "protein": 4.9
+  },
+  {
+    "name": "Eclair",
+    "calories": 262,
+    "fat": 16,
+    "carbs": 24,
+    "protein": 6
+  },
+  {
+    "name": "Frozen yoghurt",
+    "calories": 159,
+    "fat": 6,
+    "carbs": 24,
+    "protein": 4
+  },
+  {
+    "name": "Gingerbread",
+    "calories": 356,
+    "fat": 16,
+    "carbs": 49,
+    "protein": 3.9
+  },
+  {
+    "name": "Honeycomb",
+    "calories": 408,
+    "fat": 3.2,
+    "carbs": 87,
+    "protein": 6.5
+  },
+  {
+    "name": "Ice cream sandwich",
+    "calories": 237,
+    "fat": 9,
+    "carbs": 37,
+    "protein": 4.3
+  },
+  {
+    "name": "Jelly Bean",
+    "calories": 375,
+    "fat": 0,
+    "carbs": 94,
+    "protein": 0
+  },
+  {
+    "name": "KitKat",
+    "calories": 518,
+    "fat": 26,
+    "carbs": 65,
+    "protein": 7
+  },
+  {
+    "name": "Lollipop",
+    "calories": 392,
+    "fat": 0.2,
+    "carbs": 98,
+    "protein": 0
+  },
+  {
+    "name": "Marshmallow",
+    "calories": 318,
+    "fat": 0,
+    "carbs": 81,
+    "protein": 2
+  },
+  {
+    "name": "Nougat",
+    "calories": 360,
+    "fat": 19,
+    "carbs": 9,
+    "protein": 37
+  },
+  {
+    "name": "Oreo",
+    "calories": 437,
+    "fat": 18,
+    "carbs": 63,
+    "protein": 4
+  }
+]).map(e => ({
+  ...e,
+  id: e.name,
+  nested: {
+    value: e.protein * 1000
+  }
+}));
 
 export interface CourseProps {
   staticCourseName: string,
@@ -91,13 +216,18 @@ export default function IndividualCourse({ staticCourseName, staticDescription }
         <h3>Related Instructors</h3>
         <Carousel>
           { status === 'success' ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <InstructorCard key={e.key} data={e} />
-          ) : [1,2,3,4,5].map(e => <InstructorCardSkeleton key={e} />)}
+          ) : Array.from(new Array(RELATED_INSTRUCTOR_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Visualization</h3>
         <Box component="div" width={'100%'} height={150} style={{ backgroundColor: 'silver' }} />
         <h3>Data</h3>
-        <EnhancedTable />
+        <EnhancedTable<Data>
+          title="Nutrition"
+          columns={columns}
+          rows={rows}
+          defaultOrder="calories"
+        />
         {/* <Box component="div" className={styles.dataTableWrap}>
           { status === 'success' ? 
             // <DataGrid
