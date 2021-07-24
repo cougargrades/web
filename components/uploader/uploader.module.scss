@@ -1,0 +1,31 @@
+
+.progress ~ label {
+  font-size: 0.8em;
+  font-style: italic;
+  color: var(--uh-gray);
+}
+
+r-cell[x-class="inputbox"] {
+  padding: 0.25rem;
+}
+
+input, select, textarea {
+  // For whatever reason, this can default to 0.6875rem even if Firefox says it is supposed to be 1.03rem (set by New.css)
+  font-size: 1rem;
+}
+
+input[type=number] {
+  padding-right: 6px;
+}
+
+@import "bootstrap/scss/_functions.scss";
+@import "bootstrap/scss/_variables.scss";
+@import "bootstrap/scss/_mixins.scss";
+
+@import "bootstrap/scss/_forms.scss";
+
+.form-control, .form-control:focus {
+  background: var(--nc-bg-2);
+  color: var(--nc-tx-2);
+  border: 1px solid var(--nc-bg-3);
+}

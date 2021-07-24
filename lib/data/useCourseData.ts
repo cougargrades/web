@@ -62,7 +62,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     badges: [
       ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
       ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalQ/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`, color: grade2Color.get('Q') }] : []),
+      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`, color: grade2Color.get('Q') }] : []),
     ],
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
@@ -158,7 +158,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
         ...(didLoadCorrectly && data.enrollment !== undefined ? [
           {
             key: 'droprate',
-            text: `${(data.enrollment.totalQ/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`,
+            text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`,
             color: grade2Color.get('Q'),
             caption: 'Drop Rate'
           }] : []),
@@ -202,12 +202,12 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             sortComparator: (a, b) => defaultComparator(`${a[0].lastName}, ${a[0].firstName}`, `${b[0].lastName}, ${b[0].firstName}`),
             valueFormatter: value => `${value[0].lastName}, ${value[0].firstName}`,
           },
-          ...(['A','B','C','D','F','Q']).map<Column<SectionPlus>>(e => ({
+          ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
             field: e as any,
             headerName: e,
             description: `Number of ${e}s given for this section`,
             type: 'number',
-            width: 30,
+            width: e !== 'NCR' ? 30 : 55,
             padding: 6,
           })),
           {

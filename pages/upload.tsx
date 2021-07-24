@@ -2,7 +2,7 @@ import React from 'react'
 import { AuthCheck } from 'reactfire'
 import { CustomClaimsCheck } from '../components/auth/CustomClaimsCheck'
 import { LoginForm } from '../components/auth/LoginForm'
-import Uploader from '../components/uploader'
+import { Uploader } from '../components/uploader/uploader'
 
 export default function Upload() {
   return (

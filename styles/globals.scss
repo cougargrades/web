@@ -134,3 +134,25 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
     }
   }
 }
+
+// For the uploader
+.upload-item-enter {
+  opacity: 0;
+}
+.upload-item-enter-active {
+  opacity: 1;
+  color: green;
+  background: rgba(0,255,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 100ms ease-in;
+}
+.upload-item-exit {
+  opacity: 1;
+}
+.upload-item-exit-active {
+  opacity: 0;
+  color: red;
+  background: rgba(255,0,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 100ms ease-in;
+}
