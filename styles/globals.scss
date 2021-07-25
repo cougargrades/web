@@ -158,6 +158,8 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
   transition: opacity 100ms ease-in;
 }
 
-.google-visualization-tooltip path {
-  fill: $dm-fore;
+@media (prefers-color-scheme: dark) {
+  .google-visualization-tooltip path {
+    fill: $dm-fore;
+  }
 }
