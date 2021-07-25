@@ -90,10 +90,11 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
   const { data, error, status } = useFirestoreDocData<Course>(db.doc(`/catalog/${courseName}`))
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
+  const isActualError = typeof courseName === 'string' && courseName !== '' && status !== 'loading' && isBadObject
   const [instructorData, setInstructorData] = useState<Instructor[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
-  const sharedStatus = status === 'success' ? isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
+  const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
   // Remove previously stored instructors whenever we reroute
   useEffect(() => {

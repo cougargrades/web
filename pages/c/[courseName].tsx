@@ -7,6 +7,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
+import Alert from '@material-ui/core/Alert'
+import AlertTitle from '@material-ui/core/AlertTitle'
 import Tilty from 'react-tilty'
 import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
@@ -55,6 +57,13 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <PankoRow />
       <main>
         <div className={styles.courseHero}>
+          {
+            status !== 'error' ? <></> :
+            <Alert severity="error">
+              <AlertTitle>Error 404</AlertTitle>
+              {staticCourseName} could not be found.
+            </Alert>
+          }
           <figure>
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
             { !isMissingProps ? <h1 className={styles.display_3}>{staticCourseName}</h1> : <CustomSkeleton width={325} height={75} />}
@@ -134,7 +143,7 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   const { courseName } = params
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
   const description = courseData !== undefined ? courseData.description : ''
-  const recentPublication: PublicationInfo = courseData.publications !== undefined && 
+  const recentPublication: PublicationInfo = courseData && courseData.publications !== undefined && 
     Array.isArray(courseData.publications) &&
     courseData.publications.length > 0
     ? 
@@ -148,7 +157,7 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
     props: { 
       staticCourseName: onlyOne(courseName),
       staticDescription: description,
-      staticHTML: content,
+      staticHTML: content ?? '',
     }
   };
 
