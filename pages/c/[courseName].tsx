@@ -7,12 +7,11 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
-import Typography from '@material-ui/core/Typography'
 import Tilty from 'react-tilty'
-import { Course } from '@cougargrades/types'
+import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
-import { onlyOne, getFirestoreDocument, sanitizeHTML } from '../../lib/ssg'
+import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
 import { defaultComparator, EnhancedTable } from '../../components/datatable'
@@ -26,11 +25,10 @@ import styles from './course.module.scss'
 export interface CourseProps {
   staticCourseName: string;
   staticDescription: string;
-  //staticHTML: string;
-  staticLongDescription: string;
+  staticHTML: string;
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription, staticLongDescription }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
@@ -74,15 +72,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           </figure>
         </div>
         { !isMissingProps ? 
-          <Typography variant="body1" color="text.primary">
-            {staticLongDescription}
-          </Typography>
+          <div dangerouslySetInnerHTML={{ __html: staticHTML }}></div>
           : 
           <Skeleton variant="text" width={'100%'} height={20} />
          }
         <h6>Sources:</h6>
         { status === 'success' ? data.publications.map(e => (
-          <Chip key={e.key} label={e.title} className={styles.chip} component="a" href={e.url} clickable />
+          <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
+            <Chip label={e.title} className={styles.chip} component="a" href={e.url} clickable />
+          </Tooltip>
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
         <h3>Basic Information</h3>
         <ul>
@@ -136,28 +134,21 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   const { courseName } = params
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
   const description = courseData !== undefined ? courseData.description : ''
-  const rawHTML = courseData.publications !== undefined && 
+  const recentPublication: PublicationInfo = courseData.publications !== undefined && 
     Array.isArray(courseData.publications) &&
     courseData.publications.length > 0
     ? 
-    sanitizeHTML(courseData.publications.sort((a,b) => defaultComparator(a.catoid, b.catoid))[0].content)
+    courseData.publications.sort((a,b) => defaultComparator(a.catoid, b.catoid))[0]
     :
-    '';
-  function getLongDescription(raw: string): string {
-    const desc = raw.indexOf('<strong>Description</strong>');
-    const br1 = raw.indexOf('<br>', desc) + '<br>'.length
-    const br2 = raw.indexOf('<br>', br1);
-    return raw.substring(br1, br2).trim();
-  }
-  const longDescription = getLongDescription(rawHTML);
+    undefined;
+  const { content } = recentPublication || {}
   //console.timeEnd('getStaticProps')
 
   return { 
     props: { 
       staticCourseName: onlyOne(courseName),
       staticDescription: description,
-      //staticHTML: rawHTML,
-      staticLongDescription: longDescription,
+      staticHTML: content,
     }
   };
 

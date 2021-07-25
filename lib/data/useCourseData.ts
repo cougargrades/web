@@ -48,7 +48,7 @@ export function group2Result(data: Group): CourseGroupResult {
     key: data.identifier,
     href: `/g/${data.identifier}`,
     title: `${data.name} (${data.identifier})`,
-    count: data.courses_count
+    count: Array.isArray(data.courses) ? data.courses.length : 0
   };
 }
 
