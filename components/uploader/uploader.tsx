@@ -12,9 +12,13 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Switch from '@material-ui/core/Switch'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Alert from '@material-ui/core/Alert'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
 import { Dropzone } from './dropzone'
-import { LinearProgressWithLabel } from './progress'
+import { LinearProgressWithLabel, SliderWithLabel } from './progress'
 import { readPatchfile } from './AsyncFileReader'
+import { FieldValue } from '../../lib/lazy'
 import { AsyncSemaphore } from './AsyncSemaphore'
 import { localeFunc } from './timeago'
 
@@ -59,7 +63,13 @@ export function Uploader() {
   // max number of phases
   const [patchfilesMaxPhase, setPatchfilesMaxPhase] = useState<number>(-1);
   // max number to do in parallel
-  const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
+  //const [patchfileConcurrencyLimit, setPatchfileConcurrencyLimit] = useState<number>(64);
+  // max number to do in parallel (per phase)
+  const [patchfileConcurrencyLimitPerPhase, setPatchfileConcurrencyLimitPerPhase] = useState<{ prefix: string, limit: number}[]>([]);
+  // number of patchfiles which failed to execute
+  const [patchfilesFailed, setPatchfilesFailed] = useState<number>(0);
+  // easier to list why a patchfile failed
+  const [patchfilesFailedReasons, setPatchfilesFailedReasons] = useState<string[]>([]);
 
   // max number to do in parallel
   const [recordConcurrencyLimit, setRecordConcurrencyLimit] = useState<number>(64);
@@ -178,6 +188,7 @@ export function Uploader() {
     // Save references to patchfiles
     setPatchFiles(pf => [ ...temp ]);
     setPatchfilesMax(temp.length)
+    setIsButtonEnabled(true);
   }, []);
 
   // Return a random entry from the loaded records, then delete it from our memory
@@ -278,7 +289,7 @@ export function Uploader() {
     const timeRemaining = (timeTaken / uploadQueueProcessed) * itemsRemaining;
     setRecordProcessingEstimate(new Date(now + timeRemaining));
 
-    if(uploadStartedAt.valueOf() > 0 && uploadQueueProcessed > 0 && uploadQueueProcessed === uploadQueueMax) {
+    if(uploadStartedAt.valueOf() > 0 && ((uploadQueueMax > 0 && uploadQueueProcessed === uploadQueueMax) || (uploadQueueMax === 0))) {
       console.log('UPLOAD FINISHED MAYBE?');
 
       // mark records as completed
@@ -288,7 +299,7 @@ export function Uploader() {
       setPatchfilesPhase(0);
       setPatchfileProcessingStartedAt(new Date());
     }
-  }, [ uploadQueueProcessed, uploadStartedAt ]);
+  }, [ uploadQueueProcessed, uploadQueueMax, uploadStartedAt ]);
 
   /**
    * Execute an individual patchfile
@@ -299,8 +310,16 @@ export function Uploader() {
     //console.log(`read: ${file.name}`);
     if(contents !== null) {
       //console.log(`executing: ${file.name}`);
-      await executePatchFile(firestore, contents);
-      setPatchfilesProcessed(x => x + 1);
+      try {
+        await executePatchFile(firestore, FieldValue as any, contents);
+        setPatchfilesProcessed(x => x + 1);
+      }
+      catch(err) {
+        console.warn('Patchfile failed: ', err);
+        setPatchfilesProcessed(x => x + 1);
+        setPatchfilesFailed(x => x + 1);
+        setPatchfilesFailedReasons(x => [...x, `For target '${contents.target.path}': ${err}`])
+      }
       //console.log(`DONE: ${file.name}`);
     }
   }
@@ -312,14 +331,14 @@ export function Uploader() {
     (async () => {
       // phases start at 0
       if(patchfilesPhase >= 0 && patchfilesPhase <= patchfilesMaxPhase) {
-        console.log(patchFiles);
 
         const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
 
-        const semaphore = new AsyncSemaphore(patchfileConcurrencyLimit);
+        // parallel processing
+        const semaphore = new AsyncSemaphore(patchfileConcurrencyLimitPerPhase[patchfilesPhase].limit);
 
         for(let file of filesForCurrentPhase) {
-          await semaphore.withLockRunAndForget(() => processPatchfile(file));
+          await semaphore.withLockRunAndForget(async () => await processPatchfile(file));
         }
         
         await semaphore.awaitTerminate();
@@ -342,7 +361,7 @@ export function Uploader() {
       }
     })();
     // do nothing if phase == -1
-  }, [ patchfilesPhase, patchfilesMaxPhase ])
+  }, [ patchfilesPhase, patchfilesMaxPhase, patchfileConcurrencyLimitPerPhase ])
 
   /**
    * Estimate when Patchfile queue will be completed
@@ -355,6 +374,19 @@ export function Uploader() {
     const timeRemaining = (timeTaken / patchfilesProcessed) * itemsRemaining;
     setPatchfileProcessingEstimate(new Date(now + timeRemaining));
   }, [patchfilesProcessed, patchfilesMax, patchfileProcessingStartedAt])
+
+  /**
+   * 
+   */
+  useEffect(() => {
+    if(patchfilesMaxPhase > 0 && patchfilesPhase === -1) {
+      // temporarily get sorted list of patchfiles
+      const temp = patchFiles.slice().sort((a,b) => a.name.localeCompare(b.name));
+      // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]
+      const prefixes = Array.from(new Set(temp.map(e => e.name.split('-')[2])))
+      setPatchfileConcurrencyLimitPerPhase(prefixes.map((value, index) => ({ prefix: value, limit: 64 })))
+    }
+  }, [patchFiles, patchfilesPhase, patchfilesMaxPhase])
 
   return (
     <div>
@@ -370,27 +402,45 @@ export function Uploader() {
         <br />
         {/* Input area */}
         <div className="row">
-          <div className="col-sm-6">
-            <TextField
-              variant="outlined"
-              label="Record Concurrency Limit"
-              helperText={`Maximum number of documents allowed to be inside the "upload_queue" Firestore collection at once. Default: 64`}
-              type="number"
-              value={recordConcurrencyLimit}
-              onChange={e => setRecordConcurrencyLimit(parseInt(e.target.value))}
+          <TextField
+            variant="outlined"
+            label="Record Concurrency Limit"
+            helperText={`Maximum number of documents allowed to be inside the "upload_queue" Firestore collection at once. Default: 64`}
+            type="number"
+            value={recordConcurrencyLimit}
+            onChange={e => setRecordConcurrencyLimit(parseInt(e.target.value))}
+          />
+        </div>
+        <div className="row">
+          <h5>Patchfile Concurrency Limits</h5>
+          <Typography variant="body2" color="text.secondary">
+            Maximum number of patchfiles to process concurrently (the initial value of the semaphore), customizable per phase. Default: 64
+          </Typography>
+          {patchfileConcurrencyLimitPerPhase.map(({ prefix, limit }, index) => (
+            <SliderWithLabel 
+              key={index}
+              label={prefix}
+              valueLabelDisplay="auto"
+              disabled={patchfilesPhase > -1}
+              defaultValue={64}
+              value={limit}
+              onChange={(_, value) => setPatchfileConcurrencyLimitPerPhase(x => {
+                const temp = x.slice();
+                temp[index].limit = value as number;
+                return temp;
+              })}
+              min={1}
+              max={64}
+              step={4}
+              marks 
             />
-          </div>
-          <div className="col-sm-6">
-            <TextField
-              variant="outlined"
-              label="Patchfile Concurrency Limit"
-              helperText={`Maximum number of patchfiles to process concurrently (the initial value of the semaphore). Default: 64`}
-              type="number"
-              value={patchfileConcurrencyLimit}
-              disabled={patchfileProcessingStartedAt.valueOf() > 0}
-              onChange={e => setPatchfileConcurrencyLimit(parseInt(e.target.value))}
-            />
-          </div>
+          ))}
+          {
+          patchfileConcurrencyLimitPerPhase.length > 0 ? <></> : 
+          <Box style={{ marginTop: 5 }}>
+            <Alert severity="info">Patchfiles not added</Alert>
+          </Box>
+          }
         </div>
         <br />
         <div className="form-check form-switch">
@@ -443,6 +493,18 @@ export function Uploader() {
               </>
             }
           </label>
+          {
+            patchfilesFailed === 0 ? <></> : 
+            <>
+              <Alert severity="warning">{patchfilesFailed} Patchfiles failed to execute.</Alert>
+              <details>
+                <summary>See reasons</summary>
+                <ul>
+                { patchfilesFailedReasons.map((value, index) => <li key={index}>{value}</li>)}
+                </ul>
+              </details>
+            </>
+          }
           <h5>Debugging</h5>
           <ul>
             <li>recordConcurrencyCount: {recordConcurrencyCount}</li>
