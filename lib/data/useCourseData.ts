@@ -207,7 +207,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             headerName: e,
             description: `Number of ${e}s given for this section`,
             type: 'number',
-            width: e !== 'NCR' ? 30 : 55,
+            width: e !== 'NCR' ? 30 : 60,
             padding: 6,
           })),
           {
@@ -215,7 +215,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             headerName: 'GPA',
             description: 'Grade Point Average for just this section',
             type: 'number',
-            width: 55,
+            width: 60,
             padding: 8,
           },
         ],
