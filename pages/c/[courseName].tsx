@@ -10,6 +10,7 @@ import Skeleton from '@material-ui/core/Skeleton'
 import Alert from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
 import Tilty from 'react-tilty'
+import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
@@ -22,7 +23,6 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
-
 
 export interface CourseProps {
   staticCourseName: string;
@@ -107,7 +107,23 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Visualization</h3>
-        <Box component="div" width={'100%'} height={150} style={{ backgroundColor: 'silver' }} />
+        <div className={styles.chartWrap}>
+          {
+            status === 'success' ?
+            <Chart
+              width={'100%'}
+              height={350}
+              chartType="LineChart"
+              loader={<CustomSkeleton width={'100%'} height={350} />}
+              data={data.dataChart.data}
+              options={data.dataChart.options}
+              // prevent ugly red box when there's no data yet on first-mount
+              chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
+            />
+            :
+            <CustomSkeleton width={'100%'} height={150} />
+          }
+        </div>
         <h3>Data</h3>
         <EnhancedTable<SectionPlus>
           title="Past Sections"

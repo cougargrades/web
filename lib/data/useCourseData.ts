@@ -8,6 +8,7 @@ import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components
 import { Column, defaultComparator } from '../../components/datatable'
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
+import { getChartData } from './getChartData'
 
 export type SectionPlus = Section & { id: string };
 
@@ -22,7 +23,11 @@ export interface CourseResult {
   dataGrid: {
     columns: Column<SectionPlus>[];
     rows: SectionPlus[];
-  }
+  },
+  dataChart: {
+    data: any[],
+    options: { [key: string ]: any }
+  } 
 }
 
 export interface CourseGroupResult {
@@ -226,7 +231,44 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             ...e,
           })) : [])
         ],
-      }
+      },
+      dataChart: {
+        data: [
+          ...(didLoadCorrectly ? getChartData(sectionData) : [])
+        ],
+        // https://developers.google.com/chart/interactive/docs/gallery/linechart?hl=en#configuration-options
+        options: {
+          title: `${courseName} Average GPA Over Time by Instructor`,
+          vAxis: {
+            title: 'Average GPA',
+            gridlines: {
+                count: -1 //auto
+            },
+            maxValue: 4.0,
+            minValue: 0.0
+          },
+          hAxis: {
+            title: 'Semester',
+            gridlines: {
+                count: -1 //auto
+            }
+          },
+          chartArea: {
+            //width: '100%',
+            //width: '55%',
+            //width: '65%',
+            left: 'auto',
+            //left: 65, // default 'auto' or 65
+            right: 'auto',
+            //right: 35, // default 'auto' or 65
+            //left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
+          },
+          legend: {
+            position: 'bottom'
+          },
+          pointSize: 5,
+          interpolateNulls: true //lines between point gaps
+      }}
     },
     error,
     status: sharedStatus,

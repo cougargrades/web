@@ -105,7 +105,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
         onClose={() => setOpen(false)}
         TransitionComponent={fullScreen ? Transition : undefined}
       >
-        <DialogTitle {...handlers}>
+        <DialogTitle {...handlers} className={styles.dialogTitle}>
           <IconButton
             edge="start"
             color="inherit"

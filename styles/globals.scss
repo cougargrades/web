@@ -1,3 +1,4 @@
+@import "./vars.scss";
 
 // For sticky footer
 #__next {
@@ -155,4 +156,8 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
   background: rgba(255,0,0,0.1);
   border-radius: 0.25rem;
   transition: opacity 100ms ease-in;
+}
+
+.google-visualization-tooltip path {
+  fill: $dm-fore;
 }

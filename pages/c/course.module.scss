@@ -1,3 +1,4 @@
+@import "../../styles/vars";
 
 // borrowed from Bootstrap 5.0
 .display_1 {
@@ -126,4 +127,26 @@
   // @media (min-width: 576px) {
   //   width: 100%;
   // }
+}
+
+.chartWrap {
+  overflow: auto;
+  div {
+    display: inline-block
+  }
+  @media (prefers-color-scheme: dark) {
+    & svg rect {
+      fill: $dm-text;
+    }
+    // make graph background transparent but not the lines
+    & svg:nth-child(1) > rect:nth-child(2) {
+      fill: rgba(0,0,0,0);
+    }
+    & svg rect [height="1"] {
+      fill: $dm-text;
+    }
+    & svg text {
+      fill: $dm-text;
+    }
+  }
 }

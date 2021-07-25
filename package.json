@@ -31,6 +31,7 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.3.4",
     "react-fitty": "^1.0.1",
+    "react-google-charts": "^3.0.15",
     "react-highlight-words": "^0.17.0",
     "react-swipeable": "^6.1.2",
     "react-tilty": "^2.0.3",
