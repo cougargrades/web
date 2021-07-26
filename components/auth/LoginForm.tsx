@@ -1,14 +1,15 @@
 import React from 'react'
-import { auth as fbAuth, useAuth } from 'reactfire'
+import { useAuth } from 'reactfire'
 
 export function LoginForm() {
   const auth = useAuth();
+  const fbAuth = useAuth;
   const provider = new fbAuth.GoogleAuthProvider();
   provider.addScope('profile');
   provider.addScope('email');
 
-  const signIn = () => {
-    auth.signInWithPopup(provider)
+  const signIn = async () => {
+    await auth.signInWithPopup(provider)
   };
 
   // If already signed in, offer account options

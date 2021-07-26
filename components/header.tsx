@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
-import { AuthCheck } from 'reactfire'
-import { CustomClaimsCheck } from './auth/CustomClaimsCheck'
+import { useSigninCheck } from 'reactfire'
 import Search from './search'
 import { Emoji } from './emoji'
 
@@ -10,6 +9,7 @@ import styles from './header.module.scss'
 export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation>{children}</Button></Link>;
 
 export default function Header() {
+  const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});
   return (
     <header className={styles.hero}>
       <div className="new-container">
@@ -25,12 +25,10 @@ export default function Header() {
           <NavLink href="/groups"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="newspaper" symbol="🗞️" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
-          <AuthCheck fallback={<></>}>
-            <CustomClaimsCheck requiredClaims={{ admin: true }} fallback={<></>}>
-              <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>
-              <NavLink href="/upload"><Emoji label="hammer and wrench" symbol="🛠️" />Upload</NavLink>
-            </CustomClaimsCheck>
-          </AuthCheck>
+          { status === 'success' && signInCheckResult.signedIn && signInCheckResult.hasRequiredClaims ? <>
+            <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>
+            <NavLink href="/upload"><Emoji label="hammer and wrench" symbol="🛠️" />Upload</NavLink>
+          </> : <></>}
         </nav>
         <Search />
       </div>

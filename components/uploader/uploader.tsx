@@ -22,7 +22,7 @@ import { FieldValue } from '../../lib/lazy'
 import { AsyncSemaphore } from './AsyncSemaphore'
 import { localeFunc } from './timeago'
 
-import styles from './uploader.module.scss'
+//import styles from './uploader.module.scss'
 
 export function Uploader() {
   timeago.register('en_US_custom', localeFunc);

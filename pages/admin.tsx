@@ -1,14 +1,15 @@
 import React from 'react'
-import { AuthCheck } from 'reactfire'
+import { useSigninCheck } from 'reactfire'
 import { UserAccountControl } from '../components/auth/UserAccountControl'
 import { LoginForm } from '../components/auth/LoginForm'
 
 export default function AdminPanel() {
+  const { status, data: signInCheckResult } = useSigninCheck();
   return (
     <div className="new-container">
-      <AuthCheck fallback={<LoginForm />}>
-        <UserAccountControl forceRefresh />
-      </AuthCheck>
+      { status === 'success' && signInCheckResult.signedIn ? <>
+        <UserAccountControl />
+      </> : <LoginForm />}
     </div>
   );
 }

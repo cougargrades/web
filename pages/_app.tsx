@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import { ThemeProvider } from '@material-ui/core/styles'
 //import { FirebaseAppProvider } from 'reactfire'
 const FirebaseAppProvider = dynamic(() => import('../lib/lazy').then((mod) => mod.FirebaseAppProviderWrapper))
+//import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
+const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then((mod) => mod.RealtimeClaimUpdater))
 //import { RecoilRoot } from 'recoil'
 const RecoilRoot = dynamic(() => import('recoil').then((mod) => mod.RecoilRoot))
 import { useTheme } from '../lib/theme'
@@ -60,6 +62,7 @@ export default function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <FirebaseAppProvider>
           <RecoilRoot>
+            <RealtimeClaimUpdater />
             <Layout>
               <Component {...pageProps} />
             </Layout>

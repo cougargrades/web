@@ -1,34 +1,37 @@
-import React from 'react'
-import { auth as fbAuth, useAuth, useUser, useIdTokenResult } from 'reactfire'
+import React, { useEffect, useState } from 'react'
+import { useAuth, useUser, useIdTokenResult, useSigninCheck, useFirestoreDoc, useFirestore } from 'reactfire'
 import { CustomClaimNames as isCustomClaim } from '@cougargrades/types/dist/is'
 import { Collaborator } from '../collaborator'
 
 import styles from './UserAccountControl.module.scss'
+import { useJWT } from './RealtimeClaimUpdater'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
-interface UserAccountControlProps {
-  forceRefresh?: boolean;
-}
 
-export function UserAccountControl({ forceRefresh }: UserAccountControlProps) {
-  // get the current user, identified by the SDK-managed JWT 
-  const { data: user } = useUser();
-  const { data: jwt, error } = useIdTokenResult(user, forceRefresh);
+export function UserAccountControl() {
+  // get the current user, identified by the SDK-managed JWT
+  const { status, data: signInCheckResult } = useSigninCheck();
+  const jwt = useJWT();
+  const [showAllClaims, setShowAllClaims] = useState(false)
 
   // for signing out
   const auth = useAuth();
+  const fbAuth = useAuth;
   const provider = new fbAuth.GoogleAuthProvider();
   provider.addScope('profile');
   provider.addScope('email');
 
   // typical SWR stuff
-  if (error) return <div>failed to load</div>;
-  if (!jwt) return <div>loading...</div>;
+  if (status === 'error') return <div>failed to load</div>;
+  if (status === 'loading') return <div>loading...</div>;
+  if (! signInCheckResult.signedIn || jwt === null) return <div>not signed in</div>;
 
   // for rendering claims
   const rows = Object.keys(jwt.claims)
   // dont present other stuff present in the OpenID spec
   // see: https://openid.net/specs/openid-connect-core-1_0.html#IDToken
-  .filter(e => isCustomClaim(e))
+  .filter(e => showAllClaims ? true : isCustomClaim(e))
   .map(key => 
     <tr key={key}>
       <td>{key}</td>
@@ -68,8 +71,9 @@ export function UserAccountControl({ forceRefresh }: UserAccountControlProps) {
         <button onClick={signOut}>Sign Out</button>
         <button onClick={deleteAccount} disabled={auth.currentUser === null}>Delete account</button>
       </div>
+      <FormControlLabel control={<Switch checked={showAllClaims} onChange={e => setShowAllClaims(e.target.checked)} />} label="Show all claims" />
       <table>
-        <caption>Custom Claims</caption>
+        <caption>{showAllClaims ? 'All Claims' : 'Custom Claims'}</caption>
         <thead>
           <tr>
             <th>Field</th>

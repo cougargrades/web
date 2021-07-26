@@ -1,6 +1,7 @@
 import Box, { BoxProps } from '@material-ui/core/Box'
 import Tooltip from '@material-ui/core/Tooltip'
 import CircleIcon from '@material-ui/icons/Circle'
+import React from 'react'
 
 import styles from './enrollment.module.scss'
 
@@ -23,9 +24,9 @@ export function EnrollmentInfo(props: EnrollmentInfoProps & BoxProps) {
     <Box component="div" {...props}>
       <span className={`Progress ${styles.progressWrap}`} style={{ height: barHeight }}>
         { data.map(e => (
-          e.percentage === 0 ? <></> : 
-          <Tooltip placement="top" title={`${e.value.toLocaleString()} total students have received ${e.title}s`}>
-            <span key={e.key} className="Progress-item" style={{ width: `${e.percentage}%`, backgroundColor: e.color }}></span>
+          e.percentage === 0 ? <React.Fragment key={e.key}></React.Fragment> : 
+          <Tooltip key={e.key} placement="top" title={`${e.value.toLocaleString()} total students have received ${e.title}s`}>
+            <span className="Progress-item" style={{ width: `${e.percentage}%`, backgroundColor: e.color }}></span>
           </Tooltip>
         ))}
       </span>
