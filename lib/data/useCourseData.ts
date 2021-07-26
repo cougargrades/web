@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { Course, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
+import { Course, Enrollment, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/com.collegescheduler.uh.subjects/dictionary.json'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
-import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
+import { getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'
 import { Column, defaultComparator } from '../../components/datatable'
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { getChartData } from './getChartData'
+import { EnrollmentInfoResult } from '../../components/enrollment'
 
 export type SectionPlus = Section & { id: string };
 
@@ -27,13 +28,15 @@ export interface CourseResult {
   dataChart: {
     data: any[],
     options: { [key: string ]: any }
-  } 
+  },
+  enrollment: EnrollmentInfoResult[];
 }
 
 export interface CourseGroupResult {
   key: string;
   href: string;
   title: string;
+  description: string;
   count: number;
 }
 
@@ -53,6 +56,7 @@ export function group2Result(data: Group): CourseGroupResult {
     key: data.identifier,
     href: `/g/${data.identifier}`,
     title: `${data.name} (${data.identifier})`,
+    description: data.description,
     count: Array.isArray(data.courses) ? data.courses.length : 0
   };
 }
@@ -65,9 +69,9 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     subtitle: generateSubjectString(data),
     caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
     badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toPrecision(3)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toPrecision(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`, color: grade2Color.get('Q') }] : []),
+      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
+      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
+      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
     ],
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
@@ -150,22 +154,22 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
         ...(didLoadCorrectly && data.GPA.average !== 0 ? [
           {
             key: 'gpa',
-            text: `${data.GPA.average.toPrecision(3)} GPA`,
+            text: `${data.GPA.average.toFixed(2)} GPA`,
             color: grade2Color.get(getGradeForGPA(data.GPA.average)),
             caption: 'Grade Point Average',
           }] : []),
         ...(didLoadCorrectly && data.GPA.standardDeviation !== 0 ? [
           {
             key: 'sd',
-            text: `${data.GPA.standardDeviation.toPrecision(3)} SD`,
+            text: `${data.GPA.standardDeviation.toFixed(3)} SD`,
             color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
             caption: 'Standard Deviation',
           }] : []),
         ...(didLoadCorrectly && data.enrollment !== undefined ? [
           {
             key: 'droprate',
-            text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toPrecision(3)}% W`,
-            color: grade2Color.get('Q'),
+            text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
+            color: grade2Color.get('W'),
             caption: 'Drop Rate'
           }] : []),
       ],
@@ -268,7 +272,43 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
           },
           pointSize: 5,
           interpolateNulls: true //lines between point gaps
-      }}
+        }
+      },
+      enrollment: [
+        ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
+          .map(k => ({
+            key: k,
+            title: k.substring(5), // 'totalA' => 'A'
+            color: grade2Color.get(k.substring(5) as Grade),
+            value: data.enrollment[k],
+            percentage: data.enrollment[k] / data.enrollment.totalEnrolled * 100,
+          })
+        ) : []),
+        // {
+        //   key: 1,
+        //   title: 'Success', // success warning danger info
+        //   color: '#28a745', // #28a745 #ffd33d #d73a49 #0366d6
+        //   value: 50, // 50 25 15 10
+        // },
+        // {
+        //   key: 2,
+        //   title: 'Warning', // success warning danger info
+        //   color: '#ffd33d', // #28a745 #ffd33d #d73a49 #0366d6
+        //   value: 25, // 50 25 15 10
+        // },
+        // {
+        //   key: 3,
+        //   title: 'Danger', // success warning danger info
+        //   color: '#d73a49', // #28a745 #ffd33d #d73a49 #0366d6
+        //   value: 15, // 50 25 15 10
+        // },
+        // {
+        //   key: 4,
+        //   title: 'Info', // success warning danger info
+        //   color: '#0366d6', // #28a745 #ffd33d #d73a49 #0366d6
+        //   value: 10, // 50 25 15 10
+        // },
+      ],
     },
     error,
     status: sharedStatus,

@@ -86,7 +86,7 @@ export type Column<T> = { [K in keyof T]: ({
 })) }[keyof T];
 
 export interface EnhancedTableProps<T> {
-  title: string;
+  title?: string;
   columns: Column<T>[];
   rows: T[];
   defaultOrder?: Order;
@@ -107,11 +107,14 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
   return (
     <div className={styles.root}>
       <Paper className={styles.paper}>
-        <Toolbar>
-          <Typography variant="h6" id="tableTitle" component="div">
-            {title}
-          </Typography>
-        </Toolbar>
+        {
+          title ===  undefined ? <></> : 
+          <Toolbar>
+            <Typography variant="h6" id="tableTitle" component="div">
+              {title}
+            </Typography>
+          </Toolbar>
+        }
         <TableContainer>
           <Table
             className={styles.table}

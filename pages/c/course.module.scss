@@ -114,6 +114,15 @@
   }
 }
 
+.enrollmentBar {
+  padding-top: 20px;
+  padding-bottom: 0px;
+}
+
+.enrollmentBarProgress {
+  height: 12px;
+}
+
 .relatedInstructors {
   display: flex;
   flex-direction: row;

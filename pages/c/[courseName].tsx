@@ -20,6 +20,7 @@ import { Badge, BadgeSkeleton } from '../../components/badge'
 import { defaultComparator, EnhancedTable } from '../../components/datatable'
 import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
+import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
 import styles from './course.module.scss'
@@ -83,7 +84,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         { !isMissingProps ? 
           <div dangerouslySetInnerHTML={{ __html: staticHTML }}></div>
           : 
-          <Skeleton variant="text" width={'100%'} height={20} />
+          <CustomSkeleton width={'100%'} height={125} />
          }
         <h6>Sources:</h6>
         { status === 'success' ? data.publications.map(e => (
@@ -91,6 +92,9 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             <Chip label={e.title} className={styles.chip} component="a" href={e.url} clickable />
           </Tooltip>
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
+        { status === 'success' ? <>
+          <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
+        </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
         <h3>Basic Information</h3>
         <ul>
           <li>Earliest record: { status === 'success' ? data.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
@@ -98,7 +102,9 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         </ul>
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
-          <Chip key={e.key} label={e.title} className={styles.chip} onClick={() => router.push(e.href)} />
+          <Tooltip key={e.key} title={e.description}>
+            <Chip label={e.title} className={styles.chip} onClick={() => router.push(e.href)} />
+          </Tooltip>
         )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>
         <Carousel>
@@ -106,7 +112,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           ) : Array.from(new Array(RELATED_INSTRUCTOR_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
-        <h3>Visualization</h3>
+        <h3>Data</h3>
         <div className={styles.chartWrap}>
           {
             status === 'success' ?
@@ -124,7 +130,6 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             <CustomSkeleton width={'100%'} height={150} />
           }
         </div>
-        <h3>Data</h3>
         <EnhancedTable<SectionPlus>
           title="Past Sections"
           columns={status === 'success' ? data.dataGrid.columns : []}

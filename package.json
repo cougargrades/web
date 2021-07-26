@@ -19,6 +19,7 @@
     "@material-ui/core": "5.0.0-beta.1",
     "@material-ui/icons": "5.0.0-beta.1",
     "@material-ui/styles": "^5.0.0-beta.1",
+    "@primer/css": "^17.4.0",
     "bootstrap": "^5.0.1",
     "firebase": "^8.6.7",
     "fitty": "^2.3.5",
