@@ -41,14 +41,20 @@
   svg + span {
     font-size: 12px;
     font-weight: 600;
-    color: #c9d1d9;
+    color: #24292e;
     margin-right: 4px;
+    @media (prefers-color-scheme: dark) {
+      color: #c9d1d9;
+    }
   }
 
   // all spans
   span {
     font-size: 12px;
     font-weight: 400;
-    color: #8b949e;
+    color: #586069;
+    @media (prefers-color-scheme: dark) {
+      color: #8b949e;
+    }
   }
 }
