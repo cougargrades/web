@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@au5ton/use-atom-feed": "^1.0.3",
+    "@au5ton/use-atom-feed": "^1.0.4",
     "@cougargrades/publicdata": "^1.0.0-20210723234911",
     "@cougargrades/types": "0.0.77",
     "@emotion/react": "^11.4.0",

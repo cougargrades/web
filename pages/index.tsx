@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
-import Blog from '../components/blog'
+import { BlogNotifications } from '../components/blog'
 import { ExternalLink } from '../components/link'
 import { searchInputAtom } from '../lib/recoil'
 import Button from '@material-ui/core/Button'
@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div className="new-container">
       <main className={styles.main}>
-        <Blog />
+        <BlogNotifications />
         <div className="row g-0">
           <div className="col-sm-6">
             <section>

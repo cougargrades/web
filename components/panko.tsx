@@ -8,6 +8,7 @@ import IosShareIcon from '@material-ui/icons/IosShare'
 import { copyText } from '../vendor/clipboard'
 import { useIsMobile } from '../lib/hook'
 import { Emoji } from './emoji'
+import { BlogNotifications } from './blog'
 import styles from './panko.module.scss'
 
 const strip = (path: string) => path.split(/[?|#]/).slice(0,1).join('')
@@ -45,6 +46,8 @@ export function PankoRow() {
   }
 
   return (
+    <>
+    <BlogNotifications />
     <div className={`new-container ${styles.pankoRow}`}>
       <Panko />
       <div>
@@ -70,6 +73,7 @@ export function PankoRow() {
         />
       </div>
     </div>
+    </>
   )
 }
 

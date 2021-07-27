@@ -28,4 +28,25 @@
   }
 }
 
+.blogNotifications {
+  //margin-bottom: 8px;
+  margin-bottom: 1rem;
+}
 
+.blogNotice {
+  * {
+    margin: 0;
+  }
+}
+
+.blogNoticeAction {
+  align-self: center;
+  &:hover {
+    color: inherit;
+  }
+}
+
+.blogNoticeTime {
+  font-size: 0.85em;
+  padding-right: 5px;
+}
