@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@au5ton/use-atom-feed": "^1.0.4",
-    "@cougargrades/publicdata": "^1.0.0-20210723234911",
-    "@cougargrades/types": "0.0.77",
+    "@cougargrades/publicdata": "^1.0.0-20210727071630",
+    "@cougargrades/types": "0.0.78",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@exampledev/new.css": "^1.1.3",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
 import { Course, Enrollment, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
-import abbreviationMap from '@cougargrades/publicdata/bundle/com.collegescheduler.uh.subjects/dictionary.json'
+import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'

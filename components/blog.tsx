@@ -60,10 +60,7 @@ export default function Blog() {
 }
 
 export function BlogNotifications() {
-  const { data } = useAtomFeed(BLOG_URL, { fetcher: (url: string) => {
-    console.log('url?',url)
-    return fetch(url).then(res => res.text())
-  } });
+  const { data } = useAtomFeed(BLOG_URL);
   const notices = getNotices(data)
 
   return (
