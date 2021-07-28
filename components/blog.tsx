@@ -64,7 +64,7 @@ export function BlogNotifications() {
   const notices = getNotices(data)
 
   return (
-    <Stack className={styles.blogNotifications} spacing={1}>
+    <Stack className={styles.blogNotifications} alignItems="center" spacing={1}>
       { notices.map(e => (
         <BlogNotice key={e.id} {...e} />
       ))}
@@ -85,9 +85,9 @@ export function BlogNotice({ title, bodyHTML, href, severity, variant, updated }
   </>
 
   return (
-    <Alert severity={alertSeverity} variant={alertVariant} icon={icon} action={action}>
+    <Alert className={styles.blogNotice} severity={alertSeverity} variant={alertVariant} icon={icon} action={action}>
       <AlertTitle dangerouslySetInnerHTML={{ __html: title }}></AlertTitle>
-      <div className={styles.blogNotice} dangerouslySetInnerHTML={{ __html: bodyHTML }}></div>
+      <div className={styles.blogNoticeContent} dangerouslySetInnerHTML={{ __html: bodyHTML }}></div>
       
     </Alert>
   )

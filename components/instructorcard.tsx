@@ -13,6 +13,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import CloseIcon from '@material-ui/icons/Close'
+import Skeleton from '@material-ui/core/Skeleton'
 import Slide from '@material-ui/core/Slide'
 import { TransitionProps } from '@material-ui/core/transitions'
 import ListSubheader from '@material-ui/core/ListSubheader'
@@ -32,6 +33,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 
 interface InstructorCardProps {
   data: CourseInstructorResult;
+  fitSubtitle?: boolean;
 }
 
 interface InstructorCardShowMoreProps {
@@ -39,7 +41,12 @@ interface InstructorCardShowMoreProps {
   data: CourseInstructorResult[];
 }
 
-export function InstructorCard({ data }: InstructorCardProps) {
+interface InstructorCardEmptyProps {
+  text: string;
+  onClick?: () => void;
+}
+
+export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
   const router = useRouter()
   return (
     <Card sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
@@ -53,9 +60,16 @@ export function InstructorCard({ data }: InstructorCardProps) {
           <Typography variant="h6" component={ReactFitty} maxSize={18}>
             {data.title}
           </Typography>
-          <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
-            {data.subtitle}
-          </Typography>
+          {
+            fitSubtitle ?
+            <Typography gutterBottom component={ReactFitty} maxSize={18} variant="body2" color="text.secondary" noWrap>
+              {data.subtitle}
+            </Typography>
+            :
+            <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
+              {data.subtitle}
+            </Typography>
+          }
           <Typography variant="caption" color="text.primary">
             {data.caption}
           </Typography>
@@ -157,8 +171,28 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
   );
 }
 
+export function InstructorCardEmpty({ text, onClick }: InstructorCardEmptyProps) {
+  return (
+    <Card variant="outlined" sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
+      <CardActionArea className={styles.cardActionArea} onClick={onClick}>
+        <CardContent className={styles.cardContent}>
+          <Typography className={styles.showMore} color="text.secondary">
+            {text}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  )
+}
+
 export function InstructorCardSkeleton() {
   return (
-    <CustomSkeleton width={250} height={150} />
+    <Skeleton
+      variant="rectangular"
+      className={styles.instructorCard}
+      style={{ margin: 4, borderRadius: 5 }}
+      width={250}
+      height={150}
+    />
   )
 }

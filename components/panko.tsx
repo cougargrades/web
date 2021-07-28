@@ -47,7 +47,9 @@ export function PankoRow() {
 
   return (
     <>
-    <BlogNotifications />
+    <div className="new-container">
+      <BlogNotifications />
+    </div>
     <div className={`new-container ${styles.pankoRow}`}>
       <Panko />
       <div>
@@ -90,7 +92,7 @@ export function generateBreadcrumbs(path: string) {
       if(value.toLowerCase() === 'i') {
         return <span key={key}><Emoji label="teacher" symbol="👩‍🏫" />Instructors</span>
       }
-      if(value.toLowerCase() === 'g') {
+      if(value.toLowerCase() === 'g' || value.toLowerCase() === 'groups') {
         return <span key={key}><Emoji label="file box" symbol="🗃️" />Groups</span>
       }
     }
