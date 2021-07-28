@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
@@ -6,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
@@ -25,11 +29,6 @@ import { Badge } from './badge'
 import { CustomSkeleton } from './skeleton'
 import { CourseInstructorResult } from '../lib/data/useCourseData'
 import styles from './instructorcard.module.scss'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-
-
 
 interface InstructorCardProps {
   data: CourseInstructorResult;
@@ -50,31 +49,33 @@ export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
   const router = useRouter()
   return (
     <Card sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
-      <CardActionArea className={styles.cardActionArea} onClick={() => router.push(data.href)}>
-        <CardContent className={styles.cardContent}>
-          <Box className={styles.badgeRow}>
-            {data.badges.map(e => (
-              <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em', marginRight: '0.25rem' }}>{e.text}</Badge>
-            ))}
-          </Box>
-          <Typography variant="h6" component={ReactFitty} maxSize={18}>
-            {data.title}
-          </Typography>
-          {
-            fitSubtitle ?
-            <Typography gutterBottom component={ReactFitty} maxSize={18} variant="body2" color="text.secondary" noWrap>
-              {data.subtitle}
+      <Link href={data.href} passHref>
+        <CardActionArea className={styles.cardActionArea}>
+          <CardContent className={styles.cardContent}>
+            <Box className={styles.badgeRow}>
+              {data.badges.map(e => (
+                <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em', marginRight: '0.25rem' }}>{e.text}</Badge>
+              ))}
+            </Box>
+            <Typography variant="h6" component={ReactFitty} maxSize={18}>
+              {data.title}
             </Typography>
-            :
-            <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
-              {data.subtitle}
+            {
+              fitSubtitle ?
+              <Typography gutterBottom component={ReactFitty} maxSize={18} variant="body2" color="text.secondary" noWrap>
+                {data.subtitle}
+              </Typography>
+              :
+              <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
+                {data.subtitle}
+              </Typography>
+            }
+            <Typography variant="caption" color="text.primary">
+              {data.caption}
             </Typography>
-          }
-          <Typography variant="caption" color="text.primary">
-            {data.caption}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   );
 }
