@@ -3,14 +3,16 @@ import Container from '@material-ui/core/Container'
 import { PankoRow } from '../components/panko'
 import { useAllGroups } from '../lib/data/useAllGroups'
 import { GroupRow } from '../components/grouprow'
+import { useRosetta } from '../lib/i18n'
 
 export default function Groups() {
+  const stone = useRosetta()
   const { data, status } = useAllGroups();
   return (
     <>
       <Head>
         <title>Groups - CougarGrades.io</title>
-        <meta name="description" content="Groups page" />
+        <meta name="description" content={stone.t('meta.groups.description')} />
       </Head>
       <Container>
         <PankoRow />

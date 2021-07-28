@@ -8,6 +8,9 @@ export const en_US = {
     },
     "instructor": {
       "description": ({instructorName, departmentText}) => isEmpty(instructorName) ? `An instructor at the University of Houston. View grade distribution data at CougarGrades.io.` : `${instructorName} is ${isEmpty(departmentText) || isVowel(departmentText) ? 'an ' : 'a ' }${`${unwrap(departmentText)} `}instructor at the University of Houston. View grade distribution data at CougarGrades.io.`
+    },
+    "groups": {
+      "description": "View courses which satisfy different areas of the UH Core Curriculum. View grade distribution data at CougarGrades.io."
     }
   },
   "season": {

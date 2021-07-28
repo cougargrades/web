@@ -8,6 +8,9 @@ export const es = {
     },
     "instructor": {
       "description": ({instructorName, departmentText}) => isEmpty(instructorName) ? `Instructora de la Universidad de Houston. Vea los datos de distribución de calificaciones en CougarGrades.io.` : `${instructorName} es instructor ${departmentText !== '' ? `de ${departmentText} ` : ''}en la Universidad de Houston. Vea los datos de distribución de calificaciones en CougarGrades.io.`
+    },
+    "groups": {
+      "description": "Ver cursos que satisfacen diferentes áreas del plan de estudios básico de UH. Vea los datos de distribución de calificaciones en CougarGrades.io."
     }
   },
   "season": {
