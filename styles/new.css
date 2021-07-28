@@ -186,7 +186,7 @@ a {
 	color: var(--nc-lk-1);
 }
 
-a:hover:not(.MuiButton-root) {
+a:hover:not(.MuiButton-root):not(.MuiButtonBase-root) {
 	color: var(--nc-lk-2);
 }
 
