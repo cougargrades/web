@@ -148,169 +148,154 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     }
   }, [data, status])
 
-  return {
-    data: {
-      badges: [
-        ...(didLoadCorrectly && data.GPA.average !== 0 ? [
-          {
-            key: 'gpa',
-            text: `${data.GPA.average.toFixed(2)} GPA`,
-            color: grade2Color.get(getGradeForGPA(data.GPA.average)),
-            caption: 'Grade Point Average',
-          }] : []),
-        ...(didLoadCorrectly && data.GPA.standardDeviation !== 0 ? [
-          {
-            key: 'sd',
-            text: `${data.GPA.standardDeviation.toFixed(3)} SD`,
-            color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
-            caption: 'Standard Deviation',
-          }] : []),
-        ...(didLoadCorrectly && data.enrollment !== undefined ? [
-          {
-            key: 'droprate',
-            text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
-            color: grade2Color.get('W'),
-            caption: 'Drop Rate'
-          }] : []),
-      ],
-      publications: [
-        ...(didLoadCorrectly && data.publications !== undefined && Array.isArray(data.publications) ? data.publications.map(e => (
-          {
-            ...e,
-            key: `${e.catoid}|${e.coid}`
-          }
-        )) : [])
-      ],
-      firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
-      lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',
-      relatedGroups: [
-        ...(didLoadCorrectly ? groupData.map(e => group2Result(e)) : [])
-      ],
-      relatedInstructors: [
-        ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])
-      ],
-      dataGrid: {
-        columns: [
-          {
-            field: 'term',
-            headerName: 'Term',
-            type: 'number',
-            width: 65,
-            valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
-          },
-          {
-            field: 'sectionNumber',
-            headerName: 'Section #',
-            type: 'number',
-            width: 90,
-          },
-          {
-            field: 'instructorNames',
-            headerName: 'Instructor',
-            type: 'string',
-            width: 95,
-            sortComparator: (a, b) => defaultComparator(`${a[0].lastName}, ${a[0].firstName}`, `${b[0].lastName}, ${b[0].firstName}`),
-            valueFormatter: value => `${value[0].lastName}, ${value[0].firstName}`,
-          },
-          ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
-            field: e as any,
-            headerName: e,
-            description: `Number of ${e}s given for this section`,
-            type: 'number',
-            width: e !== 'NCR' ? 30 : 60,
-            padding: 6,
-          })),
-          {
-            field: 'semesterGPA',
-            headerName: 'GPA',
-            description: 'Grade Point Average for just this section',
-            type: 'number',
-            width: 60,
-            padding: 8,
-          },
+  try {
+    return {
+      data: {
+        badges: [
+          ...(didLoadCorrectly && data.GPA.average !== 0 ? [
+            {
+              key: 'gpa',
+              text: `${data.GPA.average.toFixed(2)} GPA`,
+              color: grade2Color.get(getGradeForGPA(data.GPA.average)),
+              caption: 'Grade Point Average',
+            }] : []),
+          ...(didLoadCorrectly && data.GPA.standardDeviation !== 0 ? [
+            {
+              key: 'sd',
+              text: `${data.GPA.standardDeviation.toFixed(3)} SD`,
+              color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
+              caption: 'Standard Deviation',
+            }] : []),
+          ...(didLoadCorrectly && data.enrollment !== undefined ? [
+            {
+              key: 'droprate',
+              text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
+              color: grade2Color.get('W'),
+              caption: 'Drop Rate'
+            }] : []),
         ],
-        rows: [
-          ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
-            id: e._id,
-            ...e,
-          })) : [])
-        ],
-      },
-      dataChart: {
-        data: [
-          ...(didLoadCorrectly ? getChartData(sectionData) : [])
-        ],
-        // https://developers.google.com/chart/interactive/docs/gallery/linechart?hl=en#configuration-options
-        options: {
-          title: `${courseName} Average GPA Over Time by Instructor`,
-          vAxis: {
-            title: 'Average GPA',
-            gridlines: {
-                count: -1 //auto
-            },
-            maxValue: 4.0,
-            minValue: 0.0
-          },
-          hAxis: {
-            title: 'Semester',
-            gridlines: {
-                count: -1 //auto
+        publications: [
+          ...(didLoadCorrectly && data.publications !== undefined && Array.isArray(data.publications) ? data.publications.map(e => (
+            {
+              ...e,
+              key: `${e.catoid}|${e.coid}`
             }
-          },
-          chartArea: {
-            //width: '100%',
-            //width: '55%',
-            //width: '65%',
-            left: 'auto',
-            //left: 65, // default 'auto' or 65
-            right: 'auto',
-            //right: 35, // default 'auto' or 65
-            //left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
-          },
-          legend: {
-            position: 'bottom'
-          },
-          pointSize: 5,
-          interpolateNulls: true //lines between point gaps
-        }
+          )) : [])
+        ],
+        firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
+        lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',
+        relatedGroups: [
+          ...(didLoadCorrectly ? groupData.map(e => group2Result(e)) : [])
+        ],
+        relatedInstructors: [
+          ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])
+        ],
+        dataGrid: {
+          columns: [
+            {
+              field: 'term',
+              headerName: 'Term',
+              type: 'number',
+              width: 65,
+              valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
+            },
+            {
+              field: 'sectionNumber',
+              headerName: 'Section #',
+              type: 'number',
+              width: 90,
+            },
+            {
+              field: 'instructorNames',
+              headerName: 'Instructor',
+              type: 'string',
+              width: 95,
+              sortComparator: (a, b) => defaultComparator(`${a[0].lastName}, ${a[0].firstName}`, `${b[0].lastName}, ${b[0].firstName}`),
+              valueFormatter: value => `${value[0].lastName}, ${value[0].firstName}`,
+            },
+            ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
+              field: e as any,
+              headerName: e,
+              description: `Number of ${e}s given for this section`,
+              type: 'number',
+              width: e !== 'NCR' ? 30 : 60,
+              padding: 6,
+            })),
+            {
+              field: 'semesterGPA',
+              headerName: 'GPA',
+              description: 'Grade Point Average for just this section',
+              type: 'number',
+              width: 60,
+              padding: 8,
+            },
+          ],
+          rows: [
+            ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
+              id: e._id,
+              ...e,
+            })) : [])
+          ],
+        },
+        dataChart: {
+          data: [
+            ...(didLoadCorrectly ? getChartData(sectionData) : [])
+          ],
+          // https://developers.google.com/chart/interactive/docs/gallery/linechart?hl=en#configuration-options
+          options: {
+            title: `${courseName} Average GPA Over Time by Instructor`,
+            vAxis: {
+              title: 'Average GPA',
+              gridlines: {
+                  count: -1 //auto
+              },
+              maxValue: 4.0,
+              minValue: 0.0
+            },
+            hAxis: {
+              title: 'Semester',
+              gridlines: {
+                  count: -1 //auto
+              }
+            },
+            chartArea: {
+              //width: '100%',
+              //width: '55%',
+              //width: '65%',
+              left: 'auto',
+              //left: 65, // default 'auto' or 65
+              right: 'auto',
+              //right: 35, // default 'auto' or 65
+              //left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
+            },
+            legend: {
+              position: 'bottom'
+            },
+            pointSize: 5,
+            interpolateNulls: true //lines between point gaps
+          }
+        },
+        enrollment: [
+          ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
+            .map(k => ({
+              key: k,
+              title: k.substring(5), // 'totalA' => 'A'
+              color: grade2Color.get(k.substring(5) as Grade),
+              value: data.enrollment[k],
+              percentage: data.enrollment[k] / data.enrollment.totalEnrolled * 100,
+            })
+          ) : []),
+        ],
       },
-      enrollment: [
-        ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
-          .map(k => ({
-            key: k,
-            title: k.substring(5), // 'totalA' => 'A'
-            color: grade2Color.get(k.substring(5) as Grade),
-            value: data.enrollment[k],
-            percentage: data.enrollment[k] / data.enrollment.totalEnrolled * 100,
-          })
-        ) : []),
-        // {
-        //   key: 1,
-        //   title: 'Success', // success warning danger info
-        //   color: '#28a745', // #28a745 #ffd33d #d73a49 #0366d6
-        //   value: 50, // 50 25 15 10
-        // },
-        // {
-        //   key: 2,
-        //   title: 'Warning', // success warning danger info
-        //   color: '#ffd33d', // #28a745 #ffd33d #d73a49 #0366d6
-        //   value: 25, // 50 25 15 10
-        // },
-        // {
-        //   key: 3,
-        //   title: 'Danger', // success warning danger info
-        //   color: '#d73a49', // #28a745 #ffd33d #d73a49 #0366d6
-        //   value: 15, // 50 25 15 10
-        // },
-        // {
-        //   key: 4,
-        //   title: 'Info', // success warning danger info
-        //   color: '#0366d6', // #28a745 #ffd33d #d73a49 #0366d6
-        //   value: 10, // 50 25 15 10
-        // },
-      ],
-    },
-    error,
-    status: sharedStatus,
+      error,
+      status: sharedStatus,
+    }
+  }
+  catch(error) {
+    return {
+      data: undefined,
+      error,
+      status: 'error',
+    }
   }
 }
