@@ -46,7 +46,6 @@ interface InstructorCardEmptyProps {
 }
 
 export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
-  const router = useRouter()
   return (
     <Card sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
       <Link href={data.href} passHref>
