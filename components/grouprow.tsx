@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Tilty from 'react-tilty'
@@ -22,6 +22,13 @@ export function GroupRow({ data }: GroupRowProps) {
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? courses.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
+
+  // Used for prefetching all options which are presented
+  useEffect(() => {
+    for(let item of courses) {
+      router.prefetch(item.href);
+    }
+  }, [courses]);
 
   return (
     <section className={styles.groupSection}> 
