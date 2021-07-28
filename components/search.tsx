@@ -147,7 +147,7 @@ export default function SearchBar() {
           className={styles.textField}
           onSelect={handleSelect}
           label="🔍 Search"
-          helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, First Year Writing`}
+          helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, College Algebra`}
           type="search"
           variant="outlined"
           fullWidth
