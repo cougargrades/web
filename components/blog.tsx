@@ -8,6 +8,7 @@ import Alert, { AlertColor } from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
 import NewReleasesIcon from '@material-ui/icons/NewReleases'
 import { Badge } from './badge'
+import { buildArgs, VercelEnv } from '../lib/environment'
 
 import styles from './blog.module.scss'
 
@@ -102,6 +103,7 @@ export interface BlogNotice {
   expiry: Date;
   severity: '' | 'new' | AlertColor;
   variant?: 'standard' | 'filled' | 'outlined';
+  environments?: (VercelEnv & '*')[];
 }
 
 function getNotices(feed: AtomFeed): BlogNotice[] {
@@ -118,6 +120,7 @@ function getNotices(feed: AtomFeed): BlogNotice[] {
       updated: undefined,
       expiry: undefined,
       severity: undefined as any,
+      environments: ['*'],
       /**
        * allow us to override these properties if necessary, 
        * but only have the overriden properties visible for the notice message
@@ -137,7 +140,9 @@ function getNotices(feed: AtomFeed): BlogNotice[] {
      * for invalid dates, this condition 
      * will return false (desired behavior)
      */
-    .filter(e => new Date() < new Date(e.expiry));
+    .filter(e => new Date() < new Date(e.expiry))
+    // require that the environment used match our current deployment
+    .filter(e => e.environments ? Array.isArray(e.environments) && (e.environments.includes('*') || e.environments.includes(buildArgs.vercelEnv)) : true);
   }
   return [];
 }

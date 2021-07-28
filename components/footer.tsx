@@ -20,7 +20,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
   //   }
   // }, [easterEgg]);
 
-  const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
+  const { commitHash, version, buildDate } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
       <div className="new-container">

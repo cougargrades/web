@@ -5,6 +5,8 @@ import { ThemeProvider } from '@material-ui/core/styles'
 const FirebaseAppProvider = dynamic(() => import('../lib/lazy').then((mod) => mod.FirebaseAppProviderWrapper))
 //import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
 const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then((mod) => mod.RealtimeClaimUpdater))
+//import { AppCheck } from '../components/appcheck'
+const AppCheck = dynamic(() => import('../components/appcheck').then((mod) => mod.AppCheck))
 //import { RecoilRoot } from 'recoil'
 const RecoilRoot = dynamic(() => import('recoil').then((mod) => mod.RecoilRoot))
 import { useTheme } from '../lib/theme'
@@ -63,6 +65,7 @@ export default function MyApp({ Component, pageProps }) {
         <FirebaseAppProvider>
           <RecoilRoot>
             <RealtimeClaimUpdater />
+            <AppCheck />
             <Layout>
               <Component {...pageProps} />
             </Layout>

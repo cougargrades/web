@@ -7,6 +7,7 @@ import 'firebase/performance'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/app-check'
 
 export const FieldValue = firebase.firestore.FieldValue
 

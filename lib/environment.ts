@@ -8,17 +8,20 @@ export const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+  recaptchaSiteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
 };
+
+export type VercelEnv = 'production' | 'preview' | 'development';
 
 export const buildArgs: {
   commitHash: string,
   version: string,
   buildDate: string,
-  vercelEnv: 'production' | 'preview' | 'development' | 'local'
+  vercelEnv: VercelEnv
 } = {
   commitHash: process.env.NEXT_PUBLIC_GIT_SHA,
   version: process.env.NEXT_PUBLIC_VERSION,
   buildDate: process.env.NEXT_PUBLIC_BUILD_DATE,
-  vercelEnv: (process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'local'
+  vercelEnv: (process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'development'
 };
