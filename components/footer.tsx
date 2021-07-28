@@ -20,7 +20,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
   //   }
   // }, [easterEgg]);
 
-  const { commitHash, version, buildDate } = buildArgs; // hopefully works
+  const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
       <div className="new-container">
@@ -45,6 +45,10 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                   buildDate,
                 ).toLocaleDateString()}
               </span>
+              { vercelEnv !== 'production' ? <>
+              <br />
+              Environment: {vercelEnv}
+              </> : <></>}
               <br />
               <a href="https://github.com/cougargrades/web/wiki/Feedback">
                 Got feedback?

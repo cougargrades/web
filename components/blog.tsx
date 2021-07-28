@@ -109,24 +109,28 @@ export interface BlogNotice {
 function getNotices(feed: AtomFeed): BlogNotice[] {
   if(feed !== undefined) {
     const notices = feed.entries.filter(e => e.link.filter(e => e.title === 'notice').length > 0)
-    
-    return notices.map(e => ({
-      // extract what we can from the primary post information
-      id: e.id,
-      title: e.title.value,
-      bodyHTML: e.content ? e.content.value : '',
-      href: e.link ? e.link[0].href : '',
-      // set defaults, we need to extract these from the embedded JSON object
-      updated: undefined,
-      expiry: undefined,
-      severity: undefined as any,
-      environments: ['*'],
-      /**
-       * allow us to override these properties if necessary, 
-       * but only have the overriden properties visible for the notice message
-       */
-      ...JSON.parse(decodeDataURI(e.link.filter(e => e.title === 'notice')[0].href))
-    }))
+
+    return notices.map(e => 
+      e.link.filter(e => e.title === 'notice')
+      .map((link, index) => ({
+        // extract what we can from the primary post information
+        id: `${e.id}|${index}`,
+        title: e.title.value,
+        bodyHTML: e.content ? e.content.value : '',
+        href: e.link ? e.link[0].href : '', // first link is probably the one that links to the blog post
+        // set defaults, we need to extract these from the embedded JSON object
+        updated: undefined,
+        expiry: undefined,
+        severity: undefined as any,
+        environments: ['*'],
+        /**
+         * allow us to override these properties if necessary, 
+         * but only have the overriden properties visible for the notice message
+         */
+        ...JSON.parse(decodeDataURI(link.href))
+      }))
+    )
+    .flat()
     // require that the "expiry" property be set
     .filter(e => e.expiry !== undefined && e.severity !== undefined && e.updated !== undefined)
     // put real values here
