@@ -1,6 +1,7 @@
 # @cougargrades/web
 
-![Placeholder](https://badgen.net/badge/icon/typescript?icon=typescript&label)
+[![Preview Environment](https://img.shields.io/github/deployments/cougargrades/web/Preview?label=Preview%20Environment)](https://cougargrades.vercel.app/)
+[![Production Environment](https://img.shields.io/github/deployments/cougargrades/web/Production?label=Production%20Environment)](https://cougargrades.io)
 
 React app that powers cougargrades.io
 
@@ -10,14 +11,11 @@ See: https://github.com/orgs/cougargrades/projects/2
 
 ## Project Status
 
-Currently, the entire CougarGrades.io stack is near finished with a major site overhaul. This means that the code you find here may not look like the live website.
-
-| Project                                                                              	| Version 	| Status                                                              	| URL                                       	|
-|--------------------------------------------------------------------------------------	|---------	|---------------------------------------------------------------------	|-------------------------------------------	|
-| cougargrades.io front-end, live version (as of Nov 2020)                             	| 0.4.4   	| Live 🚀                                                              	| https://cougargrades.io                   	|
-| [**cougargrades.io front-end, major redesign**](https://github.com/cougargrades/web) 	| 1.0.0   	| [In Progress 👨‍💻](https://github.com/orgs/cougargrades/projects/2)   	| https://cougargrades-testing.web.app      	|
-| cougargrades.io API, original version                                                	| 1.1.0   	| Offline                                                             	| https://cougargrades.io/api/              	|
-| [**cougargrades.io API, concurrent rework**](https://github.com/cougargrades/api)    	| 2.0.0   	| [Near Complete 👨‍💻](https://github.com/orgs/cougargrades/projects/1) 	| https://cougargrades-testing.web.app/api/ 	|
+| Project                  | Version | Status                                                              | URL                                       |
+|--------------------------|---------|---------------------------------------------------------------------|-------------------------------------------|
+| cougargrades.io (beta)   | 0.4.5   | Live 🚀                                                             | https://cougargrades.io                   |
+| cougargrades.io (1.0.0)  | 1.0.0   | [Near Complete 👨‍💻](https://github.com/orgs/cougargrades/projects/2) | https://cougargrades.vercel.app/          |
+| cougargrades.io HTTP API | 2.0.0   | Live 🚀                                                             | https://api.cougargrades.io               |
 
 ### Continuous Deployment
 

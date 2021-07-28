@@ -103,26 +103,35 @@ export function useSearchResults(inputValue: string): Observable<SearchResult[]>
   const groupQuery = db.collection('groups').where('keywords', 'array-contains', inputValue.toLowerCase()).orderBy('name').limit(SEARCH_RESULT_LIMIT)
   const groupData = useFirestoreCollectionData<Group>(groupQuery)
 
-  return {
-    data: [
-      ...[
-        ...(courseByDeptData.status === 'success' ? courseByDeptData.data.map(e => course2Result(e)) : []),
-        ...(courseData.status === 'success' ? courseData.data.map(e => course2Result(e)) : [])
-      ]
-        // remove duplicates
-        // reference: https://stackoverflow.com/a/56757215/4852536
-        .filter((item, index, self) => index === self.findIndex(e => (e.key === item.key)))
-        // put exact title matches first
-        .sort(sortByTitle(inputValue)),
-      ...(instructorData.status === 'success' ? instructorData.data.map(e => instructor2Result(e)) : []).sort(sortByTitle(inputValue)),
-      ...(groupData.status === 'success' ? groupData.data.map(e => group2Result(e)) : []).sort(sortByTitle(inputValue)),
-    ],
-    /**
-     * If compareFunction(a, b) returns value > than 0, sort b before a.
-     * If compareFunction(a, b) returns value ≤ 0, leave a and b in the same order.
-     * If inconsistent results are returned, then the sort order is undefined.
-     */
-    error: getFirst([courseData.error, instructorData.error, groupData.error]),
-    status: inputValue === '' ? 'success' : [courseData.status, instructorData.status, groupData.status].some(e => e === 'loading') ? 'loading' : 'success'
+  try {
+    return {
+      data: [
+        ...[
+          ...(courseByDeptData.status === 'success' ? courseByDeptData.data.map(e => course2Result(e)) : []),
+          ...(courseData.status === 'success' ? courseData.data.map(e => course2Result(e)) : [])
+        ]
+          // remove duplicates
+          // reference: https://stackoverflow.com/a/56757215/4852536
+          .filter((item, index, self) => index === self.findIndex(e => (e.key === item.key)))
+          // put exact title matches first
+          .sort(sortByTitle(inputValue)),
+        ...(instructorData.status === 'success' ? instructorData.data.map(e => instructor2Result(e)) : []).sort(sortByTitle(inputValue)),
+        ...(groupData.status === 'success' ? groupData.data.map(e => group2Result(e)) : []).sort(sortByTitle(inputValue)),
+      ],
+      /**
+       * If compareFunction(a, b) returns value > than 0, sort b before a.
+       * If compareFunction(a, b) returns value ≤ 0, leave a and b in the same order.
+       * If inconsistent results are returned, then the sort order is undefined.
+       */
+      error: getFirst([courseData.error, instructorData.error, groupData.error]),
+      status: inputValue === '' ? 'success' : [courseData.status, instructorData.status, groupData.status].some(e => e === 'loading') ? 'loading' : 'success'
+    }
+  }
+  catch(error) {
+    return {
+      data: [],
+      error,
+      status: 'error',
+    }
   }
 }

@@ -83,11 +83,20 @@ export function useGroupCoursesData(courses: DocumentReference<Course>[]): Obser
     })();
   }, [courses])
 
-  return {
-    data: [
-      ...courseData.map(e => course2Result(e))
-    ],
-    error: undefined,
-    status: courseData.length === 0 ? 'loading' : 'success',
+  try {
+    return {
+      data: [
+        ...courseData.map(e => course2Result(e))
+      ],
+      error: undefined,
+      status: courseData.length === 0 ? 'loading' : 'success',
+    }
+  }
+  catch(error) {
+    return {
+      data: undefined,
+      error,
+      status: 'error',
+    }
   }
 }
