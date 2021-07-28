@@ -23,7 +23,7 @@ export function group2Result(data: Group): GroupResult {
   return {
     key: data.identifier,
     href: `/g/${data.identifier}`,
-    title: `${data.name} (${data.identifier})`,
+    title: data.name,
     description: data.description,
     courses: data.courses as DocumentReference<Course>[],
   }
