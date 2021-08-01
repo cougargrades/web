@@ -45,7 +45,7 @@ export function GroupRow({ data }: GroupRowProps) {
       </Carousel>
       <Divider className={styles.groupSectionDivider}>
         <Link href={data.href} passHref>
-          <Button variant="text">
+          <Button variant="text" size="large">
             {LINK_TEXT}
           </Button>
         </Link>
