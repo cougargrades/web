@@ -53,7 +53,7 @@ export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
           <CardContent className={styles.cardContent}>
             <Box className={styles.badgeRow}>
               {data.badges.map(e => (
-                <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em', marginRight: '0.25rem' }}>{e.text}</Badge>
+                <Badge key={e.key} className={styles.badgeRowBadge} style={{ backgroundColor: e.color }}>{e.text}</Badge>
               ))}
             </Box>
             <Typography variant="h6" component={ReactFitty} maxSize={18}>
@@ -164,7 +164,7 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
           </List>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="info" onClick={() => setOpen(false)}>Close</Button>
+          <Button variant="contained" color="primary" onClick={() => setOpen(false)}>Close</Button>
         </DialogActions>
       </Dialog>
     </>

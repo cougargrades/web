@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import Alert, { AlertColor } from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
 import NewReleasesIcon from '@material-ui/icons/NewReleases'
+import AnnouncementIcon from '@material-ui/icons/Announcement'
 import { Badge } from './badge'
 import { buildArgs, VercelEnv } from '../lib/environment'
 
@@ -30,7 +31,7 @@ export default function Blog() {
       <summary>
         Developer Updates{' '}
         {isPriorityBlogPosted ? (
-          <Badge extraClassNames={styles.new}>
+          <Badge className={styles.new}>
             New {latestBlogPost?.updated.toLocaleDateString()}
           </Badge>
         ) : (
@@ -74,8 +75,8 @@ export function BlogNotifications() {
 }
 
 export function BlogNotice({ title, bodyHTML, href, severity, variant, updated }: BlogNotice & { [key: string]: any }) {
-  const alertSeverity = severity === '' ? 'info' : severity === 'new' ? 'warning' : severity;
-  const icon = severity === 'new' ? <NewReleasesIcon fontSize="inherit" /> : undefined;
+  const alertSeverity = severity === '' ? 'info' : severity === 'new' ? 'warning' : severity === 'announcement' ? 'info' : severity;
+  const icon = severity === 'new' ? <NewReleasesIcon fontSize="inherit" /> : severity === 'announcement' ? <AnnouncementIcon fontSize="inherit" /> : undefined;
   const alertVariant = variant ? variant : 'standard';
 
   const action = <>
@@ -89,7 +90,6 @@ export function BlogNotice({ title, bodyHTML, href, severity, variant, updated }
     <Alert className={styles.blogNotice} severity={alertSeverity} variant={alertVariant} icon={icon} action={action}>
       <AlertTitle dangerouslySetInnerHTML={{ __html: title }}></AlertTitle>
       <div className={styles.blogNoticeContent} dangerouslySetInnerHTML={{ __html: bodyHTML }}></div>
-      
     </Alert>
   )
 }
@@ -101,7 +101,7 @@ export interface BlogNotice {
   href: string;
   updated: Date;
   expiry: Date;
-  severity: '' | 'new' | AlertColor;
+  severity: '' | 'new' | 'announcement' | AlertColor;
   variant?: 'standard' | 'filled' | 'outlined';
   environments?: (VercelEnv & '*')[];
 }

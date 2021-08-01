@@ -103,7 +103,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
           <Tooltip key={e.key} title={e.description}>
-            <Chip label={e.title} className={styles.chip} onClick={() => router.push(e.href)} />
+            <Chip label={e.title} className={styles.chip} component="a" href={e.href} clickable />
           </Tooltip>
         )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>
