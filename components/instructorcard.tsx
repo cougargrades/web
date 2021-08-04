@@ -51,7 +51,7 @@ export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
       <Link href={data.href} passHref>
         <CardActionArea className={styles.cardActionArea}>
           <CardContent className={styles.cardContent}>
-            <Box className={styles.badgeRow}>
+            <Box className={styles.badgeRow} component={ReactFitty} minSize={8} maxSize={11}>
               {data.badges.map(e => (
                 <Badge key={e.key} className={styles.badgeRowBadge} style={{ backgroundColor: e.color }}>{e.text}</Badge>
               ))}
