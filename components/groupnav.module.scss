@@ -1,0 +1,26 @@
+
+.sidebarList {
+  padding-bottom: 0;
+}
+
+.listSubHeader {
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.accordionRoot {
+  border-radius: 4px;
+  margin: 8px 0;
+  &::before {
+    display: none;
+  }
+}
+
+.accordionRootExpanded {
+  margin-bottom: 16px!important;
+}
+
+.listItemSelected {
+  // color: inherit;
+  // font-weight: 700;
+}

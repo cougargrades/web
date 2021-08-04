@@ -6,9 +6,13 @@ import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
 
+type AllGroupsResultItem = { [key: string]: GroupResult[] };
+
 export interface AllGroupsResult {
+  categories: string[];
+  results: AllGroupsResultItem;
   core_curriculum: GroupResult[];
-  //all_groups: GroupResult[];
+  all_groups: GroupResult[];
 }
 
 export interface GroupResult {
@@ -48,17 +52,42 @@ export function course2Result(data: Course): CourseInstructorResult {
 
 export function useAllGroups(): Observable<AllGroupsResult> {
   const db = useFirestore();
-  const query = db.collection('groups').where('categories', 'array-contains', 'UH Core Curriculum')
+  const query = db.collection('groups').where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
   const { data, status, error } = useFirestoreCollectionData<Group>(query)
+
+  const ALL_GROUPS_SENTINEL = 'All Groups'
+
+  const categories = [
+    ...(status === 'success' ? Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories : []).flat())) : []),
+    ALL_GROUPS_SENTINEL
+  ];
+
+  // make a key/value store of category -> GroupResult[]
+  const results = categories
+  .reduce((obj, key) => {
+    if(key === ALL_GROUPS_SENTINEL) {
+      obj[key] = [
+        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
+      ];
+    }
+    else {
+      obj[key] = [
+        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)) : [])
+      ];
+    }
+    return obj;
+  }, {} as AllGroupsResultItem);
 
   return {
     data: {
+      categories,
+      results,
       core_curriculum: [
         ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
       ],
-      // all_groups: [
-      //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
-      // ],
+      all_groups: [
+        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
+      ],
     },
     error,
     status,
