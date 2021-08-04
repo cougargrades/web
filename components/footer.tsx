@@ -5,20 +5,6 @@ import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 
 export default function Footer(props: { hideDisclaimer?: boolean }) {
-  // const history = useHistory();
-  // const [easterEgg, setEasterEgg] = useState<number>(0);
-
-  // const handleClick = (e: React.MouseEvent<HTMLHeadingElement, MouseEvent>) => {
-  //   e.preventDefault();
-  //   setEasterEgg(x => x + 1);
-  // }
-
-  // useEffect(() => {
-  //   if(easterEgg >= 3) {
-  //     setEasterEgg(0);
-  //     history.push('/admin');
-  //   }
-  // }, [easterEgg]);
 
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
@@ -54,16 +40,6 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                 Got feedback?
               </a>
             </p>
-            {/* {props.hideDisclaimer ? (
-              <></>
-            ) : (
-              <p>
-                <em>
-                  Not affiliated with the University of Houston. Data is sourced
-                  directly from the University of Houston.
-                </em>
-              </p>
-            )} */}
           </div>
           <div className="col-sm">
             <div className={styles.sponsor}>

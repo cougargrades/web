@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/core/Autocomplete'
+import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Highlighter from 'react-highlight-words'
 import NProgress from 'nprogress'
@@ -91,7 +92,7 @@ export default function SearchBar() {
   // improve mobile UX by moving input field to the top of the viewport
   const handleSelect = () => {
     if(elementRef.current !== null) {
-      if(isMobile()) window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top)
+      if(isMobile()) window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top - 20)
     }
   }
 
@@ -121,47 +122,51 @@ export default function SearchBar() {
   }
 
   return (
-    <Autocomplete<SearchResult, undefined, undefined, boolean | undefined>
-      openOnFocus
-      autoHighlight
-      freeSolo
-      classes={{ groupLabel: styles.groupLabel }}
-      open={open}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
-      onChange={handleChange}
-      onInputChange={(_, x) => setInputValue(x)}
-      value={value}
-      inputValue={inputValue}
-      isOptionEqualToValue={(option, value) => option.key === value.key}
-      getOptionLabel={(option) => option.title}
-      groupBy={(option) => option.group}
-      options={data}
-      loading={loading}
-      filterOptions={(x) => x}
-      renderOption={(props, option) => <SearchListItem {...props} key={option.key} option={option} />}
-      renderInput={(params) => (
-        <TextField 
-          {...params}
-          inputRef={elementRef}
-          className={styles.textField}
-          onSelect={handleSelect}
-          label="🔍 Search"
-          helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, College Algebra`}
-          type="search"
-          variant="outlined"
-          fullWidth
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-              {loading ? <CircularProgress color="inherit" size={20} /> : null}
-              {params.InputProps.endAdornment}
-              </>
-            )
-          }}
-        />
-      )}
-    />
+    <>
+      <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1}} open={open}></Backdrop>
+      <Autocomplete<SearchResult, undefined, undefined, boolean | undefined>
+        openOnFocus
+        autoHighlight
+        freeSolo
+        classes={{ root: styles.autocompleteRoot, groupLabel: styles.groupLabel }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+        onChange={handleChange}
+        onInputChange={(_, x) => setInputValue(x)}
+        value={value}
+        inputValue={inputValue}
+        isOptionEqualToValue={(option, value) => option.key === value.key}
+        getOptionLabel={(option) => option.title}
+        groupBy={(option) => option.group}
+        options={data}
+        loading={loading}
+        filterOptions={(x) => x}
+        renderOption={(props, option) => <SearchListItem {...props} key={option.key} option={option} />}
+        renderInput={(params) => (
+          <TextField 
+            {...params}
+            inputRef={elementRef}
+            className={styles.textField}
+            onSelect={handleSelect}
+            label="🔍 Search"
+            helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, College Algebra`}
+            type="search"
+            variant="outlined"
+            fullWidth
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+                </>
+              )
+            }}
+          />
+        )}
+      />
+    </>
   )
 }
