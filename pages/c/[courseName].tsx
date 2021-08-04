@@ -23,7 +23,9 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
+
 import styles from './course.module.scss'
+import interactivity from '../../styles/interactivity.module.scss'
 
 export interface CourseProps {
   staticCourseName: string;
@@ -89,7 +91,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <h6>Sources:</h6>
         { status === 'success' ? data.publications.map(e => (
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
-            <Chip label={e.title} className={styles.chip} component="a" href={e.url} clickable />
+            <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
           </Tooltip>
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
         { status === 'success' ? <>
@@ -103,7 +105,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
           <Tooltip key={e.key} title={e.description}>
-            <Chip label={e.title} className={styles.chip} component="a" href={e.href} clickable />
+            <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
           </Tooltip>
         )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>

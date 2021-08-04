@@ -92,7 +92,10 @@ export default function SearchBar() {
   // improve mobile UX by moving input field to the top of the viewport
   const handleSelect = () => {
     if(elementRef.current !== null) {
-      if(isMobile()) window.scrollTo(0, window.pageYOffset + elementRef.current.getBoundingClientRect().top - 20)
+      const rect = elementRef.current.getBoundingClientRect()
+      if(isMobile() || (rect.top - 10) < 0) {
+        window.scrollTo(0, window.pageYOffset + rect.top - 20)
+      }
     }
   }
 

@@ -15,7 +15,7 @@ import { selectedGroupResultKey } from '../lib/recoil'
 import { GroupRow } from '../components/grouprow'
 
 import styles from './groupnav.module.scss'
-//import hoverStyles from '../styles/hover.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 export function GroupNav() {
   const { data, status } = useAllGroups();
@@ -55,7 +55,7 @@ export function GroupNav() {
             key={e.key}
             selected={e.key === selected}
             onClick={() => setSelected(e.key)}
-            classes={{ root: styles.accordionRoot, selected: styles.listItemSelected }}
+            classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
             dense
             >
             <ListItemText primary={e.title} primaryTypographyProps={{ color: (theme) => (e.key === selected) ? theme.palette.text.primary : theme.palette.text.secondary, fontWeight: 'unset' }} />

@@ -6,7 +6,9 @@ import { searchInputAtom } from '../lib/recoil'
 import Button from '@material-ui/core/Button'
 import slotmachine from '../public/slotmachine.svg'
 import wordcloud from '../public/wordcloud.svg'
+
 import styles from '../styles/Homepage.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 export default function Home() {
   const [searchInputRef, _] = useRecoilState(searchInputAtom)
@@ -38,7 +40,7 @@ export default function Home() {
               </div>
               <br />
               <p>
-                <Button color="primary" variant="contained" onClick={focusSearchInput}>Search Courses</Button>
+                <Button color="primary" variant="contained" className={interactivity.hoverActive} onClick={focusSearchInput}>Search Courses</Button>
               </p>
             </section>
           </div>
@@ -68,7 +70,7 @@ export default function Home() {
               </div>
               <br />
               <p>
-                <Button color="primary" variant="contained" onClick={focusSearchInput}>Search Instructors</Button>
+                <Button color="primary" variant="contained" className={interactivity.hoverActive} onClick={focusSearchInput}>Search Instructors</Button>
               </p>
             </section>
           </div>

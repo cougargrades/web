@@ -26,9 +26,10 @@ import { useTheme } from '@material-ui/core/styles'
 import { ReactFitty } from 'react-fitty'
 import { useSwipeable } from 'react-swipeable'
 import { Badge } from './badge'
-import { CustomSkeleton } from './skeleton'
 import { CourseInstructorResult } from '../lib/data/useCourseData'
+
 import styles from './instructorcard.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 interface InstructorCardProps {
   data: CourseInstructorResult;
@@ -47,7 +48,7 @@ interface InstructorCardEmptyProps {
 
 export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
   return (
-    <Card sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
+    <Card sx={{ width: 250, height: 150 }} className={`${styles.instructorCard} ${interactivity.hoverActive}`}>
       <Link href={data.href} passHref>
         <CardActionArea className={styles.cardActionArea}>
           <CardContent className={styles.cardContent}>

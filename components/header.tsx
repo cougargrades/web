@@ -5,8 +5,9 @@ import Search from './search'
 import { Emoji } from './emoji'
 
 import styles from './header.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
-export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation>{children}</Button></Link>;
+export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
 
 export default function Header() {
   const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});

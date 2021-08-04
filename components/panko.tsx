@@ -9,7 +9,9 @@ import { copyText } from '../vendor/clipboard'
 import { useIsMobile } from '../lib/hook'
 import { Emoji } from './emoji'
 import { BlogNotifications } from './blog'
+
 import styles from './panko.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 const strip = (path: string) => path.split(/[?|#]/).slice(0,1).join('')
 
@@ -53,7 +55,7 @@ export function PankoRow() {
     <div className={`new-container ${styles.pankoRow}`}>
       <Panko />
       <div>
-        <IconButton color="primary" aria-label="Share" onClick={handleShare}>
+        <IconButton color="primary" aria-label="Share" onClick={handleShare} className={interactivity.hoverActive}>
           <IosShareIcon />
         </IconButton>
         <Snackbar
