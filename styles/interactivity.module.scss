@@ -1,17 +1,17 @@
 
 @mixin transition {
-  transition: all 0.125s ease 0s;
+  transition: all 0.125s ease 0s!important;
 }
 
 @mixin hover {
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.05)!important;
   }
 }
 
 @mixin active {
   &:active {
-    transform: scale(0.925);
+    transform: scale(0.925)!important;
   }
 }
 

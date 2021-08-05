@@ -12,6 +12,7 @@ import { GroupResult, useGroupCoursesData } from '../lib/data/useAllGroups'
 import { Carousel } from './carousel'
 
 import styles from './grouprow.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 interface GroupRowProps {
   data: GroupResult;
@@ -42,7 +43,7 @@ export function GroupRow({ data }: GroupRowProps) {
       </Typography>
       { ! isCoreGroup ? <></> : <>
         <h6>Source:</h6>
-        <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" clickable />
+        <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" className={interactivity.hoverActive} clickable />
       </>}
       <Carousel>
         { status === 'success' ? courses.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={4} /></Tilty></Grid>

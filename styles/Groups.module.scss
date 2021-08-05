@@ -28,8 +28,8 @@
 }
 
 .accordionRoot {
-  border-radius: 4px;
-  margin: 8px 0;
+  border-radius: 4px!important;
+  margin: 8px 0!important;
   &::before {
     display: none;
   }
