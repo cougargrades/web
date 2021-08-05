@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react'
-import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
-import { useRecoilState } from 'recoil'
+import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { Group } from '@cougargrades/types'
 import Container from '@material-ui/core/Container'
+import List from '@material-ui/core/List'
+import ListItemButton from '@material-ui/core/ListItemButton'
+import ListItemText from '@material-ui/core/ListItemText'
 import { PankoRow } from '../../components/panko'
-import { GroupNav, GroupContent } from '../../components/groupnav'
-import { selectedGroupResultKey } from '../../lib/recoil'
-import { useIsCondensed } from '../../lib/hook'
-import { getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { GroupContent, GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
+import { FakeLink } from '../../components/link'
+import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { GroupResult, useAllGroups } from '../../lib/data/useAllGroups'
+import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 
 import styles from '../../styles/Groups.module.scss'
+import interactivity from '../../styles/interactivity.module.scss'
 
 export interface GroupProps {
   staticGroupId: string;
@@ -21,13 +26,26 @@ export interface GroupProps {
 
 export default function Groups({ staticGroupId, staticName, staticDescription }: GroupProps) {
   const stone = useRosetta()
-  const [selected, setSelected] = useRecoilState(selectedGroupResultKey)
-  const condensed = useIsCondensed()
+  const router = useRouter()
+  const { data, status } = useAllGroups();
+  const isMissingProps = staticGroupId === undefined
+  const good = !isMissingProps && status === 'success'
+
+  const handleClick = (x: GroupResult) => {
+    router.push(x.href, undefined, { scroll: false })
+  }
 
   useEffect(() => {
-    console.log('groupId?',staticGroupId)
-    if(staticGroupId) setSelected(staticGroupId);
-  }, [staticGroupId])
+    if(good && data.categories.length > 0) {
+      // preload referenced areas
+      for(let key of data.categories) {
+        const cat = data.results[key];
+        for(let item of cat) {
+          router.prefetch(item.href)
+        }
+      }
+    }
+  },[good,data])
 
   return (
     <>
@@ -40,35 +58,38 @@ export default function Groups({ staticGroupId, staticName, staticDescription }:
       </Container>
       <main className={styles.main}>
         <aside className={styles.nav}>
-          <GroupNav />
+          <TableOfContentsWrap>
+          { good ? data.categories.map(cat => (
+            <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
+              {data.results[cat].map((e, index) => (
+                <React.Fragment key={e.key}>
+                  <FakeLink href={e.href}>
+                    <ListItemButton
+                      selected={e.key === staticGroupId}
+                      onClick={() => handleClick(e)}
+                      classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
+                      dense
+                      >
+                      <ListItemText
+                        primary={e.title}
+                        primaryTypographyProps={{
+                          color: (theme) => (e.key === staticGroupId) ? theme.palette.text.primary : theme.palette.text.secondary,
+                          fontWeight: 'unset'
+                        }}
+                        />
+                    </ListItemButton>
+                  </FakeLink>
+                </React.Fragment>
+              ))}
+            </List>
+          )) : <></>
+          }
+          </TableOfContentsWrap>
         </aside>
-        { condensed ? <></> : 
         <div>
-          <GroupContent groupId={selected} />
+          { good ? <GroupContent groupId={staticGroupId} /> : <></>}
         </div>
-        }
       </main>
-      {/* <div className="container-xxl" style={{ width: 'unset' }}>
-        <div className="row">
-          <nav className="col-12 col-md-3">
-            <GroupNav />
-          </nav>
-          <div className="d-none d-md-block col-md-9">
-            <GroupContent />
-          </div>
-        </div>
-      </div> */}
-      {/* <Container>
-        
-        <main>
-          <h1>UH Core Curriculum</h1>
-          <h6>Source:</h6>
-          <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" clickable />
-          { status === 'success' ? data.core_curriculum.map(e => (
-            <GroupRow key={e.key} data={e} />
-          )) : '' }
-        </main>
-      </Container> */}
     </>
   );
 }
@@ -80,8 +101,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // console.timeEnd('getStaticPaths')
   return {
     paths: [
-      //{ params: { courseName: '' } },
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
+      //{ params: { groupId: '' } },
+      //...(['production','preview'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
     ],
     fallback: true
   }

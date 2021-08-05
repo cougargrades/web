@@ -1,14 +1,12 @@
 
 .main {
-  margin: 0 16px;
-  margin-bottom: 16px;
+  margin: 16px;
   @media(min-width: 767px) {
     display: grid;
     grid-template-columns: 15em minmax(0, 1fr);
     max-width: 100em;
     width: 90%;
-    margin: 0 auto;
-    margin-bottom: 16px;
+    margin: 16px auto;
     & > * {
       padding-right: 8px;
       padding-left: 8px;
@@ -24,4 +22,26 @@
     margin-bottom: unset;
   }
 }
+
+.sidebarList {
+  padding-bottom: 0;
+}
+
+.accordionRoot {
+  border-radius: 4px;
+  margin: 8px 0;
+  &::before {
+    display: none;
+  }
+}
+
+.accordionRootExpanded {
+  margin-bottom: 16px!important;
+}
+
+.listItemSelected {
+  // color: inherit;
+  // font-weight: 700;
+}
+
 

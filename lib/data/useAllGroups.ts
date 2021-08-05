@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
 import { Course, Group, Util } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
+import { usePrevious } from 'react-use'
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -21,6 +21,7 @@ export interface GroupResult {
   href: string;
   title: string;
   description: string;
+  categories: string[];
   courses: DocumentReference<Course>[];
 }
 
@@ -30,6 +31,7 @@ export function group2Result(data: Group): GroupResult {
     href: `/g/${data.identifier}`,
     title: data.name,
     description: data.description,
+    categories: Array.isArray(data.categories) ? data.categories : [],
     courses: data.courses as DocumentReference<Course>[],
   }
 }
@@ -60,16 +62,16 @@ export function useAllGroups(): Observable<AllGroupsResult> {
 
   const categories = [
     ...(status === 'success' ? Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories : []).flat())) : []),
-    ALL_GROUPS_SENTINEL
+    //ALL_GROUPS_SENTINEL
   ];
 
   // make a key/value store of category -> GroupResult[]
   const results = categories
   .reduce((obj, key) => {
     if(key === ALL_GROUPS_SENTINEL) {
-      obj[key] = [
-        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
-      ];
+      // obj[key] = [
+      //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
+      // ];
     }
     else {
       obj[key] = [
@@ -111,29 +113,28 @@ export function useOneGroup(groupId: string): Observable<GroupResult> {
   }
 }
 
-export function useGroupCoursesData(courses: DocumentReference<Course>[]): Observable<CourseInstructorResult[]> {
-  const router = useRouter()
+export function useGroupCoursesData(data: GroupResult): Observable<CourseInstructorResult[]> {
   const [courseData, setCourseData] = useState<Course[]>([]);
+  const previous = usePrevious(data.key)
 
   useEffect(() => {
-    setCourseData([]);
-  },[router.query])
-
-  useEffect(() => {
-    console.log('courses?',courses)
-    setCourseData([]);
-    (async () => {
-      if(Array.isArray(courses) && Util.isDocumentReferenceArray(courses)) {
-        setCourseData(
-          (await Util.populate<Course>(courses))
-            // filter out undefined because there might be some empty references
-            .filter(e => e !== undefined)
-            // sort courses by total enrolled
-            .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
-          ) 
-      }
-    })();
-  }, [courses])
+    // prevent loading the same data again
+    if(previous !== data.key) {
+      setCourseData([]);
+      (async () => {
+        if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
+          setCourseData(
+            (await Util.populate<Course>(data.courses))
+              // filter out undefined because there might be some empty references
+              .filter(e => e !== undefined)
+              // sort courses by total enrolled
+              .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
+            ) 
+        }
+      })();
+    }
+    
+  }, [data,previous])
 
   try {
     return {
