@@ -12,5 +12,5 @@ export const jwtAtom = atom<firebase.default.auth.IdTokenResult | null>({
 
 export const selectedGroupResultKey = atom<string>({
   key: 'selectedGroupResultKey',
-  default: '10',
+  default: null,
 })

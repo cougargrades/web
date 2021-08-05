@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
 import { Course, Group, Util } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
@@ -96,7 +97,7 @@ export function useAllGroups(): Observable<AllGroupsResult> {
 
 export function useOneGroup(groupId: string): Observable<GroupResult> {
   const db = useFirestore();
-  const query = db.collection('groups').doc(groupId)
+  const query = db.doc(`/groups/${groupId}`)
   const { data, status, error } = useFirestoreDoc<Group>(query)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
@@ -111,9 +112,15 @@ export function useOneGroup(groupId: string): Observable<GroupResult> {
 }
 
 export function useGroupCoursesData(courses: DocumentReference<Course>[]): Observable<CourseInstructorResult[]> {
+  const router = useRouter()
   const [courseData, setCourseData] = useState<Course[]>([]);
 
   useEffect(() => {
+    setCourseData([]);
+  },[router.query])
+
+  useEffect(() => {
+    console.log('courses?',courses)
     setCourseData([]);
     (async () => {
       if(Array.isArray(courses) && Util.isDocumentReferenceArray(courses)) {

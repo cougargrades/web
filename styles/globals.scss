@@ -165,3 +165,8 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
     fill: $dm-fore;
   }
 }
+
+a.nostyle {
+  color: unset;
+  text-decoration: none;
+}

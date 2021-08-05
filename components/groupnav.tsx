@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useRecoilState } from 'recoil'
 import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
 import ListItemButton from '@material-ui/core/ListItemButton'
 import ListItemText from '@material-ui/core/ListItemText'
 import Accordion from '@material-ui/core/Accordion'
@@ -9,13 +11,15 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ListSubheader from '@material-ui/core/ListSubheader'
-import { useAllGroups, useOneGroup } from '../lib/data/useAllGroups'
+import { GroupResult, useAllGroups, useOneGroup } from '../lib/data/useAllGroups'
 import { selectedGroupResultKey } from '../lib/recoil'
-import { GroupRow } from '../components/grouprow'
+import { GroupRow, GroupRowSkeleton } from '../components/grouprow'
 
 import styles from './groupnav.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
 import { useIsCondensed } from '../lib/hook'
+import { FakeLink } from './link'
+import { useRouter } from 'next/router'
 
 interface GroupNavSubheaderProps {
   children: React.ReactNode;
@@ -62,9 +66,15 @@ function GroupNavSubheader({ children }: GroupNavSubheaderProps) {
 }
 
 export function GroupNav() {
+  const router = useRouter()
   const { data, status } = useAllGroups();
   const [selected, setSelected] = useRecoilState(selectedGroupResultKey);
   const condensed = useIsCondensed()
+
+  const handleClick = (x: GroupResult) => {
+    console.log('click')
+    router.push(x.href, undefined, { scroll: false })
+  }
 
   useEffect(() => {
     console.log('selected?', selected);
@@ -95,15 +105,23 @@ export function GroupNav() {
             </AccordionDetails>
           </Accordion>
           :
-          <ListItemButton
-            key={e.key}
-            selected={e.key === selected}
-            onClick={() => setSelected(e.key)}
-            classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
-            dense
-            >
-            <ListItemText primary={e.title} primaryTypographyProps={{ color: (theme) => (e.key === selected) ? theme.palette.text.primary : theme.palette.text.secondary, fontWeight: 'unset' }} />
-          </ListItemButton>
+          <FakeLink key={e.key} href={e.href}>
+            <ListItemButton
+              key={e.key}
+              selected={e.key === selected}
+              onClick={() => handleClick(e)}
+              classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
+              dense
+              >
+              <ListItemText
+                primary={e.title}
+                primaryTypographyProps={{
+                  color: (theme) => (e.key === selected) ? theme.palette.text.primary : theme.palette.text.secondary,
+                  fontWeight: 'unset'
+                }}
+                />
+            </ListItemButton>
+          </FakeLink>
         ))}
       </List>
     )) : <></>
@@ -118,8 +136,9 @@ interface GroupContentProps {
 
 export function GroupContent({ groupId }: GroupContentProps) {
   const { data, status } = useOneGroup(groupId);
+  const good = status === 'success' && groupId && groupId !== '';
 
   return (
-    status === 'success' ? <GroupRow data={data} /> : <></>
+    good ? <GroupRow data={data} /> : <GroupRowSkeleton />
   )
 }

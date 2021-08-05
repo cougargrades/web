@@ -1,18 +1,17 @@
-import React from 'react'
-import Head from 'next/head'
+import React, { useEffect } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
-import Chip from '@material-ui/core/Chip'
-import Skeleton from '@material-ui/core/Skeleton'
+import Head from 'next/head'
+import { useRecoilState } from 'recoil'
 import { Group } from '@cougargrades/types'
+import Container from '@material-ui/core/Container'
 import { PankoRow } from '../../components/panko'
-import { useGroupData } from '../../lib/data/useGroupData'
-import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
-import { buildArgs } from '../../lib/environment'
+import { GroupNav, GroupContent } from '../../components/groupnav'
+import { selectedGroupResultKey } from '../../lib/recoil'
+import { useIsCondensed } from '../../lib/hook'
+import { getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { useRosetta } from '../../lib/i18n'
 
-import styles from './group.module.scss'
-import { EnhancedTable } from '../../components/datatable'
+import styles from '../../styles/Groups.module.scss'
 
 export interface GroupProps {
   staticGroupId: string;
@@ -20,40 +19,58 @@ export interface GroupProps {
   staticDescription: string;
 }
 
-export default function IndividualGroup({ staticGroupId, staticName, staticDescription }: GroupProps) {
-  const { data, status } = useGroupData(staticGroupId)
-  const isMissingProps = staticGroupId === undefined || false
+export default function Groups({ staticGroupId, staticName, staticDescription }: GroupProps) {
+  const stone = useRosetta()
+  const [selected, setSelected] = useRecoilState(selectedGroupResultKey)
+  const condensed = useIsCondensed()
+
+  useEffect(() => {
+    console.log('groupId?',staticGroupId)
+    if(staticGroupId) setSelected(staticGroupId);
+  }, [staticGroupId])
+
   return (
     <>
-    <Head>
-      <title>{staticName || staticGroupId} / CougarGrades.io</title>
-      <meta name="description" content={`Groups of courses from the University of Houston. View grade distribution data at CougarGrades.io.`} />
-    </Head>
-    <Container>
-      <PankoRow />
-      <main>
-        <div className={styles.groupHero}>
-          <h1>{!isMissingProps ? staticName : <Skeleton variant="text" width={360} height={50} />}</h1>
-          <p>{!isMissingProps ? staticDescription : <Skeleton variant="text" width="100%" />}</p>
-          { status === 'success' ? data.categories.map(e => (
-            e.href ? 
-            <Chip key={e.key} label={e.title} className={styles.chip} component="a" href={e.href} clickable />
-            :
-            <Chip key={e.key} label={e.title} className={styles.chip} />
-          )) : [1].map(e => <Skeleton key={e} variant="text" width={230} height={32} />)}
+      <Head>
+        <title>{staticName || staticGroupId} / CougarGrades.io</title>
+        <meta name="description" content={staticDescription || stone.t('meta.groups.description')} />
+      </Head>
+      <Container>
+        <PankoRow />
+      </Container>
+      <main className={styles.main}>
+        <aside className={styles.nav}>
+          <GroupNav />
+        </aside>
+        { condensed ? <></> : 
+        <div>
+          <GroupContent groupId={selected} />
         </div>
-        <h1>Courses</h1>
-        <EnhancedTable<{ id: number, foo: string, bar: string}>
-          columns={status === 'success' ? [] : []}
-          rows={status === 'success' ? [] : []}
-          defaultOrderBy="foo"
-        />
-        {/* Intentionally empty */}
-        <Box component="div" width={'100%'} height={30} />
+        }
       </main>
-    </Container>
+      {/* <div className="container-xxl" style={{ width: 'unset' }}>
+        <div className="row">
+          <nav className="col-12 col-md-3">
+            <GroupNav />
+          </nav>
+          <div className="d-none d-md-block col-md-9">
+            <GroupContent />
+          </div>
+        </div>
+      </div> */}
+      {/* <Container>
+        
+        <main>
+          <h1>UH Core Curriculum</h1>
+          <h6>Source:</h6>
+          <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" clickable />
+          { status === 'success' ? data.core_curriculum.map(e => (
+            <GroupRow key={e.key} data={e} />
+          )) : '' }
+        </main>
+      </Container> */}
     </>
-  )
+  );
 }
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true

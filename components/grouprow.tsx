@@ -5,6 +5,7 @@ import Tilty from 'react-tilty'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
+import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
 import { InstructorCard, InstructorCardEmpty, InstructorCardSkeleton } from '../components/instructorcard'
 import { GroupResult, useGroupCoursesData } from '../lib/data/useAllGroups'
@@ -57,6 +58,27 @@ export function GroupRow({ data }: GroupRowProps) {
           {LINK_TEXT}
         </Button>
         }
+      </Divider>
+    </section>
+  )
+}
+
+export function GroupRowSkeleton() {
+  return (
+    <section className={styles.groupSection}> 
+      <Typography variant="h3">
+        <Skeleton variant="text" />
+      </Typography>
+      <Typography gutterBottom variant="body1" color="text.secondary">
+        <Skeleton variant="text" />
+      </Typography>
+      <Carousel>
+        { [1,2,3].map(e => <InstructorCardSkeleton key={e} />)}
+      </Carousel>
+      <Divider className={styles.groupSectionDivider}>
+        <Button variant="text" size="large" disabled>
+          Show All
+        </Button>
       </Divider>
     </section>
   )
