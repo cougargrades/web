@@ -1,6 +1,9 @@
-import { useWindowSize } from 'react-use'
+import { useMedia } from 'react-use'
 
 export function useIsMobile() {
-  const { width } = useWindowSize()
-  return width < 576;
+  return useMedia('(max-width: 576px)');
+}
+
+export function useIsCondensed() {
+  return useMedia('(max-width: 768px)');
 }

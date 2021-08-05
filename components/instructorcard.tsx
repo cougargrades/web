@@ -34,6 +34,8 @@ import interactivity from '../styles/interactivity.module.scss'
 interface InstructorCardProps {
   data: CourseInstructorResult;
   fitSubtitle?: boolean;
+  variant?: 'elevation' | 'outlined';
+  elevation?: number;
 }
 
 interface InstructorCardShowMoreProps {
@@ -44,11 +46,12 @@ interface InstructorCardShowMoreProps {
 interface InstructorCardEmptyProps {
   text: string;
   onClick?: () => void;
+  href?: string;
 }
 
-export function InstructorCard({ data, fitSubtitle }: InstructorCardProps) {
+export function InstructorCard({ data, fitSubtitle, variant, elevation }: InstructorCardProps) {
   return (
-    <Card sx={{ width: 250, height: 150 }} className={`${styles.instructorCard} ${interactivity.hoverActive}`}>
+    <Card sx={{ width: 250, height: 150 }} variant={variant} elevation={elevation} className={`${styles.instructorCard} ${interactivity.hoverActive}`}>
       <Link href={data.href} passHref>
         <CardActionArea className={styles.cardActionArea}>
           <CardContent className={styles.cardContent}>
@@ -172,9 +175,20 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
   );
 }
 
-export function InstructorCardEmpty({ text, onClick }: InstructorCardEmptyProps) {
+export function InstructorCardEmpty({ text, onClick, href }: InstructorCardEmptyProps) {
   return (
     <Card variant="outlined" sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
+      { href ? 
+      <Link href={href} passHref>
+        <CardActionArea className={styles.cardActionArea} onClick={onClick}>
+          <CardContent className={styles.cardContent}>
+            <Typography className={styles.showMore} color="text.secondary">
+              {text}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
+      :
       <CardActionArea className={styles.cardActionArea} onClick={onClick}>
         <CardContent className={styles.cardContent}>
           <Typography className={styles.showMore} color="text.secondary">
@@ -182,6 +196,7 @@ export function InstructorCardEmpty({ text, onClick }: InstructorCardEmptyProps)
           </Typography>
         </CardContent>
       </CardActionArea>
+      }
     </Card>
   )
 }

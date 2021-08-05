@@ -11,6 +11,7 @@ import { GroupResult, useGroupCoursesData } from '../lib/data/useAllGroups'
 import { Carousel } from './carousel'
 
 import styles from './grouprow.module.scss'
+import { useIsCondensed } from '../lib/hook'
 
 interface GroupRowProps {
   data: GroupResult;
@@ -22,6 +23,7 @@ export function GroupRow({ data }: GroupRowProps) {
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? courses.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
+  const condensed = useIsCondensed()
 
   // Used for prefetching all options which are presented
   useEffect(() => {
@@ -39,16 +41,22 @@ export function GroupRow({ data }: GroupRowProps) {
         {data.description}
       </Typography>
       <Carousel>
-        { status === 'success' ? courses.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle /></Tilty></Grid>
+        { status === 'success' ? courses.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={4} /></Tilty></Grid>
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
-        { status === 'success' && REMAINING_COURSES > 0 ? <InstructorCardEmpty text={LINK_TEXT} onClick={() => router.push(data.href)} /> : ''}
+        { status === 'success' && REMAINING_COURSES > 0 ? <InstructorCardEmpty text={LINK_TEXT} href={data.href} /> : <></>}
       </Carousel>
       <Divider className={styles.groupSectionDivider}>
+        { condensed ?
         <Link href={data.href} passHref>
           <Button variant="text" size="large">
             {LINK_TEXT}
           </Button>
         </Link>
+        :
+        <Button variant="text" size="large" onClick={() => alert('hi')}>
+          {LINK_TEXT}
+        </Button>
+        }
       </Divider>
     </section>
   )

@@ -1,20 +1,20 @@
 import React from 'react'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
-import { useWindowSize } from 'react-use'
 import Container from '@material-ui/core/Container'
 import { PankoRow } from '../components/panko'
 import { GroupNav, GroupContent } from '../components/groupnav'
 import { selectedGroupResultKey } from '../lib/recoil'
+import { useIsCondensed } from '../lib/hook'
 import { useRosetta } from '../lib/i18n'
 
 import styles from '../styles/Groups.module.scss'
 
+
 export default function Groups() {
   const stone = useRosetta()
-  const [selected, _] = useRecoilState(selectedGroupResultKey);
-  const { width } = useWindowSize()
-  const condensed = width < 768;
+  const [selected, _] = useRecoilState(selectedGroupResultKey)
+  const condensed = useIsCondensed()
 
   return (
     <>

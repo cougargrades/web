@@ -4,7 +4,7 @@
   margin-bottom: 16px;
   @media(min-width: 767px) {
     display: grid;
-    grid-template-columns: 15em 1fr;
+    grid-template-columns: 15em minmax(0, 1fr);
     max-width: 100em;
     width: 90%;
     margin: 0 auto;

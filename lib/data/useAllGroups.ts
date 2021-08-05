@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useFirestore, useFirestoreCollectionData } from 'reactfire'
+import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
 import { Course, Group, Util } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
@@ -89,6 +89,22 @@ export function useAllGroups(): Observable<AllGroupsResult> {
         ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
       ],
     },
+    error,
+    status,
+  }
+}
+
+export function useOneGroup(groupId: string): Observable<GroupResult> {
+  const db = useFirestore();
+  const query = db.collection('groups').doc(groupId)
+  const { data, status, error } = useFirestoreDoc<Group>(query)
+  const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
+  const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
+  const isActualError = typeof groupId === 'string' && groupId !== '' && status !== 'loading' && isBadObject
+  const good = status === 'success' && didLoadCorrectly && !isActualError && data.exists;
+
+  return {
+    data: good ? group2Result(data.data()) : undefined,
     error,
     status,
   }
