@@ -23,7 +23,7 @@
     "bootstrap": "^5.0.1",
     "firebase": "^8.6.7",
     "fitty": "^2.3.5",
-    "next": "^11.0.1",
+    "next": "^11.1.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "papaparse": "^5.3.1",
