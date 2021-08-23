@@ -25,7 +25,7 @@ export function EnrollmentInfo(props: EnrollmentInfoProps & BoxProps) {
       <span className={`Progress ${styles.progressWrap}`} style={{ height: barHeight }}>
         { data.map(e => (
           e.percentage === 0 ? <React.Fragment key={e.key}></React.Fragment> : 
-          <Tooltip key={e.key} placement="top" arrow title={`${e.value.toLocaleString()} total students have received ${e.title}s`}>
+          <Tooltip key={e.key} placement="top" arrow title={e.value === -1 ? '' : `${e.value.toLocaleString()} total students have received ${e.title}s`}>
             <span className="Progress-item" style={{ width: `${e.percentage}%`, backgroundColor: e.color }}></span>
           </Tooltip>
         ))}

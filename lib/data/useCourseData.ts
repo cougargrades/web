@@ -256,14 +256,17 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
           }
         },
         enrollment: [
-          ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
-            .map(k => ({
-              key: k,
-              title: k.substring(5), // 'totalA' => 'A'
-              color: grade2Color.get(k.substring(5) as Grade),
-              value: data.enrollment[k],
-              percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
-            })
+          ...(didLoadCorrectly ? 
+              data.enrollment.totalEnrolled === 0 ? 
+              [{ key: 'nodata', title: 'No data', color: grade2Color.get('I'), value: -1, percentage: 100 }] : 
+              ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
+              .map(k => ({
+                key: k,
+                title: k.substring(5), // 'totalA' => 'A'
+                color: grade2Color.get(k.substring(5) as Grade),
+                value: data.enrollment[k],
+                percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
+              })
           ) : []),
         ],
         instructorCount: didLoadCorrectly ? instructorData.length : 0,

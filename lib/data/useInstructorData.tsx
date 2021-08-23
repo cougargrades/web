@@ -111,14 +111,17 @@ export function useInstructorData(instructorName: string): Observable<Instructor
           ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
         ],
         enrollment: [
-          ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
-            .map(k => ({
-              key: k,
-              title: k.substring(5), // 'totalA' => 'A'
-              color: grade2Color.get(k.substring(5) as Grade),
-              value: data.enrollment[k],
-              percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
-            })
+          ...(didLoadCorrectly ? 
+              data.enrollment.totalEnrolled === 0 ? 
+              [{ key: 'nodata', title: 'No data', color: grade2Color.get('I'), value: -1, percentage: 100 }] : 
+              ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
+              .map(k => ({
+                key: k,
+                title: k.substring(5), // 'totalA' => 'A'
+                color: grade2Color.get(k.substring(5) as Grade),
+                value: data.enrollment[k],
+                percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
+              })
           ) : []),
         ],
         firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
