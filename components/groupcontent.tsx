@@ -57,7 +57,7 @@ export function GroupContent({ data }: GroupContentProps) {
       </Carousel>
       <h3>Data</h3>
       <EnhancedTable<CoursePlus>
-        title="Past Sections"
+        title="Courses"
         columns={status === 'success' ? dataGrid.columns : []}
         rows={status === 'success' ? dataGrid.rows : []}
         defaultOrderBy="id"
@@ -81,7 +81,7 @@ export function GroupContentSkeleton() {
       </Carousel>
       <h3>Data</h3>
       <EnhancedTable<CoursePlus>
-        title="Past Sections"
+        title="Courses"
         columns={[]}
         rows={[]}
         defaultOrderBy="id"
