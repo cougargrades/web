@@ -17,7 +17,7 @@ export function getBadges(gpa: GPA.GPA, enrollment?: Enrollment): SearchResultBa
           caption: 'Grade Point Average',
         }
       ] : []),
-      ...(gpa.standardDeviation !== 0 ? [
+      ...(gpa.average !== 0 ? [
         {
           key: 'sd',
           text: formatSDValue(gpa.standardDeviation),

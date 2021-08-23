@@ -4,14 +4,14 @@ import { Section } from '@cougargrades/types'
  * Very much extracted from PoC3
  * https://github.com/cougargrades/web/blob/3d511fc56b0a90f2038883a71852245b726af7e3/src/components/courses/results/Processor.js#L177
  */
-export function getChartData(sections: Section[]) {
+export function getChartDataForInstructor(sections: Section[]) {
   let expanded = expandSections(sections);
   // Sorts results chronologically
   expanded.sort((a,b) => a['term'] - b['term'])
 
   //make column headings for chart
   //ensure each prof only appears once in columns
-  let cols = Array.from(new Set(['Semester', ...expanded.map(e => e.primaryInstructorFullName)]))
+  let cols = Array.from(new Set(['Semester', ...expanded.map(e => e.courseName)]))
 
   let graphArray = []
   graphArray.push(cols)
@@ -34,15 +34,16 @@ export function getChartData(sections: Section[]) {
           + (expanded[i]['D'] ?? 0)
           + (expanded[i]['F'] ?? 0);
       let instructor = expanded[i]['primaryInstructorFullName'];
+      let courseName = expanded[i]['courseName']
       let rowID = graphArray.length;
       let term = expanded[i]['termString'].split(' ').reverse().join(' '); // "Fall 2013" => "2013 Fall"
       
-      if(typeof studentsMap.get(`${term} ${instructor}`) === 'undefined') { //if first section prof has taught this semester
-          studentsMap.set(`${term} ${instructor}`, students) //set number of students in section
+      if(typeof studentsMap.get(`${term} ${courseName}`) === 'undefined') { //if first section prof has taught this semester
+          studentsMap.set(`${term} ${courseName}`, students) //set number of students in section
       }
       else {
-          studentsMap.set(`${term} ${instructor}`,
-              studentsMap.get(`${term} ${instructor}`) + students) //increment number of students taught this semester
+          studentsMap.set(`${term} ${courseName}`,
+              studentsMap.get(`${term} ${courseName}`) + students) //increment number of students taught this semester
       }
       if(typeof rowsMap.get(term) === 'undefined') { //if row for semester doesn't exist in chart data
           //initialize row
@@ -54,10 +55,10 @@ export function getChartData(sections: Section[]) {
       else {
           rowID = rowsMap.get(term);
       }
-      if(typeof graphArray[rowID][colsMap.get(instructor)] === 'undefined') { //initialize cell
-          graphArray[rowID][colsMap.get(instructor)] = 0;
+      if(typeof graphArray[rowID][colsMap.get(courseName)] === 'undefined') { //initialize cell
+          graphArray[rowID][colsMap.get(courseName)] = 0;
       }
-      graphArray[rowID][colsMap.get(instructor)] += gpa*students; //increment student-weighted GPA
+      graphArray[rowID][colsMap.get(courseName)] += gpa*students; //increment student-weighted GPA
   }
   for(let i = 1; i < graphArray.length; ++i) {
       for(let j = 1; j < graphArray[i].length; ++j) {
