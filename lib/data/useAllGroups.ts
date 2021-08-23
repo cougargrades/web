@@ -4,6 +4,7 @@ import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
+import { getBadges } from './getBadges'
 
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
@@ -42,11 +43,7 @@ export function course2Result(data: Course): CourseInstructorResult {
     title: `${data.department} ${data.catalogNumber}`,
     subtitle: data.description,
     caption: `${Array.isArray(data.instructors) ? data.instructors.length : 0} instructors • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
-    badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
-    ],
+    badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
     lastInitial: '',
   };

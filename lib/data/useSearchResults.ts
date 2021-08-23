@@ -2,6 +2,7 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { Course, Instructor, Group } from '@cougargrades/types'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
+import { getBadges } from './getBadges';
 
 export interface SearchResultBadge {
   key: string;
@@ -26,11 +27,7 @@ export function course2Result(data: Course): SearchResult {
     type: 'course',
     group: '📚 Courses',
     title: `${data._id}: ${data.description}`,
-    badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
-    ],
+    badges: getBadges(data.GPA, data.enrollment),
   };
 }
 
@@ -41,11 +38,7 @@ export function instructor2Result(data: Instructor): SearchResult {
     type: 'instructor',
     group: '👩‍🏫 Instructors',
     title: data._id,
-    badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
-    ],
+    badges: getBadges(data.GPA, data.enrollment),
   };
 }
 

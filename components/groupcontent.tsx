@@ -7,9 +7,10 @@ import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
-import { InstructorCard, InstructorCardEmpty, InstructorCardSkeleton } from './instructorcard'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
 import { GroupResult } from '../lib/data/useAllGroups'
-import { useGroupCoursesData } from '../lib/data/useGroupData'
+import { useGroupData } from '../lib/data/useGroupData'
 import { Carousel } from './carousel'
 
 import styles from './groupcontent.module.scss'
@@ -22,7 +23,8 @@ interface GroupContentProps {
 
 export function GroupContent({ data }: GroupContentProps) {
   const router = useRouter()
-  const { data: courses, status } = useGroupCoursesData(data)
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const { data: courses, status } = useGroupData(data)
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? courses.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
@@ -37,7 +39,7 @@ export function GroupContent({ data }: GroupContentProps) {
 
   return (
     <section className={styles.groupSection}> 
-      <Typography variant="h3">
+      <Typography variant="h1">
         {data.title}
       </Typography>
       <Typography gutterBottom variant="body1" color="text.secondary">
@@ -47,10 +49,10 @@ export function GroupContent({ data }: GroupContentProps) {
         <h6>Source:</h6>
         <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" className={interactivity.hoverActive} clickable />
       </>}
+      <h3>Most Enrolled</h3>
       <Carousel>
-        { status === 'success' ? courses.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={4} /></Tilty></Grid>
+        { status === 'success' ? courses.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={prefersDarkMode ? 4 : 1} /></Tilty></Grid>
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
-        { status === 'success' && REMAINING_COURSES > 0 ? <InstructorCardEmpty text={LINK_TEXT} href={data.href} /> : <></>}
       </Carousel>
       <Divider className={styles.groupSectionDivider}>
         <Button variant="text" size="large" onClick={() => alert('hi')}>

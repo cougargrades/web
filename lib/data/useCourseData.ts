@@ -10,6 +10,7 @@ import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { getChartData } from './getChartData'
 import { EnrollmentInfoResult } from '../../components/enrollment'
+import { getBadges } from './getBadges'
 
 export type SectionPlus = Section & { id: string };
 
@@ -68,11 +69,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     title: data.fullName,
     subtitle: generateSubjectString(data),
     caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
-    badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
-    ],
+    badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
   };
@@ -152,27 +149,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     return {
       data: {
         badges: [
-          ...(didLoadCorrectly && data.GPA.average !== 0 ? [
-            {
-              key: 'gpa',
-              text: `${data.GPA.average.toFixed(2)} GPA`,
-              color: grade2Color.get(getGradeForGPA(data.GPA.average)),
-              caption: 'Grade Point Average',
-            }] : []),
-          ...(didLoadCorrectly && data.GPA.standardDeviation !== 0 ? [
-            {
-              key: 'sd',
-              text: `${data.GPA.standardDeviation.toFixed(3)} SD`,
-              color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
-              caption: 'Standard Deviation',
-            }] : []),
-          ...(didLoadCorrectly && data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [
-            {
-              key: 'droprate',
-              text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
-              color: grade2Color.get('W'),
-              caption: 'Drop Rate'
-            }] : []),
+          ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
         ],
         publications: [
           ...(didLoadCorrectly && data.publications !== undefined && Array.isArray(data.publications) ? data.publications.map(e => (

@@ -5,7 +5,7 @@ import { Observable } from './Observable'
 import { GroupResult, course2Result,  } from './useAllGroups'
 import { CourseInstructorResult } from './useCourseData'
 
-export function useGroupCoursesData(data: GroupResult): Observable<CourseInstructorResult[]> {
+export function useGroupData(data: GroupResult): Observable<CourseInstructorResult[]> {
   const [courseData, setCourseData] = useState<Course[]>([]);
   const previous = usePrevious(data.key)
 
