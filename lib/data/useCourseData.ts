@@ -71,7 +71,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     badges: [
       ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
       ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
+      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
     ],
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
@@ -166,7 +166,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
               caption: 'Standard Deviation',
             }] : []),
-          ...(didLoadCorrectly && data.enrollment !== undefined ? [
+          ...(didLoadCorrectly && data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [
             {
               key: 'droprate',
               text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
@@ -282,7 +282,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               title: k.substring(5), // 'totalA' => 'A'
               color: grade2Color.get(k.substring(5) as Grade),
               value: data.enrollment[k],
-              percentage: data.enrollment[k] / data.enrollment.totalEnrolled * 100,
+              percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
             })
           ) : []),
         ],

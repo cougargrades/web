@@ -46,7 +46,7 @@ export function course2Result(data: Course): CourseInstructorResult {
     badges: [
       ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
       ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
+      ...(data.enrollment !== undefined && data.enrollment.totalEnrolled !== 0 ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
     ],
     id: data._id,
     lastInitial: '',
