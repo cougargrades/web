@@ -29,7 +29,8 @@ export default function Panko() {
 export function PankoRow() {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile()
-  const [tooltipText, setTooltipText] = useState('')
+  const [tooltipText, setTooltipText] = useState('Copy Link')
+  const [toasterMessage, setToasterMessage] = useState('✓ Copied link')
 
   const handleShare = async () => {
     const isMac = navigator.userAgent.toLowerCase().indexOf('macintosh') >= 0;
@@ -40,12 +41,16 @@ export function PankoRow() {
         title: document.title,
         url: window.location.href
       })
-      .then(() => {})
+      .then(() => {
+        setToasterMessage('✓ Link shared')
+        setOpen(true)
+      })
       .catch(() => {})
     }
     else {
       // Fallback
       await copyText(window.location.href);
+      setToasterMessage('✓ Copied link')
       setOpen(true);
     }
   }
@@ -91,9 +96,9 @@ export function PankoRow() {
         </Tooltip>
         <Snackbar
           open={open}
-          autoHideDuration={10*6000}
+          autoHideDuration={6000}
           onClose={() => setOpen(false)}
-          message="✓ Copied link"
+          message={toasterMessage}
           anchorOrigin={{ vertical: isMobile ? 'bottom' : 'top', horizontal: 'right' }}
           action={<>
           <IconButton
