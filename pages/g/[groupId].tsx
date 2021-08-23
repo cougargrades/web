@@ -22,14 +22,15 @@ export interface GroupProps {
   staticGroupId: string;
   staticName: string;
   staticDescription: string;
+  doesNotExist?: boolean;
 }
 
-export default function Groups({ staticGroupId, staticName, staticDescription }: GroupProps) {
+export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useAllGroups();
   const isMissingProps = staticGroupId === undefined
-  const good = !isMissingProps && status === 'success'
+  const good = !isMissingProps && status === 'success' && doesNotExist === false
 
   const handleClick = (x: GroupResult) => {
     router.push(x.href, undefined, { scroll: false })
@@ -119,6 +120,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
       staticGroupId: onlyOne(groupId),
       staticName: name,
       staticDescription: description,
+      doesNotExist: groupData === undefined,
     }
   };
 }

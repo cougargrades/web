@@ -10,8 +10,9 @@ import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
 
 export interface InstructorProps {
-  instructorName: string,
-  departmentText: string,
+  instructorName: string;
+  departmentText: string;
+  doesNotExist?: boolean;
 }
 
 export default function IndividualInstructor({ instructorName, departmentText }: InstructorProps) {
@@ -56,6 +57,7 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
     props: {
       instructorName: onlyOne(instructorName),
       departmentText: departmentText,
+      doesNotExist: instructorData === undefined,
     }
   };
 }

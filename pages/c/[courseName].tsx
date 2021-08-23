@@ -31,13 +31,14 @@ export interface CourseProps {
   staticCourseName: string;
   staticDescription: string;
   staticHTML: string;
+  doesNotExist?: boolean;
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
-  const isMissingProps = staticCourseName === undefined || false
+  const isMissingProps = staticCourseName === undefined
   const RELATED_INSTRUCTOR_LIMIT = 4;
 
   if(status === 'success') {
@@ -61,11 +62,12 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <main>
         <div className={styles.courseHero}>
           {
-            status !== 'error' ? <></> :
+            (status === 'error' || doesNotExist === true) ?
             <Alert severity="error">
               <AlertTitle>Error 404</AlertTitle>
               {staticCourseName} could not be found.
             </Alert>
+            : <></>
           }
           <figure>
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
@@ -181,6 +183,7 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
       staticCourseName: onlyOne(courseName),
       staticDescription: description,
       staticHTML: content ?? '',
+      doesNotExist: courseData === undefined,
     }
   };
 
