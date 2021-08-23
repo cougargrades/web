@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useRecoilState } from 'recoil'
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -8,6 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useOneGroup } from '../lib/data/useAllGroups'
 import { GroupRow, GroupRowSkeleton } from '../components/grouprow'
 import { useIsCondensed } from '../lib/hook'
+import { tocAtom } from '../lib/recoil'
 
 import styles from './groupnav.module.scss'
 //import interactivity from '../styles/interactivity.module.scss'
@@ -74,10 +76,11 @@ interface TableOfContentsWrapProps {
 }
 
 export function TableOfContentsWrap({ children }: TableOfContentsWrapProps) {
+  const [expanded, setExpanded] = useRecoilState(tocAtom)
   const condensed = useIsCondensed()
   return (
     condensed ? 
-    <Accordion>
+    <Accordion expanded={expanded} onChange={(_,exp) => setExpanded(exp)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h6" sx={{ padding: 0, borderBottom: 'none' }}>Select Group</Typography>
       </AccordionSummary>

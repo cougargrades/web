@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRecoilState } from 'recoil'
 import { Group } from '@cougargrades/types'
 import Container from '@material-ui/core/Container'
 import List from '@material-ui/core/List'
@@ -14,6 +15,7 @@ import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib
 import { GroupResult, useAllGroups } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
+import { tocAtom } from '../../lib/recoil'
 
 import styles from '../../styles/Groups.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -31,9 +33,11 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   const { data, status } = useAllGroups();
   const isMissingProps = staticGroupId === undefined
   const good = !isMissingProps && status === 'success' && doesNotExist === false
+  const [_, setTOCExpanded] = useRecoilState(tocAtom)
 
   const handleClick = (x: GroupResult) => {
     router.push(x.href, undefined, { scroll: false })
+    setTOCExpanded(false)
   }
 
   useEffect(() => {
