@@ -25,14 +25,15 @@ export interface CourseResult {
   dataGrid: {
     columns: Column<SectionPlus>[];
     rows: SectionPlus[];
-  },
+  };
   dataChart: {
     data: any[],
     options: { [key: string ]: any }
-  },
+  };
   enrollment: EnrollmentInfoResult[];
   instructorCount: number;
   sectionCount: number;
+  classSize: number;
 }
 
 export interface CourseGroupResult {
@@ -267,6 +268,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
         ],
         instructorCount: didLoadCorrectly ? instructorData.length : 0,
         sectionCount: didLoadCorrectly ? sectionData.length : 0,
+        classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
       },
       error,
       status: sharedStatus,

@@ -105,6 +105,9 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <li>Latest record: { status === 'success' ? data.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of instructors: { status === 'success' ? data.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of sections: { status === 'success' ? data.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <Tooltip placement="bottom-start" title="Estimated average size of each section, # of total enrolled ÷ # of sections">
+            <li>Average number of students per section: { status === 'success' ? `~ ${data.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          </Tooltip>
         </ul>
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (

@@ -76,13 +76,13 @@ export type Column<T> = { [K in keyof T]: ({
    * Function that allows to apply a formatter before rendering its value.
    * @default (value: T[K]) => T[K]
    */
-  valueFormatter: (value: T[K]) => string;
+  valueFormatter: (value: T[K]) => string | React.ReactNode;
 } : {
   /**
    * Function that allows to apply a formatter before rendering its value.
    * @default (value: T[K]) => T[K]
    */
-  valueFormatter?: (value: T[K]) => string;
+  valueFormatter?: (value: T[K]) => string | React.ReactNode;
 })) }[keyof T];
 
 export interface EnhancedTableProps<T> {
@@ -136,6 +136,7 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
                       <TableSortLabel
                         active={orderBy === col.field}
                         direction={orderBy === col.field ? order : 'asc'}
+                        classes={{ icon: styles.sortLabel }}
                         onClick={(event) => handleRequestSort(event, col.field)}
                       >
                         {col.headerName}
