@@ -62,11 +62,6 @@ export function GroupContent({ data }: GroupContentProps) {
         rows={status === 'success' ? dataGrid.rows : []}
         defaultOrderBy="id"
       />
-      <Divider className={styles.groupSectionDivider}>
-        <Button variant="text" size="large" onClick={() => alert('hi')}>
-          {LINK_TEXT}
-        </Button>
-      </Divider>
     </section>
   )
 }
@@ -91,11 +86,6 @@ export function GroupContentSkeleton() {
         rows={[]}
         defaultOrderBy="id"
       />
-      <Divider className={styles.groupSectionDivider}>
-        <Button variant="text" size="large" disabled>
-          Show All
-        </Button>
-      </Divider>
     </section>
   )
 }
