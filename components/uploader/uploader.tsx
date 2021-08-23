@@ -147,7 +147,7 @@ export function Uploader() {
     // Save reference to records
     acceptedFiles.forEach(file => {
       // identify primary CSV data source
-      if(file.name === 'records.csv') {
+      if(file.name.startsWith('records') && file.name.endsWith('.csv')) {
         setRecordsFile(_ => {
           // parse CSV file
           Papa.parse(file, {
