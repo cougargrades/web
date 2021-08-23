@@ -148,7 +148,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: 'SD',
               description: 'Standard deviation of GPA across all sections in a course',
               type: 'number',
-              width: 50,
+              width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
               valueFormatter: value => <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge>,
