@@ -58,7 +58,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   return (
     <>
       <Head>
-        <title>{staticName || staticGroupId} / CougarGrades.io</title>
+        <title>{(staticName || staticGroupId) !== undefined ? `${staticName || staticGroupId} / ` : ''}CougarGrades.io</title>
         <meta name="description" content={staticDescription || stone.t('meta.groups.description')} />
       </Head>
       <Container>
