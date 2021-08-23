@@ -7,18 +7,20 @@ import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
-import { InstructorCard, InstructorCardEmpty, InstructorCardSkeleton } from '../components/instructorcard'
-import { GroupResult, useGroupCoursesData } from '../lib/data/useAllGroups'
+import { InstructorCard, InstructorCardEmpty, InstructorCardSkeleton } from './instructorcard'
+import { GroupResult } from '../lib/data/useAllGroups'
+import { useGroupCoursesData } from '../lib/data/useGroupData'
 import { Carousel } from './carousel'
 
-import styles from './grouprow.module.scss'
+import styles from './groupcontent.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
 
-interface GroupRowProps {
+
+interface GroupContentProps {
   data: GroupResult;
 }
 
-export function GroupRow({ data }: GroupRowProps) {
+export function GroupContent({ data }: GroupContentProps) {
   const router = useRouter()
   const { data: courses, status } = useGroupCoursesData(data)
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
@@ -59,7 +61,7 @@ export function GroupRow({ data }: GroupRowProps) {
   )
 }
 
-export function GroupRowSkeleton() {
+export function GroupContentSkeleton() {
   return (
     <section className={styles.groupSection}> 
       <Typography variant="h3">

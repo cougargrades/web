@@ -8,10 +8,13 @@ import Container from '@material-ui/core/Container'
 import List from '@material-ui/core/List'
 import ListItemButton from '@material-ui/core/ListItemButton'
 import ListItemText from '@material-ui/core/ListItemText'
+import Alert from '@material-ui/core/Alert'
+import AlertTitle from '@material-ui/core/AlertTitle'
 import { PankoRow } from '../../components/panko'
-import { GroupContent, GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { FakeLink } from '../../components/link'
 import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
+import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
 import { GroupResult, useAllGroups } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
@@ -32,7 +35,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   const router = useRouter()
   const { data, status } = useAllGroups();
   const isMissingProps = staticGroupId === undefined
-  const good = !isMissingProps && status === 'success' && doesNotExist === false
+  const good = !isMissingProps && status === 'success'
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
 
   const handleClick = (x: GroupResult) => {
@@ -92,7 +95,14 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
           </TableOfContentsWrap>
         </aside>
         <div>
-          { good ? <GroupContent groupId={staticGroupId} /> : <></>}
+          { doesNotExist === true ? 
+          <Alert severity="error">
+            <AlertTitle>Error 404</AlertTitle>
+            Group {staticGroupId} could not be found.
+          </Alert>
+          : <></>
+          }
+          { good && doesNotExist === false ? <GroupContent data={data.core_curriculum.find(e => e.key === staticGroupId)} /> : <GroupContentSkeleton /> }
         </div>
       </main>
     </>

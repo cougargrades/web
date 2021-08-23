@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
+import Accordion from '@material-ui/core/Accordion'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
 import ListSubheader from '@material-ui/core/ListSubheader'
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useOneGroup } from '../lib/data/useAllGroups'
-import { GroupRow, GroupRowSkeleton } from '../components/grouprow'
+import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { useIsCondensed } from '../lib/hook'
 import { tocAtom } from '../lib/recoil'
 
@@ -55,19 +53,6 @@ export function GroupNavSubheader({ children }: GroupNavSubheaderProps) {
     >
       {children}
     </ListSubheader>
-  )
-}
-
-interface GroupContentProps {
-  groupId: string;
-}
-
-export function GroupContent({ groupId }: GroupContentProps) {
-  const { data, status } = useOneGroup(groupId);
-  const good = status === 'success' && groupId && groupId !== '';
-
-  return (
-    good ? <GroupRow data={data} /> : <GroupRowSkeleton />
   )
 }
 

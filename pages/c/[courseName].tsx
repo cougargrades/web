@@ -65,7 +65,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             (status === 'error' || doesNotExist === true) ?
             <Alert severity="error">
               <AlertTitle>Error 404</AlertTitle>
-              {staticCourseName} could not be found.
+              Course {staticCourseName} could not be found.
             </Alert>
             : <></>
           }

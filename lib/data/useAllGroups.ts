@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
-import { Course, Group, Util } from '@cougargrades/types'
+import { useFirestore, useFirestoreCollectionData } from 'reactfire'
+import { Course, Group } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
-import { usePrevious } from 'react-use'
+
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -94,62 +93,5 @@ export function useAllGroups(): Observable<AllGroupsResult> {
     },
     error,
     status,
-  }
-}
-
-export function useOneGroup(groupId: string): Observable<GroupResult> {
-  const db = useFirestore();
-  const query = db.doc(`/groups/${groupId}`)
-  const { data, status, error } = useFirestoreDoc<Group>(query)
-  const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
-  const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
-  const isActualError = typeof groupId === 'string' && groupId !== '' && status !== 'loading' && isBadObject
-  const good = status === 'success' && didLoadCorrectly && !isActualError && data.exists;
-
-  return {
-    data: good ? group2Result(data.data()) : undefined,
-    error,
-    status,
-  }
-}
-
-export function useGroupCoursesData(data: GroupResult): Observable<CourseInstructorResult[]> {
-  const [courseData, setCourseData] = useState<Course[]>([]);
-  const previous = usePrevious(data.key)
-
-  useEffect(() => {
-    // prevent loading the same data again
-    if(previous !== data.key) {
-      setCourseData([]);
-      (async () => {
-        if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
-          setCourseData(
-            (await Util.populate<Course>(data.courses))
-              // filter out undefined because there might be some empty references
-              .filter(e => e !== undefined)
-              // sort courses by total enrolled
-              .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
-            ) 
-        }
-      })();
-    }
-    
-  }, [data,previous])
-
-  try {
-    return {
-      data: [
-        ...courseData.map(e => course2Result(e))
-      ],
-      error: undefined,
-      status: courseData.length === 0 ? 'loading' : 'success',
-    }
-  }
-  catch(error) {
-    return {
-      data: undefined,
-      error,
-      status: 'error',
-    }
   }
 }
