@@ -31,6 +31,8 @@ export interface CourseResult {
     options: { [key: string ]: any }
   },
   enrollment: EnrollmentInfoResult[];
+  instructorCount: number;
+  sectionCount: number;
 }
 
 export interface CourseGroupResult {
@@ -263,6 +265,8 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             })
           ) : []),
         ],
+        instructorCount: didLoadCorrectly ? instructorData.length : 0,
+        sectionCount: didLoadCorrectly ? sectionData.length : 0,
       },
       error,
       status: sharedStatus,

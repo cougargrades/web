@@ -103,6 +103,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <ul>
           <li>Earliest record: { status === 'success' ? data.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Latest record: { status === 'success' ? data.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of instructors: { status === 'success' ? data.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of sections: { status === 'success' ? data.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
         </ul>
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
