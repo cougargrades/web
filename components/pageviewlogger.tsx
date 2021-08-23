@@ -17,12 +17,6 @@ export function PageViewLogger() {
       analytics.logEvent('page_view', {
         path_name: router.asPath,
       });
-      analytics.logEvent('screen_view', {
-        app_name: 'web',
-        screen_name: router.asPath,
-        app_id: firebaseConfig.appId,
-        app_version: `${buildArgs.version} (${buildArgs.commitHash.substring(0,7)})`,
-      });
     }
   }, [router.asPath, analyticsRef]);
 

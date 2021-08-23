@@ -18,7 +18,6 @@ import Typography from '@material-ui/core/Typography'
 import { Dropzone } from './dropzone'
 import { LinearProgressWithLabel, SliderWithLabel } from './progress'
 import { readPatchfile } from './AsyncFileReader'
-import { FieldValue } from '../../lib/lazy'
 import { AsyncSemaphore } from './AsyncSemaphore'
 import { localeFunc } from './timeago'
 
@@ -86,6 +85,7 @@ export function Uploader() {
    * Firebase stuff
    */
   const firestore = useFirestore();
+  const FieldValue = useFirestore.FieldValue;
   useEffect(() => {
     /**
      * Subscribe to the upload_queue collection
