@@ -1,3 +1,4 @@
+@import "../styles/vars";
 
 .groupSection {
   h1, h2, h3, h4, h5, h6 {
@@ -15,4 +16,26 @@
 .groupSectionDivider {
   margin-top: 2.5rem!important;
   margin-bottom: 1rem!important;
+}
+
+.chartWrap {
+  overflow: auto;
+  div {
+    display: inline-block
+  }
+  @media (prefers-color-scheme: dark) {
+    & svg rect {
+      fill: $dm-text;
+    }
+    // make graph background transparent but not the lines
+    & svg:nth-child(1) > rect:nth-child(2) {
+      fill: rgba(0,0,0,0);
+    }
+    & svg rect [height="1"] {
+      fill: $dm-text;
+    }
+    & svg text {
+      fill: $dm-text;
+    }
+  }
 }

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Tilty from 'react-tilty'
 import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
 import Divider from '@material-ui/core/Divider'
@@ -8,14 +7,17 @@ import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Tilty from 'react-tilty'
+import { Chart } from 'react-google-charts'
 import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
 import { GroupResult } from '../lib/data/useAllGroups'
 import { CoursePlus, useGroupData } from '../lib/data/useGroupData'
 import { Carousel } from './carousel'
+import { EnhancedTable } from './datatable'
+import { CustomSkeleton } from './skeleton'
 
 import styles from './groupcontent.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-import { EnhancedTable } from './datatable'
 
 
 interface GroupContentProps {
@@ -25,7 +27,7 @@ interface GroupContentProps {
 export function GroupContent({ data }: GroupContentProps) {
   const router = useRouter()
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const { data: { topEnrolled, dataGrid }, status } = useGroupData(data)
+  const { data: { topEnrolled, dataGrid, dataChart }, status } = useGroupData(data)
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? topEnrolled.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
@@ -56,6 +58,23 @@ export function GroupContent({ data }: GroupContentProps) {
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
       <h3>Data</h3>
+      <div className={styles.chartWrap}>
+        {
+          status === 'success' ?
+          <Chart
+            width={'100%'}
+            height={350}
+            chartType="LineChart"
+            loader={<CustomSkeleton width={'100%'} height={350} />}
+            data={dataChart.data}
+            options={dataChart.options}
+            // prevent ugly red box when there's no data yet on first-mount
+            chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
+          />
+          :
+          <CustomSkeleton width={'100%'} height={150} />
+        }
+      </div>
       <EnhancedTable<CoursePlus>
         title="Courses"
         columns={status === 'success' ? dataGrid.columns : []}

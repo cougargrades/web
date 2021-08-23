@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePrevious } from 'react-use'
-import { Course, Util } from '@cougargrades/types'
+import { Course, Section, Util } from '@cougargrades/types'
 import { Observable } from './Observable'
 import { GroupResult, course2Result,  } from './useAllGroups'
 import { CourseInstructorResult } from './useCourseData'
@@ -10,6 +10,7 @@ import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../com
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { formatDropRateValue, formatGPAValue, formatSDValue } from './getBadges'
+import { getChartDataForInstructor } from './getChartDataForInstructor'
 
 
 export type CoursePlus = Course & {
@@ -28,14 +29,20 @@ export interface GroupDataResult {
   dataGrid: {
     columns: Column<CoursePlus>[];
     rows: CoursePlus[];
-  },
+  };
+  dataChart: {
+    data: any[],
+    options: { [key: string ]: any }
+  };
 }
 
 export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
   const stone = useRosetta()
   const [courseData, setCourseData] = useState<Course[]>([]);
+  const [sectionData, setSectionData] = useState<Section[]>([]);
   const previous = usePrevious(data.key)
 
+  // load courses data
   useEffect(() => {
     // prevent loading the same data again
     if(previous !== data.key) {
@@ -52,7 +59,19 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
         }
       })();
     }
-    
+  }, [data,previous])
+  
+  // load sections data
+  useEffect(() => {
+    // prevent loading the same data again
+    if(previous !== data.key) {
+      setSectionData([]);
+      (async () => {
+        if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
+          setSectionData(await Util.populate<Section>(data.sections))
+        }
+      })();
+    }
   }, [data,previous])
 
   try {
@@ -178,6 +197,44 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             })))
           ],
           //rows: [],
+        },
+        dataChart: {
+          data: [
+            ...getChartDataForInstructor(sectionData)
+          ],
+          // https://developers.google.com/chart/interactive/docs/gallery/linechart?hl=en#configuration-options
+          options: {
+            title: `${data.title} Average GPA Over Time by Course`,
+            vAxis: {
+              title: 'Average GPA',
+              gridlines: {
+                  count: -1 //auto
+              },
+              maxValue: 4.0,
+              minValue: 0.0
+            },
+            hAxis: {
+              title: 'Semester',
+              gridlines: {
+                  count: -1 //auto
+              }
+            },
+            chartArea: {
+              //width: '100%',
+              //width: '55%',
+              //width: '65%',
+              left: 'auto',
+              //left: 65, // default 'auto' or 65
+              right: 'auto',
+              //right: 35, // default 'auto' or 65
+              //left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
+            },
+            legend: {
+              position: 'bottom'
+            },
+            pointSize: 5,
+            interpolateNulls: true //lines between point gaps
+          }
         },
       },
       error: undefined,

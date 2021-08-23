@@ -1,11 +1,9 @@
 import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
-import { Course, Group } from '@cougargrades/types'
+import { Course, Group, Section } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
-import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
 import { getBadges } from './getBadges'
-
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -23,6 +21,7 @@ export interface GroupResult {
   description: string;
   categories: string[];
   courses: DocumentReference<Course>[];
+  sections: DocumentReference<Section>[];
 }
 
 export function group2Result(data: Group): GroupResult {
@@ -33,6 +32,7 @@ export function group2Result(data: Group): GroupResult {
     description: data.description,
     categories: Array.isArray(data.categories) ? data.categories : [],
     courses: data.courses as DocumentReference<Course>[],
+    sections: data.sections as DocumentReference<Section>[],
   }
 }
 
