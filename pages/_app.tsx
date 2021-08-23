@@ -9,6 +9,7 @@ const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeCl
 const AppCheck = dynamic(() => import('../components/appcheck').then((mod) => mod.AppCheck))
 //import { RecoilRoot } from 'recoil'
 const RecoilRoot = dynamic(() => import('recoil').then((mod) => mod.RecoilRoot))
+const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then((mod) => mod.PageViewLogger))
 import { useTheme } from '../lib/theme'
 
 //import Layout from '../components/layout'
@@ -66,6 +67,7 @@ export default function MyApp({ Component, pageProps }) {
           <RecoilRoot>
             <RealtimeClaimUpdater />
             <AppCheck />
+            <PageViewLogger />
             <Layout>
               <Component {...pageProps} />
             </Layout>
