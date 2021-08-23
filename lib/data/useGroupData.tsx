@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { usePrevious } from 'react-use'
 import { Course, Util } from '@cougargrades/types'
 import { Observable } from './Observable'
@@ -9,6 +10,7 @@ import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../com
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { formatDropRateValue, formatGPAValue, formatSDValue } from './getBadges'
+
 
 export type CoursePlus = Course & {
   id: string,
@@ -67,6 +69,8 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               type: 'string',
               width: 60,
               padding: 8,
+              // eslint-disable-next-line react/display-name
+              valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
             },
             {
               field: 'description',
