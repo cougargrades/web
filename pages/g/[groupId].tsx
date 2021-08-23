@@ -15,7 +15,7 @@ import { FakeLink } from '../../components/link'
 import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { GroupResult, useAllGroups } from '../../lib/data/useAllGroups'
+import { GroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 import { tocAtom } from '../../lib/recoil'
@@ -34,8 +34,9 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useAllGroups();
+  const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
   const isMissingProps = staticGroupId === undefined
-  const good = !isMissingProps && status === 'success'
+  const good = !isMissingProps && status === 'success' && oneGroupStatus === 'success'
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
 
   const handleClick = (x: GroupResult) => {
@@ -102,7 +103,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
           </Alert>
           : <></>
           }
-          { good && doesNotExist === false ? <GroupContent data={data.core_curriculum.find(e => e.key === staticGroupId)} /> : <GroupContentSkeleton /> }
+          { good && doesNotExist === false ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
         </div>
       </main>
     </>
