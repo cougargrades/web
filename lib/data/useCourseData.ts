@@ -142,7 +142,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections))
+          setSectionData(await Util.populate<Section>(data.sections, 10))
         }
       })();
     }
@@ -272,8 +272,8 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               })
           ) : []),
         ],
-        instructorCount: didLoadCorrectly ? instructorData.length : 0,
-        sectionCount: didLoadCorrectly ? sectionData.length : 0,
+        instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
+        sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
         classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
       },
       error,

@@ -8,6 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Instructor } from '@cougargrades/types'
@@ -29,6 +30,7 @@ import { CoursePlus } from '../../lib/data/useGroupData'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+
 
 export interface InstructorProps {
   staticInstructorName: string;
@@ -101,7 +103,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
     <Container maxWidth="xl">
       <div className={styles.chartWrap}>
         {
-          status === 'success' ?
+          status === 'success' && data.dataChart.data.length > 1 ?
           <Chart
             width={'100%'}
             height={450}
@@ -113,23 +115,26 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <CustomSkeleton width={'100%'} height={150} />
+          <Box className={styles.loadingFlex} height={150}>
+            <CircularProgress />
+            <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+          </Box>
         }
       </div>
     </Container>
     <Container>
       <main>
-        <EnhancedTable<SectionPlus>
-          title="Past Sections"
-          columns={status === 'success' ? data.sectionDataGrid.columns : []}
-          rows={status === 'success' ? data.sectionDataGrid.rows : []}
-          defaultOrderBy="term"
-        />
         <EnhancedTable<CoursePlus>
           title="Courses"
           columns={status === 'success' ? data.courseDataGrid.columns : []}
           rows={status === 'success' ? data.courseDataGrid.rows : []}
           defaultOrderBy="id"
+        />
+        <EnhancedTable<SectionPlus>
+          title="Past Sections"
+          columns={status === 'success' ? data.sectionDataGrid.columns : []}
+          rows={status === 'success' ? data.sectionDataGrid.rows : []}
+          defaultOrderBy="term"
         />
       </main>
     </Container>

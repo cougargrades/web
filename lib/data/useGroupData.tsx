@@ -40,13 +40,16 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
   const stone = useRosetta()
   const [courseData, setCourseData] = useState<Course[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const previous = usePrevious(data.key)
 
-  // load courses data
+  // load courses + section data
   useEffect(() => {
     // prevent loading the same data again
     if(previous !== data.key) {
       setCourseData([]);
+      setSectionData([]);
+      setLoading(true);
       (async () => {
         if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
           setCourseData(
@@ -57,19 +60,10 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
             ) 
         }
-      })();
-    }
-  }, [data,previous])
-  
-  // load sections data
-  useEffect(() => {
-    // prevent loading the same data again
-    if(previous !== data.key) {
-      setSectionData([]);
-      (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections))
+          setSectionData(await Util.populate<Section>(data.sections, 10))
         }
+        setLoading(false)
       })();
     }
   }, [data,previous])
@@ -241,7 +235,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
         },
       },
       error: undefined,
-      status: courseData.length === 0 ? 'loading' : 'success',
+      status: loading ? 'loading' : 'success',
     }
   }
   catch(error) {

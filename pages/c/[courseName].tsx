@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Alert from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
@@ -117,7 +118,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>
         <Carousel>
-          { status === 'success' ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
+          { status === 'success' && data.relatedInstructors.length > 0 ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
           ) : Array.from(new Array(RELATED_INSTRUCTOR_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
@@ -127,7 +128,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     <Container maxWidth="xl">
       <div className={styles.chartWrap}>
         {
-          status === 'success' ?
+          status === 'success' && data.dataChart.data.length > 1 ?
           <Chart
             width={'100%'}
             height={450}
@@ -139,7 +140,10 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <CustomSkeleton width={'100%'} height={150} />
+          <Box className={styles.loadingFlex} height={150}>
+            <CircularProgress />
+            <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+          </Box>
         }
       </div>
     </Container>

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Chip from '@material-ui/core/Chip'
-import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
 import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
@@ -41,7 +41,8 @@ export function GroupContent({ data }: GroupContentProps) {
   }, [topEnrolled]);
 
   return (
-    <section className={styles.groupSection}> 
+    <section className={styles.groupSection}>
+      <p>{topEnrolled.length}</p>
       <Typography variant="h1">
         {data.title}
       </Typography>
@@ -54,13 +55,13 @@ export function GroupContent({ data }: GroupContentProps) {
       </>}
       <h3>Most Enrolled</h3>
       <Carousel>
-        { status === 'success' ? topEnrolled.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={prefersDarkMode ? 4 : 1} /></Tilty></Grid>
+        { topEnrolled.length > 0 ? topEnrolled.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={prefersDarkMode ? 4 : 1} /></Tilty></Grid>
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
       <h3>Data</h3>
       <div className={styles.chartWrap}>
         {
-          status === 'success' ?
+          (status !== 'error' && dataChart.data.length > 1) ?
           <Chart
             width={'100%'}
             height={450}
@@ -72,13 +73,16 @@ export function GroupContent({ data }: GroupContentProps) {
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <CustomSkeleton width={'100%'} height={150} />
+          <Box className={styles.loadingFlex} height={150}>
+            <CircularProgress />
+            <strong>Loading {data.sections.length.toLocaleString()} sections...</strong>
+          </Box>
         }
       </div>
       <EnhancedTable<CoursePlus>
         title="Courses"
-        columns={status === 'success' ? dataGrid.columns : []}
-        rows={status === 'success' ? dataGrid.rows : []}
+        columns={status !== 'error' ? dataGrid.columns : []}
+        rows={status !== 'error' ? dataGrid.rows : []}
         defaultOrderBy="id"
       />
     </section>
