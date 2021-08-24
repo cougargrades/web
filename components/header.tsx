@@ -29,6 +29,7 @@ export default function Header() {
           { status === 'success' && signInCheckResult.signedIn && signInCheckResult.hasRequiredClaims ? <>
             <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>
             <NavLink href="/upload"><Emoji label="hammer and wrench" symbol="🛠️" />Upload</NavLink>
+            <NavLink href="/utilities"><Emoji label="hammer and wrench" symbol="🛠️" />Utilities</NavLink>
           </> : <></>}
         </nav>
         <Search />
