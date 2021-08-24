@@ -132,7 +132,8 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
           >
             <CloseIcon />
           </IconButton>
-          All {courseName} instructors
+          All {courseName} instructors <br />
+          <Typography variant="body1" color="text.secondary">{data.length.toLocaleString()} total</Typography>
         </DialogTitle>
         <DialogContent className={styles.showMoreContent}>
           <List
