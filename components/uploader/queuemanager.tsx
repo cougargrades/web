@@ -101,6 +101,8 @@ export function QueueManager() {
         </p>
       </div>
       <LinearProgressWithLabel value={uploadQueueTripDone/uploadQueueTripMax*100} />
+
+      {/* boop */}
     </div>
   );
 }
