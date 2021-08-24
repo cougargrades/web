@@ -24,7 +24,7 @@ export default function Header() {
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
           <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
-          <NavLink href="https://blog.cougargrades.io"><Emoji label="newspaper" symbol="🗞️" />Updates</NavLink>
+          <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           { status === 'success' && signInCheckResult.signedIn && signInCheckResult.hasRequiredClaims ? <>
             <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>

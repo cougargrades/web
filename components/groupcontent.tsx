@@ -42,7 +42,6 @@ export function GroupContent({ data }: GroupContentProps) {
 
   return (
     <section className={styles.groupSection}>
-      <p>{topEnrolled.length}</p>
       <Typography variant="h1">
         {data.title}
       </Typography>
