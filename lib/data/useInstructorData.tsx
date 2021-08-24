@@ -145,15 +145,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               field: 'sectionNumber',
               headerName: 'Section #',
               type: 'number',
-              width: 90,
-            },
-            {
-              field: 'instructorNames',
-              headerName: 'Instructor',
-              type: 'string',
-              width: 95,
-              sortComparator: (a, b) => defaultComparator(`${a[0].lastName}, ${a[0].firstName}`, `${b[0].lastName}, ${b[0].firstName}`),
-              valueFormatter: value => `${value[0].lastName}, ${value[0].firstName}`,
+              width: 80,
             },
             ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
               field: e as any,
