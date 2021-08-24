@@ -122,23 +122,29 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Data</h3>
-        <div className={styles.chartWrap}>
-          {
-            status === 'success' ?
-            <Chart
-              width={'100%'}
-              height={350}
-              chartType="LineChart"
-              loader={<CustomSkeleton width={'100%'} height={350} />}
-              data={data.dataChart.data}
-              options={data.dataChart.options}
-              // prevent ugly red box when there's no data yet on first-mount
-              chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
-            />
-            :
-            <CustomSkeleton width={'100%'} height={150} />
-          }
-        </div>
+      </main>
+    </Container>
+    <Container maxWidth="xl">
+      <div className={styles.chartWrap}>
+        {
+          status === 'success' ?
+          <Chart
+            width={'100%'}
+            height={450}
+            chartType="LineChart"
+            loader={<CustomSkeleton width={'100%'} height={350} />}
+            data={data.dataChart.data}
+            options={data.dataChart.options}
+            // prevent ugly red box when there's no data yet on first-mount
+            chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
+          />
+          :
+          <CustomSkeleton width={'100%'} height={150} />
+        }
+      </div>
+    </Container>
+    <Container>
+      <main>
         <EnhancedTable<SectionPlus>
           title="Past Sections"
           columns={status === 'success' ? data.dataGrid.columns : []}

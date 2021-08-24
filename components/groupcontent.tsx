@@ -63,7 +63,7 @@ export function GroupContent({ data }: GroupContentProps) {
           status === 'success' ?
           <Chart
             width={'100%'}
-            height={350}
+            height={450}
             chartType="LineChart"
             loader={<CustomSkeleton width={'100%'} height={350} />}
             data={dataChart.data}

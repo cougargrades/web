@@ -208,7 +208,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             vAxis: {
               title: 'Average GPA',
               gridlines: {
-                  count: -1 //auto
+                count: -1 //auto
               },
               maxValue: 4.0,
               minValue: 0.0
@@ -216,8 +216,11 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             hAxis: {
               title: 'Semester',
               gridlines: {
-                  count: -1 //auto
-              }
+                count: -1 //auto
+              },
+              textStyle: {
+                fontSize: 12
+              },
             },
             chartArea: {
               //width: '100%',

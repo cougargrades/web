@@ -306,7 +306,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             vAxis: {
               title: 'Average GPA',
               gridlines: {
-                  count: -1 //auto
+                count: -1 //auto
               },
               maxValue: 4.0,
               minValue: 0.0
@@ -314,8 +314,13 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             hAxis: {
               title: 'Semester',
               gridlines: {
-                  count: -1 //auto
-              }
+                count: -1 //auto
+              },
+              //slantedText: false,
+              //showTextEvery: 1,
+              textStyle: {
+                fontSize: 12
+              },
             },
             chartArea: {
               //width: '100%',

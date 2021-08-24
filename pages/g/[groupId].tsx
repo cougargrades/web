@@ -20,7 +20,7 @@ import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 import { tocAtom } from '../../lib/recoil'
 
-import styles from '../../styles/Groups.module.scss'
+import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
 
 export interface GroupProps {
