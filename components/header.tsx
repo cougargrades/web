@@ -5,8 +5,9 @@ import Search from './search'
 import { Emoji } from './emoji'
 
 import styles from './header.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
-export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation>{children}</Button></Link>;
+export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
 
 export default function Header() {
   const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});
@@ -22,8 +23,8 @@ export default function Header() {
         </hgroup>
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
-          <NavLink href="/groups"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
-          <NavLink href="https://blog.cougargrades.io"><Emoji label="newspaper" symbol="🗞️" />Updates</NavLink>
+          <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
+          <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           { status === 'success' && signInCheckResult.signedIn && signInCheckResult.hasRequiredClaims ? <>
             <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>

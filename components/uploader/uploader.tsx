@@ -18,7 +18,6 @@ import Typography from '@material-ui/core/Typography'
 import { Dropzone } from './dropzone'
 import { LinearProgressWithLabel, SliderWithLabel } from './progress'
 import { readPatchfile } from './AsyncFileReader'
-import { FieldValue } from '../../lib/lazy'
 import { AsyncSemaphore } from './AsyncSemaphore'
 import { localeFunc } from './timeago'
 
@@ -86,6 +85,7 @@ export function Uploader() {
    * Firebase stuff
    */
   const firestore = useFirestore();
+  const FieldValue = useFirestore.FieldValue;
   useEffect(() => {
     /**
      * Subscribe to the upload_queue collection
@@ -118,11 +118,13 @@ export function Uploader() {
 
   // What happens when the Upload button is clicked
   const handleClick = useCallback(() => {
+    // run phase 0 before doing courses
+    setPatchfilesPhase(0);
     // This allows us to benchmark upload times
     setUploadStartedAt(new Date());
     setRecordProcessingStartedAt(new Date());
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
-    setAllowUploading(true);
+    // setAllowUploading(true); // this is done after phase 0 completes instead
     setIsButtonEnabled(false);
   }, [ recordsFile, patchFiles ]);
 
@@ -145,7 +147,7 @@ export function Uploader() {
     // Save reference to records
     acceptedFiles.forEach(file => {
       // identify primary CSV data source
-      if(file.name === 'records.csv') {
+      if(file.name.startsWith('records') && file.name.endsWith('.csv')) {
         setRecordsFile(_ => {
           // parse CSV file
           Papa.parse(file, {
@@ -296,7 +298,7 @@ export function Uploader() {
       setRecordProcessingFinishedAt(new Date());
 
       // update patchFile phase to begin processing patchfiles
-      setPatchfilesPhase(0);
+      setPatchfilesPhase(1)
       setPatchfileProcessingStartedAt(new Date());
     }
   }, [ uploadQueueProcessed, uploadQueueMax, uploadStartedAt ]);
@@ -347,10 +349,17 @@ export function Uploader() {
         // remove current phase to prevent double executions
         setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
 
-        // kick off to process next phase
+        // kick off to process next phase, but only 
         if(patchfilesPhase < patchfilesMaxPhase) {
-          console.log('attempting kick off of next phase: ', patchfilesPhase + 1);
-          setPatchfilesPhase(x => x + 1);
+          // but only if we've already done phase 0 (special phase)
+          if(patchfilesPhase >= 1) {
+            console.log('attempting kick off of next phase: ', patchfilesPhase + 1);
+            setPatchfilesPhase(x => x + 1);
+          }
+          else {
+            console.log(`phase kickoff skipped (finished phase ${patchfilesPhase})`)
+            setAllowUploading(true);
+          }
         }
         else {
           console.log('no more phases!');

@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Alert from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
@@ -23,19 +24,22 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { buildArgs } from '../../lib/environment'
+
 import styles from './course.module.scss'
+import interactivity from '../../styles/interactivity.module.scss'
 
 export interface CourseProps {
   staticCourseName: string;
   staticDescription: string;
   staticHTML: string;
+  doesNotExist?: boolean;
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
-  const isMissingProps = staticCourseName === undefined || false
+  const isMissingProps = staticCourseName === undefined
   const RELATED_INSTRUCTOR_LIMIT = 4;
 
   if(status === 'success') {
@@ -59,11 +63,12 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <main>
         <div className={styles.courseHero}>
           {
-            status !== 'error' ? <></> :
+            (status === 'error' || doesNotExist === true) ?
             <Alert severity="error">
               <AlertTitle>Error 404</AlertTitle>
-              {staticCourseName} could not be found.
+              Course {staticCourseName} could not be found.
             </Alert>
+            : <></>
           }
           <figure>
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
@@ -89,7 +94,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <h6>Sources:</h6>
         { status === 'success' ? data.publications.map(e => (
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
-            <Chip label={e.title} className={styles.chip} component="a" href={e.url} clickable />
+            <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
           </Tooltip>
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
         { status === 'success' ? <>
@@ -99,37 +104,51 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         <ul>
           <li>Earliest record: { status === 'success' ? data.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Latest record: { status === 'success' ? data.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of instructors: { status === 'success' ? data.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of sections: { status === 'success' ? data.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <Tooltip placement="bottom-start" title="Estimated average size of each section, # of total enrolled ÷ # of sections">
+            <li>Average number of students per section: { status === 'success' ? `~ ${data.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          </Tooltip>
         </ul>
         <h3>Related Groups</h3>
         { status === 'success' ? data.relatedGroups.map(e => (
           <Tooltip key={e.key} title={e.description}>
-            <Chip label={e.title} className={styles.chip} onClick={() => router.push(e.href)} />
+            <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
           </Tooltip>
         )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
         <h3>Related Instructors</h3>
         <Carousel>
-          { status === 'success' ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
+          { status === 'success' && data.relatedInstructors.length > 0 ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
           ) : Array.from(new Array(RELATED_INSTRUCTOR_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
           { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Data</h3>
-        <div className={styles.chartWrap}>
-          {
-            status === 'success' ?
-            <Chart
-              width={'100%'}
-              height={350}
-              chartType="LineChart"
-              loader={<CustomSkeleton width={'100%'} height={350} />}
-              data={data.dataChart.data}
-              options={data.dataChart.options}
-              // prevent ugly red box when there's no data yet on first-mount
-              chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
-            />
-            :
-            <CustomSkeleton width={'100%'} height={150} />
-          }
-        </div>
+      </main>
+    </Container>
+    <Container maxWidth="xl">
+      <div className={styles.chartWrap}>
+        {
+          status === 'success' && data.dataChart.data.length > 1 ?
+          <Chart
+            width={'100%'}
+            height={450}
+            chartType="LineChart"
+            loader={<CustomSkeleton width={'100%'} height={350} />}
+            data={data.dataChart.data}
+            options={data.dataChart.options}
+            // prevent ugly red box when there's no data yet on first-mount
+            chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
+          />
+          :
+          <Box className={styles.loadingFlex} height={150}>
+            <CircularProgress />
+            <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+          </Box>
+        }
+      </div>
+    </Container>
+    <Container>
+      <main>
         <EnhancedTable<SectionPlus>
           title="Past Sections"
           columns={status === 'success' ? data.dataGrid.columns : []}
@@ -179,6 +198,7 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
       staticCourseName: onlyOne(courseName),
       staticDescription: description,
       staticHTML: content ?? '',
+      doesNotExist: courseData === undefined,
     }
   };
 

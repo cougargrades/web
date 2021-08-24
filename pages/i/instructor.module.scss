@@ -26,7 +26,7 @@
   line-height: 1.2;
 }
 
-.courseHero {
+.instructorHero {
   //display: flex;
   //justify-content: center;
   figure {
@@ -38,23 +38,34 @@
     }
     
     h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       margin: 0;
       padding: 0;
 
       @media (min-width: 768px) {
-        font-size: 4rem;
+        font-size: 3.5rem;
       }
     }
-    h3 {
-      margin-bottom: 0;
-      padding-bottom: 0;
+    h4 {
+      font-size: 1.9rem;
+      color: rgba(0, 0, 0, 0.5);
+      margin-top: 0;
+      padding-top: 0;
+      
+      @media (prefers-color-scheme: dark) {
+        color: rgba(255, 255, 255, 0.6);
+      }
     }
 
     div {
       font-size: 1.25rem;
     }
   }
+}
+
+.enrollmentBar {
+  padding-top: 20px;
+  padding-bottom: 0px;
 }
 
 .chip {
@@ -64,30 +75,6 @@
   &:hover {
     color: unset;
   }
-}
-
-.enrollmentBar {
-  padding-top: 20px;
-  padding-bottom: 0px;
-}
-
-.enrollmentBarProgress {
-  height: 12px;
-}
-
-.relatedInstructors {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.dataTableWrap {
-  overflow: hidden;
-  // width: 600px;
-  // @media (min-width: 576px) {
-  //   width: 100%;
-  // }
 }
 
 .chartWrap {

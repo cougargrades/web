@@ -10,6 +10,7 @@ import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { getChartData } from './getChartData'
 import { EnrollmentInfoResult } from '../../components/enrollment'
+import { getBadges } from './getBadges'
 
 export type SectionPlus = Section & { id: string };
 
@@ -24,12 +25,15 @@ export interface CourseResult {
   dataGrid: {
     columns: Column<SectionPlus>[];
     rows: SectionPlus[];
-  },
+  };
   dataChart: {
     data: any[],
     options: { [key: string ]: any }
-  },
+  };
   enrollment: EnrollmentInfoResult[];
+  instructorCount: number;
+  sectionCount: number;
+  classSize: number;
 }
 
 export interface CourseGroupResult {
@@ -68,11 +72,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     title: data.fullName,
     subtitle: generateSubjectString(data),
     caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
-    badges: [
-      ...(data.GPA.average !== 0 ? [{ key: 'gpa', text: `${data.GPA.average.toFixed(2)} GPA`, color: grade2Color.get(getGradeForGPA(data.GPA.average)) }] : []),
-      ...(data.GPA.standardDeviation !== 0 ? [{ key: 'sd', text: `${data.GPA.standardDeviation.toFixed(3)} SD`, color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)) }] : []),
-      ...(data.enrollment !== undefined ? [{ key: 'droprate', text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`, color: grade2Color.get('W') }] : []),
-    ],
+    badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()
   };
@@ -142,7 +142,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections))
+          setSectionData(await Util.populate<Section>(data.sections, 10))
         }
       })();
     }
@@ -152,27 +152,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     return {
       data: {
         badges: [
-          ...(didLoadCorrectly && data.GPA.average !== 0 ? [
-            {
-              key: 'gpa',
-              text: `${data.GPA.average.toFixed(2)} GPA`,
-              color: grade2Color.get(getGradeForGPA(data.GPA.average)),
-              caption: 'Grade Point Average',
-            }] : []),
-          ...(didLoadCorrectly && data.GPA.standardDeviation !== 0 ? [
-            {
-              key: 'sd',
-              text: `${data.GPA.standardDeviation.toFixed(3)} SD`,
-              color: grade2Color.get(getGradeForStdDev(data.GPA.standardDeviation)),
-              caption: 'Standard Deviation',
-            }] : []),
-          ...(didLoadCorrectly && data.enrollment !== undefined ? [
-            {
-              key: 'droprate',
-              text: `${(data.enrollment.totalW/data.enrollment.totalEnrolled*100).toFixed(2)}% W`,
-              color: grade2Color.get('W'),
-              caption: 'Drop Rate'
-            }] : []),
+          ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
         ],
         publications: [
           ...(didLoadCorrectly && data.publications !== undefined && Array.isArray(data.publications) ? data.publications.map(e => (
@@ -247,7 +227,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             vAxis: {
               title: 'Average GPA',
               gridlines: {
-                  count: -1 //auto
+                count: -1 //auto
               },
               maxValue: 4.0,
               minValue: 0.0
@@ -255,8 +235,11 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             hAxis: {
               title: 'Semester',
               gridlines: {
-                  count: -1 //auto
-              }
+                count: -1 //auto
+              },
+              textStyle: {
+                fontSize: 12
+              },
             },
             chartArea: {
               //width: '100%',
@@ -276,16 +259,22 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
           }
         },
         enrollment: [
-          ...(didLoadCorrectly ? ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
-            .map(k => ({
-              key: k,
-              title: k.substring(5), // 'totalA' => 'A'
-              color: grade2Color.get(k.substring(5) as Grade),
-              value: data.enrollment[k],
-              percentage: data.enrollment[k] / data.enrollment.totalEnrolled * 100,
-            })
+          ...(didLoadCorrectly ? 
+              data.enrollment.totalEnrolled === 0 ? 
+              [{ key: 'nodata', title: 'No data', color: grade2Color.get('I'), value: -1, percentage: 100 }] : 
+              ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
+              .map(k => ({
+                key: k,
+                title: k.substring(5), // 'totalA' => 'A'
+                color: grade2Color.get(k.substring(5) as Grade),
+                value: data.enrollment[k],
+                percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
+              })
           ) : []),
         ],
+        instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
+        sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
+        classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
       },
       error,
       status: sharedStatus,

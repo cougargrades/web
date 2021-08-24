@@ -164,4 +164,12 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
   .google-visualization-tooltip path {
     fill: $dm-fore;
   }
+  .goog-tooltip div {
+    background-color: $dm-fore!important;
+  }
+}
+
+a.nostyle {
+  color: unset;
+  text-decoration: none;
 }

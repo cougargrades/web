@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import IosShareIcon from '@material-ui/icons/IosShare'
+import Tooltip from '@material-ui/core/Tooltip'
 import { copyText } from '../vendor/clipboard'
 import { useIsMobile } from '../lib/hook'
 import { Emoji } from './emoji'
 import { BlogNotifications } from './blog'
+
 import styles from './panko.module.scss'
+import interactivity from '../styles/interactivity.module.scss'
 
 const strip = (path: string) => path.split(/[?|#]/).slice(0,1).join('')
 
@@ -26,24 +29,57 @@ export default function Panko() {
 export function PankoRow() {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile()
+  const [tooltipText, setTooltipText] = useState('Copy Link')
+  const [toasterMessage, setToasterMessage] = useState('✓ Copied link')
 
   const handleShare = async () => {
     const isMac = navigator.userAgent.toLowerCase().indexOf('macintosh') >= 0;
-    if(navigator.share && ! isMac) {
+    const shouldShare = ! isMac
+    if(navigator.share && shouldShare) {
       // Web Share API is supported
       navigator.share({
         title: document.title,
         url: window.location.href
       })
-      .then(() => {})
+      .then(() => {
+        setToasterMessage('✓ Link shared')
+        setOpen(true)
+      })
       .catch(() => {})
     }
     else {
       // Fallback
       await copyText(window.location.href);
+      setToasterMessage('✓ Copied link')
       setOpen(true);
     }
   }
+
+  useEffect(() => {
+    if(navigator.share) {
+      const inUserAgent = (x: string) => navigator.userAgent.toLowerCase().indexOf(x.toLocaleLowerCase()) >= 0
+      
+      const isMac = inUserAgent('Macintosh');
+      // official name: https://support.apple.com/guide/mac-help/use-the-share-menu-on-mac-mh40614/mac
+      //if(isMac) setTooltipText('Open macOS Share Menu')
+      
+      const isWin10 = inUserAgent('Windows NT');
+      // official name: https://blogs.windows.com/windowsdeveloper/2017/04/06/new-share-experience-windows-10-creators-update/
+      if(isWin10) setTooltipText('Open Windows Share Dialog')
+      
+      const isAndroid = inUserAgent('Android');
+      // official name: https://developer.android.com/training/sharing/send
+      if(isAndroid) setTooltipText('Open Android Sharesheet')
+      
+      const isiOS = inUserAgent('iPhone') || inUserAgent('iPad');
+      // official name: https://support.apple.com/guide/shortcuts/share-sheet-input-types-apd7644168e1/ios
+      if(isiOS) setTooltipText('Open iOS Share Sheet');
+    }
+    else {
+      setTooltipText('Copy Link')
+    }
+    const isMac = navigator.userAgent.toLowerCase().indexOf('macintosh') >= 0;
+  },[])
 
   return (
     <>
@@ -53,14 +89,16 @@ export function PankoRow() {
     <div className={`new-container ${styles.pankoRow}`}>
       <Panko />
       <div>
-        <IconButton color="primary" aria-label="Share" onClick={handleShare}>
-          <IosShareIcon />
-        </IconButton>
+        <Tooltip title={tooltipText}>
+          <IconButton color="primary" aria-label="Share" onClick={handleShare} className={interactivity.hoverActive}>
+            <IosShareIcon />
+          </IconButton>
+        </Tooltip>
         <Snackbar
           open={open}
-          autoHideDuration={10*6000}
+          autoHideDuration={6000}
           onClose={() => setOpen(false)}
-          message="✓ Copied link"
+          message={toasterMessage}
           anchorOrigin={{ vertical: isMobile ? 'bottom' : 'top', horizontal: 'right' }}
           action={<>
           <IconButton

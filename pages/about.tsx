@@ -15,6 +15,7 @@ export default function About() {
       </Head>
       <div className="new-container">
         <h2>About</h2>
+        <p>Started in Summer 2019, CougarGrades is an open-source web app for finding grade distribution information about courses and instructors at the University of Houston.</p>
         <h3>Resources</h3>
         <p className={styles.links}>
           <ExternalLink href="https://github.com/cougargrades/web">Source Code</ExternalLink>

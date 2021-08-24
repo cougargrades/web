@@ -17,7 +17,7 @@ export function Badge(props: BadgeProps) {
   return (
     <span
       {...props}
-      className={`${styles.badge} ${props.extraClassNames}`}
+      className={`${styles.badge} ${props.className}`}
       style={props.style}
       title={props.title}
     >

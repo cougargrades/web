@@ -5,22 +5,8 @@ import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 
 export default function Footer(props: { hideDisclaimer?: boolean }) {
-  // const history = useHistory();
-  // const [easterEgg, setEasterEgg] = useState<number>(0);
 
-  // const handleClick = (e: React.MouseEvent<HTMLHeadingElement, MouseEvent>) => {
-  //   e.preventDefault();
-  //   setEasterEgg(x => x + 1);
-  // }
-
-  // useEffect(() => {
-  //   if(easterEgg >= 3) {
-  //     setEasterEgg(0);
-  //     history.push('/admin');
-  //   }
-  // }, [easterEgg]);
-
-  const { commitHash, version, buildDate } = buildArgs; // hopefully works
+  const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
       <div className="new-container">
@@ -45,21 +31,15 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                   buildDate,
                 ).toLocaleDateString()}
               </span>
+              { vercelEnv !== 'production' ? <>
+              <br />
+              Environment: {vercelEnv}
+              </> : <></>}
               <br />
               <a href="https://github.com/cougargrades/web/wiki/Feedback">
                 Got feedback?
               </a>
             </p>
-            {/* {props.hideDisclaimer ? (
-              <></>
-            ) : (
-              <p>
-                <em>
-                  Not affiliated with the University of Houston. Data is sourced
-                  directly from the University of Houston.
-                </em>
-              </p>
-            )} */}
           </div>
           <div className="col-sm">
             <div className={styles.sponsor}>
