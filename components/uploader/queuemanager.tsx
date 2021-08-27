@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useFirestore } from 'reactfire'
-import { FieldValue, collection, get } from 'firebase/firestore'
+import { FieldValue, collection, getDocs, deleteDoc, addDoc } from 'firebase/firestore'
 import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { LinearProgressWithLabel } from './progress'
@@ -28,17 +28,17 @@ export function QueueManager() {
     console.log('clicked')
     setUploadQueueRecycleInProgress(true)
     // get upload_queue docs
-    const upload_queue_snap = await collection(firestore, 'upload_queue').get();
+    const upload_queue_snap = await getDocs(collection(firestore, 'upload_queue'));
     setUploadQueueRecycleMax(upload_queue_snap.size)
     // save a copy of the data
     const data = upload_queue_snap.docs.map(e => e.data())
     // delete items in upload_queue
     for(const doc of upload_queue_snap.docs) {
-      await doc.ref.delete()
+      await deleteDoc(doc.ref)
     }
     // add extracted data to backlog
     for(const item of data) {
-      await firestore.collection('upload_queue_backlog').add(item)
+      await addDoc(collection(firestore, 'upload_queue_backlog'), item)
       setUploadQueueRecycleDone(x => x + 1)
     }
     setUploadQueueRecycleInProgress(false)
@@ -48,17 +48,17 @@ export function QueueManager() {
     console.log('clicked')
     setUploadQueueTripInProgress(true)
     // get upload_queue docs
-    const upload_queue_snap = await firestore.collection('upload_queue').get();
+    const upload_queue_snap = await getDocs(collection(firestore, 'upload_queue_backlog'));
     setUploadQueueTripMax(upload_queue_snap.size)
     // save a copy of the data
     const data = upload_queue_snap.docs.map(e => e.data())
     // delete items in upload_queue
     for(const doc of upload_queue_snap.docs) {
-      await doc.ref.delete()
+      await deleteDoc(doc.ref)
     }
     // add extracted data to backlog
     for(const item of data) {
-      await firestore.collection('upload_queue_backlog').add(item)
+      await addDoc(collection(firestore, 'upload_queue'), item)
       setUploadQueueTripDone(x => x + 1)
     }
     setUploadQueueTripInProgress(false)
