@@ -1,6 +1,9 @@
 import { User } from '@cougargrades/types'
 import { useEffect, useState } from 'react';
 import { useFirestore, useFirestoreDoc, useSigninCheck } from 'reactfire'
+import type { User as fbUser } from 'firebase/auth'
+import { doc } from 'firebase/firestore'
+import type { DocumentReference } from 'firebase/firestore'
 import { useRecoilState } from 'recoil'
 
 import { jwtAtom } from '../../lib/recoil'
@@ -33,7 +36,7 @@ export function RealtimeClaimUpdater() {
 }
 
 interface UserDocumentSubscriberProps {
-  user: firebase.default.User;
+  user: fbUser;
   delay: number;
 }
 
@@ -46,7 +49,7 @@ function UserDocumentSubscriber({ user, delay }: UserDocumentSubscriberProps) {
   const db = useFirestore();
   const [forceRefresh, setForceRefresh] = useState(false);
   const [jwt, setJwt] = useRecoilState(jwtAtom);
-  const { status: docStatus, data: doc } = useFirestoreDoc<User>(db.doc(`/users/${user.uid}`))
+  const { status: docStatus, data: snap } = useFirestoreDoc<User>(doc(db, `/users/${user.uid}`) as DocumentReference<User>)
 
   // initialize jwt
   useEffect(() => {
@@ -75,8 +78,8 @@ function UserDocumentSubscriber({ user, delay }: UserDocumentSubscriberProps) {
     // don't try another refresh until the effect hook above catches up
     if(! forceRefresh) {
       // verify that both are loaded before comparing
-      if(docStatus === 'success' && doc.exists && jwt !== null) {
-        const docData = doc.data()
+      if(docStatus === 'success' && snap.exists && jwt !== null) {
+        const docData = snap.data()
         //console.log('JWT (doc): ', docData.custom_claims)
         //console.log('JWT (recoil): ', onlyClaims(jwt.claims, ['admin','hello']));
         // compare if token claims are different from the doc
@@ -90,7 +93,7 @@ function UserDocumentSubscriber({ user, delay }: UserDocumentSubscriberProps) {
         //console.log('comparator done')
       }
     }
-  }, [forceRefresh, docStatus, doc, jwt])
+  }, [forceRefresh, docStatus, snap, jwt])
 
   return <></>
 }

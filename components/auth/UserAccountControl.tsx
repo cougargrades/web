@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useAuth, useUser, useIdTokenResult, useSigninCheck, useFirestoreDoc, useFirestore } from 'reactfire'
+import React, { useState } from 'react'
+import { useAuth, useSigninCheck } from 'reactfire'
+import { GoogleAuthProvider, reauthenticateWithPopup } from 'firebase/auth'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 import { CustomClaimNames as isCustomClaim } from '@cougargrades/types/dist/is'
 import { Collaborator } from '../collaborator'
 
 import styles from './UserAccountControl.module.scss'
 import { useJWT } from './RealtimeClaimUpdater'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
-
 
 export function UserAccountControl() {
   // get the current user, identified by the SDK-managed JWT
@@ -17,8 +17,7 @@ export function UserAccountControl() {
 
   // for signing out
   const auth = useAuth();
-  const fbAuth = useAuth;
-  const provider = new fbAuth.GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
   provider.addScope('profile');
   provider.addScope('email');
 
@@ -46,9 +45,9 @@ export function UserAccountControl() {
   const deleteAccount = async () => {
     if(auth.currentUser) {
       // this is a sensitive operation so we want to revalidate their identity
-      const cred = await auth.currentUser.reauthenticateWithPopup(provider);
+      const cred = await reauthenticateWithPopup(auth.currentUser, provider);
       // if reauthentication was successful
-      if(cred.credential) {
+      if(cred && cred.user) {
         await auth.currentUser.delete();
       }
     }

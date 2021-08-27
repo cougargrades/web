@@ -11,7 +11,7 @@ import { searchInputAtom } from '../lib/recoil'
 import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
-import { useAnalyticsRef } from '../lib/hook'
+//import { useAnalyticsRef } from '../lib/hook'
 import styles from './search.module.scss'
 
 
@@ -21,7 +21,7 @@ type SearchListItemProps = React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLI
 
 export default function SearchBar() {
   // For analytics
-  const analyticsRef = useAnalyticsRef()
+  //const analyticsRef = useAnalyticsRef()
 
   // For letting other components focus here
   const elementRef = useRef<HTMLInputElement>(null);
@@ -50,13 +50,13 @@ export default function SearchBar() {
   const loading = status !== 'success'
 
   // For analytics
-  useEffect(() => {
-    if(analyticsRef.current !== null && inputValue.length > 0) {
-      analyticsRef.current.logEvent('search', { 
-        search_term: inputValue
-      })
-    }
-  }, [analyticsRef, inputValue])
+  // useEffect(() => {
+  //   if(analyticsRef.current !== null && inputValue.length > 0) {
+  //     analyticsRef.current.logEvent('search', { 
+  //       search_term: inputValue
+  //     })
+  //   }
+  // }, [analyticsRef, inputValue])
 
   // For responding to searches and redirecting
   const router = useRouter();
