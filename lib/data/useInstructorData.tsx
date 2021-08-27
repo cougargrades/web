@@ -37,6 +37,7 @@ export interface InstructorResult {
   courseCount: number;
   sectionCount: number;
   classSize: number;
+  sectionLoadingProgress: number;
 }
 
 /**
@@ -59,6 +60,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
   const [courseData, setCourseData] = useState<Course[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
+  const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
   const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
   // Remove previously stored data whenever we reroute
@@ -66,6 +68,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
     setCourseData([]);
     setSectionData([]);
     setGroupData([]);
+    setSectionLoadingProgress(0);
   }, [instructorName])
 
   // Resolve the course document references
@@ -86,7 +89,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
     if(didLoadCorrectly) {
       (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10))
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
         }
       })();
     }
@@ -334,6 +337,8 @@ export function useInstructorData(instructorName: string): Observable<Instructor
         courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
         sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
         classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+        //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
+        sectionLoadingProgress,
       },
       error,
       status: sharedStatus,

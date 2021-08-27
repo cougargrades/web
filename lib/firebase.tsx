@@ -30,7 +30,7 @@ export function FirestorePreloader(props: { children: React.ReactNode }) {
           // set cache size to 300 megabytes
           firestore().settings({ cacheSizeBytes: 300e6 })
           
-          // determine if cache is too old to keep around
+          // determine if cache is too old to keep around (7 day age limit)
           if(isOverNDaysOld(new Date(localstorage.get('cacheLastCleared')), 7)) {
             console.log('cache could potentially be out of date, clearing')
             await firestore().clearPersistence()

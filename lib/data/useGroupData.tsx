@@ -34,6 +34,7 @@ export interface GroupDataResult {
     data: any[],
     options: { [key: string ]: any }
   };
+  sectionLoadingProgress: number;
 }
 
 export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
@@ -41,6 +42,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
   const [courseData, setCourseData] = useState<Course[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
   const previous = usePrevious(data.key)
 
   // load courses + section data
@@ -50,6 +52,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
       setCourseData([]);
       setSectionData([]);
       setLoading(true);
+      setSectionLoadingProgress(0);
       (async () => {
         if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
           setCourseData(
@@ -61,7 +64,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             ) 
         }
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10))
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
         }
         setLoading(false)
       })();
@@ -233,6 +236,8 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             interpolateNulls: true //lines between point gaps
           }
         },
+        //sectionLoadingProgress: (sectionLoadingProgress/data.sections.length*100),
+        sectionLoadingProgress,
       },
       error: undefined,
       status: loading ? 'loading' : 'success',

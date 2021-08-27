@@ -9,7 +9,6 @@ import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Alert from '@material-ui/core/Alert'
 import AlertTitle from '@material-ui/core/AlertTitle'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
@@ -23,6 +22,7 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
+import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { buildArgs } from '../../lib/environment'
 
 import styles from './course.module.scss'
@@ -141,8 +141,10 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           />
           :
           <Box className={styles.loadingFlex} height={150}>
-            <CircularProgress />
             <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+            <div style={{ width: '80%' }}>
+              <LinearProgressWithLabel value={Math.round(data.sectionLoadingProgress)} />
+            </div>
           </Box>
         }
       </div>
