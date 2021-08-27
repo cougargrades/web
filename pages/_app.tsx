@@ -2,7 +2,8 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { ThemeProvider } from '@material-ui/core/styles'
 //import { FirebaseAppProvider } from 'reactfire'
-const FirebaseAppProvider = dynamic(() => import('../lib/lazy').then((mod) => mod.FirebaseAppProviderWrapper))
+const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then((mod) => mod.FirebaseAppProviderWrapper))
+//import { FirebaseAppProviderWrapper as FirebaseAppProvider } from '../lib/firebase'
 //import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
 const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then((mod) => mod.RealtimeClaimUpdater))
 //import { AppCheck } from '../components/appcheck'
