@@ -216,7 +216,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: '# Enrolled',
               description: 'Total number of students who have been enrolled in this course',
               type: 'number',
-              width: 90,
+              width: 95,
               padding: 8,
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
