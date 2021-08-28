@@ -131,7 +131,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               field: 'sectionNumber',
               headerName: 'Section #',
               type: 'number',
-              width: 80,
+              width: 90,
             },
             ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
               field: e as any,
