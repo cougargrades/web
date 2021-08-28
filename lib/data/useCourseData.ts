@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
+import { usePrevious } from 'react-use'
 import { Course, Enrollment, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
 import { Observable } from './Observable'
@@ -106,51 +107,76 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
+  const previous = usePrevious(data?._id)
   const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
-  // Remove previously stored instructors whenever we reroute
-  useEffect(() => {
-    setInstructorData([]);
-    setGroupData([]);
-    setSectionData([]);
-    setSectionLoadingProgress(0);
-  }, [courseName])
-
-  // Resolve the group data document references
+  // load courses + section + group data
   useEffect(() => {
     const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
+    // prevent loading the same data again
+    if(didLoadCorrectly && previous !== data._id) {
+      setInstructorData([]);
+      setGroupData([]);
+      setSectionData([]);
+      setSectionLoadingProgress(0);
       (async () => {
         if(Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups)) {
           setGroupData(await Util.populate<Group>(data.groups))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the instructor document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors)) {
           setInstructorData(await Util.populate<Instructor>(data.instructors))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the section document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100)))
+          console.count('course populate section')
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100), false, true))
         }
       })();
     }
-  }, [data, status])
+  }, [data,previous])
+
+  // // Remove previously stored instructors whenever we reroute
+  // useEffect(() => {
+  //   setInstructorData([]);
+  //   setGroupData([]);
+  //   setSectionData([]);
+  //   setSectionLoadingProgress(0);
+  // }, [courseName])
+
+  // // Resolve the group data document references
+  // useEffect(() => {
+  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
+  //   if(didLoadCorrectly) {
+  //     (async () => {
+  //       if(Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups)) {
+  //         setGroupData(await Util.populate<Group>(data.groups))
+  //       }
+  //     })();
+  //   }
+  // }, [data, status])
+
+  // // Resolve the instructor document references
+  // useEffect(() => {
+  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
+  //   if(didLoadCorrectly) {
+  //     (async () => {
+  //       if(Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors)) {
+  //         setInstructorData(await Util.populate<Instructor>(data.instructors))
+  //       }
+  //     })();
+  //   }
+  // }, [data, status])
+
+  // // Resolve the section document references
+  // useEffect(() => {
+  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
+  //   if(didLoadCorrectly) {
+  //     (async () => {
+  //       if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
+  //         setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100)))
+  //       }
+  //     })();
+  //   }
+  // }, [data, status])
 
   try {
     return {

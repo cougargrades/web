@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
+import { usePrevious } from 'react-use'
 import { Course, Group, Instructor, Section, Util } from '@cougargrades/types'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
@@ -14,6 +15,7 @@ import { CourseGroupResult, CourseInstructorResult, group2Result, SectionPlus } 
 import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
+import { useFakeFirestore } from '../firebase'
 
 export interface InstructorResult {
   badges: SearchResultBadge[];
@@ -47,8 +49,8 @@ export interface InstructorResult {
  */
 export function useInstructorData(instructorName: string): Observable<InstructorResult> {
   const stone = useRosetta()
-  const db = useFirestore()
-  const { data, error, status } = useFirestoreDocData<Instructor>(db.doc(`/instructors/${instructorName}`))
+  const db = useFakeFirestore()
+  const { data, error, status } = useFirestoreDocData<Instructor>(db.doc(`/instructors/${instructorName}`) as any)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
   const isActualError = typeof instructorName === 'string' && instructorName !== '' && status !== 'loading' && isBadObject
@@ -61,51 +63,32 @@ export function useInstructorData(instructorName: string): Observable<Instructor
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
+  const previous = usePrevious(data?._id)
   const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
-  // Remove previously stored data whenever we reroute
-  useEffect(() => {
-    setCourseData([]);
-    setSectionData([]);
-    setGroupData([]);
-    setSectionLoadingProgress(0);
-  }, [instructorName])
-
-  // Resolve the course document references
+  // load courses + section + group data
   useEffect(() => {
     const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
+    // prevent loading the same data again
+    if(didLoadCorrectly && previous !== data._id) {
+      setCourseData([]);
+      setSectionData([]);
+      setGroupData([]);
+      setSectionLoadingProgress(0);
       (async () => {
         if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
           setCourseData(await Util.populate<Course>(data.courses))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the section document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
+          console.count('instructor populate section')
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100), false, true))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the group document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs)) {
           setGroupData(await Util.populate<Group>(groupRefs))
         }
       })();
     }
-  }, [data, status])
+  },[data,previous])
 
   try {
     return {
