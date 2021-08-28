@@ -14,3 +14,10 @@ export const seasonCode = (termCode: number): string => {
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
+
+export function isOverNDaysOld(d: Date, n: number): boolean {
+  let n_days_ago = new Date()
+  n_days_ago.setDate(n_days_ago.getDate() - n);
+
+  return d.valueOf() < n_days_ago.valueOf();
+}

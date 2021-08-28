@@ -2,7 +2,7 @@ import { User } from '@cougargrades/types'
 import { useEffect, useState } from 'react';
 import { useFirestore, useFirestoreDoc, useSigninCheck } from 'reactfire'
 import { useRecoilState } from 'recoil'
-
+import { FirestoreGuard } from '../../lib/firebase';
 import { jwtAtom } from '../../lib/recoil'
 
 export function useJWT() {
@@ -29,7 +29,7 @@ export function RealtimeClaimUpdater() {
     }
   }, [shouldSubscribe, jwt])
 
-  return shouldSubscribe ? <UserDocumentSubscriber delay={5000} user={signInCheckResult.user} /> :  <></>;
+  return shouldSubscribe ? <FirestoreGuard><UserDocumentSubscriber delay={5000} user={signInCheckResult.user} /></FirestoreGuard> :  <></>;
 }
 
 interface UserDocumentSubscriberProps {
