@@ -136,6 +136,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           title="Past Sections"
           columns={status === 'success' ? data.sectionDataGrid.columns : []}
           rows={status === 'success' ? data.sectionDataGrid.rows : []}
+          defaultOrder="desc"
           defaultOrderBy="term"
         />
       </main>

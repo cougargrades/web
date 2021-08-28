@@ -158,6 +158,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           title="Past Sections"
           columns={status === 'success' ? data.dataGrid.columns : []}
           rows={status === 'success' ? data.dataGrid.rows : []}
+          defaultOrder="desc"
           defaultOrderBy="term"
         />
         {/* Intentionally empty */}
