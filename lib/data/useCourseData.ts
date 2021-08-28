@@ -4,13 +4,14 @@ import { Course, Enrollment, Group, Instructor, PublicationInfo, Section, Util }
 import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
-import { getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'
+import { Grade, grade2Color } from '../../components/badge'
 import { Column, defaultComparator } from '../../components/datatable'
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { getChartData } from './getChartData'
 import { EnrollmentInfoResult } from '../../components/enrollment'
 import { getBadges } from './getBadges'
+import { useFakeFirestore } from '../firebase'
 
 export type SectionPlus = Section & { id: string };
 
@@ -96,8 +97,8 @@ function generateSubjectString(data: Instructor | undefined): string {
  */
 export function useCourseData(courseName: string): Observable<CourseResult> {
   const stone = useRosetta()
-  const db = useFirestore()
-  const { data, error, status } = useFirestoreDocData<Course>(db.doc(`/catalog/${courseName}`))
+  const db = useFakeFirestore()
+  const { data, error, status } = useFirestoreDocData<Course>(db.doc(`/catalog/${courseName}`) as any)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
   const isActualError = typeof courseName === 'string' && courseName !== '' && status !== 'loading' && isBadObject

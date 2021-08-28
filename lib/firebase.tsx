@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useRecoilState } from 'recoil'
 import { FirebaseAppProvider, preloadFirestore, useFirebaseApp } from 'reactfire'
+import { Firestore as FirestoreStub } from '@cougargrades/types/dist/FirestoreStubs'
 import { firebaseConfig } from './environment'
 import * as localstorage from './localstorage'
+import { isOverNDaysOld } from './util'
+import { isFirestoreLoadedAtom } from './recoil'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -9,19 +13,24 @@ import 'firebase/performance'
 import 'firebase/analytics'
 //import 'firebase/firestore'
 import 'firebase/app-check'
-import { isOverNDaysOld } from './util'
 
-export const FirebaseAppProviderWrapper = (props: { children: React.ReactNode }) => (
+export interface WrapperProps {
+  children: React.ReactNode;
+}
+
+export interface WrapperWithFallback extends WrapperProps {
+  fallback?: React.ReactNode;
+}
+
+export const FirebaseAppProviderWrapper = (props: WrapperProps) => (
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <FirestorePreloader>
-      {props.children}
-    </FirestorePreloader>
+    {props.children}
   </FirebaseAppProvider>
 );
 
-export function FirestorePreloader(props: { children: React.ReactNode }) {
+export function FirestorePreloader() {
   const firebaseApp = useFirebaseApp()
-  const [database, setDatabase] = useState<firebase.firestore.Firestore | undefined>(undefined)
+  const [, setIsFirestoreLoaded] = useRecoilState<boolean>(isFirestoreLoadedAtom)
   useEffect(() => {
     preloadFirestore({
       firebaseApp,
@@ -32,12 +41,12 @@ export function FirestorePreloader(props: { children: React.ReactNode }) {
           
           // determine if cache is too old to keep around (7 day age limit)
           if(isOverNDaysOld(new Date(localstorage.get('cacheLastCleared')), 7)) {
-            console.log('cache could potentially be out of date, clearing')
+            console.debug('cache could potentially be out of date, clearing')
             await firestore().clearPersistence()
             localstorage.set('cacheLastCleared', new Date().toISOString())
           }
           else {
-            console.log('cache is still fresh')
+            console.debug('cache is still fresh')
           }
 
           // enable cache
@@ -47,16 +56,29 @@ export function FirestorePreloader(props: { children: React.ReactNode }) {
         catch(err) {
           console.warn('[firebase.tsx] There was an issue calling enablePersistence. This is unfortunate, but safe to ignore. More:',err)
         }
-        setDatabase(firestore())
+        setIsFirestoreLoaded(true)
       }
     })
   }, [])
 
-  if(!database) {
-    return <p>Loading...</p>
-  }
+  return null;
+}
 
-  return (
-    <>{props.children}</>
-  )
+export function FirestoreGuard(props: WrapperWithFallback) {
+  const [isFirestoreLoaded, _] = useRecoilState<boolean>(isFirestoreLoadedAtom)
+
+  return isFirestoreLoaded ? <>{props.children}</> : props.fallback ? <>{props.fallback}</> : null
+}
+
+export const firestoreStub: FirestoreStub = {
+  // somehow this works
+  doc: (x: any) => ({ firestore: { app: { name: '[DEFAULT]' }}, onSnapshot: (x: any) => (() => { console.log('unsubscribe!');return undefined;})}),
+  collection: (x: any) => undefined,
+  runTransaction: (x: any) => undefined,
+} as any
+
+export function useFakeFirestore() {
+  const app = useFirebaseApp()
+  const [isFirestoreLoaded, _] = useRecoilState<boolean>(isFirestoreLoadedAtom)
+  return isFirestoreLoaded ? app.firestore() : firestoreStub
 }

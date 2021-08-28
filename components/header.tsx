@@ -1,8 +1,10 @@
+import React from 'react'
 import Link from 'next/link'
 import Button from '@material-ui/core/Button'
 import { useSigninCheck } from 'reactfire'
-import Search from './search'
+import Search, { SearchBarSkeleton } from './search'
 import { Emoji } from './emoji'
+import { FirestoreGuard } from '../lib/firebase'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
@@ -32,7 +34,9 @@ export default function Header() {
             <NavLink href="/utilities"><Emoji label="hammer and wrench" symbol="🛠️" />Utilities</NavLink>
           </> : <></>}
         </nav>
-        <Search />
+        <FirestoreGuard fallback={<SearchBarSkeleton />}>
+          <Search />
+        </FirestoreGuard>
       </div>
     </header>
   )

@@ -25,6 +25,9 @@ import { CustomSkeleton } from '../../components/skeleton'
 import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { buildArgs } from '../../lib/environment'
 
+// import firebase from 'firebase/app'
+// import 'firebase/firestore'
+
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
 
@@ -141,9 +144,9 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           />
           :
           <Box className={styles.loadingFlex} height={150}>
-            <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+            <strong>Loading {status === 'success' ? data.sectionCount.toLocaleString() : ''} sections...</strong>
             <div style={{ width: '80%' }}>
-              <LinearProgressWithLabel value={Math.round(data.sectionLoadingProgress)} />
+              <LinearProgressWithLabel value={Math.round(data?.sectionLoadingProgress)} />
             </div>
           </Box>
         }
