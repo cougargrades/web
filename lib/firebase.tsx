@@ -72,8 +72,16 @@ export function FirestoreGuard(props: WrapperWithFallback) {
 
 export const firestoreStub: FirestoreStub = {
   // somehow this works
-  doc: (x: any) => ({ firestore: { app: { name: '[DEFAULT]' }}, onSnapshot: (x: any) => (() => { console.log('unsubscribe!');return undefined;})}),
-  collection: (x: any) => undefined,
+  doc: (x: any) => ({
+    firestore: { app: { name: '[DEFAULT]' }}, onSnapshot: (x: any) => (() => undefined)
+  }),
+  // somehow this works
+  collection: (x: any) => ({
+    where: (a: any, b: any, c: any) => ({
+      isEqual: () => false,
+      onSnapshot: (x: any) => (() => undefined)
+    }),
+  }),
   runTransaction: (x: any) => undefined,
 } as any
 

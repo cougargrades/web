@@ -128,55 +128,11 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
         }
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
           console.count('course populate section')
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100), false, true))
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100), false, false))
         }
       })();
     }
   }, [data,previous])
-
-  // // Remove previously stored instructors whenever we reroute
-  // useEffect(() => {
-  //   setInstructorData([]);
-  //   setGroupData([]);
-  //   setSectionData([]);
-  //   setSectionLoadingProgress(0);
-  // }, [courseName])
-
-  // // Resolve the group data document references
-  // useEffect(() => {
-  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-  //   if(didLoadCorrectly) {
-  //     (async () => {
-  //       if(Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups)) {
-  //         setGroupData(await Util.populate<Group>(data.groups))
-  //       }
-  //     })();
-  //   }
-  // }, [data, status])
-
-  // // Resolve the instructor document references
-  // useEffect(() => {
-  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-  //   if(didLoadCorrectly) {
-  //     (async () => {
-  //       if(Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors)) {
-  //         setInstructorData(await Util.populate<Instructor>(data.instructors))
-  //       }
-  //     })();
-  //   }
-  // }, [data, status])
-
-  // // Resolve the section document references
-  // useEffect(() => {
-  //   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-  //   if(didLoadCorrectly) {
-  //     (async () => {
-  //       if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-  //         setSectionData(await Util.populate<Section>(data.sections, 10, true, (p,total) => setSectionLoadingProgress(p/total*100)))
-  //       }
-  //     })();
-  //   }
-  // }, [data, status])
 
   try {
     return {

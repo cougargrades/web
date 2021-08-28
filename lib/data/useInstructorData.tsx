@@ -81,7 +81,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
         }
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
           console.count('instructor populate section')
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100), false, true))
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100), false, false))
         }
         if(Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs)) {
           setGroupData(await Util.populate<Group>(groupRefs))
