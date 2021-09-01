@@ -8,7 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Instructor } from '@cougargrades/types'
@@ -20,6 +19,7 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnhancedTable } from '../../components/datatable'
 import { CustomSkeleton } from '../../components/skeleton'
+import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
@@ -116,8 +116,10 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           />
           :
           <Box className={styles.loadingFlex} height={150}>
-            <CircularProgress />
             <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+            <div style={{ width: '80%' }}>
+              <LinearProgressWithLabel value={Math.round(data.sectionLoadingProgress)} />
+            </div>
           </Box>
         }
       </div>
@@ -134,6 +136,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           title="Past Sections"
           columns={status === 'success' ? data.sectionDataGrid.columns : []}
           rows={status === 'success' ? data.sectionDataGrid.rows : []}
+          defaultOrder="desc"
           defaultOrderBy="term"
         />
       </main>

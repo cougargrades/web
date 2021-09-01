@@ -1,26 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import prettyBytes from 'pretty-bytes'
-import TimeAgo from 'timeago-react'
-import * as timeago from 'timeago.js'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import Papa from 'papaparse'
+import React, { useState } from 'react'
 import { useFirestore } from 'reactfire'
-import type { GradeDistributionCSVRow } from '@cougargrades/types/dist/GradeDistributionCSVRow'
-import { tryFromRaw } from '@cougargrades/types/dist/GradeDistributionCSVRow'
-import { executePatchFile } from '@cougargrades/types/dist/PatchfileUtil'
 import Button from '@material-ui/core/Button'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import TextField from '@material-ui/core/TextField'
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Alert from '@material-ui/core/Alert'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import { Dropzone } from './dropzone'
-import { LinearProgressWithLabel, SliderWithLabel } from './progress'
-import { readPatchfile } from './AsyncFileReader'
-import { AsyncSemaphore } from './AsyncSemaphore'
-import { localeFunc } from './timeago'
+import { LinearProgressWithLabel } from './progress'
 
 //import styles from './uploader.module.scss'
 
@@ -101,6 +83,8 @@ export function QueueManager() {
         </p>
       </div>
       <LinearProgressWithLabel value={uploadQueueTripDone/uploadQueueTripMax*100} />
+
+      {/* boop */}
     </div>
   );
 }

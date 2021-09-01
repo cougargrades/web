@@ -34,6 +34,7 @@ export interface GroupDataResult {
     data: any[],
     options: { [key: string ]: any }
   };
+  sectionLoadingProgress: number;
 }
 
 export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
@@ -41,6 +42,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
   const [courseData, setCourseData] = useState<Course[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
   const previous = usePrevious(data.key)
 
   // load courses + section data
@@ -50,6 +52,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
       setCourseData([]);
       setSectionData([]);
       setLoading(true);
+      setSectionLoadingProgress(0);
       (async () => {
         if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
           setCourseData(
@@ -61,7 +64,8 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             ) 
         }
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10))
+          console.count('group populate section')
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
         }
         setLoading(false)
       })();
@@ -80,7 +84,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               field: 'id',
               headerName: 'Name',
               type: 'string',
-              width: 60,
+              width: 65,
               padding: 8,
               // eslint-disable-next-line react/display-name
               valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
@@ -89,7 +93,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               field: 'description',
               headerName: 'Description',
               type: 'string',
-              width: 95,
+              width: 105,
               padding: 8,
             },
             {
@@ -97,7 +101,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: 'First Taught',
               description: 'The oldest semester that this course was taught',
               type: 'number',
-              width: 65,
+              width: 75,
               padding: 6,
               valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
             },
@@ -106,7 +110,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: 'Last Taught',
               description: 'The most recent semester that this course was taught',
               type: 'number',
-              width: 65,
+              width: 75,
               padding: 6,
               valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
             },
@@ -115,7 +119,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: '# Instructors',
               description: 'Number of instructors',
               type: 'number',
-              width: 100,
+              width: 110,
               padding: 4,
               valueFormatter: value => value.toLocaleString(),
             },
@@ -124,7 +128,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: '# Sections',
               description: 'Number of sections',
               type: 'number',
-              width: 90,
+              width: 95,
               padding: 8,
               valueFormatter: value => value.toLocaleString(),
             },
@@ -133,7 +137,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: '# Enrolled',
               description: 'Total number of students who have been enrolled in this course',
               type: 'number',
-              width: 85,
+              width: 95,
               padding: 8,
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
@@ -233,6 +237,8 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             interpolateNulls: true //lines between point gaps
           }
         },
+        //sectionLoadingProgress: (sectionLoadingProgress/data.sections.length*100),
+        sectionLoadingProgress,
       },
       error: undefined,
       status: loading ? 'loading' : 'success',

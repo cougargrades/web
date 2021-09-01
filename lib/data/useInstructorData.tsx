@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
+import { usePrevious } from 'react-use'
 import { Course, Group, Instructor, Section, Util } from '@cougargrades/types'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
@@ -14,6 +15,7 @@ import { CourseGroupResult, CourseInstructorResult, group2Result, SectionPlus } 
 import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
+import { useFakeFirestore } from '../firebase'
 
 export interface InstructorResult {
   badges: SearchResultBadge[];
@@ -37,6 +39,7 @@ export interface InstructorResult {
   courseCount: number;
   sectionCount: number;
   classSize: number;
+  sectionLoadingProgress: number;
 }
 
 /**
@@ -46,8 +49,8 @@ export interface InstructorResult {
  */
 export function useInstructorData(instructorName: string): Observable<InstructorResult> {
   const stone = useRosetta()
-  const db = useFirestore()
-  const { data, error, status } = useFirestoreDocData<Instructor>(db.doc(`/instructors/${instructorName}`))
+  const db = useFakeFirestore()
+  const { data, error, status } = useFirestoreDocData<Instructor>(db.doc(`/instructors/${instructorName}`) as any)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
   const isActualError = typeof instructorName === 'string' && instructorName !== '' && status !== 'loading' && isBadObject
@@ -59,50 +62,33 @@ export function useInstructorData(instructorName: string): Observable<Instructor
   const [courseData, setCourseData] = useState<Course[]>([]);
   const [sectionData, setSectionData] = useState<Section[]>([]);
   const [groupData, setGroupData] = useState<Group[]>([]);
+  const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
+  const previous = usePrevious(data?._id)
   const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
-  // Remove previously stored data whenever we reroute
-  useEffect(() => {
-    setCourseData([]);
-    setSectionData([]);
-    setGroupData([]);
-  }, [instructorName])
-
-  // Resolve the course document references
+  // load courses + section + group data
   useEffect(() => {
     const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
+    // prevent loading the same data again
+    if(didLoadCorrectly && previous !== data._id) {
+      setCourseData([]);
+      setSectionData([]);
+      setGroupData([]);
+      setSectionLoadingProgress(0);
       (async () => {
         if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
           setCourseData(await Util.populate<Course>(data.courses))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the section document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          setSectionData(await Util.populate<Section>(data.sections, 10))
+          console.count('instructor populate section')
+          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100), false, false))
         }
-      })();
-    }
-  }, [data, status])
-
-  // Resolve the group document references
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    if(didLoadCorrectly) {
-      (async () => {
         if(Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs)) {
           setGroupData(await Util.populate<Group>(groupRefs))
         }
       })();
     }
-  }, [data, status])
+  },[data,previous])
 
   try {
     return {
@@ -145,7 +131,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               field: 'sectionNumber',
               headerName: 'Section #',
               type: 'number',
-              width: 80,
+              width: 90,
             },
             ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
               field: e as any,
@@ -177,7 +163,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               field: 'id',
               headerName: 'Name',
               type: 'string',
-              width: 60,
+              width: 65,
               padding: 8,
               // eslint-disable-next-line react/display-name
               valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
@@ -186,7 +172,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               field: 'description',
               headerName: 'Description',
               type: 'string',
-              width: 95,
+              width: 105,
               padding: 8,
             },
             {
@@ -194,7 +180,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: 'First Taught',
               description: 'The oldest semester that this course was taught',
               type: 'number',
-              width: 65,
+              width: 75,
               padding: 6,
               valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
             },
@@ -203,7 +189,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: 'Last Taught',
               description: 'The most recent semester that this course was taught',
               type: 'number',
-              width: 65,
+              width: 75,
               padding: 6,
               valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
             },
@@ -212,7 +198,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: '# Instructors',
               description: 'Number of instructors',
               type: 'number',
-              width: 100,
+              width: 110,
               padding: 4,
               valueFormatter: value => value.toLocaleString(),
             },
@@ -221,7 +207,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: '# Sections',
               description: 'Number of sections',
               type: 'number',
-              width: 90,
+              width: 95,
               padding: 8,
               valueFormatter: value => value.toLocaleString(),
             },
@@ -230,7 +216,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               headerName: '# Enrolled',
               description: 'Total number of students who have been enrolled in this course',
               type: 'number',
-              width: 85,
+              width: 95,
               padding: 8,
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
@@ -334,6 +320,8 @@ export function useInstructorData(instructorName: string): Observable<Instructor
         courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
         sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
         classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+        //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
+        sectionLoadingProgress,
       },
       error,
       status: sharedStatus,

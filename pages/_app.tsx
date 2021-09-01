@@ -2,18 +2,21 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { ThemeProvider } from '@material-ui/core/styles'
 //import { FirebaseAppProvider } from 'reactfire'
-const FirebaseAppProvider = dynamic(() => import('../lib/lazy').then((mod) => mod.FirebaseAppProviderWrapper))
+const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper))
+const FirestorePreloader = dynamic(() => import('../lib/firebase').then(mod => mod.FirestorePreloader))
+//import { FirebaseAppProviderWrapper as FirebaseAppProvider } from '../lib/firebase'
 //import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
-const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then((mod) => mod.RealtimeClaimUpdater))
+const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then(mod => mod.RealtimeClaimUpdater))
 //import { AppCheck } from '../components/appcheck'
-const AppCheck = dynamic(() => import('../components/appcheck').then((mod) => mod.AppCheck))
+const AppCheck = dynamic(() => import('../components/appcheck').then(mod => mod.AppCheck))
 //import { RecoilRoot } from 'recoil'
-const RecoilRoot = dynamic(() => import('recoil').then((mod) => mod.RecoilRoot))
-const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then((mod) => mod.PageViewLogger))
+const RecoilRoot = dynamic(() => import('recoil').then(mod => mod.RecoilRoot))
+const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then(mod => mod.PageViewLogger))
+//import Layout from '../components/layout'
+// eslint-disable-next-line react/display-name
+const Layout = dynamic(() => import('../components/layout'))
 import { useTheme } from '../lib/theme'
 
-//import Layout from '../components/layout'
-const Layout = dynamic(() => import('../components/layout'))
 import 'normalize.css/normalize.css'
 //import '@exampledev/new.css/new.css'
 import '../styles/new.css';
@@ -63,16 +66,17 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg" />  */}
       </Head>
       <ThemeProvider theme={theme}>
-        <FirebaseAppProvider>
-          <RecoilRoot>
+        <RecoilRoot>
+          <FirebaseAppProvider>
+            <FirestorePreloader />
             <RealtimeClaimUpdater />
             <AppCheck />
             <PageViewLogger />
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </RecoilRoot>
-        </FirebaseAppProvider>
+          </FirebaseAppProvider>
+        </RecoilRoot>
       </ThemeProvider>
     </>
   );

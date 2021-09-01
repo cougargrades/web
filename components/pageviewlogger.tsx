@@ -12,11 +12,13 @@ export function PageViewLogger() {
 
   useEffect(() => {
     if(analyticsRef.current) {
-      const analytics = analyticsRef.current
-      console.log(`event logged: ${router.asPath}`);
-      analytics.logEvent('page_view', {
-        path_name: router.asPath,
-      });
+      if(buildArgs.vercelEnv !== 'development') {
+        const analytics = analyticsRef.current
+        console.log(`event logged: ${router.asPath}`);
+        analytics.logEvent('page_view', {
+          path_name: router.asPath,
+        });
+      }
     }
   }, [router.asPath, analyticsRef]);
 

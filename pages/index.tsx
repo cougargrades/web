@@ -1,9 +1,12 @@
+import React from 'react'
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
+import { useFirestore } from 'reactfire'
+import Button from '@material-ui/core/Button'
 import { BlogNotifications } from '../components/blog'
 import { ExternalLink } from '../components/link'
 import { searchInputAtom } from '../lib/recoil'
-import Button from '@material-ui/core/Button'
+import { FirestoreGuard } from '../lib/firebase'
 import slotmachine from '../public/slotmachine.svg'
 import wordcloud from '../public/wordcloud.svg'
 

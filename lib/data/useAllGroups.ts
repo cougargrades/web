@@ -4,6 +4,7 @@ import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
 import { getBadges } from './getBadges'
+import { useFakeFirestore } from '../firebase'
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -50,8 +51,8 @@ export function course2Result(data: Course): CourseInstructorResult {
 }
 
 export function useAllGroups(): Observable<AllGroupsResult> {
-  const db = useFirestore();
-  const query = db.collection('groups').where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
+  const db = useFakeFirestore();
+  const query = (db.collection('groups') as any).where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
   const { data, status, error } = useFirestoreCollectionData<Group>(query)
 
   const ALL_GROUPS_SENTINEL = 'All Groups'
@@ -94,9 +95,8 @@ export function useAllGroups(): Observable<AllGroupsResult> {
 }
 
 export function useOneGroup(groupId: string): Observable<GroupResult> {
-  const db = useFirestore();
-  const query = db.doc(`/groups/${groupId}`)
-  const { data, status, error } = useFirestoreDoc<Group>(query)
+  const db = useFakeFirestore();
+  const { data, status, error } = useFirestoreDoc<Group>(db.doc(`/groups/${groupId}`) as any)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
   const isActualError = typeof groupId === 'string' && groupId !== '' && status !== 'loading' && isBadObject

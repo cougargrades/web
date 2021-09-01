@@ -6,7 +6,6 @@ import Chip from '@material-ui/core/Chip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Typography from '@material-ui/core/Typography'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
@@ -18,6 +17,7 @@ import { CustomSkeleton } from './skeleton'
 
 import styles from './groupcontent.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
+import { LinearProgressWithLabel } from './uploader/progress'
 
 
 interface GroupContentProps {
@@ -27,7 +27,7 @@ interface GroupContentProps {
 export function GroupContent({ data }: GroupContentProps) {
   const router = useRouter()
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const { data: { topEnrolled, dataGrid, dataChart }, status } = useGroupData(data)
+  const { data: { topEnrolled, dataGrid, dataChart, sectionLoadingProgress }, status } = useGroupData(data)
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? topEnrolled.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
@@ -58,9 +58,9 @@ export function GroupContent({ data }: GroupContentProps) {
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
       <h3>Data</h3>
-      <div className={styles.chartWrap}>
-        {
-          (status !== 'error' && dataChart.data.length > 1) ?
+      {
+        (status !== 'error' && dataChart.data.length > 1) ?
+        <div className={styles.chartWrap}>
           <Chart
             width={'100%'}
             height={450}
@@ -71,13 +71,15 @@ export function GroupContent({ data }: GroupContentProps) {
             // prevent ugly red box when there's no data yet on first-mount
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
-          :
-          <Box className={styles.loadingFlex} height={150}>
-            <CircularProgress />
-            <strong>Loading {data.sections.length.toLocaleString()} sections...</strong>
-          </Box>
-        }
-      </div>
+        </div>
+        :
+        <Box className={styles.loadingFlex} height={150}>
+          <strong>Loading {data.sections.length.toLocaleString()} sections...</strong>
+          <div style={{ width: '80%' }}>
+            <LinearProgressWithLabel value={Math.round(sectionLoadingProgress)} />
+          </div>
+        </Box>
+      }
       <EnhancedTable<CoursePlus>
         title="Courses"
         columns={status !== 'error' ? dataGrid.columns : []}

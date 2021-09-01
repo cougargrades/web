@@ -186,3 +186,16 @@ export default function SearchBar() {
     </>
   )
 }
+
+export function SearchBarSkeleton() {
+  return (
+    <TextField 
+      className={styles.textField}
+      label="🔍 Search"
+      helperText={`Please enter course or instructor. Example: MATH 1310, Renu Khator, College Algebra`}
+      type="search"
+      variant="outlined"
+      fullWidth
+    />
+  )
+}
