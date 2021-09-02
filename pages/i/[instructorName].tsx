@@ -4,10 +4,13 @@ import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
+import Stack from '@material-ui/core/Stack'
 import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
+import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import RateReviewIcon from '@material-ui/icons/RateReview'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Instructor } from '@cougargrades/types'
@@ -59,6 +62,27 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             { !isMissingProps ? <Typography variant="h1">{staticInstructorName}</Typography> : <CustomSkeleton width={325} height={75} />}
             { !isMissingProps ? <Typography variant="h4">{staticDepartmentText}</Typography> : <CustomSkeleton width={360} height={45} /> }
           </figure>
+          <Stack
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={1}
+          >
+            {status === 'success' ? data.badges.map(e => (
+              <Tooltip key={e.key} title={e.caption}>
+                <Box component="span">
+                  <Badge style={{ backgroundColor: e.color }}>{e.text}</Badge>
+                </Box>
+              </Tooltip>
+            )) : [1,2,3].map(e => (
+              <BadgeSkeleton key={e} style={{ marginRight: '0.25rem' }}/>
+            ))}
+            <Tooltip title="View Firstname Lastname on RateMyProfessors">
+              <IconButton color="primary" className={interactivity.hoverActive}>
+                <RateReviewIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
+          </Stack>
           <div>
             {status === 'success' ? data.badges.map(e => (
               <Tooltip key={e.key} title={e.caption}>
