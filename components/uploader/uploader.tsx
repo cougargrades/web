@@ -333,21 +333,24 @@ export function Uploader() {
     (async () => {
       // phases start at 0
       if(patchfilesPhase >= 0 && patchfilesPhase <= patchfilesMaxPhase) {
+        // only run phases which have patchfiles, skip phases that are missing them
+        if(patchfileConcurrencyLimitPerPhase[patchfilesPhase] !== undefined) {
+          //console.log(patchfilesPhase, 'well defined')
+          const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
 
-        const filesForCurrentPhase = patchFiles.filter(e => e.name.startsWith(`patch-${patchfilesPhase}`));
+          // parallel processing
+          const semaphore = new AsyncSemaphore(patchfileConcurrencyLimitPerPhase[patchfilesPhase].limit);
 
-        // parallel processing
-        const semaphore = new AsyncSemaphore(patchfileConcurrencyLimitPerPhase[patchfilesPhase].limit);
+          for(let file of filesForCurrentPhase) {
+            await semaphore.withLockRunAndForget(async () => await processPatchfile(file));
+          }
+          
+          await semaphore.awaitTerminate();
+          console.log(`phase ${patchfilesPhase} queue done!`);
 
-        for(let file of filesForCurrentPhase) {
-          await semaphore.withLockRunAndForget(async () => await processPatchfile(file));
+          // remove current phase to prevent double executions
+          setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
         }
-        
-        await semaphore.awaitTerminate();
-        console.log(`phase ${patchfilesPhase} queue done!`);
-
-        // remove current phase to prevent double executions
-        setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
 
         // kick off to process next phase, but only 
         if(patchfilesPhase < patchfilesMaxPhase) {
@@ -392,8 +395,19 @@ export function Uploader() {
       // temporarily get sorted list of patchfiles
       const temp = patchFiles.slice().sort((a,b) => a.name.localeCompare(b.name));
       // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]
-      const prefixes = Array.from(new Set(temp.map(e => e.name.split('-')[2])))
-      setPatchfileConcurrencyLimitPerPhase(prefixes.map((value, index) => ({ prefix: value, limit: 64 })))
+      const prefixes = Array.from(new Set(temp.map(e => {
+        const phase = e.name.split('-')[1]
+        const prefix = e.name.split('-')[2]
+        return `${phase}-${prefix}`
+      })))
+      // properly set the limits per phase if phases are missing
+      const limitPerPhase: { prefix: string, limit: number}[] = [];
+      for(const item of prefixes) {
+        const [phase, prefix] = item.split('-'); 
+        limitPerPhase[parseInt(phase)] = { prefix, limit: 64 };
+      }
+
+      setPatchfileConcurrencyLimitPerPhase([...limitPerPhase])
     }
   }, [patchFiles, patchfilesPhase, patchfilesMaxPhase])
 
