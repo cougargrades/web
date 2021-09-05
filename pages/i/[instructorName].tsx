@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
-import Stack from '@material-ui/core/Stack'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import RateReviewIcon from '@material-ui/icons/RateReview'
 import Tilty from 'react-tilty'
@@ -75,28 +73,16 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             ))}
           </div>
         </div>
-        {/* Start potential RMP stuff here */}
         <div className={styles.rmpLink}>
-          { false ? <>
-            <Link href="#" passHref>
-              <IconButton color="info" className={interactivity.hoverActive}>
-                <RateReviewIcon fontSize="medium" />
-              </IconButton>
-            </Link>
-            <Typography variant="caption">Linked with RateMyProfessors.com</Typography>
-            </> : null
-          }
           { true ? <>
             <Link href="#" passHref>
               <Button variant="text" size="small" color="info" className={interactivity.hoverActive} startIcon={<RateReviewIcon />}>
                 Linked with RateMyProfessors.com
               </Button>
             </Link>
-            {/* <Typography variant="caption">Linked with RateMyProfessors.com</Typography> */}
             </> : null
           }
         </div>
-        {/* End potential RMP stuff here */}
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
