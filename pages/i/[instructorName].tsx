@@ -74,8 +74,8 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           </div>
         </div>
         <div className={styles.rmpLink}>
-          { true ? <>
-            <Link href="#" passHref>
+          { status === 'success' && data.rmpHref !== undefined ? <>
+            <Link href={data.rmpHref} passHref>
               <Button variant="text" size="small" color="info" className={interactivity.hoverActive} startIcon={<RateReviewIcon />}>
                 Linked with RateMyProfessors.com
               </Button>
