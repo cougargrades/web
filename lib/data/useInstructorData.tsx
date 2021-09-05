@@ -40,6 +40,7 @@ export interface InstructorResult {
   sectionCount: number;
   classSize: number;
   sectionLoadingProgress: number;
+  rmpHref?: string;
 }
 
 /**
@@ -322,6 +323,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
         classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
         //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
         sectionLoadingProgress,
+        rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? `https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${data.rmpLegacyId}` : undefined,
       },
       error,
       status: sharedStatus,

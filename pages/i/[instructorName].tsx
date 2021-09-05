@@ -1,13 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
+import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
+import RateReviewIcon from '@material-ui/icons/RateReview'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Instructor } from '@cougargrades/types'
@@ -23,7 +26,6 @@ import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
-import { tocAtom } from '../../lib/recoil'
 import { useInstructorData } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
@@ -71,8 +73,16 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             ))}
           </div>
         </div>
-        {/* Start potential RMP stuff here */}
-        {/* End potential RMP stuff here */}
+        <div className={styles.rmpLink}>
+          { status === 'success' && data.rmpHref !== undefined ? <>
+            <Link href={data.rmpHref} passHref>
+              <Button variant="text" size="small" color="info" className={interactivity.hoverActive} startIcon={<RateReviewIcon />}>
+                Linked with RateMyProfessors.com
+              </Button>
+            </Link>
+            </> : null
+          }
+        </div>
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
