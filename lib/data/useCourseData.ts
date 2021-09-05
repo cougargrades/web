@@ -74,7 +74,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     href: `/i/${data._id}`,
     title: data.fullName,
     subtitle: generateSubjectString(data),
-    caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
+    caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections${Math.random() > 0.5 ? ` • 💬 RMP` : ''}`,
     badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
     lastInitial: data.lastName.charAt(0).toUpperCase()

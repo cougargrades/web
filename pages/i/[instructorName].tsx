@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Box from '@material-ui/core/Box'
 import Chip from '@material-ui/core/Chip'
 import Stack from '@material-ui/core/Stack'
+import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 import Skeleton from '@material-ui/core/Skeleton'
 import Container from '@material-ui/core/Container'
@@ -26,7 +28,6 @@ import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
-import { tocAtom } from '../../lib/recoil'
 import { useInstructorData } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
@@ -62,27 +63,6 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             { !isMissingProps ? <Typography variant="h1">{staticInstructorName}</Typography> : <CustomSkeleton width={325} height={75} />}
             { !isMissingProps ? <Typography variant="h4">{staticDepartmentText}</Typography> : <CustomSkeleton width={360} height={45} /> }
           </figure>
-          <Stack
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={1}
-          >
-            {status === 'success' ? data.badges.map(e => (
-              <Tooltip key={e.key} title={e.caption}>
-                <Box component="span">
-                  <Badge style={{ backgroundColor: e.color }}>{e.text}</Badge>
-                </Box>
-              </Tooltip>
-            )) : [1,2,3].map(e => (
-              <BadgeSkeleton key={e} style={{ marginRight: '0.25rem' }}/>
-            ))}
-            <Tooltip title="View Firstname Lastname on RateMyProfessors">
-              <IconButton color="primary" className={interactivity.hoverActive}>
-                <RateReviewIcon fontSize="large" />
-              </IconButton>
-            </Tooltip>
-          </Stack>
           <div>
             {status === 'success' ? data.badges.map(e => (
               <Tooltip key={e.key} title={e.caption}>
@@ -96,6 +76,26 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           </div>
         </div>
         {/* Start potential RMP stuff here */}
+        <div className={styles.rmpLink}>
+          { false ? <>
+            <Link href="#" passHref>
+              <IconButton color="info" className={interactivity.hoverActive}>
+                <RateReviewIcon fontSize="medium" />
+              </IconButton>
+            </Link>
+            <Typography variant="caption">Linked with RateMyProfessors.com</Typography>
+            </> : null
+          }
+          { true ? <>
+            <Link href="#" passHref>
+              <Button variant="text" size="small" color="info" className={interactivity.hoverActive} startIcon={<RateReviewIcon />}>
+                Linked with RateMyProfessors.com
+              </Button>
+            </Link>
+            {/* <Typography variant="caption">Linked with RateMyProfessors.com</Typography> */}
+            </> : null
+          }
+        </div>
         {/* End potential RMP stuff here */}
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
