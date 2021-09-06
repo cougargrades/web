@@ -145,6 +145,12 @@ function getNotices(feed: AtomFeed): BlogNotice[] {
      * will return false (desired behavior)
      */
     .filter(e => new Date() < new Date(e.expiry))
+    /**
+     * require that notices be "updated"
+     * in the past, so future notices can be
+     * staged for release, but not yet displayed.
+     */
+    .filter(e => new Date() > new Date(e.updated))
     // require that the environment used match our current deployment
     .filter(e => e.environments ? Array.isArray(e.environments) && (e.environments.includes('*') || e.environments.includes(buildArgs.vercelEnv)) : true);
   }
