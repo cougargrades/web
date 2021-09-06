@@ -172,4 +172,7 @@ $ff-scrollbar-dm-thumb-hover: #9A9A9A;
 a.nostyle {
   color: unset;
   text-decoration: none;
+  &:hover {
+    color: unset!important;
+  }
 }

@@ -33,6 +33,8 @@
     //background-image: linear-gradient(#17EAD9, #6078EA);
     //border-radius: 14px;
     //padding: 0.5rem;
+    margin-bottom: 0;
+
     h1, h2, h3, h4, h5, h6 {
       border-bottom: 0;
     }
@@ -55,6 +57,11 @@
       font-size: 1.25rem;
     }
   }
+}
+
+.tccnsUpdateLinks {
+  padding-top: 10px;
+  padding-bottom: 0;
 }
 
 .chip {
