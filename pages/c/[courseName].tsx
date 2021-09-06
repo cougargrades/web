@@ -23,10 +23,8 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LinearProgressWithLabel } from '../../components/uploader/progress'
+import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
 import { buildArgs } from '../../lib/environment'
-
-// import firebase from 'firebase/app'
-// import 'firebase/firestore'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -55,6 +53,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     }
   }
 
+  const tccnsUpdateAsterisk = status === 'success' && data.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
+
   return (
     <>
     <Head>
@@ -66,28 +66,41 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <main>
         <div className={styles.courseHero}>
           {
-            (status === 'error' || doesNotExist === true) ?
+            (doesNotExist === true) ?
             <Alert severity="error">
               <AlertTitle>Error 404</AlertTitle>
               Course {staticCourseName} could not be found.
             </Alert>
-            : <></>
+            : null
+          }
+          {
+            (status === 'error' && doesNotExist === false) ?
+            <Alert severity="error">
+              <AlertTitle>Unknown Error</AlertTitle>
+              An error occured when generating this page.
+            </Alert>
+            : null
           }
           <figure>
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
-            { !isMissingProps ? <h1 className={styles.display_3}>{staticCourseName}</h1> : <CustomSkeleton width={325} height={75} />}
+            { !isMissingProps ? <h1 className={styles.display_3}>{staticCourseName}{tccnsUpdateAsterisk}</h1> : <CustomSkeleton width={325} height={75} />}
             <div>
               {status === 'success' ? data.badges.map(e => (
                 <Tooltip key={e.key} title={e.caption}>
                   <Box component="span">
-                    <Badge style={{ backgroundColor: e.color, marginRight: '0.25rem' }}>{e.text}</Badge>
+                    <Badge style={{ backgroundColor: e.color, marginRight: '0.35rem' }}>{e.text}</Badge>
                   </Box>
                 </Tooltip>
               )) : [1,2,3].map(e => (
-                <BadgeSkeleton key={e} style={{ marginRight: '0.25rem' }}/>
+                <BadgeSkeleton key={e} style={{ marginRight: '0.35rem' }}/>
               ))}
             </div>
           </figure>
+        </div>
+        <div className={styles.tccnsUpdateLinks}>
+          { status === 'success' ? data.tccnsUpdates.map((value, index) => (
+            <TCCNSUpdateNotice key={index} data={value} />
+          )) : null}
         </div>
         { !isMissingProps ? 
           <div dangerouslySetInnerHTML={{ __html: staticHTML }}></div>
