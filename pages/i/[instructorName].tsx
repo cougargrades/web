@@ -60,18 +60,18 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           <figure>
             { !isMissingProps ? <Typography variant="h1">{staticInstructorName}</Typography> : <CustomSkeleton width={325} height={75} />}
             { !isMissingProps ? <Typography variant="h4">{staticDepartmentText}</Typography> : <CustomSkeleton width={360} height={45} /> }
+            <div>
+              {status === 'success' ? data.badges.map(e => (
+                <Tooltip key={e.key} title={e.caption}>
+                  <Box component="span">
+                    <Badge style={{ backgroundColor: e.color, marginRight: '0.35rem' }}>{e.text}</Badge>
+                  </Box>
+                </Tooltip>
+              )) : [1,2,3].map(e => (
+                <BadgeSkeleton key={e} style={{ marginRight: '0.35rem' }}/>
+              ))}
+            </div>
           </figure>
-          <div>
-            {status === 'success' ? data.badges.map(e => (
-              <Tooltip key={e.key} title={e.caption}>
-                <Box component="span">
-                  <Badge style={{ backgroundColor: e.color, marginRight: '0.25rem' }}>{e.text}</Badge>
-                </Box>
-              </Tooltip>
-            )) : [1,2,3].map(e => (
-              <BadgeSkeleton key={e} style={{ marginRight: '0.25rem' }}/>
-            ))}
-          </div>
         </div>
         <div className={styles.rmpLink}>
           { status === 'success' && data.rmpHref !== undefined ? <>
