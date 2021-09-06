@@ -1,23 +1,16 @@
-import React, { forwardRef } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Stack from '@material-ui/core/Stack'
-import MuiLink from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
 import FlagIcon from '@material-ui/icons/Flag'
 import HelpIcon from '@material-ui/icons/Help'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import { TCCNSUpdateInfo } from '@cougargrades/types'
 
 import styles from './tccnsupdatenotice.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-
-interface TCCNSUpdateInfo {
-  shortMessage: string,
-  longMessage: string,
-  courseHref: string, 
-  sourceHref: string,
-}
 
 interface TCCNSUpdateNoticeProps {
   data: TCCNSUpdateInfo;

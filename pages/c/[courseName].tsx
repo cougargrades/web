@@ -53,7 +53,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     }
   }
 
-  const tccnsUpdateAsterisk = <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip>
+  const tccnsUpdateAsterisk = status === 'success' && data.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
 
   return (
     <>
@@ -66,12 +66,20 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <main>
         <div className={styles.courseHero}>
           {
-            (status === 'error' || doesNotExist === true) ?
+            (doesNotExist === true) ?
             <Alert severity="error">
               <AlertTitle>Error 404</AlertTitle>
               Course {staticCourseName} could not be found.
             </Alert>
-            : <></>
+            : null
+          }
+          {
+            (status === 'error' && doesNotExist === false) ?
+            <Alert severity="error">
+              <AlertTitle>Unknown Error</AlertTitle>
+              An error occured when generating this page.
+            </Alert>
+            : null
           }
           <figure>
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
@@ -90,12 +98,9 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           </figure>
         </div>
         <div className={styles.tccnsUpdateLinks}>
-          <TCCNSUpdateNotice data={{
-            longMessage: 'Effective Fall 2021, COOG 1234 was renamed to COOG 1111',
-            shortMessage: 'Renamed to COOG 1111',
-            courseHref: '/c/MATH 13101',
-            sourceHref: 'https://web.archive.org/web/20210415084338/https://uh.edu/academics/courses-enrollment/course-number-updates/index.php',
-          }} />
+          { status === 'success' ? data.tccnsUpdates.map((value, index) => (
+            <TCCNSUpdateNotice key={index} data={value} />
+          )) : null}
         </div>
         { !isMissingProps ? 
           <div dangerouslySetInnerHTML={{ __html: staticHTML }}></div>

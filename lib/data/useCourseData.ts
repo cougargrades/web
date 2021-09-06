@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
 import { usePrevious } from 'react-use'
-import { Course, Enrollment, Group, Instructor, PublicationInfo, Section, Util } from '@cougargrades/types'
+import { Course, Group, Instructor, PublicationInfo, TCCNSUpdateInfo, Section, Util } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
@@ -37,6 +37,7 @@ export interface CourseResult {
   sectionCount: number;
   classSize: number;
   sectionLoadingProgress: number;
+  tccnsUpdates: TCCNSUpdateInfo[];
 }
 
 export interface CourseGroupResult {
@@ -147,6 +148,9 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               key: `${e.catoid}|${e.coid}`
             }
           )) : [])
+        ],
+        tccnsUpdates: [
+          ...(didLoadCorrectly && data.tccnsUpdates !== undefined ? data.tccnsUpdates : []),
         ],
         firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
         lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',
@@ -269,6 +273,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
     }
   }
   catch(error) {
+    console.error(`[useCourseData] Error:`, error)
     return {
       data: undefined,
       error,
