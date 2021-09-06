@@ -90,3 +90,7 @@ export function useFakeFirestore() {
   const [isFirestoreLoaded, _] = useRecoilState<boolean>(isFirestoreLoadedAtom)
   return isFirestoreLoaded ? app.firestore() : firestoreStub
 }
+
+export function isFakeFirestore(db: ReturnType<typeof useFakeFirestore>) {
+  return typeof db['useEmulator'] === 'undefined';
+}
