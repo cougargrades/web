@@ -129,6 +129,15 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
             },
             {
+              field: 'courseName',
+              headerName: 'Course',
+              type: 'string',
+              width: 65,
+              padding: 8,
+              // eslint-disable-next-line react/display-name
+              valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
+            },
+            {
               field: 'sectionNumber',
               headerName: 'Section #',
               type: 'number',
