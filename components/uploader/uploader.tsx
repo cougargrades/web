@@ -117,16 +117,21 @@ export function Uploader() {
    */
 
   // What happens when the Upload button is clicked
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     // run phase 0 before doing courses
-    setPatchfilesPhase(0);
+    if(patchfilesMaxPhase > -1) {
+      setPatchfilesPhase(0);
+    }
+    else {
+      setAllowUploading(true);
+    }
     // This allows us to benchmark upload times
     setUploadStartedAt(new Date());
     setRecordProcessingStartedAt(new Date());
     // This triggers the useEffect() that listens to `allowUploading`, which will start the upload queue
     // setAllowUploading(true); // this is done after phase 0 completes instead
     setIsButtonEnabled(false);
-  }, [ recordsFile, patchFiles ]);
+  };
 
   // What happens when files are dropped into the page
   const handleDrop = useCallback((acceptedFiles: File[]) => {
@@ -298,10 +303,18 @@ export function Uploader() {
       setRecordProcessingFinishedAt(new Date());
 
       // update patchFile phase to begin processing patchfiles
-      setPatchfilesPhase(1)
+      if(patchfilesPhase === 0 && patchfilesMaxPhase > 0) {
+        setPatchfilesPhase(1)
+      }
+      else {
+        console.log('no patchfiles to process after records');
+        // mark all uploads as finished
+        setUploadFinishedAt(new Date());
+        setPatchfileProcessingFinishedAt(new Date());
+      }
       setPatchfileProcessingStartedAt(new Date());
     }
-  }, [ uploadQueueProcessed, uploadQueueMax, uploadStartedAt ]);
+  }, [ uploadQueueProcessed, uploadQueueMax, uploadStartedAt, patchfilesPhase, patchfilesMaxPhase ]);
 
   /**
    * Execute an individual patchfile
@@ -350,6 +363,9 @@ export function Uploader() {
 
           // remove current phase to prevent double executions
           setPatchFiles(x => [...patchFiles.filter(e => ! e.name.startsWith(`patch-${patchfilesPhase}`))]);
+        }
+        else {
+          console.log('phase skipped: files for phase', patchfilesPhase, 'are missing');
         }
 
         // kick off to process next phase, but only 
@@ -470,7 +486,7 @@ export function Uploader() {
           <FormControlLabel control={<Switch checked={showPendingUploads} onChange={e => setShowPendingUploads(e.target.checked)} />} label="Show pending uploads animation" />
         </div>
         <br />
-        <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem' }}>
+        <div className="d-flex flex-row align-items-center" style={{ columnGap: '1rem', paddingBottom: '1rem' }}>
           <Button variant="contained" onClick={handleClick} disabled={!isButtonEnabled}>Start Upload</Button>
           <p className="mb-0">
             {
