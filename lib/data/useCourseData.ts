@@ -150,7 +150,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
           )) : [])
         ],
         tccnsUpdates: [
-          ...(didLoadCorrectly && data.tccnsUpdates !== undefined ? data.tccnsUpdates : []),
+          ...(didLoadCorrectly && data.tccnsUpdates !== undefined && Array.isArray(data.tccnsUpdates) ? data.tccnsUpdates : []),
         ],
         firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
         lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',
