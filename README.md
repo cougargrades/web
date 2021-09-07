@@ -13,7 +13,7 @@ See: https://github.com/orgs/cougargrades/projects/2
 
 | Project                  | Version | Status          | URL                            |
 |--------------------------|---------|-----------------|--------------------------------|
-| cougargrades.io (beta)   | 0.4.5   | Sunsetted 🌅    | N/A                            |
+| cougargrades.io (beta)   | 0.4.5   | Offline 💤      | N/A                            |
 | cougargrades.io (1.X.X)  | 1.X.X   | Live 🚀         | https://cougargrades.io/       |
 | cougargrades.io HTTP API | 2.0.0   | Live 🚀         | https://api.cougargrades.io    |
 
