@@ -407,7 +407,7 @@ export function Uploader() {
    * 
    */
   useEffect(() => {
-    if(patchfilesMaxPhase > 0 && patchfilesPhase === -1) {
+    if(patchfilesMaxPhase >= 0 && patchfilesPhase === -1) {
       // temporarily get sorted list of patchfiles
       const temp = patchFiles.slice().sort((a,b) => a.name.localeCompare(b.name));
       // [ "patch", "0", "groupdefaults", "1617828381961927207.json" ]

@@ -50,12 +50,12 @@ export function course2Result(data: Course): CourseInstructorResult {
   };
 }
 
+export const ALL_GROUPS_SENTINEL = 'All Groups'
+
 export function useAllGroups(): Observable<AllGroupsResult> {
   const db = useFakeFirestore();
   const query = (db.collection('groups') as any).where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
   const { data, status, error } = useFirestoreCollectionData<Group>(query)
-
-  const ALL_GROUPS_SENTINEL = 'All Groups'
 
   const categories = [
     ...(status === 'success' ? Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories : []).flat())) : []),

@@ -50,7 +50,7 @@ export function FirestorePreloader() {
           }
 
           // enable cache
-          await firestore().enablePersistence()
+          await firestore().enablePersistence({ synchronizeTabs: true });
           console.log('[firebase.tsx] Persistence enabled')
         }
         catch(err) {
@@ -81,6 +81,8 @@ export const firestoreStub: FirestoreStub = {
       isEqual: () => false,
       onSnapshot: (x: any) => (() => undefined)
     }),
+    isEqual: () => false,
+    onSnapshot: (x: any) => (() => undefined)
   }),
   runTransaction: (x: any) => undefined,
 } as any

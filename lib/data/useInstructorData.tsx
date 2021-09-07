@@ -247,7 +247,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge>,
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
             },
             {
               field: 'standardDeviation',
@@ -257,7 +257,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge>,
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
             },
             {
               field: 'dropRate',
