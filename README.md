@@ -11,11 +11,11 @@ See: https://github.com/orgs/cougargrades/projects/2
 
 ## Project Status
 
-| Project                  | Version | Status                                                              | URL                                       |
-|--------------------------|---------|---------------------------------------------------------------------|-------------------------------------------|
-| cougargrades.io (beta)   | 0.4.5   | Live 🚀                                                             | https://cougargrades.io                   |
-| cougargrades.io (1.0.0)  | 1.0.0   | [Near Complete 👨‍💻](https://github.com/orgs/cougargrades/projects/2) | https://next.cougargrades.io/             |
-| cougargrades.io HTTP API | 2.0.0   | Live 🚀                                                             | https://api.cougargrades.io               |
+| Project                  | Version | Status          | URL                            |
+|--------------------------|---------|-----------------|--------------------------------|
+| cougargrades.io (beta)   | 0.4.5   | Sunsetted 🌅    | N/A                            |
+| cougargrades.io (1.X.X)  | 1.X.X   | Live 🚀         | https://cougargrades.io/       |
+| cougargrades.io HTTP API | 2.0.0   | Live 🚀         | https://api.cougargrades.io    |
 
 ### Continuous Deployment
 
