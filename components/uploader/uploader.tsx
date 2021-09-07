@@ -333,7 +333,7 @@ export function Uploader() {
         console.warn('Patchfile failed: ', err);
         setPatchfilesProcessed(x => x + 1);
         setPatchfilesFailed(x => x + 1);
-        setPatchfilesFailedReasons(x => [...x, `For target '${contents.target.path}': ${err}`])
+        setPatchfilesFailedReasons(x => [...x, `For target '${contents.target.path}' in phase=${patchfilesPhase}: ${err}`])
       }
       //console.log(`DONE: ${file.name}`);
     }
