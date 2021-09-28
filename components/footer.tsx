@@ -1,11 +1,18 @@
 import Image from 'next/image'
 import Tooltip from '@material-ui/core/Tooltip'
+import useSWR from 'swr'
 import { buildArgs } from '../lib/environment'
 import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 
-export default function Footer(props: { hideDisclaimer?: boolean }) {
+interface SponsorshipInformation {
+  totalSponsorCount: number,
+  monthlyEstimatedSponsorsIncomeInCents: number,
+  monthlyEstimatedSponsorsIncomeFormatted: string,
+}
 
+export default function Footer(props: { hideDisclaimer?: boolean }) {
+  const { data, error, isValidating } = useSWR<SponsorshipInformation>('https://github-org-stats-au5ton.vercel.app/api/sponsors');
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
@@ -41,7 +48,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               </a>
             </p>
           </div>
-          <div className="col-sm">
+          <div className={`col-sm ${styles.sponsorRoot}`}>
             <div className={styles.sponsor}>
               <Tooltip title="CougarGrades.io is sponsored by Vercel">
                 <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
@@ -55,6 +62,13 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               </Tooltip>
               <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
             </div>
+            <p className="text-muted">
+              <small>{
+                isValidating ? '' : 
+                `${data.totalSponsorCount} people sponsor CougarGrades 
+                totalling $${data.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!`
+              }</small>
+            </p>
           </div>
         </div>
       </div>

@@ -28,9 +28,16 @@
   flex-shrink: 0;
 }
 
+.sponsorRoot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+}
+
 .sponsor {
   display: flex;
-  height: 100%;
+  //height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 13px;
