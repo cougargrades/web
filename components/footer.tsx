@@ -48,9 +48,12 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                   <Image 
                     src={sponsor}
                     alt="Powered by Vercel"
+                    width={155}
+                    height={32}
                   />
                 </a>
               </Tooltip>
+              <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
             </div>
           </div>
         </div>
