@@ -63,10 +63,10 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
             ) 
         }
-        if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          console.count('group populate section')
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
-        }
+        // if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
+        //   console.count('group populate section')
+        //   setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
+        // }
         setLoading(false)
       })();
     }

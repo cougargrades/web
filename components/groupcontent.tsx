@@ -58,7 +58,7 @@ export function GroupContent({ data }: GroupContentProps) {
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
       <h3>Data</h3>
-      {
+      {/* {
         (status !== 'error' && dataChart.data.length > 1) ?
         <div className={styles.chartWrap}>
           <Chart
@@ -79,7 +79,7 @@ export function GroupContent({ data }: GroupContentProps) {
             <LinearProgressWithLabel value={Math.round(sectionLoadingProgress)} />
           </div>
         </Box>
-      }
+      } */}
       <EnhancedTable<CoursePlus>
         title="Courses"
         columns={status !== 'error' ? dataGrid.columns : []}
