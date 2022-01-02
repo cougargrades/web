@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Chip from '@material-ui/core/Chip'
-import Skeleton from '@material-ui/core/Skeleton'
-import Typography from '@material-ui/core/Typography'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Chip from '@mui/material/Chip'
+import Skeleton from '@mui/material/Skeleton'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import Tilty from 'react-tilty'
-import { Chart } from 'react-google-charts'
 import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
 import { GroupResult } from '../lib/data/useAllGroups'
 import { CoursePlus, useGroupData } from '../lib/data/useGroupData'
@@ -58,7 +57,7 @@ export function GroupContent({ data }: GroupContentProps) {
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
       <h3>Data</h3>
-      {
+      {/* {
         (status !== 'error' && dataChart.data.length > 1) ?
         <div className={styles.chartWrap}>
           <Chart
@@ -79,7 +78,7 @@ export function GroupContent({ data }: GroupContentProps) {
             <LinearProgressWithLabel value={Math.round(sectionLoadingProgress)} />
           </div>
         </Box>
-      }
+      } */}
       <EnhancedTable<CoursePlus>
         title="Courses"
         columns={status !== 'error' ? dataGrid.columns : []}

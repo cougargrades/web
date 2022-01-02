@@ -1,4 +1,4 @@
-import Skeleton from '@material-ui/core/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 import styles from './skeleton.module.scss'
 
 interface SkeletonProps {

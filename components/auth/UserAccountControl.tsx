@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useAuth, useUser, useIdTokenResult, useSigninCheck, useFirestoreDoc, useFirestore } from 'reactfire'
+import React, { useState } from 'react'
+import { useAuth, useSigninCheck } from 'reactfire'
 import { CustomClaimNames as isCustomClaim } from '@cougargrades/types/dist/is'
 import { Collaborator } from '../collaborator'
 
 import styles from './UserAccountControl.module.scss'
 import { useJWT } from './RealtimeClaimUpdater'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
 
 
 export function UserAccountControl() {

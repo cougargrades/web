@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useFirestore } from 'reactfire'
-import Button from '@material-ui/core/Button'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import Button from '@mui/material/Button'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { LinearProgressWithLabel } from './progress'
 
 //import styles from './uploader.module.scss'

@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react'
-import Skeleton from '@material-ui/core/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 import styles from './badge.module.scss'
 
 type BadgeProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & {
