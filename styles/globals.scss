@@ -176,3 +176,7 @@ a.nostyle {
     color: unset!important;
   }
 }
+
+[type=search] {
+  -webkit-appearance: auto!important;
+}
