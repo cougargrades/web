@@ -1,6 +1,6 @@
-import Box, { BoxProps } from '@material-ui/core/Box'
-import Tooltip from '@material-ui/core/Tooltip'
-import CircleIcon from '@material-ui/icons/Circle'
+import Box, { BoxProps } from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
+import CircleIcon from '@mui/icons-material/Circle'
 import React from 'react'
 
 import styles from './enrollment.module.scss'

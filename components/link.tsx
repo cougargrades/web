@@ -1,7 +1,7 @@
 import React from 'react'
 import Link, { LinkProps as NextLinkProps } from 'next/link'
-import Button from '@material-ui/core/Button'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import Button from '@mui/material/Button'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import styles from './link.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
