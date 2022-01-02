@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import { ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
 const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper))
 const FirestorePreloader = dynamic(() => import('../lib/firebase').then(mod => mod.FirestorePreloader))

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
-import Skeleton from '@material-ui/core/Skeleton'
+import Skeleton from '@mui/material/Skeleton'
 import styles from './collaborator.module.scss'
 
 export interface CollaboratorProps {

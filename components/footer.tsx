@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import useSWR from 'swr'
 import { buildArgs } from '../lib/environment'
 import sponsor from '../public/powered-by-vercel.svg'

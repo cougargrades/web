@@ -1,7 +1,7 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
-import Alert from '@material-ui/core/Alert'
-import AlertTitle from '@material-ui/core/AlertTitle'
+import Container from '@mui/material/Container'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 
 import styles from './stickynotice.module.scss'
 
