@@ -6,7 +6,7 @@ import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications
 import { Observable } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { Grade, grade2Color } from '../../components/badge'
-import { Column, defaultComparator } from '../../components/datatable'
+import { Column, defaultComparator, descendingComparator } from '../../components/datatable'
 import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { getChartData } from './getChartData'
@@ -147,7 +147,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               ...e,
               key: `${e.catoid}|${e.coid}`
             }
-          )) : [])
+          )).sort((a,b) => descendingComparator(a, b, 'catoid')).slice(0,3) : [])
         ],
         tccnsUpdates: [
           ...(didLoadCorrectly && data.tccnsUpdates !== undefined && Array.isArray(data.tccnsUpdates) ? data.tccnsUpdates : []),
