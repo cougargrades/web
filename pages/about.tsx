@@ -2,6 +2,7 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import { ExternalLink } from '../components/link'
 import { Collaborator, CollaboratorProps, CollaboratorSkeleton } from '../components/collaborator'
+import { BlogNotifications } from '../components/blog'
 import styles from '../styles/About.module.scss'
 
 export default function About() {
@@ -14,6 +15,7 @@ export default function About() {
         <meta name="description" content="About page" />
       </Head>
       <div className="new-container">
+        <BlogNotifications />
         <h2>About</h2>
         <p>Started in Summer 2019, CougarGrades is an open-source web app for finding grade distribution information about courses and instructors at the University of Houston.</p>
         <h3>Resources</h3>

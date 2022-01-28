@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { ExternalLink } from '../components/link'
+import { BlogNotifications } from '../components/blog'
 import styles from '../styles/FAQ.module.scss'
 
 export default function FrequentlyAskedQuestions() {
@@ -10,6 +11,7 @@ export default function FrequentlyAskedQuestions() {
         <meta name="description" content="Frequently Asked Questions" />
       </Head>
       <div className="new-container">
+        <BlogNotifications />
         <h2>Frequently Asked Questions</h2>
         <p>These are some of the frequently asked questions that we receive.</p>
         <section className={styles.section}>
