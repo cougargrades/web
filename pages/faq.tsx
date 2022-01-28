@@ -62,7 +62,7 @@ export default function FrequentlyAskedQuestions() {
           <p>
             Whenever we process the grade data, we ignore areas where UH leaves missing data in the calculations.
             Unfortunately, for the case where a 0 is left where it shouldn&apos;t be, there&apos;s nothing we can do
-            but include it in the data result, because that 0 can actually be true.
+            but include it in the data result, because that 0 could actually be true.
           </p>
         </section>
         <section className={styles.section}>
@@ -70,7 +70,7 @@ export default function FrequentlyAskedQuestions() {
             I love the website! Can I give you money?
           </blockquote>
           <p>
-            CougarGrades accepts donations via GitHub Sponsors. If you are interested in supporting the project or showing your appreciation, you may donating.
+            CougarGrades accepts donations via GitHub Sponsors. If you are interested in supporting the project or showing your appreciation, you may consider donating.
           </p>
           <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
           <p>
