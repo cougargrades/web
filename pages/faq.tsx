@@ -43,7 +43,7 @@ export default function FrequentlyAskedQuestions() {
             <li><strong>Summer data</strong> is requested on <u>August 30 every year</u>.</li>
           </ul>
           <p>
-            This is to give UH time to finalize their grades and so we are not harassing their staff after or during any holidays. UH typically takes about a week to respond with the data, and sometimes even longer. Once we have the data from UH, adding the data to the site is a semi-automated process that takes about an 1-2 hours.
+            This is to give UH time to finalize their grades and so we are not harassing their staff after or during any holidays. UH typically takes about a week to respond with the data, and sometimes even longer. Once we have the data from UH, adding the data to the site is a semi-automated process that takes about 1-2 hours.
           </p>
         </section>
         <section className={styles.section}>
