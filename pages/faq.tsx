@@ -76,7 +76,7 @@ export default function FrequentlyAskedQuestions() {
           </p>
           <p>
             A <em>very</em> important principle to me when designing and developing CougarGrades was to curate the generalized statistics that students want to know about, but leave the data as <strong>open to interpretation</strong> as possible.
-            This is <em>exactly</em> CougarGrades doesn&apos;t have pages like &quot;top 10 lowest GPA instructors in the school: avoid at all costs&quot;.
+            This is <em>exactly</em> why CougarGrades doesn&apos;t have pages like &quot;top 10 lowest GPA instructors in the school: avoid at all costs&quot;.
             If pages like this existed, they would be over-extrapolating data to slander instructors who are already underpaid and underappreciated enough as it is.
           </p>
           <p>
