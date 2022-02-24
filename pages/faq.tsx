@@ -81,7 +81,7 @@ export default function FrequentlyAskedQuestions() {
           </p>
           <p>
             That said, if an instructor or individual doesn&apos;t like the way that the data on the site represents them, I can&apos;t do anything about that.
-            Being transparent means being open to scrutiny and being held accountable.
+            The University of Houston is a public university, obligated to be transparent about its operations. Being transparent means being open to scrutiny and being held accountable.
           </p>
         </section>
         <section className={styles.section}>
