@@ -69,6 +69,23 @@ export default function FrequentlyAskedQuestions() {
         </section>
         <section className={styles.section}>
           <blockquote className={styles.question}>
+            Is CougarGrades meant to shame instructors for being too hard/easy?
+          </blockquote>
+          <p>
+            First and foremost, CougarGrades is about bringing <strong>transparent, unbiased information to students</strong> so that they can make informed decisions in one of the most challenging times of their young-adult lives: College.
+          </p>
+          <p>
+            A <em>very</em> important principle to me when designing and developing CougarGrades was to curate the generalized statistics that students want to know about, but leave the data as <strong>open to interpretation</strong> as possible.
+            This is <em>exactly</em> why CougarGrades doesn&apos;t have pages like &quot;top 10 lowest GPA instructors in the school: avoid at all costs&quot;.
+            If pages like this existed, they would be over-extrapolating data to slander instructors who are already underpaid and underappreciated enough as it is.
+          </p>
+          <p>
+            That said, if an instructor or individual doesn&apos;t like the way that the data on the site represents them, I can&apos;t do anything about that.
+            Being transparent means being open to scrutiny and being held accountable.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <blockquote className={styles.question}>
             I love the website! Can I give you money?
           </blockquote>
           <p>
