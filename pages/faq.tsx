@@ -79,14 +79,14 @@ export default function FrequentlyAskedQuestions() {
           <ExampleTable />
           <p>The &quot;AVG GPA&quot; column is what CougarGrades uses in its statistics. By design, we do not recompute this value based on the number of letter grades received.</p>
           <p>
-            You can very obviously see that the bottom 2 rows don&apos;t have &quot;AVG GPA&quot; columns that make sense. However, this data is <em>exactly</em> as UH provided it. What gives?
+            You can very obviously see that the bottom 2 rows don&apos;t have &quot;AVG GPA&quot; columns that make sense. However, this data is <em>exactly</em> as UH provided it (with no official explanation). What gives?
           </p>
           <p>
             From this, we can infer that: <u>The GPA that UH provides is not necessarily the GPA that could be calculated from the grade letters received</u>. 
             The leading theory we&apos;ve <em><abbr title="speculate (verb): form a theory or conjecture about a subject without firm evidence.">speculated</abbr></em> from this is:
           </p>
           <p>
-            The GPA that UH provides is the &quot;real&quot; GPA that isn&apos;t affected by &quot;S&quot; and &quot;NCR&quot; grades. In other words, it&apos;s the average GPA of what the students <em>would have</em> made if they didn&apos;t receive S or NCR grades.
+            The GPA that UH provides is the &quot;real&quot; GPA that isn&apos;t affected by &quot;S&quot; and &quot;NCR&quot; grades. In other words, it&apos;s the average GPA of what the students <em>would have</em> made if they didn&apos;t receive S or NCR grades, and accounts for all the Cs, Ds, and Fs that would&apos;ve been given in the course.
           </p>
           <p>
             With this in mind, it makes a lot of the lower &quot;AVG GPA&quot; values seem pretty bleak, although this is most likely attributed due to the COVID-19 global pandemic and the abrupt transition to online classes.
