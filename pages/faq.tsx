@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { ExternalLink } from '../components/link'
 import { BlogNotifications } from '../components/blog'
+import { ExampleTable } from '../components/example_table';
 import styles from '../styles/FAQ.module.scss'
 
 export default function FrequentlyAskedQuestions() {
@@ -65,6 +66,30 @@ export default function FrequentlyAskedQuestions() {
             Whenever we process the grade data, we ignore areas where UH leaves missing data in the calculations.
             Unfortunately, for the case where a 0 is left where it shouldn&apos;t be, there&apos;s nothing we can do
             but include it in the data result, because that 0 could actually be true.
+          </p>
+        </section>
+        <section className={styles.section}>
+          <blockquote className={styles.question}>
+            Sometimes the &quot;GPA&quot; column is inconsistent with the letter grades that the students actually received. What does this mean? What should I believe?
+          </blockquote>
+          <p>
+            This is a very clever observation, and there&apos;s supposedly a rational explanation for this.
+            Generally speaking, the data we receive from UH looks like this:
+          </p>
+          <ExampleTable />
+          <p>The &quot;AVG GPA&quot; column is what CougarGrades uses in its statistics. By design, we do not recompute this value based on the number of letter grades received.</p>
+          <p>
+            You can very obviously see that the bottom 2 rows don&apos;t have &quot;AVG GPA&quot; columns that make sense. However, this data is <em>exactly</em> as UH provided it. What gives?
+          </p>
+          <p>
+            From this, we can infer that: <u>The GPA that UH provides is not necessarily the GPA that could be calculated from the grade letters received</u>. 
+            The leading theory we&apos;ve <em><abbr title="speculate (verb): form a theory or conjecture about a subject without firm evidence.">speculated</abbr></em> from this is:
+          </p>
+          <p>
+            The GPA that UH provides is the &quot;real&quot; GPA that isn&apos;t affected by &quot;S&quot; and &quot;NCR&quot; grades. In other words, it&apos;s the average GPA of what the students <em>would have</em> made if they didn&apos;t receive S or NCR grades.
+          </p>
+          <p>
+            With this in mind, it makes a lot of the lower &quot;AVG GPA&quot; values seem pretty bleak, although this is most likely attributed due to the COVID-19 global pandemic and the abrupt transition to online classes.
           </p>
         </section>
         <section className={styles.section}>
