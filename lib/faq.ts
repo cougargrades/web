@@ -7,6 +7,10 @@ import { join } from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
+import remarkRehype from 'remark-rehype'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
+import rehypeStringify from 'rehype-stringify'
 
 const postsDirectory = join(process.cwd(), '_posts')
 
@@ -25,6 +29,7 @@ export interface FaqPostData {
   title?: string;
   date?: string;
   content?: string;
+  id?: number;
 }
 
 export function getPostSlugs(): string[] {
@@ -61,11 +66,23 @@ export function getAllPosts(fields: string[] = []): FaqPostData[] {
   const posts = slugs
     .map((slug) => getPostBySlug(slug, fields))
     // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+    //.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+    .sort((a,b) => a.id - b.id)
   return posts
 }
 
-export async function markdownToHtml(markdown) {
-  const result = await remark().use(html).process(markdown)
+export async function markdownToHtml(markdown: string) {
+  const schema = defaultSchema
+  schema.tagNames.push('iframe')
+  if(!Array.isArray(schema.attributes['iframe']))
+    schema.attributes['iframe'] = []
+  schema.attributes['iframe'].push('src')
+  const result = await remark()
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeSanitize, schema)
+    .use(rehypeStringify)
+    //.use(html)
+    .process(markdown)
   return result.toString()
 }

@@ -14,27 +14,33 @@
     padding: 1.5rem 0;
   }
 
-  blockquote p {
-    &::before {
-      content: '\201C';
-    }
-    &::after {
-      content: '\201D';
-    }
-    font-size: 1.25em;
-    font-weight: 500;
+  div[rel="table-wrap"] {
+    max-width: 100%;
+    overflow-x: scroll;
+    margin-bottom: 1rem;
   }
-  
-  // .section {
-  //   margin-top: 3rem;
-  //   margin-bottom: 3rem;
-  // }
-  
-  // .githubSponsor {
-  //   border: 0;
-  //   margin-bottom: 0!important;
-  // }
 
+  div[rel="table-wrap"] > table {
+    font-size: 0.75em;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  // blockquote p {
+  //   &::before {
+  //     content: '\201C';
+  //   }
+  //   &::after {
+  //     content: '\201D';
+  //   }
+  //   font-size: 1.25em;
+  //   font-weight: 500;
+  // }
+  
+  iframe[src^="https://github.com/sponsors"] {
+    border: 0;
+    margin-bottom: 10px;
+  }
 }
 
 .question {
