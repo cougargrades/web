@@ -57,17 +57,18 @@ export function GroupNavSubheader({ children }: GroupNavSubheaderProps) {
 }
 
 interface TableOfContentsWrapProps {
+  condensedTitle: string;
   children: React.ReactNode;
 }
 
-export function TableOfContentsWrap({ children }: TableOfContentsWrapProps) {
+export function TableOfContentsWrap({ condensedTitle, children }: TableOfContentsWrapProps) {
   const [expanded, setExpanded] = useRecoilState(tocAtom)
   const condensed = useIsCondensed()
   return (
     condensed ? 
     <Accordion expanded={expanded} onChange={(_,exp) => setExpanded(exp)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h6" sx={{ padding: 0, borderBottom: 'none' }}>Select Group</Typography>
+        <Typography variant="h6" sx={{ padding: 0, borderBottom: 'none' }}>{condensedTitle}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         {children}

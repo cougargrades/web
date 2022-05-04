@@ -70,7 +70,6 @@ export default function MyApp({ Component, pageProps }) {
           <FirebaseAppProvider>
             <FirestorePreloader />
             <RealtimeClaimUpdater />
-            <AppCheck />
             <PageViewLogger />
             <Layout>
               <Component {...pageProps} />
@@ -78,6 +77,7 @@ export default function MyApp({ Component, pageProps }) {
           </FirebaseAppProvider>
         </RecoilRoot>
       </ThemeProvider>
+      
     </>
   );
 }
