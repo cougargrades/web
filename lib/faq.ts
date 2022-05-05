@@ -67,6 +67,7 @@ export function getAllPosts(fields: string[] = []): FaqPostData[] {
     .map((slug) => getPostBySlug(slug, fields))
     // sort posts by date in descending order
     //.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+    // sort by post "id"
     .sort((a,b) => a.id - b.id)
   return posts
 }

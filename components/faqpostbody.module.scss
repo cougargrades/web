@@ -1,6 +1,4 @@
 .markdown {
-  //color: red;
-
   h2 {
     &::before {
       content: '\201C';
@@ -8,8 +6,6 @@
     &::after {
       content: '\201D';
     }
-    //ont-size: 1.25em;
-    //font-weight: 500;
     border-bottom: none;
     padding: 1.5rem 0;
   }
@@ -25,41 +21,9 @@
     width: 100%;
     white-space: nowrap;
   }
-
-  // blockquote p {
-  //   &::before {
-  //     content: '\201C';
-  //   }
-  //   &::after {
-  //     content: '\201D';
-  //   }
-  //   font-size: 1.25em;
-  //   font-weight: 500;
-  // }
   
   iframe[src^="https://github.com/sponsors"] {
     border: 0;
     margin-bottom: 10px;
   }
-}
-
-.question {
-  &::before {
-    content: '\201C';
-  }
-  &::after {
-    content: '\201D';
-  }
-  font-size: 1.25em;
-  font-weight: 500;
-}
-
-.section {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-
-.githubSponsor {
-  border: 0;
-  margin-bottom: 0!important;
 }

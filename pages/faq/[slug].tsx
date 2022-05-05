@@ -2,26 +2,22 @@ import React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRecoilState } from 'recoil'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
-
-import { ExternalLink, FakeLink } from '../../components/link'
+import TimeAgo from 'timeago-react'
+import { FakeLink } from '../../components/link'
 import { BlogNotifications } from '../../components/blog'
-import { ExampleTable } from '../../components/example_table'
 import { FaqPostBody } from '../../components/faqpostbody'
-
+import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { getPostBySlug, getAllPosts, FaqPostData, markdownToHtml } from '../../lib/faq'
+import { tocAtom } from '../../lib/recoil'
+import { useIsCondensed } from '../../lib/hook'
 
-//import styles from '../../styles/FAQ.module.scss'
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
-import { tocAtom } from '../../lib/recoil'
-import { useRecoilState } from 'recoil'
-import TimeAgo from 'timeago-react'
-import { useIsCondensed } from '../../lib/hook'
 
 export interface FaqPostProps {
   post: FaqPostData;

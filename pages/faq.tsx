@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
-import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
-import ErrorIcon from '@mui/icons-material/Error';
-import { ExternalLink } from '../components/link'
-import { BlogNotifications } from '../components/blog'
-import { ExampleTable } from '../components/example_table';
+import ErrorIcon from '@mui/icons-material/Error'
 import { FaqPostData, getAllPosts } from '../lib/faq'
-
-import styles from '../styles/FAQ.module.scss'
-import interactivity from '../styles/interactivity.module.scss'
-import { Typography } from '@mui/material'
-
 
 export interface FaqIndexProps {
   allPosts: FaqPostData[];
@@ -62,26 +50,6 @@ export default function FrequentlyAskedQuestions({ allPosts }: FaqIndexProps) {
           </>
           }
         </Stack>
-        {/* <BlogNotifications />
-        <h2>Frequently Asked Questions</h2>
-        <p>These are some of the frequently asked questions that we receive.</p>
-      
-        <List className={styles.faqList}>
-          {allPosts.map(other => (
-              <div key={other.slug}>
-                <Link href={`/faq/${other.slug}`}>
-                  <ListItemButton
-                    classes={{ root: `${styles.faqButton} ${interactivity.hoverActive}` }}
-                    dense
-                    >
-                    <ListItemText
-                      primary={<Typography variant="subtitle2" sx={{ pt: 0, fontSize: '1.0em' }} color={theme => theme.palette.text.primary}>{other.title}</Typography>}
-                      />
-                  </ListItemButton>
-                </Link>
-              </div>
-            ))}
-        </List> */}
       </div>
     </>
   );
