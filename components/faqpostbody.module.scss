@@ -1,0 +1,29 @@
+.markdown {
+  h2 {
+    &::before {
+      content: '\201C';
+    }
+    &::after {
+      content: '\201D';
+    }
+    border-bottom: none;
+    padding: 1.5rem 0;
+  }
+
+  div[rel="table-wrap"] {
+    max-width: 100%;
+    overflow-x: scroll;
+    margin-bottom: 1rem;
+  }
+
+  div[rel="table-wrap"] > table {
+    font-size: 0.75em;
+    width: 100%;
+    white-space: nowrap;
+  }
+  
+  iframe[src^="https://github.com/sponsors"] {
+    border: 0;
+    margin-bottom: 10px;
+  }
+}

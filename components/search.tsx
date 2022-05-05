@@ -154,7 +154,7 @@ export default function SearchBar() {
         value={value}
         inputValue={inputValue}
         isOptionEqualToValue={(option, value) => option.key === value.key}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => typeof option === 'string' ? option : option.title}
         groupBy={(option) => option.group}
         options={data}
         loading={loading}

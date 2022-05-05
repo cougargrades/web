@@ -67,7 +67,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       </Container>
       <main className={styles.main}>
         <aside className={styles.nav}>
-          <TableOfContentsWrap>
+          <TableOfContentsWrap condensedTitle="Select Group">
           { good ? data.categories.map(cat => (
             <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
               {data.results[cat].map((e, index) => (
