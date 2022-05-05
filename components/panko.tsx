@@ -133,12 +133,22 @@ export function generateBreadcrumbs(path: string) {
       if(value.toLowerCase() === 'g' || value.toLowerCase() === 'groups') {
         return <span key={key}><Emoji label="file box" symbol="🗃️" />Groups</span>
       }
+      if(value.toLowerCase() === 'faq') {
+        return <span key={key}><Emoji label="speech bubble" symbol="💬" />FAQ</span>
+      }
     }
     if(index === 2) {
       if(array[1].toLowerCase() === 'g') {
         return <span key={key}>Group ID #{decodeURI(value)}</span>
       }
+      if(array[1].toLowerCase() === 'faq') {
+        return <span key={key}>{capitalizeFirstLetter(decodeURI(value).replaceAll('-',' '))}</span>
+      }
     }
     return <span key={key}>{decodeURI(value)}</span>
   })
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

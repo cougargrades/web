@@ -4,12 +4,13 @@ import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRecoilState } from 'recoil'
 import List from '@mui/material/List'
+import Container from '@mui/material/Container'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import TimeAgo from 'timeago-react'
 import { FakeLink } from '../../components/link'
-import { BlogNotifications } from '../../components/blog'
+import { PankoRow } from '../../components/panko'
 import { FaqPostBody } from '../../components/faqpostbody'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { getPostBySlug, getAllPosts, FaqPostData, markdownToHtml } from '../../lib/faq'
@@ -39,9 +40,9 @@ export default function FaqPost({ post, allPosts }: FaqPostProps) {
         <title>{router.isFallback ? `FAQ / CougarGrades.io` : `${post.title} / CougarGrades.io FAQ`}</title>
         <meta name="description" content="Frequently Asked Questions" />
       </Head>
-      <div className="new-container">
-        <BlogNotifications />
-      </div>
+      <Container>
+        <PankoRow />
+      </Container>
       <main className={styles.main}>
         <aside className={styles.nav}>
           <TableOfContentsWrap condensedTitle={condensed ? 'Frequently Asked Questions' : ''}>

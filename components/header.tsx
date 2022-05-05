@@ -28,7 +28,7 @@ export default function Header() {
           <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
-          <NavLink href="/faq"><Emoji label="waving hand" symbol="💬" />FAQ</NavLink>
+          <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>
           { status === 'success' && signInCheckResult.signedIn && signInCheckResult.hasRequiredClaims ? <>
             <NavLink href="/admin"><Emoji label="spy" symbol="🕵️" />Admin</NavLink>
             <NavLink href="/upload"><Emoji label="hammer and wrench" symbol="🛠️" />Upload</NavLink>
