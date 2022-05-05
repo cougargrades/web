@@ -142,7 +142,7 @@ export function generateBreadcrumbs(path: string) {
         return <span key={key}>Group ID #{decodeURI(value)}</span>
       }
       if(array[1].toLowerCase() === 'faq') {
-        return <span key={key}>{capitalizeFirstLetter(decodeURI(value).replaceAll('-',' '))}</span>
+        return <span key={key}>{capitalizeFirstLetter(decodeURI(value).split('-').join(' '))}</span>
       }
     }
     return <span key={key}>{decodeURI(value)}</span>
