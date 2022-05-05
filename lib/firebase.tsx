@@ -8,11 +8,11 @@ import { isOverNDaysOld } from './util'
 import { isFirestoreLoadedAtom } from './recoil'
 
 import firebase from 'firebase/app'
-import 'firebase/auth'
+//import 'firebase/auth'
 import 'firebase/performance'
 import 'firebase/analytics'
 //import 'firebase/firestore'
-import 'firebase/app-check'
+//import 'firebase/app-check'
 
 export interface WrapperProps {
   children: React.ReactNode;
