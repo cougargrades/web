@@ -1,10 +1,10 @@
 ---
-title: 'Is CougarGrades meant to shame instructors for being too hard/easy?'
-date: '2022-05-04T19:26:17.866Z'
+title: 'Is this website meant to shame instructors for being too hard/easy?'
+date: '2022-05-05T00:50:57.786Z'
 id: 5
 ---
 
-## Is CougarGrades meant to shame instructors for being too hard/easy?
+## Is this website meant to shame instructors for being too hard/easy?
 
 First and foremost, CougarGrades is about bringing **transparent, unbiased information to students** so that they 
 can make informed decisions in one of the most challenging times of their young-adult lives: College.

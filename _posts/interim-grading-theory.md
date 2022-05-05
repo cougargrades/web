@@ -1,6 +1,6 @@
 ---
 title: 'Sometimes the "GPA" column is inconsistent with the letter grades that the students actually received. What does this mean? What should I believe?'
-date: '2022-05-04T19:26:17.866Z'
+date: '2022-05-05T00:50:57.786Z'
 id: 4
 ---
 
