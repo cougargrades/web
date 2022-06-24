@@ -36,7 +36,7 @@ export default function Home() {
                 section taught at UH.
               </p>
               <div className="stamp-wrap">
-                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>103k</div>
+                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>140k</div>
                 <span className={styles.stamp_caption}>Sections</span>
                 <div className={`${styles.stamp} ${styles.gold}`}>6.9k</div>
                 <span className={styles.stamp_caption}>Courses</span>
