@@ -36,9 +36,9 @@ export default function Home() {
                 section taught at UH.
               </p>
               <div className="stamp-wrap">
-                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>103k</div>
+                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>133k</div>
                 <span className={styles.stamp_caption}>Sections</span>
-                <div className={`${styles.stamp} ${styles.gold}`}>6.9k</div>
+                <div className={`${styles.stamp} ${styles.gold}`}>7.6k</div>
                 <span className={styles.stamp_caption}>Courses</span>
               </div>
               <br />
@@ -66,10 +66,10 @@ export default function Home() {
                 their students received.
               </p>
               <div>
-                <div className={`${styles.stamp} ${styles.blue}`}>5.4k</div>
+                <div className={`${styles.stamp} ${styles.blue}`}>6.2k</div>
                 <span className={styles.stamp_caption}>Instructors</span>
-                <div className={`${styles.stamp} ${styles.orchid}`}>149</div>
-                <span className={styles.stamp_caption}>Departments</span>
+                <div className={`${styles.stamp} ${styles.orchid}`}>165</div>
+                <span className={styles.stamp_caption}>Subjects</span>
               </div>
               <br />
               <p>
