@@ -1,5 +1,5 @@
 import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
-import { Course, Group, Section } from '@cougargrades/types'
+import { Course, Group, LabeledLink, Section } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
@@ -23,6 +23,7 @@ export interface GroupResult {
   categories: string[];
   courses: DocumentReference<Course>[];
   sections: DocumentReference<Section>[];
+  sources: LabeledLink[];
 }
 
 export function group2Result(data: Group): GroupResult {
@@ -34,6 +35,7 @@ export function group2Result(data: Group): GroupResult {
     categories: Array.isArray(data.categories) ? data.categories : [],
     courses: data.courses as DocumentReference<Course>[],
     sections: data.sections as DocumentReference<Section>[],
+    sources: Array.isArray(data.sources) ? data.sources : []
   }
 }
 
