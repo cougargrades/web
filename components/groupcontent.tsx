@@ -50,7 +50,7 @@ export function GroupContent({ data }: GroupContentProps) {
       { ! isCoreGroup ? <></> : <>
         <h6>Sources:</h6>
         { status === 'success' ? data.sources.map(e => (
-          <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
+          <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
       </>}
       <h3>Most Enrolled</h3>
