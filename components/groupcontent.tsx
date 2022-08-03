@@ -48,7 +48,7 @@ export function GroupContent({ data }: GroupContentProps) {
         {data.description}
       </Typography>
       { ! isCoreGroup ? <></> : <>
-        <h6>Sources:</h6>
+        <h6>Sources:</h6> 
         { status === 'success' ? data.sources.map(e => (
           <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
