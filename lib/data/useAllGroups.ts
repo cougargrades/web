@@ -5,6 +5,7 @@ import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
 import { getBadges } from './getBadges'
 import { useFakeFirestore } from '../firebase'
+import { descendingComparator } from '../../components/datatable';
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -35,7 +36,7 @@ export function group2Result(data: Group): GroupResult {
     categories: Array.isArray(data.categories) ? data.categories : [],
     courses: data.courses as DocumentReference<Course>[],
     sections: data.sections as DocumentReference<Section>[],
-    sources: Array.isArray(data.sources) ? data.sources : []
+    sources: Array.isArray(data.sources) ? data.sources.sort((a,b) => descendingComparator(a, b, 'title')).slice(0,3) : []
   }
 }
 
