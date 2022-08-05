@@ -63,7 +63,7 @@ export function group2Result(data: Group): CourseGroupResult {
   return {
     key: data.identifier,
     href: `/g/${data.identifier}`,
-    title: `${data.name} (${data.identifier})`,
+    title: `${data.name} (${data.identifier})`, // todo update
     description: data.description,
     count: Array.isArray(data.courses) ? data.courses.length : 0
   };

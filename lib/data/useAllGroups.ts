@@ -57,7 +57,7 @@ export const ALL_GROUPS_SENTINEL = 'All Groups'
 
 export function useAllGroups(): Observable<AllGroupsResult> {
   const db = useFakeFirestore();
-  const query = (db.collection('groups') as any).where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
+  const query = (db.collection('groups') as any).where('categories', 'array-contains', 'UH Core Curriculum') // TODO: update
   const { data, status, error } = useFirestoreCollectionData<Group>(query)
 
   const categories = [
@@ -79,7 +79,7 @@ export function useAllGroups(): Observable<AllGroupsResult> {
       ];
     }
     return obj;
-  }, {} as AllGroupsResultItem);
+  }, {} as AllGroupsResultItem); // todo: sort so `(All)` is at the top
 
   return {
     data: {

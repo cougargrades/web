@@ -48,7 +48,7 @@ export function group2Result(data: Group): SearchResult {
     href: `/g/${data.identifier}`,
     type: 'group',
     group: '🗃️ Groups',
-    title: `${data.name} (${data.identifier})`,
+    title: `${data.name} (${data.identifier})`, // todo update
     badges: [],
   };
 }
