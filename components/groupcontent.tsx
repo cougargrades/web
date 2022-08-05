@@ -30,7 +30,7 @@ export function GroupContent({ data }: GroupContentProps) {
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? topEnrolled.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
-  const isCoreGroup = data.categories.includes('UH Core Curriculum')
+  const isCoreGroup = data.categories.includes('#UHCoreCurriculum')
 
   // Used for prefetching all options which are presented
   useEffect(() => {
