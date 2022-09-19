@@ -128,7 +128,7 @@ export function generateBreadcrumbs(path: string) {
         return <span key={key}><Emoji label="books" symbol="📚" />Courses</span>
       }
       if(value.toLowerCase() === 'i') {
-        return <span key={key}><Emoji label="teacher" symbol="👩‍🏫" />Instructors</span>
+        return <span key={key}><Emoji label="teacher" symbol="🧑‍🏫" />Instructors</span>
       }
       if(value.toLowerCase() === 'g' || value.toLowerCase() === 'groups') {
         return <span key={key}><Emoji label="file box" symbol="🗃️" />Groups</span>

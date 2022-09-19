@@ -47,3 +47,12 @@
   align-items: center;
   padding-bottom: 10px;
 }
+
+.chip {
+  margin-right: 0.5rem!important;
+  margin-top: 0.25rem!important;
+  margin-bottom: 0.25rem!important;
+  &:hover {
+    color: unset;
+  }
+}

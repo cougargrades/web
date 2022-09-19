@@ -1,6 +1,6 @@
 {
   "name": "@cougargrades/web",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@au5ton/use-atom-feed": "^1.0.4",
-    "@cougargrades/publicdata": "^1.0.0-20210823111107",
-    "@cougargrades/types": "0.0.88",
+    "@cougargrades/publicdata": "^1.0.0-20220805004439",
+    "@cougargrades/types": "0.0.91",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@exampledev/new.css": "^1.1.3",

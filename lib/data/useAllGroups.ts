@@ -1,10 +1,11 @@
 import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
-import { Course, Group, Section } from '@cougargrades/types'
+import { Course, Group, LabeledLink, Section } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { Observable } from './Observable'
 import { CourseInstructorResult } from './useCourseData';
 import { getBadges } from './getBadges'
 import { useFakeFirestore } from '../firebase'
+import { defaultComparator, descendingComparator } from '../../components/datatable';
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -23,6 +24,7 @@ export interface GroupResult {
   categories: string[];
   courses: DocumentReference<Course>[];
   sections: DocumentReference<Section>[];
+  sources: LabeledLink[];
 }
 
 export function group2Result(data: Group): GroupResult {
@@ -34,6 +36,7 @@ export function group2Result(data: Group): GroupResult {
     categories: Array.isArray(data.categories) ? data.categories : [],
     courses: data.courses as DocumentReference<Course>[],
     sections: data.sections as DocumentReference<Section>[],
+    sources: Array.isArray(data.sources) ? data.sources.sort((a,b) => descendingComparator(a, b, 'title')).slice(0,3) : []
   }
 }
 
@@ -54,29 +57,35 @@ export const ALL_GROUPS_SENTINEL = 'All Groups'
 
 export function useAllGroups(): Observable<AllGroupsResult> {
   const db = useFakeFirestore();
-  const query = (db.collection('groups') as any).where('categories', 'array-contains', 'UH Core Curriculum') // TODO: remove filter once testing is done
+  const query = (db.collection('groups') as any).where('categories', 'array-contains', '#UHCoreCurriculum')
   const { data, status, error } = useFirestoreCollectionData<Group>(query)
 
   const categories = [
-    ...(status === 'success' ? Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories : []).flat())) : []),
+    ...(
+      status === 'success' ? 
+      Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories.filter(cat => !cat.startsWith('#')) : []).flat()))
+        .sort((a,b) => defaultComparator(a,b)) // [ '(All)', '(2022-2023)', '(2021-2022)', '(2020-2021)' ]
+        .slice(0,2) // don't endlessly list the groups, they're still accessible from a course directly
+      : []
+      ),
     //ALL_GROUPS_SENTINEL
   ];
 
   // make a key/value store of category -> GroupResult[]
   const results = categories
-  .reduce((obj, key) => {
-    if(key === ALL_GROUPS_SENTINEL) {
-      // obj[key] = [
-      //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
-      // ];
-    }
-    else {
-      obj[key] = [
-        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)) : [])
-      ];
-    }
-    return obj;
-  }, {} as AllGroupsResultItem);
+    .reduce((obj, key) => {
+      if(key === ALL_GROUPS_SENTINEL) {
+        // obj[key] = [
+        //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
+        // ];
+      }
+      else {
+        obj[key] = [
+          ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)) : [])
+        ];
+      }
+      return obj;
+    }, {} as AllGroupsResultItem);
 
   return {
     data: {

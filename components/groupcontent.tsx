@@ -30,7 +30,7 @@ export function GroupContent({ data }: GroupContentProps) {
   const RELATED_COURSE_LIMIT = 4 < data.courses.length ? 4 : data.courses.length;
   const REMAINING_COURSES = status === 'success' ? topEnrolled.length - RELATED_COURSE_LIMIT : data.courses.length - RELATED_COURSE_LIMIT;
   const LINK_TEXT = REMAINING_COURSES <= 0 || isNaN(REMAINING_COURSES) ? 'Show All' : `Show ${REMAINING_COURSES.toLocaleString()} More`;
-  const isCoreGroup = data.categories.includes('UH Core Curriculum')
+  const isCoreGroup = data.categories.includes('#UHCoreCurriculum')
 
   // Used for prefetching all options which are presented
   useEffect(() => {
@@ -48,8 +48,10 @@ export function GroupContent({ data }: GroupContentProps) {
         {data.description}
       </Typography>
       { ! isCoreGroup ? <></> : <>
-        <h6>Source:</h6>
-        <Chip label="UH Core Curriculum 2020-2021 " component="a" href="http://publications.uh.edu/content.php?catoid=36&navoid=13119" className={interactivity.hoverActive} clickable />
+        <h6>Sources:</h6> 
+        { status === 'success' ? data.sources.map(e => (
+          <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
+        )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
       </>}
       <h3>Most Enrolled</h3>
       <Carousel>
