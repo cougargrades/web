@@ -4,7 +4,8 @@ import { getTrending } from '../../lib/trending';
 
 export default async function Trending(req: NextApiRequest, res: NextApiResponse) {
   const data = await getTrending();
-  const cacheDuration = 259200; // 3 days in seconds
-  res.setHeader('Cache-Control', `s-maxage=1, stale-while-revalidate=${cacheDuration}`);
+  const maxAge = 86400; // 1 day in seconds
+  const swrDuration = 259200; // 3 days in seconds
+  res.setHeader('Cache-Control', `s-maxage=${maxAge}, stale-while-revalidate=${swrDuration}`);
   res.json(data);
 }
