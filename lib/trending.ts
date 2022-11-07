@@ -75,7 +75,6 @@ export async function getTrending(limit: number = 5, criteria: AvailableMetric =
     orderBy: criteria,
     orderDescending: true,
   });
-  //console.log(rawReport.rows);
 
   const cleanedReport = rawReport.rows.map(row => {
     let temp: CleanedReport = {} as any;
@@ -90,8 +89,6 @@ export async function getTrending(limit: number = 5, criteria: AvailableMetric =
     }
     return temp;
   }).filter(item => item.pagePath.startsWith('/c/') || item.pagePath.startsWith('/i/'));
-
-  console.log(cleanedReport)
 
   async function resolveReport(report: CleanedReport): Promise<SearchResult | undefined> {
     if(report.pagePath.startsWith('/c/')) {

@@ -1,5 +1,6 @@
 import { useFirestore, useFirestoreCollectionData } from 'reactfire'
 import { Course, Instructor, Group } from '@cougargrades/types'
+import useSWR from 'swr'
 import { getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { Observable } from './Observable'
 import { getBadges } from './getBadges';
@@ -98,10 +99,14 @@ export function useSearchResults(inputValue: string): Observable<SearchResult[]>
   // Search for groups
   const groupQuery = db.collection('groups').where('keywords', 'array-contains', inputValue.toLowerCase()).orderBy('name').limit(SEARCH_RESULT_LIMIT)
   const groupData = useFirestoreCollectionData<Group>(groupQuery)
+  // Get "Trending" data
+  const { data: trendingData, error, isValidating } = useSWR<SearchResult[]>('/api/trending');
 
   try {
     return {
       data: [
+        ...(!isValidating && Array.isArray(trendingData) ? trendingData : [])
+          .filter(trend => trend.title.includes(inputValue)),
         ...[
           ...(courseByDeptData.status === 'success' ? courseByDeptData.data.map(e => course2Result(e)) : []),
           ...(courseData.status === 'success' ? courseData.data.map(e => course2Result(e)) : [])
