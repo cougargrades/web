@@ -2,6 +2,7 @@ import { BetaAnalyticsDataClient } from '@google-analytics/data'
 import { course2Result, instructor2Result, SearchResult } from './data/useSearchResults';
 import { getFirestoreDocument } from './ssg';
 import { Course, Instructor } from '@cougargrades/types';
+import { DateYMDString } from './date'
 
 const credential = JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS as any, 'base64').toString());
 const propertyId = process.env.GA4_PROPERTY_ID
@@ -14,7 +15,8 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   }
 });
 
-type RelativeDate = 'today' | 'yesterday' | `${bigint}daysAgo`
+
+type RelativeDate = 'today' | 'yesterday' | `${bigint}daysAgo` | DateYMDString;
 type AvailableDimension = 'pagePath'
 type AvailableMetric = 'activeUsers' | 'screenPageViews'
 
@@ -29,6 +31,11 @@ export interface ReportOptions {
   orderDescending: boolean
 }
 
+/**
+ * Underlying call to the Google Analytics API
+ * @param options 
+ * @returns 
+ */
 export async function runReport(options: ReportOptions) {
   const [response] = await analyticsDataClient.runReport({
     property: `properties/${propertyId}`,
@@ -62,11 +69,18 @@ export interface TrendingItemInfo {
 
 type CleanedReport = {[key in (AvailableDimension | AvailableMetric)]: string};
 
-export async function getTrending(limit: number = 5, criteria: AvailableMetric = 'activeUsers'): Promise<SearchResult[]> {
+/**
+ * Query the Google Analytics API by some different criteria
+ * @param limit 
+ * @param criteria 
+ * @param startDate 
+ * @returns 
+ */
+export async function getAnalyticsReports(limit: number = 5, criteria: AvailableMetric = 'activeUsers', startDate: RelativeDate = '30daysAgo'): Promise<CleanedReport[]> {
   const dimensions: AvailableDimension[] = ['pagePath']
   const metrics: AvailableMetric[] = ['activeUsers', 'screenPageViews']
   const rawReport = await runReport({
-    startDate: '30daysAgo',
+    startDate: startDate,
     endDate: 'today',
     dimensions: dimensions,
     metrics: metrics,
@@ -90,28 +104,63 @@ export async function getTrending(limit: number = 5, criteria: AvailableMetric =
     return temp;
   }).filter(item => item.pagePath.startsWith('/c/') || item.pagePath.startsWith('/i/'));
 
-  async function resolveReport(report: CleanedReport): Promise<SearchResult | undefined> {
-    if(report.pagePath.startsWith('/c/')) {
-      const courseName = report.pagePath.substring('/c/'.length).trim();
-      const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`);
-      if(courseData) {
-        const result = course2Result(courseData);
-        result.group = '🔥 Trending';
-        return result;
-      }
-    }
-    else if(report.pagePath.startsWith('/i/')) {
-      const instructorName = report.pagePath.substring('/i/'.length).trim();
-      const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`);
-      if(instructorData) {
-        const result = instructor2Result(instructorData);
-        result.group = '🔥 Trending';
-        return result;
-      }
-    }
-    return undefined;
-  }
+  return cleanedReport;
+}
 
-  const resolved = await Promise.all(cleanedReport.map(row => resolveReport(row)));
-  return resolved.filter(item => item !== null && item !== undefined).slice(0,limit);
+/**
+ * Turn a report into a Course, Instructor, or undefined if the report's URL didn't correspond to a valid course
+ * @param report 
+ * @returns 
+ */
+export async function resolveReport(report: CleanedReport): Promise<Course | Instructor | undefined> {
+  if(report.pagePath.startsWith('/c/')) {
+    const courseName = report.pagePath.substring('/c/'.length).trim();
+    const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`);
+    return courseData;
+    // if(courseData) {
+    //   const result = course2Result(courseData);
+    //   result.group = '🔥 Trending';
+    //   return result;
+    // }
+  }
+  else if(report.pagePath.startsWith('/i/')) {
+    const instructorName = report.pagePath.substring('/i/'.length).trim();
+    const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`);
+    return instructorData;
+    // if(instructorData) {
+    //   const result = instructor2Result(instructorData);
+    //   result.group = '🔥 Trending';
+    //   return result;
+    // }
+  }
+  return undefined;
+}
+
+/**
+ * Transform 
+ * @param limit 
+ * @param criteria 
+ * @returns 
+ */
+export async function getTrendingResults(limit: number = 5, criteria: AvailableMetric = 'activeUsers'): Promise<SearchResult[]> {
+  const cleanedReport = await getAnalyticsReports(limit, criteria);
+  const TRENDING_TEXT = '🔥 Trending';
+  
+
+  const resolved: (Course | Instructor | undefined)[] = await Promise.all(cleanedReport.map(row => resolveReport(row)));
+  return resolved
+    .filter(item => item !== null && item !== undefined)
+    .map(item => {
+      if ('catalogNumber' in item) {
+        const result = course2Result(item);
+        result.group = TRENDING_TEXT;
+        return result;
+      }
+      else {
+        const result = instructor2Result(item);
+        result.group = TRENDING_TEXT;
+        return result;
+      }
+    })
+    .slice(0,limit);
 }
