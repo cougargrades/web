@@ -16,6 +16,8 @@ export async function getStaticData<T>(func: string, fallback: T = undefined) {
   }
 }
 
+export const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+
 export async function getFirestoreDocument<T>(documentPath: string): Promise<T | undefined> {
   const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
   const db = app.firestore()

@@ -49,6 +49,7 @@
     "remark-rehype": "^10.1.0",
     "rosetta": "^1.1.0",
     "sass": "^1.45.2",
+    "swr": "^2.0.1",
     "timeago-react": "^3.0.2"
   },
   "devDependencies": {

@@ -17,7 +17,7 @@ export function useRosetta() {
   return stone;
 }
 
-export function getRosetta(locale: string) {
+export function getRosetta(locale: string = 'en_US') {
   const stone = rosetta(config);
   stone.locale(locale.replace('-','_'));
   return stone;

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import useSWR from 'swr/immutable'
 import Container from '@mui/material/Container'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -13,7 +14,7 @@ import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
+import { CourseResult, SectionPlus, useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
@@ -24,6 +25,7 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
+import { ObservableStatus } from '../../lib/data/Observable'
 import { buildArgs } from '../../lib/environment'
 
 import styles from './course.module.scss'
@@ -39,7 +41,9 @@ export interface CourseProps {
 export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useCourseData(staticCourseName)
+  //const { data, status } = useCourseData(staticCourseName)
+  const { data, error, isLoading } = useSWR<CourseResult>(`/api/c/${staticCourseName}`)
+  const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticCourseName) ? 'loading' : 'success'
   const isMissingProps = staticCourseName === undefined
   const RELATED_INSTRUCTOR_LIMIT = 4;
 

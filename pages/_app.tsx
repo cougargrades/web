@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import { SWRConfig } from 'swr'
 import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
 const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper))
@@ -67,14 +68,18 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <RecoilRoot>
-          <FirebaseAppProvider>
-            <FirestorePreloader />
-            {/* <RealtimeClaimUpdater /> */}
-            <PageViewLogger />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </FirebaseAppProvider>
+          <SWRConfig value={{
+            fetcher: (resource, init) => fetch(resource, init).then(res => res.json()),
+          }}>
+            <FirebaseAppProvider>
+              <FirestorePreloader />
+              {/* <RealtimeClaimUpdater /> */}
+              <PageViewLogger />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </FirebaseAppProvider>
+          </SWRConfig>
         </RecoilRoot>
       </ThemeProvider>
       

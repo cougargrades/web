@@ -21,3 +21,5 @@ export function isOverNDaysOld(d: Date, n: number): boolean {
 
   return d.valueOf() < n_days_ago.valueOf();
 }
+
+export const extract = (x: string | string[]): string => Array.isArray(x) ? x[0] : x;
