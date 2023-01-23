@@ -27,7 +27,7 @@ import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
-import { InstructorResult, useInstructorData } from '../../lib/data/useInstructorData'
+import { InstructorResult, useInstructorData, useInstructorData2 } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
 import { ObservableStatus } from '../../lib/data/Observable'
@@ -45,9 +45,9 @@ export interface InstructorProps {
 export default function IndividualInstructor({ staticInstructorName, staticDepartmentText }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
-  //const { data, status } = useInstructorData(staticInstructorName)
-  const { data, error, isLoading } = useSWR<InstructorResult>(`/api/instructor/${staticInstructorName}`)
-  const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticInstructorName) ? 'loading' : 'success'
+  const { data, status } = useInstructorData2(staticInstructorName)
+  //const { data, error, isLoading } = useSWR<InstructorResult>(`/api/instructor/${staticInstructorName}`)
+  //const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticInstructorName) ? 'loading' : 'success'
   const isMissingProps = staticInstructorName === undefined
   const RELATED_COURSE_LIMIT = 4;
 
