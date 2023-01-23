@@ -46,7 +46,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
   const stone = useRosetta()
   const router = useRouter()
   //const { data, status } = useInstructorData(staticInstructorName)
-  const { data, error, isLoading } = useSWR<InstructorResult>(`/api/i/${staticInstructorName}`)
+  const { data, error, isLoading } = useSWR<InstructorResult>(`/api/instructor/${staticInstructorName}`)
   const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticInstructorName) ? 'loading' : 'success'
   const isMissingProps = staticInstructorName === undefined
   const RELATED_COURSE_LIMIT = 4;
