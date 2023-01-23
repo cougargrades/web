@@ -75,7 +75,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
     return {
       data: {
         topEnrolled: [
-          ...data.courses.map(e => course2Result(e))
+          ...data.courses.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => course2Result(e))
         ],
         dataGrid: {
           columns: [
