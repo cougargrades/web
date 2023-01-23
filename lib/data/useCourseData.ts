@@ -261,6 +261,7 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
  * React hook for accessing the course data client-side
  * @param courseName 
  * @returns 
+ * @deprecated
  */
 export function useCourseData(courseName: string): Observable<CourseResult> {
   const stone = useRosetta()

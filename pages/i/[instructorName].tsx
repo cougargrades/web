@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import useSWR from 'swr/immutable'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
@@ -26,9 +27,10 @@ import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { buildArgs } from '../../lib/environment'
-import { useInstructorData } from '../../lib/data/useInstructorData'
+import { InstructorResult, useInstructorData } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
+import { ObservableStatus } from '../../lib/data/Observable'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -43,7 +45,9 @@ export interface InstructorProps {
 export default function IndividualInstructor({ staticInstructorName, staticDepartmentText }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useInstructorData(staticInstructorName)
+  //const { data, status } = useInstructorData(staticInstructorName)
+  const { data, error, isLoading } = useSWR<InstructorResult>(`/api/i/${staticInstructorName}`)
+  const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticInstructorName) ? 'loading' : 'success'
   const isMissingProps = staticInstructorName === undefined
   const RELATED_COURSE_LIMIT = 4;
 
@@ -126,9 +130,10 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           />
           :
           <Box className={styles.loadingFlex} height={150}>
-            <strong>Loading {data.sectionCount.toLocaleString()} sections...</strong>
+            <strong>Loading {status === 'success' ? data.sectionCount.toLocaleString() : ''} sections...</strong>
             <div style={{ width: '80%' }}>
-              <LinearProgressWithLabel value={Math.round(data.sectionLoadingProgress)} />
+              <LinearProgressWithLabel value={Math.round(data?.sectionLoadingProgress)} />
+
             </div>
           </Box>
         }
