@@ -6,6 +6,6 @@ import { getTrendingResults } from '../../lib/trending';
 export default async function Trending(req: NextApiRequest, res: NextApiResponse) {
   const data = await getTrendingResults();
   const maxAge = days_to_seconds(1); // 1 day in seconds
-  res.setHeader('Cache-Control', `maxage=${maxAge}, stale-while-revalidate=${maxAge}`);
+  res.setHeader('Cache-Control', `public, must-revalidate, max-age=${maxAge}`);
   res.json(data);
 }

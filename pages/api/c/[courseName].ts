@@ -9,6 +9,6 @@ export default async function GetCourseData(req: NextApiRequest, res: NextApiRes
   const { courseName } = req.query;
   const result = await getCourseData(extract(courseName))
   const maxAge = days_to_seconds(7); // 1 day in seconds
-  res.setHeader('Cache-Control', `maxage=${maxAge}, stale-while-revalidate=${maxAge}`);
+  res.setHeader('Cache-Control', `public, must-revalidate, max-age=${maxAge}`);
   res.json(result);
 }
