@@ -5,7 +5,6 @@ import { days_to_seconds } from '../../../lib/to_seconds';
 import { extract } from '../../../lib/util';
 
 export default async function GetCourseData(req: NextApiRequest, res: NextApiResponse<CourseResult>) {
-  //const data = await getTrendingResults();
   const { courseName } = req.query;
   const result = await getCourseData(extract(courseName))
   const maxAge = days_to_seconds(7); // 1 day in seconds

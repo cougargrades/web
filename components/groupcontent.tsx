@@ -7,8 +7,9 @@ import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Tilty from 'react-tilty'
+import { Chart } from 'react-google-charts'
 import { InstructorCard, InstructorCardSkeleton } from './instructorcard'
-import { GroupResult } from '../lib/data/useAllGroups'
+import { GroupResult, PopulatedGroupResult } from '../lib/data/useAllGroups'
 import { CoursePlus, useGroupData } from '../lib/data/useGroupData'
 import { Carousel } from './carousel'
 import { EnhancedTable } from './datatable'
@@ -20,8 +21,11 @@ import { LinearProgressWithLabel } from './uploader/progress'
 
 
 interface GroupContentProps {
-  data: GroupResult;
+  data: PopulatedGroupResult;
 }
+
+// This can be expensive to run, so here's a simple toggle
+export const ENABLE_GROUP_SECTIONS: boolean = false
 
 export function GroupContent({ data }: GroupContentProps) {
   const router = useRouter()
@@ -58,8 +62,9 @@ export function GroupContent({ data }: GroupContentProps) {
         { topEnrolled.length > 0 ? topEnrolled.slice(0,RELATED_COURSE_LIMIT).map(e => <Grid key={e.key} item><Tilty max={25}><InstructorCard data={e} fitSubtitle elevation={prefersDarkMode ? 4 : 1} /></Tilty></Grid>
         ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
       </Carousel>
-      <h3>Data</h3>
-      {/* {
+      <h3 style={{ marginBottom: 'calc(8px * 2)' }}>Data</h3>
+      {
+        ENABLE_GROUP_SECTIONS ?
         (status !== 'error' && dataChart.data.length > 1) ?
         <div className={styles.chartWrap}>
           <Chart
@@ -80,7 +85,8 @@ export function GroupContent({ data }: GroupContentProps) {
             <LinearProgressWithLabel value={Math.round(sectionLoadingProgress)} />
           </div>
         </Box>
-      } */}
+        : null
+      }
       <EnhancedTable<CoursePlus>
         title="Courses"
         columns={status !== 'error' ? dataGrid.columns : []}

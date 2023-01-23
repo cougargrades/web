@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import useSWR from 'swr/immutable'
 import { useRecoilState } from 'recoil'
 import { Group } from '@cougargrades/types'
 import Container from '@mui/material/Container'
@@ -15,10 +16,11 @@ import { FakeLink } from '../../components/link'
 import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { GroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
+import { AllGroupsResult, GroupResult, PopulatedGroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 import { tocAtom } from '../../lib/recoil'
+import { ObservableStatus } from '../../lib/data/Observable'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -30,11 +32,18 @@ export interface GroupProps {
   doesNotExist?: boolean;
 }
 
+
 export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useAllGroups();
-  const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
+  //const { data, status } = useAllGroups();
+  const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group/`)
+  const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
+
+  //const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${staticGroupId}`)
+  const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
+  
   const isMissingProps = staticGroupId === undefined
   const good = !isMissingProps && status === 'success' && oneGroupStatus === 'success'
   const [_, setTOCExpanded] = useRecoilState(tocAtom)

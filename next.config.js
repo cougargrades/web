@@ -8,6 +8,9 @@ module.exports = withTM({
   images: {
     domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com'],
   },
+  api: {
+    responseLimit: false,
+  },
   headers: async function() {
     return [
       {

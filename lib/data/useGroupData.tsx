@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import useSWR from 'swr/immutable'
 import { usePrevious } from 'react-use'
 import { Course, Section, Util } from '@cougargrades/types'
-import { Observable } from './Observable'
-import { GroupResult, course2Result,  } from './useAllGroups'
+import { Observable, ObservableStatus } from './Observable'
+import { GroupResult, course2Result, PopulatedGroupResult,  } from './useAllGroups'
 import { CourseInstructorResult } from './useCourseData'
 import { Column, defaultComparator } from '../../components/datatable'
 import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
@@ -11,6 +12,7 @@ import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { formatDropRateValue, formatGPAValue, formatSDValue } from './getBadges'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
+import { ENABLE_GROUP_SECTIONS } from '../../components/groupcontent'
 
 
 export type CoursePlus = Course & {
@@ -37,46 +39,43 @@ export interface GroupDataResult {
   sectionLoadingProgress: number;
 }
 
-export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
+/**
+ * Necessary for remapping data into client-usable nodes
+ * @param data 
+ * @returns 
+ */
+export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataResult> {
   const stone = useRosetta()
-  const [courseData, setCourseData] = useState<Course[]>([]);
-  const [sectionData, setSectionData] = useState<Section[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  //const [sectionData, setSectionData] = useState<Section[]>([]);
+  //const [loading, setLoading] = useState<boolean>(false);
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${data.key}${ENABLE_GROUP_SECTIONS ? '/sections' : ''}`)
+  const sectionStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !data.key) ? 'loading' : 'success'
+  const sectionData = sectionStatus === 'success' ? oneGroupData.sections : []
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
-  const previous = usePrevious(data.key)
+  //const previous = usePrevious(data.key)
 
-  // load courses + section data
-  useEffect(() => {
-    // prevent loading the same data again
-    if(previous !== data.key) {
-      setCourseData([]);
-      setSectionData([]);
-      setLoading(true);
-      setSectionLoadingProgress(0);
-      (async () => {
-        if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
-          setCourseData(
-            (await Util.populate<Course>(data.courses))
-              // filter out undefined because there might be some empty references
-              .filter(e => e !== undefined)
-              // sort courses by total enrolled
-              .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
-            ) 
-        }
-        // if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-        //   console.count('group populate section')
-        //   setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
-        // }
-        setLoading(false)
-      })();
-    }
-  }, [data,previous])
+  // // load courses + section data
+  // useEffect(() => {
+  //   // prevent loading the same data again
+  //   if(previous !== data.key) {
+  //     setSectionData([]);
+  //     setLoading(true);
+  //     setSectionLoadingProgress(0);
+  //     (async () => {
+  //       // if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
+  //       //   console.count('group populate section')
+  //       //   setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
+  //       // }
+  //       setLoading(false)
+  //     })();
+  //   }
+  // }, [data,previous])
 
   try {
     return {
       data: {
         topEnrolled: [
-          ...courseData.map(e => course2Result(e))
+          ...data.courses.map(e => course2Result(e))
         ],
         dataGrid: {
           columns: [
@@ -182,16 +181,19 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
             },
           ],
           rows: [
-            ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
+            ...(data.courses.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
+              ...e,
               id: e._id,
-              instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
-              sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
+              //instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
+              instructorCount: e.instructorCount,
+              //sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
+              sectionCount: e.sectionCount,
               gradePointAverage: e.GPA.average,
               standardDeviation: e.GPA.standardDeviation,
               dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
               totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-              enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-              ...e,
+              //enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
+              enrolledPerSection: e.enrollment !== undefined && e.sectionCount !== undefined ? (e.enrollment.totalEnrolled / e.sectionCount) : NaN,
             })))
           ],
           //rows: [],
@@ -241,7 +243,9 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
         sectionLoadingProgress,
       },
       error: undefined,
-      status: loading ? 'loading' : 'success',
+      //status: loading ? 'loading' : 'success',
+      status: sectionStatus,
+      //status: 'success'
     }
   }
   catch(error) {
