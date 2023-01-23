@@ -26,6 +26,7 @@ export default function Header() {
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
           <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
+          <NavLink href="/top"><Emoji label="fire" symbol="🔥" />Popular</NavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>

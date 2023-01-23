@@ -10,6 +10,7 @@ import { copyText } from '../vendor/clipboard'
 import { useIsMobile } from '../lib/hook'
 import { Emoji } from './emoji'
 import { BlogNotifications } from './blog'
+import { POPULAR_TABS } from '../lib/top'
 
 import styles from './panko.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
@@ -136,6 +137,9 @@ export function generateBreadcrumbs(path: string) {
       if(value.toLowerCase() === 'faq') {
         return <span key={key}><Emoji label="speech bubble" symbol="💬" />FAQ</span>
       }
+      if(value.toLowerCase() === 'top') {
+        return <span key={key}><Emoji label="fire" symbol="🔥" />Popular</span>
+      }
     }
     if(index === 2) {
       if(array[1].toLowerCase() === 'g') {
@@ -143,6 +147,9 @@ export function generateBreadcrumbs(path: string) {
       }
       if(array[1].toLowerCase() === 'faq') {
         return <span key={key}>{capitalizeFirstLetter(decodeURI(value).split('-').join(' '))}</span>
+      }
+      if(array[1].toLowerCase() === 'top') {
+        return <span key={key}>{POPULAR_TABS.find(e => e.slug === value)?.title ?? '???'}</span>
       }
     }
     return <span key={key}>{decodeURI(value)}</span>
