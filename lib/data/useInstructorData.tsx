@@ -163,6 +163,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
           rows: [
             ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
               id: e._id,
+              primaryInstructorName: Array.isArray(e.instructorNames) ? `${e.instructorNames[0].lastName}, ${e.instructorNames[0].firstName}` : '',
               ...e,
             })) : [])
           ],
