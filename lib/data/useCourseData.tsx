@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
+import useSWR from 'swr/immutable'
 import { usePrevious } from 'react-use'
 import { Course, Group, Instructor, PublicationInfo, TCCNSUpdateInfo, Section, Util, Enrollment } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
-import { Observable } from './Observable'
+import { Observable, ObservableStatus } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { Grade, grade2Color } from '../../components/badge'
 import { Column, defaultComparator, descendingComparator } from '../../components/datatable'
@@ -264,6 +266,78 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
   };
 }
 
+/**
+ * React hook for accessing the course data client-side
+ * @param courseName 
+ * @returns 
+ */
+export function useCourseData2(courseName: string): Observable<CourseResult> {
+  const stone = useRosetta()
+
+  const { data, error, isLoading } = useSWR<CourseResult>(`/api/course/${courseName}`)
+  const status: ObservableStatus = error ? 'error' : (isLoading || !data || !courseName) ? 'loading' : 'success'
+
+  try {
+    return {
+      data: {
+        ...(status === 'success' ? data : {} as any),
+        dataGrid: {
+          columns: [
+            {
+              field: 'term',
+              headerName: 'Term',
+              type: 'number',
+              width: 65,
+              valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
+            },
+            {
+              field: 'sectionNumber',
+              headerName: 'Section #',
+              type: 'number',
+              width: 90,
+            },
+            {
+              field: 'primaryInstructorName',
+              headerName: 'Instructor',
+              type: 'string',
+              width: 95,
+              valueFormatter: value => <Link href={`/i/${encodeURI(value)}`}><a>{value}</a></Link>,
+            },
+            ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
+              field: e as any,
+              headerName: e,
+              description: `Number of ${e}s given for this section`,
+              type: 'number',
+              width: e !== 'NCR' ? 30 : 60,
+              padding: 6,
+            })),
+            {
+              field: 'semesterGPA',
+              headerName: 'GPA',
+              description: 'Grade Point Average for just this section',
+              type: 'number',
+              width: 60,
+              padding: 8,
+            } as any,
+          ],
+          rows: [
+            ...(status === 'success' ? data.dataGrid.rows : []),
+          ],
+        },
+      },
+      error,
+      status,
+    }
+  }
+  catch(error) {
+    console.error(`[useCourseData] Error:`, error)
+    return {
+      data: undefined,
+      error: error as any,
+      status: 'error',
+    }
+  }
+}
 
 /**
  * React hook for accessing the course data client-side
