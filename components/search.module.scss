@@ -23,9 +23,12 @@
 }
 
 .badgeList {
-  span {
-    margin-left: 0.25rem;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  font-size: 0.9em;
 }
 
 .highlight {
