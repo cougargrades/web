@@ -6,8 +6,10 @@ import { extract } from '../../../../lib/util';
 
 export default async function GetOneGroup(req: NextApiRequest, res: NextApiResponse<PopulatedGroupResult>) {
   const { groupId } = req.query;
-  const result = await getOneGroup(extract(groupId), true)
+  //const result = await getOneGroup(extract(groupId), true)
   const maxAge = days_to_seconds(7); // 1 day in seconds
   res.setHeader('Cache-Control', `public, must-revalidate, max-age=${maxAge}`);
-  res.json(result);
+  res.statusCode = 400;
+  res.end('Temporarily disabled')
+  //res.json(result);
 }
