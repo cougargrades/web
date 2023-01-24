@@ -27,7 +27,7 @@ import { Badge, grade2Color } from '../../components/badge'
 import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading'
 import type { CoursePlusMetrics, InstructorPlusMetrics } from '../../lib/trending'
 import { ObservableStatus } from '../../lib/data/Observable'
-import { useTopResults } from '../../lib/data/useTopResults'
+import { TopResult, useTopResults } from '../../lib/data/useTopResults'
 
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -60,6 +60,10 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
   const handleClick = (other: FaqPostData) => {
     router.push(`/top/${other.slug}`, undefined, { scroll: false })
     setTOCExpanded(false)
+  }
+
+  const handleClickTopItem = (item: TopResult) => {
+    router.push(item.href, undefined, { scroll: true })
   }
 
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
               : <>
               { data.map((item, index, array) => (
                 <React.Fragment key={item.key}>
-                  <ListItemButton alignItems="flex-start">
+                  <ListItemButton alignItems="flex-start" onClick={() => handleClickTopItem(item)}>
                     <ListItemIcon className={styles.topItemIcon}>
                       <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
                         {

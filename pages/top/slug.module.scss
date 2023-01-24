@@ -64,20 +64,20 @@
 $topItemSpace: 7px;
 
 .topItemIcon {
-  min-width: 35px;
-  margin-top: $topItemSpace;
-  padding-right: $topItemSpace;
+  min-width: 35px!important;
+  margin-top: $topItemSpace!important;
+  padding-right: $topItemSpace!important;
   text-align: right;
 }
 
 .topItemText {
-  max-width: 80%;
+  max-width: 80%!important;
   //background-color: darkorchid;
 }
 
 .topItemTitle {
   @media (max-width: 768px) {
-    line-height: 1.15;
+    line-height: 1.15!important;
   }
   padding-top: 0;
 }
@@ -103,7 +103,7 @@ $topItemSpace: 7px;
     flex-shrink: 0;
   }
   @media (max-width: 450px) {
-    max-width: 60px
+    max-width: 60px;
   }
 }
 
