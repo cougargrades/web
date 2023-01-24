@@ -23,7 +23,7 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
-import { LoadingBoxLinearProgress } from '../../components/loading'
+import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
 import { ObservableStatus } from '../../lib/data/Observable'
 import { buildArgs } from '../../lib/environment'
@@ -114,7 +114,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
           </Tooltip>
-        )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} />)}
+        )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} display="inline-block" />)}
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
@@ -133,7 +133,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <Tooltip key={e.key} title={e.description}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
           </Tooltip>
-        )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
+        )) : [1,2,3].map(e => <CustomSkeleton key={e} width={150} height={32} display="inline-block" />)}
         <h3>Related Instructors</h3>
         <Carousel>
           { status === 'success' && data.relatedInstructors.length > 0 ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
@@ -158,7 +158,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <LoadingBoxLinearProgress title="Loading sections..." progress={data?.sectionLoadingProgress} />
+          <LoadingBoxIndeterminate title="Loading sections..." />
         }
       </div>
     </Container>

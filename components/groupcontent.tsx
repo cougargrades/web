@@ -14,10 +14,10 @@ import { CoursePlus, useGroupData } from '../lib/data/useGroupData'
 import { Carousel } from './carousel'
 import { EnhancedTable } from './datatable'
 import { CustomSkeleton } from './skeleton'
+import { LoadingBoxIndeterminate } from './loading'
 
 import styles from './groupcontent.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-import { LinearProgressWithLabel } from './uploader/progress'
 
 
 interface GroupContentProps {
@@ -79,12 +79,7 @@ export function GroupContent({ data }: GroupContentProps) {
           />
         </div>
         :
-        <Box className={styles.loadingFlex} height={150}>
-          <strong>Loading {data.sections.length.toLocaleString()} sections...</strong>
-          <div style={{ width: '80%' }}>
-            <LinearProgressWithLabel value={Math.round(sectionLoadingProgress)} />
-          </div>
-        </Box>
+        <LoadingBoxIndeterminate title="Loading sections..." />
         : null
       }
       <EnhancedTable<CoursePlus>

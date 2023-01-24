@@ -31,6 +31,7 @@ import { InstructorResult, useInstructorData, useInstructorData2 } from '../../l
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
 import { ObservableStatus } from '../../lib/data/Observable'
+import { LoadingBoxIndeterminate } from '../../components/loading'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -129,13 +130,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <Box className={styles.loadingFlex} height={150}>
-            <strong>Loading {status === 'success' ? data.sectionCount.toLocaleString() : ''} sections...</strong>
-            <div style={{ width: '80%' }}>
-              <LinearProgressWithLabel value={Math.round(data?.sectionLoadingProgress)} />
-
-            </div>
-          </Box>
+          <LoadingBoxIndeterminate title="Loading sections..." />
         }
       </div>
     </Container>
