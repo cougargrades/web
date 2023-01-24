@@ -238,7 +238,14 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
         keywords: [],
       }));
     data.sectionCount = Array.isArray(data.sections) ? data.sections.length : 0
-    data.sections = sectionData;
+    data.sections = sectionData
+      // filter out undefined because there might be some empty references
+      .filter(e => e !== undefined)
+      // sanitize unwanted document references
+      .map(sec => ({ 
+        ...sec,
+        instructors: [],
+      }));
     //console.log('cc',data.courseCount,'sc',data.sectionCount,data.sections)
   }
 
