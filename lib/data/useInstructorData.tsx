@@ -141,9 +141,10 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
       ],
       rows: [
         ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
+          ...e,
           id: e._id,
           primaryInstructorName: Array.isArray(e.instructorNames) ? `${e.instructorNames[0].lastName}, ${e.instructorNames[0].firstName}` : '',
-          ...e,
+          instructors: [],
         })) : [])
       ],
     },
@@ -252,15 +253,18 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
       ],
       rows: [
         ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
+          ...e,
           id: e._id,
           instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
+          instructors: [],
           sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
+          sections: [],
+          groups: [],
           gradePointAverage: e.GPA.average,
           standardDeviation: e.GPA.standardDeviation,
           dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
           totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
           enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-          ...e,
         })))
       ],
     },
