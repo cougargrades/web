@@ -127,7 +127,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
               </FormControl>
               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                 <InputLabel>Time Span</InputLabel>
-                <Select label="Time Span" value={viewTime} onChange={(e) => setViewLimit(parseInt2(e.target.value))}>
+                <Select label="Time Span" value={viewTime} onChange={(e) => setViewTime(e.target.value as any)}>
                   <MenuItem value="lastMonth" disabled={viewMetric === 'totalEnrolled'}>Last Month</MenuItem>
                   <MenuItem value="all">All Time</MenuItem>
                 </Select>
@@ -180,7 +180,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
                       </>}
                     />
                     <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
-                      {item.metricFormatted}<span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span>
+                      {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
                     </Typography>
                   </ListItemButton>
                   { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
