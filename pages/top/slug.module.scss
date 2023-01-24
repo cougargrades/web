@@ -83,20 +83,20 @@ $topItemSpace: 7px;
 }
 
 .topItemSubtitle {
-  line-height: 1.2;
+  line-height: 1.2!important;
   padding: calc(0.75em / 2) 0;
   padding-top: 0;
 }
 
 .hintedMetric {
-  font-size: 0.75rem;
+  font-size: 0.75rem!important;
   font-style: italic;
-  margin-top: calc($topItemSpace + 1px);
+  margin-top: calc($topItemSpace + 1px)!important;
   padding-right: 2px;
-  white-space: break-spaces;
+  white-space: break-spaces!important;
   text-align: right;
   min-width: 45px;
-  margin-left: auto;
+  margin-left: auto!important;
   align-self: stretch;
   //background-color: darkgreen;
   @media(min-width: 991px) {
