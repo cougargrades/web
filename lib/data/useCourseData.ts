@@ -8,7 +8,7 @@ import { SearchResultBadge } from './useSearchResults'
 import { Grade, grade2Color } from '../../components/badge'
 import { Column, defaultComparator, descendingComparator } from '../../components/datatable'
 import { getRosetta, useRosetta } from '../i18n'
-import { getYear, seasonCode } from '../util'
+import { getYear, seasonCode, truncateWithEllipsis } from '../util'
 import { getChartData } from './getChartData'
 import { EnrollmentInfoResult } from '../../components/enrollment'
 import { getBadges } from './getBadges'
@@ -93,7 +93,15 @@ function generateSubjectString(data: Instructor | undefined): string {
   if(data !== undefined && data !== null && data.departments !== undefined && data.departments !== null) {
     const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
     if(entries.length > 0) {
-      return entries.map(e => (abbreviationMap as any)[e[0]]).filter(e => e !== undefined).join(', ')
+      // The following attempts to prevent Instructor descriptions from being too long
+      const CHARACTER_LIMIT = 70
+      let numAllowedEntries = entries.length
+      const try_attempt = () => entries.slice(0, numAllowedEntries).map(e => (abbreviationMap as any)[e[0]]).filter(e => e !== undefined).join(', ');
+      while(try_attempt().length > CHARACTER_LIMIT) {
+        numAllowedEntries--;
+      }
+      
+      return try_attempt();
     }
   }
   return '';

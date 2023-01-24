@@ -216,6 +216,7 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
   )];
 
   if (didLoadCorrectly) {
+    data.keywords = []
     data.courseCount = Array.isArray(data.courses) ? data.courses.length : 0
     data.courses = courseData
       // filter out undefined because there might be some empty references
@@ -234,6 +235,7 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
         //sections: Array.isArray(course.sections) ? course.sections.map(sec => ({ id: sec?.id as any as string })) as any : [],
         //instructors: Array.isArray(course.instructors) ? course.instructors.map(ins => ({ id: ins?.id as any as string })) as any : [],
         groups: [],
+        keywords: [],
       }));
     data.sectionCount = Array.isArray(data.sections) ? data.sections.length : 0
     data.sections = sectionData;

@@ -1,4 +1,5 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
+import type { google } from '@google-analytics/data/build/protos/protos'
 import { course2Result, instructor2Result, SearchResult } from './data/useSearchResults';
 import { getFirestoreDocument } from './ssg';
 import { Course, Instructor } from '@cougargrades/types';
@@ -16,15 +17,23 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
 });
 
 
-type RelativeDate = 'today' | 'yesterday' | `${bigint}daysAgo` | DateYMDString;
-type AvailableDimension = 'pagePath'
-type AvailableMetric = 'activeUsers' | 'screenPageViews'
+export type RelativeDate = 'today' | 'yesterday' | `${bigint}daysAgo` | DateYMDString;
+export type AvailableDimension = 'pagePath' | ''
+export type AvailableMetric = 'activeUsers' | 'screenPageViews'
+export type DimensionFilterStringMatchType = google.analytics.data.v1beta.Filter.IStringFilter['matchType']
 
 export interface ReportOptions {
   startDate: RelativeDate
   endDate: RelativeDate
   dimensions: AvailableDimension[]
   metrics: AvailableMetric[],
+  dimensionFilter?: {
+    fieldName: AvailableDimension,
+    stringFilter: {
+      matchType: DimensionFilterStringMatchType,
+      value: string,
+    },
+  },
   limit: number,
   offset: number,
   orderBy: AvailableMetric,
@@ -47,6 +56,9 @@ export async function runReport(options: ReportOptions) {
     ],
     dimensions: options.dimensions.map(dim => ({ name: dim })),
     metrics: options.metrics.map(met => ({ name: met })),
+    dimensionFilter: !options.dimensionFilter ? undefined : {
+      filter: options.dimensionFilter
+    },
     orderBys: [
       {
         metric: {
@@ -76,15 +88,23 @@ type CleanedReport = {[key in (AvailableDimension | AvailableMetric)]: string};
  * @param startDate 
  * @returns 
  */
-export async function getAnalyticsReports(limit: number = 5, criteria: AvailableMetric = 'activeUsers', startDate: RelativeDate = '30daysAgo'): Promise<CleanedReport[]> {
+export async function getAnalyticsReports(limit: number = 5, criteria: AvailableMetric = 'activeUsers', startDate: RelativeDate = '30daysAgo', filterOnly: 'course' | 'instructor' | undefined = undefined): Promise<CleanedReport[]> {
   const dimensions: AvailableDimension[] = ['pagePath']
   const metrics: AvailableMetric[] = ['activeUsers', 'screenPageViews']
+  const dimensionFilter: ReportOptions['dimensionFilter'] | undefined = filterOnly === undefined ? undefined : {
+    fieldName: 'pagePath',
+    stringFilter: {
+      matchType: 'BEGINS_WITH',
+      value: filterOnly === 'course' ? '/c/' : '/i/'
+    }
+  };
   const rawReport = await runReport({
     startDate: startDate,
     endDate: 'today',
     dimensions: dimensions,
     metrics: metrics,
-    limit: limit * 2,
+    dimensionFilter,
+    limit: Math.round(limit * 1.5), // sometimes results don't resolve, so we want some buffer space
     offset: 0,
     orderBy: criteria,
     orderDescending: true,
@@ -107,31 +127,35 @@ export async function getAnalyticsReports(limit: number = 5, criteria: Available
   return cleanedReport;
 }
 
+export interface PlusMetrics {
+  activeUsers?: number;
+  screenPageViews?: number;
+}
+
+export interface CoursePlusMetrics extends Course, PlusMetrics {}
+export interface InstructorPlusMetrics extends Instructor, PlusMetrics {}
+
+const parseIntOrUndefined = (x: string | undefined): number | undefined => isNaN(parseInt(x)) ? undefined : parseInt(x)
+
 /**
  * Turn a report into a Course, Instructor, or undefined if the report's URL didn't correspond to a valid course
  * @param report 
  * @returns 
  */
-export async function resolveReport(report: CleanedReport): Promise<Course | Instructor | undefined> {
+export async function resolveReport(report: CleanedReport): Promise<CoursePlusMetrics | InstructorPlusMetrics | undefined> {
   if(report.pagePath.startsWith('/c/')) {
     const courseName = report.pagePath.substring('/c/'.length).trim();
-    const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`);
+    const courseData = await getFirestoreDocument<CoursePlusMetrics>(`/catalog/${courseName}`);
+    if(courseData) courseData.activeUsers = parseIntOrUndefined(report?.activeUsers)
+    if(courseData) courseData.screenPageViews = parseIntOrUndefined(report?.screenPageViews)
     return courseData;
-    // if(courseData) {
-    //   const result = course2Result(courseData);
-    //   result.group = '🔥 Trending';
-    //   return result;
-    // }
   }
   else if(report.pagePath.startsWith('/i/')) {
     const instructorName = report.pagePath.substring('/i/'.length).trim();
-    const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`);
+    const instructorData = await getFirestoreDocument<InstructorPlusMetrics>(`/instructors/${instructorName}`);
+    if (instructorData) instructorData.activeUsers = parseIntOrUndefined(report?.activeUsers)
+    if (instructorData) instructorData.screenPageViews = parseIntOrUndefined(report?.screenPageViews)
     return instructorData;
-    // if(instructorData) {
-    //   const result = instructor2Result(instructorData);
-    //   result.group = '🔥 Trending';
-    //   return result;
-    // }
   }
   return undefined;
 }
@@ -145,7 +169,6 @@ export async function resolveReport(report: CleanedReport): Promise<Course | Ins
 export async function getTrendingResults(limit: number = 5, criteria: AvailableMetric = 'activeUsers'): Promise<SearchResult[]> {
   const cleanedReport = await getAnalyticsReports(limit, criteria);
   const TRENDING_TEXT = '🔥 Trending';
-  
 
   const resolved: (Course | Instructor | undefined)[] = await Promise.all(cleanedReport.map(row => resolveReport(row)));
   return resolved

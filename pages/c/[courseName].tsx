@@ -23,7 +23,7 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
-import { LinearProgressWithLabel } from '../../components/uploader/progress'
+import { LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
 import { ObservableStatus } from '../../lib/data/Observable'
 import { buildArgs } from '../../lib/environment'
@@ -160,12 +160,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
           :
-          <Box className={styles.loadingFlex} height={150}>
-            <strong>Loading {status === 'success' ? data.sectionCount.toLocaleString() : ''} sections...</strong>
-            <div style={{ width: '80%' }}>
-              <LinearProgressWithLabel value={Math.round(data?.sectionLoadingProgress)} />
-            </div>
-          </Box>
+          <LoadingBoxLinearProgress title="Loading sections..." progress={data?.sectionLoadingProgress} />
         }
       </div>
     </Container>

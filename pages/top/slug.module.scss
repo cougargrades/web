@@ -51,3 +51,64 @@
 .accordionRootExpanded {
   margin-bottom: 16px!important;
 }
+
+.controlBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  //background-color: rebeccapurple;
+}
+
+$topItemSpace: 7px;
+
+.topItemIcon {
+  min-width: 35px;
+  margin-top: $topItemSpace;
+  padding-right: $topItemSpace;
+  text-align: right;
+}
+
+.topItemText {
+  max-width: 80%;
+  //background-color: darkorchid;
+}
+
+.topItemTitle {
+  @media (max-width: 768px) {
+    line-height: 1.15;
+  }
+  padding-top: 0;
+}
+
+.topItemSubtitle {
+  line-height: 1.2;
+  padding: calc(0.75em / 2) 0;
+  padding-top: 0;
+}
+
+.hintedMetric {
+  font-size: 0.75rem;
+  font-style: italic;
+  margin-top: calc($topItemSpace + 1px);
+  padding-right: 2px;
+  white-space: break-spaces;
+  text-align: right;
+  min-width: 45px;
+  margin-left: auto;
+  align-self: stretch;
+  //background-color: darkgreen;
+  @media(min-width: 991px) {
+    flex-shrink: 0;
+  }
+  @media (max-width: 450px) {
+    max-width: 60px
+  }
+}
+
+.hintedMetricExtended {
+  @media (max-width: 990px) {
+    display: none;
+  }
+}

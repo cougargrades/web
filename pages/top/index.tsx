@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import ErrorIcon from '@mui/icons-material/Error'
 import { FaqPostData, getAllPosts } from '../../lib/faq'
-import { POPULAR_TABS } from '../../lib/top'
+import { POPULAR_TABS } from '../../lib/top_front'
 
 export interface FaqIndexProps {
   allPosts: FaqPostData[];

@@ -1,3 +1,4 @@
+import { getRosetta } from "./i18n";
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -9,6 +10,11 @@ export const seasonCode = (termCode: number): string => {
   termCode = Math.floor(termCode / 10)
   const first = termCode % 10
   return `${first}${second}`
+}
+
+export function formatTermCode(termCode: number): string {
+  const stone = getRosetta()
+  return `${stone.t(`season.${seasonCode(termCode)}`)} ${getYear(termCode)}`
 }
 
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
@@ -23,3 +29,5 @@ export function isOverNDaysOld(d: Date, n: number): boolean {
 }
 
 export const extract = (x: string | string[]): string => Array.isArray(x) ? x[0] : x;
+
+export const truncateWithEllipsis = (x: string, maxLength: number): string => x.length <= maxLength ? x : `${x.slice(0,maxLength-1)}\u2026`

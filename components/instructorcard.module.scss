@@ -22,12 +22,17 @@
 }
 
 .badgeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.25rem;
   margin-bottom: 5px;
 }
 
 .badgeRowBadge {
   font-size: inherit!important;
-  margin-right: 0.25rem;
+  // margin-right: 0.25rem;
 }
 
 .badgeStackListItem {
