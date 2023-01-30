@@ -9,34 +9,25 @@ import List from '@mui/material/List'
 import Container from '@mui/material/Container'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
-import ListItem from '@mui/material/ListItem'
 import Divider from '@mui/material/Divider'
-import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
-import Tooltip from '@mui/material/Tooltip'
-import TimeAgo from 'timeago-react'
-import { FakeLink } from '../../components/link'
-import { PankoRow } from '../../components/panko'
-import { FaqPostBody } from '../../components/faqpostbody'
-import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
-import { getPostBySlug, getAllPosts, FaqPostData, markdownToHtml } from '../../lib/faq'
-import { tocAtom } from '../../lib/recoil'
-import { useIsCondensed } from '../../lib/hook'
-import { POPULAR_TABS, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top_front'
-import { Badge, grade2Color } from '../../components/badge'
-import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading'
-import type { CoursePlusMetrics, InstructorPlusMetrics } from '../../lib/trending'
-import { ObservableStatus } from '../../lib/data/Observable'
-import { TopResult, useTopResults } from '../../lib/data/useTopResults'
-
-import styles from './slug.module.scss'
-import interactivity from '../../styles/interactivity.module.scss'
-import instructorCardStyles from '../../components/instructorcard.module.scss'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import { FakeLink } from '../../components/link'
+import { PankoRow } from '../../components/panko'
+import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
+import { FaqPostData } from '../../lib/faq'
+import { tocAtom } from '../../lib/recoil'
+import { useIsCondensed } from '../../lib/hook'
+import { POPULAR_TABS, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top_front'
+import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading'
+import { TopResult, useTopResults } from '../../lib/data/useTopResults'
+import { TopListItem } from '../../components/TopListItem'
 
+import styles from './slug.module.scss'
+import interactivity from '../../styles/interactivity.module.scss'
 
 export interface FaqPostProps {
   post: FaqPostData;
@@ -62,9 +53,18 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
     setTOCExpanded(false)
   }
 
-  const handleClickTopItem = (item: TopResult) => {
-    router.push(item.href, undefined, { scroll: true })
-  }
+  useEffect(() => {
+    if(status === 'success') {
+      // preload referenced areas
+      for(let item of allPosts) {
+        const href = `/top/${item.slug}`
+        router.prefetch(href)
+      }
+      for(let item of data) {
+        router.prefetch(item.href)
+      }
+    }
+  },[status,data,allPosts])
 
   useEffect(() => {
     if (viewMetric === 'totalEnrolled') {
@@ -150,43 +150,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
               : <>
               { data.map((item, index, array) => (
                 <React.Fragment key={item.key}>
-                  <ListItemButton alignItems="flex-start" onClick={() => handleClickTopItem(item)}>
-                    <ListItemIcon className={styles.topItemIcon}>
-                      <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
-                        {
-                        index + 1 <= 10
-                        ? `#${index + 1}`
-                        : <span style={{ fontSize: (index + 1 < 100 ? '0.7em' : '0.6em' ) }}>#{index + 1}</span>
-                        }
-                      </Typography>
-                    </ListItemIcon>
-                    <ListItemText className={styles.topItemText} 
-                      primary={<>
-                        <Typography variant="h5" className={styles.topItemTitle}>
-                          {item.title}
-                        </Typography>
-                      </>}
-                      secondary={<>
-                        <Typography variant="subtitle1" color="text.secondary" className={styles.topItemSubtitle}>
-                          {
-                            item.subtitle.length <= 50
-                            ? `${item.subtitle}`
-                            : <span style={{ fontSize: item.subtitle.length <= 60 ? '0.9em' : '0.8em' }}>{item.subtitle}</span>
-                          }
-                        </Typography>
-                        <Box className={instructorCardStyles.badgeRow} sx={{ marginTop: '6px', fontSize: '0.8em' }}>
-                          { item.badges.map(b => (
-                            <Tooltip key={b.key} title={b.caption}>
-                              <Badge style={{ backgroundColor: b.color }} className={instructorCardStyles.badgeRowBadge}>{b.text}</Badge>
-                            </Tooltip>
-                          ))}
-                        </Box>
-                      </>}
-                    />
-                    <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
-                      {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
-                    </Typography>
-                  </ListItemButton>
+                  <TopListItem data={item} index={index} viewMetric={viewMetric} />
                   { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
                 </React.Fragment>
               ))}

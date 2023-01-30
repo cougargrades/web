@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -34,6 +34,14 @@ export default function FaqPost({ post, allPosts }: FaqPostProps) {
     router.push(`/faq/${other.slug}`, undefined, { scroll: false })
     setTOCExpanded(false)
   }
+
+  useEffect(() => {
+    for(let item of allPosts) {
+      const href = `/faq/${item.slug}`
+      router.prefetch(href)
+    }
+  },[allPosts])
+
   return (
     <>
       <Head>
