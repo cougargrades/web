@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import useSWR from 'swr/immutable'
-import { usePrevious } from 'react-use'
-import { Course, Section, Util } from '@cougargrades/types'
+import { Course } from '@cougargrades/types'
 import { Observable, ObservableStatus } from './Observable'
-import { GroupResult, course2Result, PopulatedGroupResult,  } from './useAllGroups'
+import { course2Result, PopulatedGroupResult,  } from './useAllGroups'
 import { CourseInstructorResult } from './useCourseData'
 import { Column, defaultComparator } from '../../components/datatable'
 import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
@@ -46,30 +45,10 @@ export interface GroupDataResult {
  */
 export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataResult> {
   const stone = useRosetta()
-  //const [sectionData, setSectionData] = useState<Section[]>([]);
-  //const [loading, setLoading] = useState<boolean>(false);
   const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${data.key}${ENABLE_GROUP_SECTIONS ? '/sections' : ''}`)
   const sectionStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !data.key) ? 'loading' : 'success'
   const sectionData = sectionStatus === 'success' ? oneGroupData.sections : []
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
-  //const previous = usePrevious(data.key)
-
-  // // load courses + section data
-  // useEffect(() => {
-  //   // prevent loading the same data again
-  //   if(previous !== data.key) {
-  //     setSectionData([]);
-  //     setLoading(true);
-  //     setSectionLoadingProgress(0);
-  //     (async () => {
-  //       // if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-  //       //   console.count('group populate section')
-  //       //   setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
-  //       // }
-  //       setLoading(false)
-  //     })();
-  //   }
-  // }, [data,previous])
 
   try {
     return {
@@ -243,9 +222,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
         sectionLoadingProgress,
       },
       error: undefined,
-      //status: loading ? 'loading' : 'success',
       status: sectionStatus,
-      //status: 'success'
     }
   }
   catch(error) {

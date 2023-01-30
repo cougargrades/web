@@ -14,7 +14,7 @@ import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
-import { CourseResult, SectionPlus, useCourseData, useCourseData2 } from '../../lib/data/useCourseData'
+import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
 import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
@@ -25,8 +25,6 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
-import { ObservableStatus } from '../../lib/data/Observable'
-import { buildArgs } from '../../lib/environment'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -41,7 +39,7 @@ export interface CourseProps {
 export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useCourseData2(staticCourseName)
+  const { data, status } = useCourseData(staticCourseName)
   const isMissingProps = staticCourseName === undefined
   const RELATED_INSTRUCTOR_LIMIT = 4;
 

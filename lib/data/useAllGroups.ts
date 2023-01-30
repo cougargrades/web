@@ -1,13 +1,9 @@
-import { useFirestore, useFirestoreCollectionData, useFirestoreDoc } from 'reactfire'
 import { Course, Group, LabeledLink, Section, Util } from '@cougargrades/types'
 import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
-import { Observable } from './Observable'
-import { CourseInstructorResult } from './useCourseData';
+import { CourseInstructorResult } from './useCourseData'
 import { getBadges } from './getBadges'
-import { useFakeFirestore } from '../firebase'
-import { defaultComparator, descendingComparator } from '../../components/datatable';
-import { firebaseApp, getFirestoreDocument } from '../ssg';
-import { GroupDataResult } from './useGroupData';
+import { defaultComparator, descendingComparator } from '../../components/datatable'
+import { firebaseApp, getFirestoreDocument } from '../ssg'
 
 type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -137,59 +133,6 @@ export async function getAllGroups(): Promise<AllGroupsResult> {
   }
 }
 
-/**
- * 
- * @returns 
- * @deprecated
- */
-export function useAllGroups(): Observable<AllGroupsResult> {
-  const db = useFakeFirestore();
-  const query = (db.collection('groups') as any).where('categories', 'array-contains', '#UHCoreCurriculum')
-  const { data, status, error } = useFirestoreCollectionData<Group>(query)
-
-  const categories = [
-    ...(
-      status === 'success' ? 
-      Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories.filter(cat => !cat.startsWith('#')) : []).flat()))
-        .sort((a,b) => defaultComparator(a,b)) // [ '(All)', '(2022-2023)', '(2021-2022)', '(2020-2021)' ]
-        .slice(0,2) // don't endlessly list the groups, they're still accessible from a course directly
-      : []
-      ),
-    //ALL_GROUPS_SENTINEL
-  ];
-
-  // make a key/value store of category -> GroupResult[]
-  const results = categories
-    .reduce((obj, key) => {
-      if(key === ALL_GROUPS_SENTINEL) {
-        // obj[key] = [
-        //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
-        // ];
-      }
-      else {
-        obj[key] = [
-          ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)) : [])
-        ];
-      }
-      return obj;
-    }, {} as AllGroupsResultItem);
-
-  return {
-    data: {
-      categories,
-      results,
-      core_curriculum: [
-        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
-      ],
-      all_groups: [
-        ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)) : [])
-      ],
-    },
-    error,
-    status,
-  }
-}
-
 export interface GroupPlus extends Group {
   courseCount?: number;
   sectionCount?: number;
@@ -204,16 +147,13 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
   const data = await getFirestoreDocument<GroupPlus>(`/groups/${groupId}`)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
 
-  const courseData: CoursePlus[] = [...(
-    data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)
-    ? await Util.populate<CoursePlus>(data.courses)
-    : []
-  )];
-  const sectionData: Section[] = [...(
-    data && includeSections && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections)
-    ? await Util.populate<Section>(data.sections, 10, true)
-    : []
-  )];
+  const settledData = await Promise.allSettled([
+    (data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses) ? Util.populate<CoursePlus>(data.courses) : Promise.resolve<CoursePlus[]>([])),
+    (data && includeSections && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+  ]);
+  const [courseDataSettled, sectionDataSettled] = settledData
+  const courseData = courseDataSettled.status === 'fulfilled' ? courseDataSettled.value : [];
+  const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
 
   if (didLoadCorrectly) {
     data.keywords = []
@@ -246,29 +186,7 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
         ...sec,
         instructors: [],
       }));
-    //console.log('cc',data.courseCount,'sc',data.sectionCount,data.sections)
   }
 
   return didLoadCorrectly ? group2PopResult(data) : undefined
-}
-
-/**
- * 
- * @param groupId 
- * @returns 
- * @deprecated
- */
-export function useOneGroup(groupId: string): Observable<GroupResult> {
-  const db = useFakeFirestore();
-  const { data, status, error } = useFirestoreDoc<Group>(db.doc(`/groups/${groupId}`) as any)
-  const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
-  const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
-  const isActualError = typeof groupId === 'string' && groupId !== '' && status !== 'loading' && isBadObject
-  const good = status === 'success' && didLoadCorrectly && !isActualError && data.exists;
-
-  return {
-    data: good ? group2Result(data.data()) : undefined,
-    error,
-    status,
-  }
 }

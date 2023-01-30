@@ -16,7 +16,7 @@ import { FakeLink } from '../../components/link'
 import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { AllGroupsResult, GroupResult, PopulatedGroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
+import { AllGroupsResult, GroupResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 import { tocAtom } from '../../lib/recoil'
@@ -36,11 +36,9 @@ export interface GroupProps {
 export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
-  //const { data, status } = useAllGroups();
-  const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group/`)
+  const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
   const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
 
-  //const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
   const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${staticGroupId}`)
   const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
   

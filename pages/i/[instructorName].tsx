@@ -23,14 +23,11 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnhancedTable } from '../../components/datatable'
 import { CustomSkeleton } from '../../components/skeleton'
-import { LinearProgressWithLabel } from '../../components/uploader/progress'
 import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
 import { useRosetta } from '../../lib/i18n'
-import { buildArgs } from '../../lib/environment'
-import { InstructorResult, useInstructorData, useInstructorData2 } from '../../lib/data/useInstructorData'
+import { InstructorResult, useInstructorData } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
-import { ObservableStatus } from '../../lib/data/Observable'
 import { LoadingBoxIndeterminate } from '../../components/loading'
 
 import styles from './instructor.module.scss'
@@ -46,11 +43,19 @@ export interface InstructorProps {
 export default function IndividualInstructor({ staticInstructorName, staticDepartmentText }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useInstructorData2(staticInstructorName)
-  //const { data, error, isLoading } = useSWR<InstructorResult>(`/api/instructor/${staticInstructorName}`)
-  //const status: ObservableStatus = error ? 'error' : (isLoading || !data || !staticInstructorName) ? 'loading' : 'success'
+  const { data, status } = useInstructorData(staticInstructorName)
   const isMissingProps = staticInstructorName === undefined
   const RELATED_COURSE_LIMIT = 4;
+
+  if(status === 'success') {
+    // preload referenced areas
+    for(let item of data.relatedGroups) {
+      router.prefetch(item.href)
+    }
+    for(let item of data.relatedCourses) {
+      router.prefetch(item.href)
+    }
+  }
 
   return (
     <>
