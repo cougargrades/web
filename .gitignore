@@ -35,3 +35,6 @@ yarn-error.log*
 .env
 .env.**
 !.env.example
+
+# tsc
+tsconfig.tsbuildinfo

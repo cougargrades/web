@@ -111,13 +111,13 @@ export async function getAnalyticsReports(limit: number = 5, criteria: Available
     orderDescending: true,
   });
 
-  const cleanedReport = rawReport.rows.map(row => {
+  const cleanedReport = rawReport.rows!.map(row => {
     let temp: CleanedReport = {} as any;
     dimensions.forEach((item, i) => {
-      temp[item] = row.dimensionValues[i].value
+      temp[item] = row.dimensionValues![i].value ?? ''
     });
     metrics.forEach((item, i) => {
-      temp[item] = row.metricValues[i].value
+      temp[item] = row.metricValues![i].value ?? ''
     });
     if(temp['pagePath']) {
       temp['pagePath'] = decodeURI(temp['pagePath']);
@@ -136,7 +136,7 @@ export interface PlusMetrics {
 export interface CoursePlusMetrics extends Course, PlusMetrics {}
 export interface InstructorPlusMetrics extends Instructor, PlusMetrics {}
 
-const parseIntOrUndefined = (x: string | undefined): number | undefined => isNaN(parseInt(x)) ? undefined : parseInt(x)
+const parseIntOrUndefined = (x: string | undefined): number | undefined => x === undefined ? undefined : isNaN(parseInt(x)) ? undefined : parseInt(x)
 
 /**
  * Turn a report into a Course, Instructor, or undefined if the report's URL didn't correspond to a valid course
@@ -173,7 +173,7 @@ export async function getTrendingResults(limit: number = 5, criteria: AvailableM
 
   const resolved: (Course | Instructor | undefined)[] = await Promise.all(cleanedReport.map(row => resolveReport(row)));
   return resolved
-    .filter(item => item !== null && item !== undefined)
+    .filter(notNullish)
     .map(item => {
       if ('catalogNumber' in item) {
         const result = course2Result(item);
@@ -187,4 +187,8 @@ export async function getTrendingResults(limit: number = 5, criteria: AvailableM
       }
     })
     .slice(0,limit);
+}
+
+function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
 }

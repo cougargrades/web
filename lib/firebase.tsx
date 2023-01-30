@@ -5,7 +5,7 @@ import { firebaseConfig } from './environment'
 
 export function useAnalyticsRef() {
   const app = useFirebaseApp()
-  const analyticsRef = useRef<Analytics>(null)
+  const analyticsRef = useRef<Analytics>(null as any)
 
   useEffect(() => {
     (async () => {

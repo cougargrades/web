@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
@@ -21,7 +22,7 @@ import '../styles/nprogress-custom.scss'
 import '../styles/globals.scss'
 import '../styles/colors.scss'
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const theme = useTheme();
   return (
     <>

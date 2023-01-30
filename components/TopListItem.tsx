@@ -49,7 +49,7 @@ export function TopListItem({ data: item, index, viewMetric }: TopListItemProps)
             </Typography>
             <Box className={instructorCardStyles.badgeRow} sx={{ marginTop: '6px', fontSize: '0.8em' }}>
               { item.badges.map(b => (
-                <Tooltip key={b.key} title={b.caption}>
+                <Tooltip key={b.key} title={b.caption ?? ''}>
                   <Badge style={{ backgroundColor: b.color }} className={instructorCardStyles.badgeRowBadge}>{b.text}</Badge>
                 </Tooltip>
               ))}

@@ -106,12 +106,12 @@ export interface BlogNotice {
   environments?: (VercelEnv & '*')[];
 }
 
-function getNotices(feed: AtomFeed): BlogNotice[] {
+function getNotices(feed?: AtomFeed): BlogNotice[] {
   if(feed !== undefined) {
-    const notices = feed.entries.filter(e => e.link.filter(e => e.title === 'notice').length > 0)
+    const notices = feed.entries.filter(e => e.link && e.link.filter(e => e.title === 'notice').length > 0)
 
     return notices.map(e => 
-      e.link.filter(e => e.title === 'notice')
+      e.link!.filter(e => e.title === 'notice')
       .map((link, index) => ({
         // extract what we can from the primary post information
         id: `${e.id}|${index}`,

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
+import Autocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Highlighter from 'react-highlight-words'
@@ -45,7 +45,7 @@ export default function SearchBar() {
 
   // For state management
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<SearchResult>(null);
+  const [value, setValue] = useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
   // For actually performing searches
   const { data, status } = useSearchResults(inputValue)
@@ -64,7 +64,7 @@ export default function SearchBar() {
   const router = useRouter();
   // Used for displaying rerouting progress bar
   useEffect(() => {
-    const handleStart = (url) => {
+    const handleStart = () => {
       console.time('reroute')
       NProgress.start()
     }
@@ -86,19 +86,21 @@ export default function SearchBar() {
 
   // Used for prefetching all options which are presented
   useEffect(() => {
-    for(let item of data) {
-      router.prefetch(item.href);
+    if (data) {
+      for(let item of data) {
+        router.prefetch(item.href);
+      }
     }
   }, [data]);
 
   // Used for actually issuing the redirect
-  const handleChange = (_, x: string | SearchResult) => {
+  const handleChange: AutocompleteProps<SearchResult, undefined, undefined, boolean | undefined>['onChange'] = (event, x) => {
     if(typeof x !== 'string' && x !== null) {
       // update the state
       setInputValue(x.title)
       setValue(null)
       // unselect the searchbar after choosing a result
-      elementRef.current.blur()
+      elementRef.current?.blur()
       // redirect to the selected result
       router.push(x.href, undefined, { scroll: false })
     }
@@ -158,7 +160,7 @@ export default function SearchBar() {
         isOptionEqualToValue={(option, value) => option.key === value.key}
         getOptionLabel={(option) => typeof option === 'string' ? option : option.title}
         groupBy={(option) => option.group}
-        options={data}
+        options={data ?? []}
         loading={loading}
         filterOptions={(x) => x}
         renderOption={(props, option) => <SearchListItem {...props} key={option.key} option={option} />}
