@@ -23,7 +23,7 @@ import { Carousel } from '../../components/carousel'
 import { InstructorCard, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnhancedTable } from '../../components/datatable'
 import { CustomSkeleton } from '../../components/skeleton'
-import { onlyOne, getFirestoreDocument, getFirestoreCollection } from '../../lib/ssg'
+import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
 import { useRosetta } from '../../lib/i18n'
 import { InstructorResult, useInstructorData } from '../../lib/data/useInstructorData'
 import { SectionPlus } from '../../lib/data/useCourseData'
@@ -32,6 +32,7 @@ import { LoadingBoxIndeterminate } from '../../components/loading'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { extract } from '../../lib/util'
 
 
 export interface InstructorProps {
@@ -123,7 +124,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
     <Container maxWidth="xl">
       <div className={styles.chartWrap}>
         {
-          status === 'success' && data.dataChart.data.length > 1 ?
+          status === 'success' && data.dataChart.data.length > 0 ?
           <Chart
             width={'100%'}
             height={450}
@@ -184,7 +185,7 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
 
   return {
     props: {
-      staticInstructorName: onlyOne(instructorName),
+      staticInstructorName: extract(instructorName),
       staticDepartmentText: departmentText,
       doesNotExist: instructorData === undefined,
     }

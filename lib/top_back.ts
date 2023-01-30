@@ -1,5 +1,6 @@
 import { Course, Instructor } from '@cougargrades/types';
-import { firebaseApp } from './ssg';
+//import { firebaseApp } from './ssg';
+import { firebase } from './firebase_admin'
 import { AvailableMetric, CoursePlusMetrics, getAnalyticsReports, InstructorPlusMetrics, RelativeDate, resolveReport } from './trending';
 
 export type TopMetric = 'totalEnrolled' | AvailableMetric
@@ -15,7 +16,7 @@ export interface TopOptions {
 
 export async function getTopResults({ metric, topic, limit, time }: TopOptions): Promise<(CoursePlusMetrics | InstructorPlusMetrics)[]> {
   if (metric === 'totalEnrolled') {
-    const db = firebaseApp.firestore();
+    const db = firebase.firestore();
     const query = db.collection(topic === 'course' ? 'catalog' : 'instructors').orderBy('enrollment.totalEnrolled', 'desc').limit(limit)
     const snap = await query.get()
     

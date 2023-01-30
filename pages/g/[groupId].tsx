@@ -13,7 +13,7 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import { PankoRow } from '../../components/panko'
 import { FakeLink } from '../../components/link'
-import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
 import { AllGroupsResult, GroupResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
@@ -24,6 +24,7 @@ import { ObservableStatus } from '../../lib/data/Observable'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { extract } from '../../lib/util'
 
 export interface GroupProps {
   staticGroupId: string;
@@ -139,7 +140,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const description = groupData !== undefined ? groupData.description : ''
   return {
     props: {
-      staticGroupId: onlyOne(groupId),
+      staticGroupId: extract(groupId),
       staticName: name,
       staticDescription: description,
       doesNotExist: groupData === undefined,

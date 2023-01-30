@@ -1,9 +1,14 @@
-import firebase from 'firebase'
-import 'firebase/firestore'
+// import firebase from 'firebase'
+// import 'firebase/firestore'
+//import { firebase } from './firebase_admin'
+
 import { firebaseConfig } from '../lib/environment'
 
-export const onlyOne = (value: string | string[]) => Array.isArray(value) ? value[0] : value;
 
+/**
+ * 
+ * @deprecated
+ */
 export async function getStaticData<T>(func: string, fallback: T = undefined) {
   try {
     const { projectId } = firebaseConfig
@@ -16,18 +21,29 @@ export async function getStaticData<T>(func: string, fallback: T = undefined) {
   }
 }
 
-export const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+/**
+ * @deprecated
+ */
+//export const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
 
-export async function getFirestoreDocument<T>(documentPath: string): Promise<T | undefined> {
-  const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-  const db = app.firestore()
-  const snap = await db.doc(documentPath).get();
-  return snap.exists ? snap.data() as T : undefined
-}
+/**
+ * 
+ * @deprecated
+ */
+// export async function getFirestoreDocument<T>(documentPath: string): Promise<T | undefined> {
+//   const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+//   const db = app.firestore()
+//   const snap = await db.doc(documentPath).get();
+//   return snap.exists ? snap.data() as T : undefined
+// }
 
-export async function getFirestoreCollection<T>(collectionPath: string): Promise<T[]> {
-  const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-  const db = app.firestore()
-  const docs = await db.collection(collectionPath).get()
-  return docs.docs.filter(e => e.exists).map(e => e.data() as T);
-}
+/**
+ * 
+ * @deprecated
+ */
+// export async function getFirestoreCollection<T>(collectionPath: string): Promise<T[]> {
+//   const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+//   const db = app.firestore()
+//   const docs = await db.collection(collectionPath).get()
+//   return docs.docs.filter(e => e.exists).map(e => e.data() as T);
+// }

@@ -3,14 +3,7 @@ import dynamic from 'next/dynamic'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
-const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper))
-const FirestorePreloader = dynamic(() => import('../lib/firebase').then(mod => mod.FirestorePreloader))
-//import { FirebaseAppProviderWrapper as FirebaseAppProvider } from '../lib/firebase'
-//import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
-const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then(mod => mod.RealtimeClaimUpdater))
-//import { AppCheck } from '../components/appcheck'
-const AppCheck = dynamic(() => import('../components/appcheck').then(mod => mod.AppCheck))
-//import { RecoilRoot } from 'recoil'
+const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper));
 const RecoilRoot = dynamic(() => import('recoil').then(mod => mod.RecoilRoot))
 const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then(mod => mod.PageViewLogger))
 //import Layout from '../components/layout'
@@ -72,7 +65,6 @@ export default function MyApp({ Component, pageProps }) {
             fetcher: (resource, init) => fetch(resource, init).then(res => res.json()),
           }}>
             <FirebaseAppProvider>
-              <FirestorePreloader />
               {/* <RealtimeClaimUpdater /> */}
               <PageViewLogger />
               <Layout>

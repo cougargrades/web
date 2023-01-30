@@ -1,8 +1,9 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
 import type { google } from '@google-analytics/data/build/protos/protos'
-import { course2Result, instructor2Result, SearchResult } from './data/useSearchResults';
-import { getFirestoreDocument } from './ssg';
 import { Course, Instructor } from '@cougargrades/types';
+import { course2Result, instructor2Result, SearchResult } from './data/useSearchResults';
+//import { getFirestoreDocument } from './ssg';
+import { getFirestoreDocument } from './data/back/getFirestoreData'
 import { DateYMDString } from './date'
 
 const credential = JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS as any, 'base64').toString());

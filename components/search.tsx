@@ -7,11 +7,13 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Highlighter from 'react-highlight-words'
 import NProgress from 'nprogress'
+import { logEvent } from 'firebase/analytics'
 import { searchInputAtom } from '../lib/recoil'
 import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
-import { useAnalyticsRef } from '../lib/hook'
+import { useAnalyticsRef } from '../lib/firebase'
+
 import styles from './search.module.scss'
 
 
@@ -52,7 +54,7 @@ export default function SearchBar() {
   // For analytics
   useEffect(() => {
     if(analyticsRef.current !== null && inputValue.length > 0) {
-      analyticsRef.current.logEvent('search', { 
+      logEvent(analyticsRef.current, 'search', {
         search_term: inputValue
       })
     }

@@ -15,7 +15,7 @@ import { Chart } from 'react-google-charts'
 import { Course, PublicationInfo } from '@cougargrades/types'
 import { PankoRow } from '../../components/panko'
 import { SectionPlus, useCourseData } from '../../lib/data/useCourseData'
-import { onlyOne, getFirestoreDocument } from '../../lib/ssg'
+import { getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
 import { useRosetta } from '../../lib/i18n'
 import { Badge, BadgeSkeleton } from '../../components/badge'
 import { defaultComparator, EnhancedTable } from '../../components/datatable'
@@ -28,6 +28,7 @@ import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { extract } from '../../lib/util'
 
 export interface CourseProps {
   staticCourseName: string;
@@ -209,7 +210,7 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
 
   return { 
     props: { 
-      staticCourseName: onlyOne(courseName),
+      staticCourseName: extract(courseName),
       staticDescription: description,
       staticHTML: content ?? '',
       doesNotExist: courseData === undefined,
