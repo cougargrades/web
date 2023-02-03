@@ -1,4 +1,4 @@
-const withTM = require('next-transpile-modules')(['rxfire','reactfire','fitty', 'react-fitty', 'react-tilty']);
+const withTM = require('next-transpile-modules')(['fitty', 'react-fitty', '@au5ton/react-tilty']);
 
 /** @type {import('next/dist/next-server/server/config').NextConfig} */
 module.exports = withTM({
@@ -7,6 +7,9 @@ module.exports = withTM({
   webpack5: true,
   images: {
     domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com'],
+  },
+  api: {
+    responseLimit: false,
   },
   headers: async function() {
     return [
@@ -29,7 +32,7 @@ module.exports = withTM({
   i18n: {
     // These are all the locales you want to support in
     // your application
-    locales: ['en-US', 'es'],
+    locales: ['en-US'],
     // This is the default locale you want to be used when visiting
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'en-US',
@@ -51,6 +54,6 @@ module.exports = withTM({
     //   },
     // ],
     // Automatically redirect based on the user's preferred locale
-    localeDetection: true,
+    localeDetection: false,
   },
 })

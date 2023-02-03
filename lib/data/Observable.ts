@@ -12,7 +12,7 @@ export interface Observable<T> {
   status: ObservableStatus;
   //hasEmitted: boolean;
   //isComplete: boolean;
-  data: T;
+  data: T | undefined;
   error: Error | undefined;
   //firstValuePromise: Promise<void>;
 }

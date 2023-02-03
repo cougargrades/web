@@ -1,7 +1,7 @@
 .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
-  font-size: 80%;
+  font-size: 0.8em;
   font-weight: bold;
   line-height: 1;
   text-align: center;
@@ -14,8 +14,8 @@
 }
 
 .skeleton {
-  display: inline-block;
-  border-radius: 0.3rem;
+  display: inline-block!important;
+  border-radius: 0.3rem!important;
 }
 
 .new {

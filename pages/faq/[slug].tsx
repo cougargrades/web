@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -34,6 +34,14 @@ export default function FaqPost({ post, allPosts }: FaqPostProps) {
     router.push(`/faq/${other.slug}`, undefined, { scroll: false })
     setTOCExpanded(false)
   }
+
+  useEffect(() => {
+    for(let item of allPosts) {
+      const href = `/faq/${item.slug}`
+      router.prefetch(href)
+    }
+  },[allPosts])
+
   return (
     <>
       <Head>
@@ -75,9 +83,9 @@ export default function FaqPost({ post, allPosts }: FaqPostProps) {
             <Typography variant="subtitle2" color="text.secondary" gutterBottom>
               Frequently Asked Question:
             </Typography>
-            <FaqPostBody content={post.content} />
+            <FaqPostBody content={post.content ?? ''} />
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Last modified: <TimeAgo datetime={post.date} locale={'en'} />
+              Last modified: <TimeAgo datetime={post.date ?? ''} locale={'en'} />
             </Typography>
           </div>
         </article>
@@ -101,9 +109,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<FaqPostProps> = async ({ params }) => {
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug
+  const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug
   const allPosts = getAllPosts(['slug','title'])
-  const postFound = allPosts.map(e => e.slug).includes(slug);
+  const postFound = allPosts.map(e => e.slug).includes(slug) && slug !== undefined;
   const post = postFound ? getPostBySlug(slug, ['slug','title', 'date','content']) : {};
   if(postFound) {
     post.content = await markdownToHtml(post.content || '')

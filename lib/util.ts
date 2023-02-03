@@ -1,3 +1,4 @@
+import { getRosetta } from "./i18n";
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -11,6 +12,11 @@ export const seasonCode = (termCode: number): string => {
   return `${first}${second}`
 }
 
+export function formatTermCode(termCode: number): string {
+  const stone = getRosetta()
+  return `${stone.t(`season.${seasonCode(termCode)}`)} ${getYear(termCode)}`
+}
+
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
@@ -20,4 +26,12 @@ export function isOverNDaysOld(d: Date, n: number): boolean {
   n_days_ago.setDate(n_days_ago.getDate() - n);
 
   return d.valueOf() < n_days_ago.valueOf();
+}
+
+export const extract = (x: string | string[] | undefined): string => x === undefined ? '' : Array.isArray(x) ? x[0] : x;
+
+export const truncateWithEllipsis = (x: string, maxLength: number): string => x.length <= maxLength ? x : `${x.slice(0,maxLength-1)}\u2026`
+
+export function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
 }

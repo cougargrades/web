@@ -1,13 +1,14 @@
 {
   "name": "@cougargrades/web",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
     "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "betterlint": "tsc --noEmit"
   },
   "dependencies": {
     "@au5ton/use-atom-feed": "^1.0.4",
@@ -21,7 +22,8 @@
     "@mui/material": "^5.2.6",
     "@primer/css": "^19.1.1",
     "bootstrap": "^5.0.1",
-    "firebase": "^8.10.0",
+    "firebase": "^9.16.0",
+    "firebase-admin": "^9.12.0",
     "fitty": "^2.3.5",
     "gray-matter": "^4.0.3",
     "next": "~12.0.3",
@@ -33,13 +35,13 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.3.4",
     "react-fitty": "^1.0.1",
-    "react-google-charts": "^3.0.15",
+    "react-google-charts": "^4.0.0",
     "react-highlight-words": "^0.17.0",
     "react-swipeable": "^6.1.2",
-    "react-tilty": "^2.0.3",
+    "@au5ton/react-tilty": "^2.0.4",
     "react-transition-group": "^4.4.2",
     "react-use": "^17.2.4",
-    "reactfire": "^3.0.0",
+    "reactfire": "^4.2.2",
     "recoil": "^0.5.2",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
@@ -49,12 +51,14 @@
     "remark-rehype": "^10.1.0",
     "rosetta": "^1.1.0",
     "sass": "^1.45.2",
+    "swr": "^2.0.1",
     "timeago-react": "^3.0.2"
   },
   "devDependencies": {
     "@au5ton/snooze": "^1.0.3",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^17.0.11",
+    "@types/react-highlight-words": "^0.16.4",
     "eslint": "^7.28.0",
     "eslint-config-next": "^12.1.6",
     "next-transpile-modules": "^9.0.0",

@@ -20,8 +20,8 @@ export const buildArgs: {
   buildDate: string,
   vercelEnv: VercelEnv
 } = {
-  commitHash: process.env.NEXT_PUBLIC_GIT_SHA,
-  version: process.env.NEXT_PUBLIC_VERSION,
-  buildDate: process.env.NEXT_PUBLIC_BUILD_DATE,
+  commitHash: process.env.NEXT_PUBLIC_GIT_SHA ?? '',
+  version: process.env.NEXT_PUBLIC_VERSION ?? '',
+  buildDate: process.env.NEXT_PUBLIC_BUILD_DATE ?? '',
   vercelEnv: (process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'development'
 };

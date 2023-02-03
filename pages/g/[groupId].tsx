@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import useSWR from 'swr/immutable'
 import { useRecoilState } from 'recoil'
 import { Group } from '@cougargrades/types'
 import Container from '@mui/material/Container'
@@ -12,16 +13,18 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import { PankoRow } from '../../components/panko'
 import { FakeLink } from '../../components/link'
-import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
+import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
 import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { GroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
+import { AllGroupsResult, GroupResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
 import { buildArgs } from '../../lib/environment'
 import { useRosetta } from '../../lib/i18n'
 import { tocAtom } from '../../lib/recoil'
+import { ObservableStatus } from '../../lib/data/Observable'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { extract } from '../../lib/util'
 
 export interface GroupProps {
   staticGroupId: string;
@@ -30,11 +33,16 @@ export interface GroupProps {
   doesNotExist?: boolean;
 }
 
+
 export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useAllGroups();
-  const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
+  const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
+  const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
+
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${staticGroupId}`)
+  const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
+  
   const isMissingProps = staticGroupId === undefined
   const good = !isMissingProps && status === 'success' && oneGroupStatus === 'success'
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
@@ -45,10 +53,10 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   }
 
   useEffect(() => {
-    if(good && data.categories.length > 0) {
+    if(good && data!.categories.length > 0) {
       // preload referenced areas
-      for(let key of data.categories) {
-        const cat = data.results[key];
+      for(let key of data!.categories) {
+        const cat = data!.results[key];
         for(let item of cat) {
           router.prefetch(item.href)
         }
@@ -68,9 +76,9 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       <main className={styles.main}>
         <aside className={styles.nav}>
           <TableOfContentsWrap condensedTitle="Select Group">
-          { good ? data.categories.map(cat => (
+          { good ? data!.categories.map(cat => (
             <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
-              {data.results[cat].map((e, index) => (
+              {data!.results[cat].map((e, index) => (
                 <React.Fragment key={e.key}>
                   <FakeLink href={e.href}>
                     <ListItemButton
@@ -103,7 +111,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
           </Alert>
           : <></>
           }
-          { good && doesNotExist === false ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
+          { good && doesNotExist === false && oneGroupData !== undefined ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
         </div>
       </main>
     </>
@@ -126,13 +134,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const { params } = context;
-  const { groupId } = params
+  const groupId = params?.groupId;
   const groupData = await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''
   return {
     props: {
-      staticGroupId: onlyOne(groupId),
+      staticGroupId: extract(groupId),
       staticName: name,
       staticDescription: description,
       doesNotExist: groupData === undefined,

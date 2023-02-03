@@ -106,16 +106,16 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
 
   return (
     <>
-    <Card variant="outlined" sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
-      <CardActionArea className={styles.cardActionArea} onClick={() => setOpen(true)}>
-        <CardContent className={styles.cardContent}>
-          <Typography className={styles.showMore} color="text.secondary">
-            View all {courseName} instructors
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-    <Dialog
+      <Card variant="outlined" sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
+        <CardActionArea className={styles.cardActionArea} onClick={() => setOpen(true)}>
+          <CardContent className={styles.cardContent}>
+            <Typography className={styles.showMore} color="text.secondary">
+              View all {courseName} instructors
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+      <Dialog
         fullScreen={fullScreen}
         fullWidth={!fullScreen}
         maxWidth={'md'}

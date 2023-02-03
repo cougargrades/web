@@ -1,16 +1,14 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import type { AppProps } from 'next/app'
+import { SWRConfig } from 'swr'
 import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
-const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper))
-const FirestorePreloader = dynamic(() => import('../lib/firebase').then(mod => mod.FirestorePreloader))
-//import { FirebaseAppProviderWrapper as FirebaseAppProvider } from '../lib/firebase'
-//import { RealtimeClaimUpdater } from '../components/auth/RealtimeClaimUpdater'
-const RealtimeClaimUpdater = dynamic(() => import('../components/auth/RealtimeClaimUpdater').then(mod => mod.RealtimeClaimUpdater))
-//import { AppCheck } from '../components/appcheck'
-const AppCheck = dynamic(() => import('../components/appcheck').then(mod => mod.AppCheck))
-//import { RecoilRoot } from 'recoil'
+// @ts-ignore
+const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper));
+// @ts-ignore
 const RecoilRoot = dynamic(() => import('recoil').then(mod => mod.RecoilRoot))
+// @ts-ignore
 const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then(mod => mod.PageViewLogger))
 //import Layout from '../components/layout'
 // eslint-disable-next-line react/display-name
@@ -27,7 +25,7 @@ import '../styles/nprogress-custom.scss'
 import '../styles/globals.scss'
 import '../styles/colors.scss'
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const theme = useTheme();
   return (
     <>
@@ -67,14 +65,17 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         <RecoilRoot>
-          <FirebaseAppProvider>
-            <FirestorePreloader />
-            {/* <RealtimeClaimUpdater /> */}
-            <PageViewLogger />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </FirebaseAppProvider>
+          <SWRConfig value={{
+            fetcher: (resource, init) => fetch(resource, init).then(res => res.json()),
+          }}>
+            <FirebaseAppProvider>
+              {/* <RealtimeClaimUpdater /> */}
+              <PageViewLogger />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </FirebaseAppProvider>
+          </SWRConfig>
         </RecoilRoot>
       </ThemeProvider>
       

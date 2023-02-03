@@ -54,10 +54,12 @@ export function getChartData(sections: Section[]) {
       else {
           rowID = rowsMap.get(term);
       }
-      if(typeof graphArray[rowID][colsMap.get(instructor)] === 'undefined') { //initialize cell
-          graphArray[rowID][colsMap.get(instructor)] = 0;
+      if(typeof graphArray[rowID][colsMap.get(instructor)!] === 'undefined') { //initialize cell
+          graphArray[rowID][colsMap.get(instructor)!] = 0;
       }
-      graphArray[rowID][colsMap.get(instructor)] += gpa*students; //increment student-weighted GPA
+      // TODO: fix? null * number => 0
+      //graphArray[rowID][colsMap.get(instructor)!] += gpa*students; //increment student-weighted GPA
+      graphArray[rowID][colsMap.get(instructor)!] += (gpa ?? 0)*students; //increment student-weighted GPA
   }
   for(let i = 1; i < graphArray.length; ++i) {
       for(let j = 1; j < graphArray[i].length; ++j) {
@@ -110,8 +112,9 @@ export function expandSections(sections: Section[]) {
       }
     }
     // move instructor data to `primaryInstructor`
-    item.primaryInstructor = item.instructorNames[0]
-    delete item.instructorNames;
+    //item.primaryInstructor = item.instructorNames[0]
+    item.primaryInstructor = Array.isArray(item.instructorNames) ? item.instructorNames[0] : { firstName: '???', lastName: '???' };
+    //delete item.instructorNames;
   }
 
   // expands instructor data
