@@ -4,8 +4,11 @@ import type { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from '@mui/material/styles'
 //import { FirebaseAppProvider } from 'reactfire'
+// @ts-ignore
 const FirebaseAppProvider = dynamic(() => import('../lib/firebase').then(mod => mod.FirebaseAppProviderWrapper));
+// @ts-ignore
 const RecoilRoot = dynamic(() => import('recoil').then(mod => mod.RecoilRoot))
+// @ts-ignore
 const PageViewLogger = dynamic(() => import('../components/pageviewlogger').then(mod => mod.PageViewLogger))
 //import Layout from '../components/layout'
 // eslint-disable-next-line react/display-name

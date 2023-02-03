@@ -9,5 +9,11 @@ export default async function GetOneGroup(req: NextApiRequest, res: NextApiRespo
   const { groupId } = req.query;
   const result = await getOneGroup(extract(groupId))
   res.setHeader('Cache-Control', CACHE_CONTROL);
-  res.json(result);
+  if (result) {
+    res.json(result);
+  }
+  else {
+    res.statusCode = 404;
+    res.send('Group Not Found' as any);
+  }
 }

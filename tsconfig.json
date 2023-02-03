@@ -15,17 +15,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    /**
-      * TODO: Set to `true` when this pull request is accepted:
-      * https://github.com/jonahallibone/react-tilty/pull/14
-      */
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "local-types"
-    ]
   },
   "include": [
     "**/*.ts",
