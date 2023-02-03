@@ -1,4 +1,4 @@
-const withTM = require('next-transpile-modules')(['fitty', 'react-fitty', '@au5ton/react-tilty']);
+const withTM = require('next-transpile-modules')(['fitty', 'react-fitty', 'react-tilty']);
 
 /** @type {import('next').NextConfig} */
 const config = {
