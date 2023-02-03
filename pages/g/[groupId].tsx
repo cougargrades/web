@@ -53,10 +53,10 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   }
 
   useEffect(() => {
-    if(good && data.categories.length > 0) {
+    if(good && data!.categories.length > 0) {
       // preload referenced areas
-      for(let key of data.categories) {
-        const cat = data.results[key];
+      for(let key of data!.categories) {
+        const cat = data!.results[key];
         for(let item of cat) {
           router.prefetch(item.href)
         }
@@ -76,9 +76,9 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       <main className={styles.main}>
         <aside className={styles.nav}>
           <TableOfContentsWrap condensedTitle="Select Group">
-          { good ? data.categories.map(cat => (
+          { good ? data!.categories.map(cat => (
             <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
-              {data.results[cat].map((e, index) => (
+              {data!.results[cat].map((e, index) => (
                 <React.Fragment key={e.key}>
                   <FakeLink href={e.href}>
                     <ListItemButton
@@ -111,7 +111,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
           </Alert>
           : <></>
           }
-          { good && doesNotExist === false ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
+          { good && doesNotExist === false && oneGroupData !== undefined ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
         </div>
       </main>
     </>
@@ -134,7 +134,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const { params } = context;
-  const { groupId } = params
+  const groupId = params?.groupId;
   const groupData = await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''

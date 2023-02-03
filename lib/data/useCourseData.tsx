@@ -158,7 +158,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             } as any,
           ],
           rows: [
-            ...(status === 'success' ? data.dataGrid.rows : []),
+            ...(status === 'success' ? data!.dataGrid.rows : []),
           ],
         },
       },

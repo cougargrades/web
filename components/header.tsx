@@ -4,11 +4,12 @@ import Button from '@mui/material/Button'
 //import { useSigninCheck } from 'reactfire'
 import Search, { SearchBarSkeleton } from './search'
 import { Emoji } from './emoji'
+import { LinkProps } from './link'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
 
-export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
+export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
 
 export default function Header() {
   //const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});

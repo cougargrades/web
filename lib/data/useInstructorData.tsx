@@ -99,7 +99,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             },
           ],
           rows: [
-            ...(status === 'success' ? data.sectionDataGrid.rows : []),
+            ...(status === 'success' ? data!.sectionDataGrid.rows : []),
           ],
         },
         courseDataGrid: {
@@ -182,7 +182,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForGPA(value)] }}>{formatGPAValue(value)}</Badge> : '',
             },
             {
               field: 'standardDeviation',
@@ -192,7 +192,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForStdDev(value)] }}>{formatSDValue(value)}</Badge> : '',
             },
             {
               field: 'dropRate',
@@ -202,11 +202,11 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => isNaN(parseFloat(`${value}`)) ? 'No data' : <Badge style={{ backgroundColor: grade2Color.get('W') }}>{formatDropRateValue(value)}</Badge>,
+              valueFormatter: value => isNaN(parseFloat(`${value}`)) ? 'No data' : <Badge style={{ backgroundColor: grade2Color['W'] }}>{formatDropRateValue(value)}</Badge>,
             },
           ],
           rows: [
-            ...(status === 'success' ? data.courseDataGrid.rows : []),
+            ...(status === 'success' ? data!.courseDataGrid.rows : []),
           ],
         },
       },
@@ -217,7 +217,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
   catch(error) {
     return {
       data: undefined,
-      error,
+      error: error as any,
       status: 'error',
     }
   }

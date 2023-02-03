@@ -66,12 +66,12 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     enrollment: [
       ...(didLoadCorrectly ? 
           data.enrollment.totalEnrolled === 0 ? 
-          [{ key: 'nodata', title: 'No data', color: grade2Color.get('I')!, value: -1, percentage: 100 }] : 
+          [{ key: 'nodata', title: 'No data', color: grade2Color['I'], value: -1, percentage: 100 }] : 
           (['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW'] as (keyof Enrollment)[])
           .map(k => ({
             key: k,
             title: k.substring(5), // 'totalA' => 'A'
-            color: grade2Color.get(k.substring(5) as Grade) ?? grade2Color.get('I')!,
+            color: grade2Color[k.substring(5) as Grade] ?? grade2Color['I'],
             value: data.enrollment[k],
             percentage: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
           })

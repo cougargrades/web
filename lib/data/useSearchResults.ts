@@ -104,7 +104,7 @@ export function useSearchResults(inputValue: string): Observable<SearchResult[]>
   catch(error) {
     return {
       data: [],
-      error,
+      error: error as any,
       status: 'error',
     }
   }

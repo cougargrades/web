@@ -28,6 +28,10 @@ export function isOverNDaysOld(d: Date, n: number): boolean {
   return d.valueOf() < n_days_ago.valueOf();
 }
 
-export const extract = (x: string | string[]): string => Array.isArray(x) ? x[0] : x;
+export const extract = (x: string | string[] | undefined): string => x === undefined ? '' : Array.isArray(x) ? x[0] : x;
 
 export const truncateWithEllipsis = (x: string, maxLength: number): string => x.length <= maxLength ? x : `${x.slice(0,maxLength-1)}\u2026`
+
+export function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
+}

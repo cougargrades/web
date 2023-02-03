@@ -66,9 +66,9 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
             </div>
             <p className="text-muted">
               <small>{
-                status !== 'success' ? '' : 
-                `${data.totalSponsorCount} people sponsor CougarGrades 
-                totalling $${data.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!`
+                status === 'success' ?  
+                `${data!.totalSponsorCount} people sponsor CougarGrades 
+                totalling $${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
               }</small>
             </p>
           </div>

@@ -13,7 +13,7 @@ export function getBadges(gpa: GPA.GPA, enrollment?: Enrollment): SearchResultBa
         {
           key: 'gpa',
           text: formatGPAValue(gpa.average),
-          color: grade2Color.get(getGradeForGPA(gpa.average)),
+          color: grade2Color[getGradeForGPA(gpa.average)],
           caption: 'Grade Point Average',
         }
       ] : []),
@@ -21,7 +21,7 @@ export function getBadges(gpa: GPA.GPA, enrollment?: Enrollment): SearchResultBa
         {
           key: 'sd',
           text: formatSDValue(gpa.standardDeviation),
-          color: grade2Color.get(getGradeForStdDev(gpa.standardDeviation)),
+          color: grade2Color[getGradeForStdDev(gpa.standardDeviation)],
           caption: 'Standard Deviation',
         }
       ] : []),
@@ -29,7 +29,7 @@ export function getBadges(gpa: GPA.GPA, enrollment?: Enrollment): SearchResultBa
         {
           key: 'droprate',
           text: formatDropRateValue(enrollment.totalW/enrollment.totalEnrolled*100),
-          color: grade2Color.get('W'),
+          color: grade2Color['W'],
           caption: 'Drop Rate',
         }
       ] : []),

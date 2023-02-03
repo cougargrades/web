@@ -57,7 +57,7 @@ export function PankoRow() {
   }
 
   useEffect(() => {
-    if(navigator.share) {
+    if('share' in navigator) {
       const inUserAgent = (x: string) => navigator.userAgent.toLowerCase().indexOf(x.toLocaleLowerCase()) >= 0
       
       const isMac = inUserAgent('Macintosh');
@@ -156,6 +156,6 @@ export function generateBreadcrumbs(path: string) {
   })
 }
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

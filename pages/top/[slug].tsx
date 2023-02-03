@@ -60,7 +60,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
         const href = `/top/${item.slug}`
         router.prefetch(href)
       }
-      for(let item of data) {
+      for(let item of data!) {
         router.prefetch(item.href)
       }
     }
@@ -148,7 +148,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
               <LoadingBoxIndeterminate title="Loading..." />
               </>
               : <>
-              { data.map((item, index, array) => (
+              { data!.map((item, index, array) => (
                 <React.Fragment key={item.key}>
                   <TopListItem data={item} index={index} viewMetric={viewMetric} />
                   { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
@@ -177,7 +177,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<FaqPostProps> = async ({ params }) => {
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug
+  const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug
   const post = POPULAR_TABS.find(post => post.slug === slug)
 
   return {

@@ -9,7 +9,7 @@ import { firebaseConfig } from '../lib/environment'
  * 
  * @deprecated
  */
-export async function getStaticData<T>(func: string, fallback: T = undefined) {
+export async function getStaticData<T>(func: string, fallback: T | undefined = undefined) {
   try {
     const { projectId } = firebaseConfig
     const res = await fetch(`https://us-central1-${projectId}.cloudfunctions.net/${func}`)

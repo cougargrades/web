@@ -5,6 +5,7 @@ import { course2Result, instructor2Result, SearchResult } from './data/useSearch
 //import { getFirestoreDocument } from './ssg';
 import { getFirestoreDocument } from './data/back/getFirestoreData'
 import { DateYMDString } from './date'
+import { notNullish } from './util'
 
 const credential = JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS as any, 'base64').toString());
 const propertyId = process.env.GA4_PROPERTY_ID
@@ -189,6 +190,3 @@ export async function getTrendingResults(limit: number = 5, criteria: AvailableM
     .slice(0,limit);
 }
 
-function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined
-}

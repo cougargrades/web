@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
 import Skeleton from '@mui/material/Skeleton'
+import type { Property } from 'csstype'
 import styles from './badge.module.scss'
 
 type BadgeProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & {
@@ -32,19 +33,22 @@ export function BadgeSkeleton({ style }: SkeletonProps) {
   )
 }
 
-export type Grade = 'A' | 'B' | 'C' | 'D' | 'F' | 'I' | 'W' | 'S' | 'U' | 'NCR';
 
-export const grade2Color = new Map<Grade, string>([
-  ['A', '#87cefa'],
-  ['B', '#90ee90'],
-  ['C', '#ffff00'],
-  ['D', '#ffa07a'],
-  ['F', '#cd5c5c'],
-  ['I', '#d3d3d3'],
-  ['W', '#9370D8'],
-  ['S', '#8fbc8f'],
-  ['NCR', '#d87093'],
-]);
+export enum LetterGrade { A, B, C, D, F, I, W, S, U, NCR }
+export type Grade = keyof typeof LetterGrade;
+
+export const grade2Color: Record<Grade, Property.Color> = {
+  'A': '#87cefa',
+  'B': '#90ee90',
+  'C': '#ffff00',
+  'D': '#ffa07a',
+  'F': '#cd5c5c',
+  'I': '#d3d3d3',
+  'W': '#9370D8',
+  'S': '#8fbc8f',
+  'U': '#d87093',
+  'NCR': '#d87093'
+}
 
 // Based on https://github.com/cougargrades/web/blob/3d511fc56b0a90f2038883a71852245b726af7e3/src/components/instructors/GPABadge.js
 export function getGradeForGPA(n: number): Grade {

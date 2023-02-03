@@ -46,15 +46,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
 
   if(status === 'success') {
     // preload referenced areas
-    for(let item of data.relatedGroups) {
+    for(let item of data!.relatedGroups) {
       router.prefetch(item.href)
     }
-    for(let item of data.relatedInstructors) {
+    for(let item of data!.relatedInstructors) {
       router.prefetch(item.href)
     }
   }
 
-  const tccnsUpdateAsterisk = status === 'success' && data.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
+  const tccnsUpdateAsterisk = status === 'success' && data!.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
 
   return (
     <>
@@ -86,8 +86,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             { !isMissingProps ? <h3>{staticDescription}</h3> : <CustomSkeleton width={360} height={45} /> }
             { !isMissingProps ? <h1 className={styles.display_3}>{staticCourseName}{tccnsUpdateAsterisk}</h1> : <CustomSkeleton width={325} height={75} />}
             <div>
-              {status === 'success' ? data.badges.map(e => (
-                <Tooltip key={e.key} title={e.caption}>
+              {status === 'success' ? data!.badges.map(e => (
+                <Tooltip key={e.key} title={e.caption ?? ''}>
                   <Box component="span">
                     <Badge style={{ backgroundColor: e.color, marginRight: '0.35rem' }}>{e.text}</Badge>
                   </Box>
@@ -99,7 +99,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           </figure>
         </div>
         <div className={styles.tccnsUpdateLinks}>
-          { status === 'success' ? data.tccnsUpdates.map((value, index) => (
+          { status === 'success' ? data!.tccnsUpdates.map((value, index) => (
             <TCCNSUpdateNotice key={index} data={value} />
           )) : null}
         </div>
@@ -109,35 +109,35 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <CustomSkeleton width={'100%'} height={125} />
          }
         <h6>Sources:</h6>
-        { status === 'success' ? data.publications.map(e => (
+        { status === 'success' ? data!.publications.map(e => (
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
           </Tooltip>
         )) : [1,2].map(e => <CustomSkeleton key={e} width={230} height={32} display="inline-block" />)}
         { status === 'success' ? <>
-          <EnrollmentInfo className={styles.enrollmentBar} data={data.enrollment} barHeight={12} />          
+          <EnrollmentInfo className={styles.enrollmentBar} data={data!.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
         <h3>Basic Information</h3>
         <ul>
-          <li>Earliest record: { status === 'success' ? data.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Latest record: { status === 'success' ? data.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of instructors: { status === 'success' ? data.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of sections: { status === 'success' ? data.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Earliest record: { status === 'success' ? data!.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of instructors: { status === 'success' ? data!.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <Tooltip placement="bottom-start" title="Estimated average size of each section, # of total enrolled ÷ # of sections">
-            <li>Average number of students per section: { status === 'success' ? `~ ${data.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+            <li>Average number of students per section: { status === 'success' ? `~ ${data!.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           </Tooltip>
         </ul>
         <h3>Related Groups</h3>
-        { status === 'success' ? data.relatedGroups.map(e => (
+        { status === 'success' ? data!.relatedGroups.map(e => (
           <Tooltip key={e.key} title={e.description}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
           </Tooltip>
         )) : [1,2,3].map(e => <CustomSkeleton key={e} width={150} height={32} display="inline-block" />)}
         <h3>Related Instructors</h3>
         <Carousel>
-          { status === 'success' && data.relatedInstructors.length > 0 ? data.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
+          { status === 'success' && data!.relatedInstructors.length > 0 ? data!.relatedInstructors.slice(0,RELATED_INSTRUCTOR_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
           ) : Array.from(new Array(RELATED_INSTRUCTOR_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
-          { status === 'success' && data.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data.relatedInstructors} /> : ''}
+          { status === 'success' && data!.relatedInstructors.length > RELATED_INSTRUCTOR_LIMIT ? <InstructorCardShowMore courseName={staticCourseName} data={data!.relatedInstructors} /> : ''}
         </Carousel>
         <h3>Data</h3>
       </main>
@@ -145,14 +145,14 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     <Container maxWidth="xl">
       <div className={styles.chartWrap}>
         {
-          status === 'success' && data.dataChart.data.length > 1 ?
+          status === 'success' && data!.dataChart.data.length > 1 ?
           <Chart
             width={'100%'}
             height={450}
             chartType="LineChart"
             loader={<CustomSkeleton width={'100%'} height={350} />}
-            data={data.dataChart.data}
-            options={data.dataChart.options}
+            data={data!.dataChart.data}
+            options={data!.dataChart.options}
             // prevent ugly red box when there's no data yet on first-mount
             chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
           />
@@ -165,8 +165,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
       <main>
         <EnhancedTable<SectionPlus>
           title="Past Sections"
-          columns={status === 'success' ? data.dataGrid.columns : []}
-          rows={status === 'success' ? data.dataGrid.rows : []}
+          columns={status === 'success' ? data!.dataGrid.columns : []}
+          rows={status === 'success' ? data!.dataGrid.rows : []}
           defaultOrder="desc"
           defaultOrderBy="term"
         />
@@ -195,10 +195,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   //console.time('getStaticProps')
   const { params, locale } = context;
-  const { courseName } = params
+  const courseName = params?.courseName;
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
   const description = courseData !== undefined ? courseData.description : ''
-  const recentPublication: PublicationInfo = courseData && courseData.publications !== undefined && 
+  const recentPublication = courseData && courseData.publications !== undefined && 
     Array.isArray(courseData.publications) &&
     courseData.publications.length > 0
     ? 

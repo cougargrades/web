@@ -44,7 +44,7 @@ export function getPostBySlug(slug: string, fields: string[] = []): FaqPostData 
     }
 
     if (typeof data[field] !== 'undefined') {
-      items[field] = data[field]
+      items[field as keyof FaqPostData] = data[field]
     }
   })
 
@@ -58,16 +58,16 @@ export function getAllPosts(fields: string[] = []): FaqPostData[] {
     // sort posts by date in descending order
     //.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
     // sort by post "id"
-    .sort((a,b) => a.id - b.id)
+    .sort((a,b) => (a.id ?? 0) - (b.id ?? 0))
   return posts
 }
 
 export async function markdownToHtml(markdown: string) {
   const schema = defaultSchema
-  schema.tagNames.push('iframe')
-  if(!Array.isArray(schema.attributes['iframe']))
-    schema.attributes['iframe'] = []
-  schema.attributes['iframe'].push('src')
+  schema!.tagNames!.push('iframe')
+  if(!Array.isArray(schema!.attributes!['iframe']))
+    schema!.attributes!['iframe'] = []
+  schema!.attributes!['iframe'].push('src')
   const result = await remark()
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)

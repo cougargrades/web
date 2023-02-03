@@ -47,7 +47,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
   const stone = useRosetta()
   const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${data.key}${ENABLE_GROUP_SECTIONS ? '/sections' : ''}`)
   const sectionStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !data.key) ? 'loading' : 'success'
-  const sectionData = sectionStatus === 'success' ? oneGroupData.sections : []
+  const sectionData = sectionStatus === 'success' ? oneGroupData!.sections : []
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
 
   try {
@@ -136,7 +136,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForGPA(value)] }}>{formatGPAValue(value)}</Badge> : '',
             },
             {
               field: 'standardDeviation',
@@ -146,7 +146,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForStdDev(value)] }}>{formatSDValue(value)}</Badge> : '',
             },
             {
               field: 'dropRate',
@@ -156,7 +156,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color.get('W') }}>{formatDropRateValue(value)}</Badge>,
+              valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color['W'] }}>{formatDropRateValue(value)}</Badge>,
             },
           ],
           rows: [
@@ -164,9 +164,9 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               ...e,
               id: e._id,
               //instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
-              instructorCount: e.instructorCount,
+              instructorCount: e.instructorCount ?? 0,
               //sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
-              sectionCount: e.sectionCount,
+              sectionCount: e.sectionCount ?? 0,
               gradePointAverage: e.GPA.average,
               standardDeviation: e.GPA.standardDeviation,
               dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
@@ -228,7 +228,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
   catch(error) {
     return {
       data: undefined,
-      error,
+      error: error as any,
       status: 'error',
     }
   }
