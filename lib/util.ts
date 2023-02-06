@@ -1,4 +1,4 @@
-import { getRosetta } from "./i18n";
+import { getRosetta } from './i18n';
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -34,4 +34,23 @@ export const truncateWithEllipsis = (x: string, maxLength: number): string => x.
 
 export function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined
+}
+
+export const parseIntOrUndefined = (x: string | undefined): number | undefined => x === undefined ? undefined : isNaN(parseInt(x)) ? undefined : parseInt(x)
+
+export function getRandomIndexes(length: number, count: number = 5): number[] {
+  const result: number[] = []
+  // loop `count` times
+  for(let i = 0; i < count; i++) {
+    let attempt = -1
+    // loop until attempt hasn't been done before
+    do {
+      attempt = Math.floor(Math.random() * length)
+    }
+    while(result.includes(attempt));
+    // add to results
+    result.push(attempt);
+  }
+
+  return result
 }
