@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import useSWR from 'swr'
+import useSWR from 'swr/immutable'
 import { ExternalLink } from '../components/link'
 import { Collaborator, CollaboratorProps, CollaboratorSkeleton } from '../components/collaborator'
 import { BlogNotifications } from '../components/blog'

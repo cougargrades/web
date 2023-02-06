@@ -1,18 +1,14 @@
-import React from 'react'
-import Link from 'next/link'
-import Button from '@mui/material/Button'
-//import { useSigninCheck } from 'reactfire'
-import Search, { SearchBarSkeleton } from './search'
+import React, { useState } from 'react'
+import Search from './search'
 import { Emoji } from './emoji'
-import { LinkProps } from './link'
+import { DropdownNavLink, NavLink } from './link'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-
-export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 
 export default function Header() {
-  //const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});
   return (
     <header className={styles.hero}>
       <div className="new-container">
@@ -24,9 +20,47 @@ export default function Header() {
           </h3>
         </hgroup>
         <nav className={styles.nav}>
-          <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
-          <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
-          <NavLink href="/top"><Emoji label="fire" symbol="🔥" />Popular</NavLink>
+          <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
+          <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
+          <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
+          {/* <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink> */}
+          <DropdownNavLink options={[
+            {
+              href: '/random/course',
+              children: (
+                <>
+                <ListItemIcon>
+                  📚
+                </ListItemIcon>
+                <ListItemText>Random Course</ListItemText>
+                </>
+              )
+            },
+            {
+              href: '/random/instructor',
+              children: (
+                <>
+                <ListItemIcon>
+                  🧑‍🏫
+                </ListItemIcon>
+                <ListItemText>Random Instructor</ListItemText>
+                </>
+              )
+            },
+            {
+              href: '/random',
+              children: (
+                <>
+                <ListItemIcon>
+                  ❔
+                </ListItemIcon>
+                <ListItemText>Any</ListItemText>
+                </>
+              )
+            }
+          ]}>
+            <Emoji symbol="🔀" />Random
+          </DropdownNavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>

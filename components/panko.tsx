@@ -126,19 +126,19 @@ export function generateBreadcrumbs(path: string) {
     }
     if(index === 1) {
       if(value.toLowerCase() === 'c') {
-        return <span key={key}><Emoji label="books" symbol="📚" />Courses</span>
+        return <span key={key}><Emoji symbol="📚" />Courses</span>
       }
       if(value.toLowerCase() === 'i') {
-        return <span key={key}><Emoji label="teacher" symbol="🧑‍🏫" />Instructors</span>
+        return <span key={key}><Emoji symbol="🧑‍🏫" />Instructors</span>
       }
       if(value.toLowerCase() === 'g' || value.toLowerCase() === 'groups') {
-        return <span key={key}><Emoji label="file box" symbol="🗃️" />Groups</span>
+        return <span key={key}><Emoji symbol="🗃️" />Groups</span>
       }
       if(value.toLowerCase() === 'faq') {
-        return <span key={key}><Emoji label="speech bubble" symbol="💬" />FAQ</span>
+        return <span key={key}><Emoji symbol="💬" />FAQ</span>
       }
       if(value.toLowerCase() === 'top') {
-        return <span key={key}><Emoji label="fire" symbol="🔥" />Popular</span>
+        return <span key={key}><Emoji symbol="🔥" />Popular</span>
       }
     }
     if(index === 2) {
