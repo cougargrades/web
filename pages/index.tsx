@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useRecoilState } from 'recoil'
 import Button from '@mui/material/Button'
+import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
 import { BlogNotifications } from '../components/blog'
 import { ExternalLink } from '../components/link'
 import { searchInputAtom } from '../lib/recoil'
@@ -13,6 +14,11 @@ import interactivity from '../styles/interactivity.module.scss'
 
 export default function Home() {
   const [searchInputRef, _] = useRecoilState(searchInputAtom)
+
+  const numSections = `${(counts.num_sections / 1000).toFixed()}k`
+  const numCourses = `${(counts.num_courses / 1000).toFixed(counts.num_courses >= 10_000 ? 0 : 1)}k`
+  const numInstructors = `${(counts.num_instructors / 1000).toFixed(counts.num_instructors >= 10_000 ? 0 : 1)}k`
+  const numSubjects = `${counts.num_subjects.toFixed(0)}`
 
   const focusSearchInput = () => {
     if(searchInputRef !== null) {
@@ -34,9 +40,9 @@ export default function Home() {
                 section taught at UH.
               </p>
               <div className="stamp-wrap">
-                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>133k</div>
+                <div className={`${styles.stamp} ${styles.teal} ${styles.bignumber}`}>{numSections}</div> {/* 133k */}
                 <span className={styles.stamp_caption}>Sections</span>
-                <div className={`${styles.stamp} ${styles.gold}`}>7.6k</div>
+                <div className={`${styles.stamp} ${styles.gold}`}>{numCourses}</div> {/* 7.6k */}
                 <span className={styles.stamp_caption}>Courses</span>
               </div>
               <br />
@@ -64,9 +70,9 @@ export default function Home() {
                 their students received.
               </p>
               <div>
-                <div className={`${styles.stamp} ${styles.blue}`}>6.2k</div>
+                <div className={`${styles.stamp} ${styles.blue}`}>{numInstructors}</div> {/* 6.2k */}
                 <span className={styles.stamp_caption}>Instructors</span>
-                <div className={`${styles.stamp} ${styles.orchid}`}>165</div>
+                <div className={`${styles.stamp} ${styles.orchid}`}>{numSubjects}</div> {/* 165 */}
                 <span className={styles.stamp_caption}>Subjects</span>
               </div>
               <br />
