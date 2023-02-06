@@ -52,9 +52,9 @@ export default function Header() {
               children: (
                 <>
                 <ListItemIcon>
-                  ❔
+                  ❓
                 </ListItemIcon>
-                <ListItemText>Any</ListItemText>
+                <ListItemText>Random Anything</ListItemText>
                 </>
               )
             }
