@@ -23,7 +23,8 @@ export default function RandomEitherRedirect() {
       <div className="new-container">
         <Stack
           sx={{
-            height: '100px'
+            height: '100px',
+            paddingBottom: '25px',
           }}
           justifyContent="center"
           alignItems="center"

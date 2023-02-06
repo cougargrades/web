@@ -13,7 +13,7 @@ body {
   max-width: unset;
 }
 .new-container {
-  max-width: 750px;
+  max-width: 820px; // used to be 750px, but an extra header button was added and we want everything to fit in one row right now
   padding-right: 2rem;
   padding-left: 2rem;
   margin-right: auto;
