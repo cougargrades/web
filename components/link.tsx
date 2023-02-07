@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import Link, { LinkProps as NextLinkProps } from 'next/link'
+import React, { useRef, useState } from 'react'
+import Link from 'next/link'
+import { useLongPress } from 'react-use'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -24,26 +25,34 @@ export const FakeLink = ({ href, children }: LinkProps) => {
 export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
 
 export interface DropdownNavLinkProps {
+  href?: string;
   children: React.ReactNode;
   options: LinkProps[];
 }
 
 // Based off of: https://mui.com/material-ui/react-menu/#basic-menu
-export function DropdownNavLink({ children, options }: DropdownNavLinkProps) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+export function DropdownNavLink({ href, children, options }: DropdownNavLinkProps) {
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false)
   };
+  const longPressEvent = useLongPress(handleOpen);
 
   return (
   <>
-    <Button variant="contained" disableElevation className={interactivity.hoverActive} onClick={handleClick}>{children}</Button>
+    {
+      href !== undefined
+      ? <Link href={href} passHref>
+          <Button ref={buttonRef} variant="contained" disableElevation className={interactivity.hoverActive} {...longPressEvent} data-has-contextmenu={true}>{children}</Button>
+        </Link>
+      : <Button ref={buttonRef} variant="contained" disableElevation className={interactivity.hoverActive} onClick={handleOpen}>{children}</Button>
+    }
     <Menu
-        anchorEl={anchorEl}
+        anchorEl={buttonRef.current}
         open={open}
         onClose={handleClose}
       >

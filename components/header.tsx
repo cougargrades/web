@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 import Search from './search'
 import { Emoji } from './emoji'
 import { DropdownNavLink, NavLink } from './link'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 
 export default function Header() {
   return (
@@ -23,8 +23,7 @@ export default function Header() {
           <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
           <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
           <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
-          {/* <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink> */}
-          <DropdownNavLink options={[
+          <DropdownNavLink href="/random" options={[
             {
               href: '/random/course',
               children: (
