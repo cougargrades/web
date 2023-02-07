@@ -1,4 +1,5 @@
-import { getRosetta } from './i18n';
+import type { Section } from '@cougargrades/types'
+import { getRosetta } from './i18n'
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -54,3 +55,5 @@ export function getRandomIndexes(length: number, count: number = 5): number[] {
 
   return result
 }
+
+export const getTotalEnrolled = (sec: Section) => sec.A + sec.B + sec.C + sec.D + sec.F + sec.NCR + sec.S + sec.W;

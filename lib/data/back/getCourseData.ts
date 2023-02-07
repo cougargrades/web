@@ -2,7 +2,7 @@ import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargra
 import { Grade, grade2Color } from '../../../components/badge';
 import { Column, descendingComparator } from '../../../components/datatable';
 import { getRosetta } from '../../i18n';
-import { getYear, seasonCode } from '../../util';
+import { getTotalEnrolled, getYear, seasonCode } from '../../util';
 import { getBadges } from '../getBadges';
 import { getChartData } from '../getChartData';
 import { CourseResult, group2Result, instructor2Result, SectionPlus } from '../useCourseData'
@@ -156,7 +156,8 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
     ],
     instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
-    classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
     sectionLoadingProgress: 100,
   };
 }
