@@ -29,6 +29,9 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
   const instructorData = instructorDataSettled.status === 'fulfilled' ? instructorDataSettled.value : [];
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
 
+  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
+
   return {
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
@@ -157,7 +160,8 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
     instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
-    classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    //classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    classSize,
     sectionLoadingProgress: 100,
   };
 }

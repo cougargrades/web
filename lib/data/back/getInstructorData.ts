@@ -36,6 +36,9 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
   const groupData = groupDataSettled.status === 'fulfilled' ? groupDataSettled.value : [];
 
+  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
+
   return {
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
@@ -278,7 +281,8 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
-    classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    //classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    classSize,
     //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
     sectionLoadingProgress: 100,
     rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? `https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${data.rmpLegacyId}` : undefined,
