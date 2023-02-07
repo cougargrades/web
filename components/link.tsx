@@ -47,7 +47,7 @@ export function DropdownNavLink({ href, children, options }: DropdownNavLinkProp
     {
       href !== undefined
       ? <Link href={href} passHref>
-          <Button ref={buttonRef} variant="contained" disableElevation className={interactivity.hoverActive} {...longPressEvent} data-has-contextmenu={true}>{children}</Button>
+          <Button ref={buttonRef} title="Long-press to view more options" variant="contained" disableElevation className={interactivity.hoverActive} {...longPressEvent} data-has-contextmenu={true}>{children}</Button>
         </Link>
       : <Button ref={buttonRef} variant="contained" disableElevation className={interactivity.hoverActive} onClick={handleOpen}>{children}</Button>
     }
