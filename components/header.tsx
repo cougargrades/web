@@ -23,43 +23,7 @@ export default function Header() {
           <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
           <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
           <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
-          <DropdownNavLink href="/random" options={[
-            {
-              href: '/random/course',
-              children: (
-                <>
-                <ListItemIcon>
-                  📚
-                </ListItemIcon>
-                <ListItemText>Random Course</ListItemText>
-                </>
-              )
-            },
-            {
-              href: '/random/instructor',
-              children: (
-                <>
-                <ListItemIcon>
-                  🧑‍🏫
-                </ListItemIcon>
-                <ListItemText>Random Instructor</ListItemText>
-                </>
-              )
-            },
-            {
-              href: '/random',
-              children: (
-                <>
-                <ListItemIcon>
-                  ❓
-                </ListItemIcon>
-                <ListItemText>Random Anything</ListItemText>
-                </>
-              )
-            }
-          ]}>
-            <Emoji symbol="🔀" />Random
-          </DropdownNavLink>
+          <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>

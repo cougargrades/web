@@ -108,7 +108,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           : 
           <CustomSkeleton width={'100%'} height={125} />
          }
-        <h6>Sources:</h6>
+        { status === 'success' && data?.publications.length === 0 ? null : <h6>Sources:</h6> }
         { status === 'success' ? data!.publications.map(e => (
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
