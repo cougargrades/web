@@ -98,9 +98,11 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
       const { courseDb } = lyra.value
       return await search(courseDb, {
         term: inputValue,
-        properties: ['courseName', 'description'],
+        properties: ['courseName', 'description', 'publicationTextContent'],
         boost: {
           courseName: 2.0,
+          description: 1.0,
+          publicationTextContent: 0.5,
         },
         tolerance: 1,
         limit: 10,
