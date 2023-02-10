@@ -26,8 +26,11 @@ import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components
 import { TopResult, useTopResults } from '../../lib/data/useTopResults'
 import { TopListItem } from '../../components/TopListItem'
 
+import SidebarContainer from '../../components/sidebarcontainer'
+
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+
 
 export interface FaqPostProps {
   post: FaqPostData;
@@ -38,8 +41,6 @@ const parseInt2 = (x: string | number) => typeof x === 'number' ? x : parseInt(x
 
 export default function TopPage({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
-  const [_, setTOCExpanded] = useRecoilState(tocAtom)
-  const condensed = useIsCondensed()
 
   const viewMetric: TopMetric = post?.slug?.includes('viewed') ? 'screenPageViews' : 'totalEnrolled'
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
@@ -48,18 +49,9 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
 
   const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime })
 
-  const handleClick = (other: FaqPostData) => {
-    router.push(`/top/${other.slug}`, undefined, { scroll: false })
-    setTOCExpanded(false)
-  }
-
   useEffect(() => {
     if(status === 'success') {
       // preload referenced areas
-      for(let item of allPosts) {
-        const href = `/top/${item.slug}`
-        router.prefetch(href)
-      }
       for(let item of data!) {
         router.prefetch(item.href)
       }
@@ -84,82 +76,60 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
       <Container>
         <PankoRow />
       </Container>
-      <main className={styles.main}>
-        <aside className={styles.nav}>
-          <TableOfContentsWrap condensedTitle={condensed ? 'Popular' : ''}>
-            <List className={styles.sidebarList} subheader={condensed ? undefined : <GroupNavSubheader>Popular</GroupNavSubheader>}>
-              {allPosts.map(other => (
-                <React.Fragment key={other.slug}>
-                  <FakeLink href={`/top/${other.slug}`}>
-                    <ListItemButton
-                      selected={other.slug === post.slug}
-                      onClick={() => handleClick(other)}
-                      classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
-                      dense
-                    >
-                      <ListItemText
-                        primary={other.title}
-                        primaryTypographyProps={{
-                          color: (theme) => (other.slug === post.slug) ? theme.palette.text.primary : theme.palette.text.secondary,
-                          fontWeight: 'unset'
-                        }}
-                      />
-                    </ListItemButton>
-                  </FakeLink>
-                </React.Fragment>
-              ))}
-            </List>
-          </TableOfContentsWrap>
-        </aside>
-        <article>
-          <div className={styles.articleContainer}>
-            <Typography variant="h4" color="text.primary">
-              {post.title}
-            </Typography>
-            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              {post.content}
-            </Typography>
-            <Box className={styles.controlBox}>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel>Count</InputLabel>
-                <Select label="Count" value={viewLimit} onChange={(e) => setViewLimit(parseInt2(e.target.value))}>
-                  <MenuItem value={10}>Top 10</MenuItem>
-                  <MenuItem value={25}>Top 25</MenuItem>
-                  <MenuItem value={50}>Top 50</MenuItem>
-                  <MenuItem value={100}>Top 100</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel>Time Span</InputLabel>
-                <Select label="Time Span" value={viewTime} onChange={(e) => setViewTime(e.target.value as any)}>
-                  <MenuItem value="lastMonth" disabled={viewMetric === 'totalEnrolled'}>Last Month</MenuItem>
-                  <MenuItem value="all">All Time</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <List sx={{ width: '100%' }}>
-              {
-              status === 'error'
-              ? <>
-              <ErrorBoxIndeterminate />
-              </>
-              : status === 'loading'
-              ? <>
-              <LoadingBoxIndeterminate title="Loading..." />
-              </>
-              : <>
-              { data!.map((item, index, array) => (
-                <React.Fragment key={item.key}>
-                  <TopListItem data={item} index={index} viewMetric={viewMetric} />
-                  { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
-                </React.Fragment>
-              ))}
-              </>
-              }
-            </List>
-          </div>
-        </article>
-      </main>
+      <SidebarContainer condensedTitle="Popular" sidebarItems={allPosts.map(post => ({
+        key: post.slug,
+        categoryName: 'Popular',
+        title: post.title,
+        href: `/top/${post.slug}`,
+        //disabled: post.slug?.endsWith('instructors')
+      }))}>
+        <div className={styles.articleContainer}>
+          <Typography variant="h4" color="text.primary">
+            {post.title}
+          </Typography>
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            {post.content}
+          </Typography>
+          <Box className={styles.controlBox}>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel>Count</InputLabel>
+              <Select label="Count" value={viewLimit} onChange={(e) => setViewLimit(parseInt2(e.target.value))}>
+                <MenuItem value={10}>Top 10</MenuItem>
+                <MenuItem value={25}>Top 25</MenuItem>
+                <MenuItem value={50}>Top 50</MenuItem>
+                <MenuItem value={100}>Top 100</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel>Time Span</InputLabel>
+              <Select label="Time Span" value={viewTime} onChange={(e) => setViewTime(e.target.value as any)}>
+                <MenuItem value="lastMonth" disabled={viewMetric === 'totalEnrolled'}>Last Month</MenuItem>
+                <MenuItem value="all">All Time</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <List sx={{ width: '100%' }}>
+            {
+            status === 'error'
+            ? <>
+            <ErrorBoxIndeterminate />
+            </>
+            : status === 'loading'
+            ? <>
+            <LoadingBoxIndeterminate title="Loading..." />
+            </>
+            : <>
+            { data!.map((item, index, array) => (
+              <React.Fragment key={item.key}>
+                <TopListItem data={item} index={index} viewMetric={viewMetric} />
+                { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
+              </React.Fragment>
+            ))}
+            </>
+            }
+          </List>
+        </div>
+      </SidebarContainer>
     </>
   );
 }

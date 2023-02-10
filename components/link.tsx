@@ -18,8 +18,9 @@ export const InternalLink = ({ href, children }: LinkProps) => <Link href={href}
 
 export const ExternalLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button className={`${styles.linkbutton} ${interactivity.hoverActive}`} color="primary" variant="contained" endIcon={<ArrowForwardIcon />}>{children}</Button></Link>
 
-export const FakeLink = ({ href, children }: LinkProps) => {
-  return <a href={href} onClick={e => e.preventDefault()} className="nostyle">{children}</a>
+export const FakeLink = (props: React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) => {
+  const { href, children } = props
+  return <a {...props} href={href} onClick={e => e.preventDefault()} className="nostyle">{children}</a>
 }
 
 export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
