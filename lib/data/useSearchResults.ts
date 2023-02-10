@@ -91,6 +91,7 @@ export const sortByTitle = (inputValue: string) => (a: SearchResult, b: SearchRe
 };
 
 export function useLiteSearchResults(inputValue: string, enableLyra: boolean): Observable<SearchResult[]> {
+  const { data: trendingData, error: trendingError } = useSWR<SearchResult[]>('/api/trending');
   const lyra = useLyra(enableLyra)
 
   const courseResults = useAsync(async () => {
@@ -162,6 +163,8 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
   try {
     return {
       data: [
+        ...(Array.isArray(trendingData) ? trendingData : [])
+          .filter(trend => trend.title.includes(inputValue)),
         ...courseData,
         ...instructorData,
       ],
@@ -181,22 +184,6 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
 export function useSearchResults(inputValue: string): Observable<SearchResult[]> {
   const { data: searchData, error: searchError } = useSWR<SearchResult[]>(`/api/search?${new URLSearchParams({ q: inputValue.toLowerCase() })}`);
   const { data: trendingData, error: trendingError } = useSWR<SearchResult[]>('/api/trending');
-  const lyra = useLyra()
-  const lyraSearchResults = useAsync(async () => {
-    if (lyra.value !== undefined) {
-      const { courseDb, instructorDb } = lyra.value
-      const foo = await search(courseDb, {
-        term: inputValue,
-        properties: ['courseName', 'description']
-      })
-      const bar = await search(instructorDb, {
-        term: inputValue,
-        properties: ['firstName', 'lastName']
-      })
-      console.log('lyra', foo, bar)
-    }
-    return
-  }, [inputValue, lyra.value])
 
   try {
     return {
