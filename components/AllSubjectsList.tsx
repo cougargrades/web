@@ -64,7 +64,7 @@ export function AllSubjectsList() {
         All Subjects
       </Typography>
       <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-        Every Subject available at the University of Houston. Here, a subject refers to the 3-4 character prefix before a course number (<em>ex: <abbr title="English">ENGL</abbr>, <abbr title="Mathematics">MATH</abbr></em>)
+        Every Subject available at the University of Houston. Here, a "Subject" refers to the 3-4 character prefix before a course number (<em>ex: <abbr title="English">ENGL</abbr>, <abbr title="Mathematics">MATH</abbr></em>)
       </Typography>
       <List sx={{ width: '100%' }}>
         {
