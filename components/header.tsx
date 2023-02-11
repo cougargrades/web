@@ -1,9 +1,8 @@
 import React from 'react'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import Search from './search'
 import { Emoji } from './emoji'
 import { DropdownNavLink, NavLink } from './link'
+import { NewFeatureWrap } from './NewFeatureWrap'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
@@ -21,9 +20,15 @@ export default function Header() {
         </hgroup>
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
-          <NavLink href="/g/all-subjects"><Emoji symbol="🗃️" />Groups</NavLink>
-          <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
-          <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink>
+          <NewFeatureWrap featureID="all-subjects.v1" hideAfterClick>
+            <NavLink href="/g/all-subjects"><Emoji symbol="🗃️" />Groups</NavLink>
+          </NewFeatureWrap>
+          <NewFeatureWrap featureID="popular.v1" hideAfterClick>
+            <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
+          </NewFeatureWrap>
+          <NewFeatureWrap featureID="random.v1" hideAfterClick>
+            <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink>
+          </NewFeatureWrap>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>
