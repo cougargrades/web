@@ -14,26 +14,42 @@ import { AllGroupsResult, PopulatedGroupResult } from '../../lib/data/useAllGrou
 import { useRosetta } from '../../lib/i18n'
 import { ObservableStatus } from '../../lib/data/Observable'
 import { extract } from '../../lib/util'
-import { SidebarContainer } from '../../components/sidebarcontainer'
+import { SidebarContainer, SidebarItem } from '../../components/sidebarcontainer'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { AllSubjectsList } from '../../components/AllSubjectsList'
 
 export interface GroupProps {
   staticGroupId: string;
   staticName: string;
   staticDescription: string;
   doesNotExist?: boolean;
+  isFakeGroup: boolean;
 }
 
-export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
+export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist, isFakeGroup }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
   const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
   const allGroupsData = status === 'success' && data !== undefined ? data.core_curriculum : []
+  const sidebarItems: SidebarItem[] = [
+    ...(allGroupsData.map(group => ({
+      key: group.key,
+      categoryName: group.categories.filter(e => !e.startsWith('#')).at(0) ?? '',
+      title: group.title,
+      href: group.href,
+    }))),
+    {
+      key: 'all-subjects',
+      categoryName: 'Other Groups',
+      title: 'All Subjects',
+      href: '/g/all-subjects',
+    },
+  ]
 
-  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${staticGroupId}`)
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${isFakeGroup ? `${undefined}` : staticGroupId}`)
   const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
   
   const isMissingProps = staticGroupId === undefined
@@ -55,12 +71,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       <Container>
         <PankoRow />
       </Container>
-      <SidebarContainer condensedTitle="Select Group" sidebarItems={allGroupsData.map(group => ({
-        key: group.key,
-        categoryName: group.categories.filter(e => !e.startsWith('#')).at(0) ?? '',
-        title: group.title,
-        href: group.href,
-      }))}>
+      <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems}>
         { doesNotExist === true ? 
           <Alert severity="error">
             <AlertTitle>Error 404</AlertTitle>
@@ -68,7 +79,16 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
           </Alert>
         : <></>
         }
-        { good && doesNotExist === false && oneGroupData !== undefined ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
+        { }
+        {
+          isFakeGroup && !doesNotExist
+          ? <AllSubjectsList />
+          : (
+            good && doesNotExist === false && oneGroupData !== undefined 
+            ? <GroupContent data={oneGroupData} /> 
+            : <GroupContentSkeleton />
+          )
+        }
       </SidebarContainer>
     </>
   );
@@ -88,10 +108,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
+const FAKE_GROUPS: Group[] = [
+  {
+    name: 'All Subjects',
+    identifier: 'all-subjects',
+    description: '',
+    courses: [],
+    sections: [],
+    keywords: [],
+    categories: [],
+    sources: [],
+  }
+]
+
 export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const { params } = context;
   const groupId = params?.groupId;
-  const groupData = await getFirestoreDocument<Group>(`/groups/${groupId}`)
+  const isFakeGroup = FAKE_GROUPS.map(e => e.identifier).includes(extract(groupId))
+  const groupData = isFakeGroup ? FAKE_GROUPS.find(e => e.identifier === groupId)! : await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''
   return {
@@ -100,6 +134,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
       staticName: name,
       staticDescription: description,
       doesNotExist: groupData === undefined,
+      isFakeGroup,
     }
   };
 }

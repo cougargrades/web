@@ -22,3 +22,6 @@ export function getRosetta(locale: string = 'en_US') {
   stone.locale(locale.replace('-','_'));
   return stone;
 }
+
+// see: https://www.grammarly.com/blog/plural-nouns/
+export const pluralize = ({ quantity, rootWord }: { quantity: number, rootWord: string }) => quantity === 1 ? rootWord : ['s', 'ss', 'sh', 'ch', 'x', 'z'].some(suffix => rootWord.endsWith(suffix)) ? `${rootWord}es` : `${rootWord}s`

@@ -18,18 +18,20 @@ interface TopListItemProps {
   data: TopResult;
   index: number;
   viewMetric: TopMetric;
+  hidePosition?: boolean;
 }
 
-export function TopListItem({ data: item, index, viewMetric }: TopListItemProps) {
+export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
   return (
     <Link href={item.href} passHref>
       <ListItemButton component="a" alignItems="flex-start">
         <ListItemIcon className={styles.topItemIcon}>
           <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
             {
-            index + 1 <= 10
-            ? `#${index + 1}`
-            : <span style={{ fontSize: (index + 1 < 100 ? '0.7em' : '0.6em' ) }}>#{index + 1}</span>
+              hidePosition ? null :
+              index + 1 <= 10
+              ? `#${index + 1}`
+              : <span style={{ fontSize: (index + 1 < 100 ? '0.7em' : '0.6em' ) }}>#{index + 1}</span>
             }
           </Typography>
         </ListItemIcon>
@@ -54,6 +56,13 @@ export function TopListItem({ data: item, index, viewMetric }: TopListItemProps)
                 </Tooltip>
               ))}
             </Box>
+            {
+              item.caption?.length > 0
+              ? <>
+              <Typography variant="body2" color="text.secondary">{item.caption}</Typography>
+              </>
+              : null
+            }
           </>}
         />
         <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>

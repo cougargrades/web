@@ -23,16 +23,17 @@ export interface SidebarContainerProps {
   condensedTitle: string;
   sidebarItems: SidebarItem[];
   //selectedSidebarItem?: React.Key;
+  resetScrollAfterLink?: boolean;
   children: React.ReactNode;
 }
 
-export function SidebarContainer({ condensedTitle, sidebarItems, children }: SidebarContainerProps) {
+export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, children }: SidebarContainerProps) {
   const router = useRouter()
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
 
   const handleClick = (href?: string) => {
     if (href) {
-      router.push(href, undefined, { scroll: false })
+      router.push(href, undefined, { scroll: resetScrollAfterLink === true ? true : false })
       setTOCExpanded(false)
     }
   }
