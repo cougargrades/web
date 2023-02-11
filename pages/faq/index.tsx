@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import ErrorIcon from '@mui/icons-material/Error'
-import { FaqPostData, getAllPosts } from '../lib/faq'
+import { FaqPostData, getAllPosts } from '../../lib/faq'
 
 export interface FaqIndexProps {
   allPosts: FaqPostData[];
