@@ -8,7 +8,7 @@ export type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
 export interface AllGroupsResult {
   categories: string[];
-  results: AllGroupsResultItem;
+  //results: AllGroupsResultItem;
   core_curriculum: GroupResult[];
   all_groups: GroupResult[];
 }

@@ -15,7 +15,7 @@ export async function getAllGroups(): Promise<AllGroupsResult> {
     data[i].sections = []
   }
 
-  // make categories
+  // make categories, necessary for sorting "correctly"
   const categories = [
     ...(
       Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories.filter(cat => !cat.startsWith('#')) : []).flat()))
@@ -25,30 +25,32 @@ export async function getAllGroups(): Promise<AllGroupsResult> {
     //ALL_GROUPS_SENTINEL
   ];
 
-  // make a key/value store of category -> GroupResult[]
-  const results = categories
-    .reduce((obj, key) => {
-      if(key === ALL_GROUPS_SENTINEL) {
-        // obj[key] = [
-        //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
-        // ];
-      }
-      else {
-        obj[key] = [
-          ...(data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)))
-        ];
-      }
-      return obj;
-    }, {} as AllGroupsResultItem);
+  const results = categories.map(cat => data.filter(e => Array.isArray(e.categories) && e.categories.includes(cat)).map(e => group2Result(e))).flat()
+
+  // // make a key/value store of category -> GroupResult[]
+  // const results = categories
+  //   .reduce((obj, key) => {
+  //     if(key === ALL_GROUPS_SENTINEL) {
+  //       // obj[key] = [
+  //       //   ...(status === 'success' ? data.filter(e => Array.isArray(e.categories) && e.categories.length === 0).map(e => group2Result(e)) : [])
+  //       // ];
+  //     }
+  //     else {
+  //       obj[key] = [
+  //         ...(data.filter(e => Array.isArray(e.categories) && e.categories.includes(key)).map(e => group2Result(e)))
+  //       ];
+  //     }
+  //     return obj;
+  //   }, {} as AllGroupsResultItem);
 
   return {
     categories,
-    results,
+    //results,
     core_curriculum: [
-      ...(data.filter(e => Array.isArray(e.categories) && e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)))
+      ...results
     ],
     all_groups: [
-      ...(data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('UH Core Curriculum')).map(e => group2Result(e)))
+      ...(data.filter(e => Array.isArray(e.categories) && ! e.categories.includes('#UHCoreCurriculum')).map(e => group2Result(e)))
     ],
   }
 }

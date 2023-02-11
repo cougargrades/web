@@ -26,7 +26,7 @@ export interface SidebarContainerProps {
   children: React.ReactNode;
 }
 
-export default function SidebarContainer({ condensedTitle, sidebarItems, children }: SidebarContainerProps) {
+export function SidebarContainer({ condensedTitle, sidebarItems, children }: SidebarContainerProps) {
   const router = useRouter()
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
 

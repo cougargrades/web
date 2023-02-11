@@ -3,28 +3,21 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
-import { useRecoilState } from 'recoil'
 import { Group } from '@cougargrades/types'
 import Container from '@mui/material/Container'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import { PankoRow } from '../../components/panko'
-import { FakeLink } from '../../components/link'
 import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
-import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { AllGroupsResult, GroupResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
-import { buildArgs } from '../../lib/environment'
+import { AllGroupsResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
 import { useRosetta } from '../../lib/i18n'
-import { tocAtom } from '../../lib/recoil'
 import { ObservableStatus } from '../../lib/data/Observable'
+import { extract } from '../../lib/util'
+import { SidebarContainer } from '../../components/sidebarcontainer'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { extract } from '../../lib/util'
 
 export interface GroupProps {
   staticGroupId: string;
@@ -33,36 +26,25 @@ export interface GroupProps {
   doesNotExist?: boolean;
 }
 
-
 export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
   const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
+  const allGroupsData = status === 'success' && data !== undefined ? data.core_curriculum : []
 
   const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${staticGroupId}`)
   const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
   
   const isMissingProps = staticGroupId === undefined
-  const good = !isMissingProps && status === 'success' && oneGroupStatus === 'success'
-  const [_, setTOCExpanded] = useRecoilState(tocAtom)
-
-  const handleClick = (x: GroupResult) => {
-    router.push(x.href, undefined, { scroll: false })
-    setTOCExpanded(false)
-  }
+  const good = !isMissingProps && oneGroupStatus === 'success'
 
   useEffect(() => {
-    if(good && data!.categories.length > 0) {
-      // preload referenced areas
-      for(let key of data!.categories) {
-        const cat = data!.results[key];
-        for(let item of cat) {
-          router.prefetch(item.href)
-        }
-      }
+    // preload referenced areas
+    for(let item of allGroupsData) {
+      router.prefetch(item.href)
     }
-  },[good,data])
+  },[allGroupsData])
 
   return (
     <>
@@ -73,47 +55,21 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       <Container>
         <PankoRow />
       </Container>
-      <main className={styles.main}>
-        <aside className={styles.nav}>
-          <TableOfContentsWrap condensedTitle="Select Group">
-          { good ? data!.categories.map(cat => (
-            <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
-              {data!.results[cat].map((e, index) => (
-                <React.Fragment key={e.key}>
-                  <FakeLink href={e.href}>
-                    <ListItemButton
-                      selected={e.key === staticGroupId}
-                      onClick={() => handleClick(e)}
-                      classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
-                      dense
-                      >
-                      <ListItemText
-                        primary={e.title}
-                        primaryTypographyProps={{
-                          color: (theme) => (e.key === staticGroupId) ? theme.palette.text.primary : theme.palette.text.secondary,
-                          fontWeight: 'unset'
-                        }}
-                        />
-                    </ListItemButton>
-                  </FakeLink>
-                </React.Fragment>
-              ))}
-            </List>
-          )) : <></>
-          }
-          </TableOfContentsWrap>
-        </aside>
-        <div>
-          { doesNotExist === true ? 
+      <SidebarContainer condensedTitle="Select Group" sidebarItems={allGroupsData.map(group => ({
+        key: group.key,
+        categoryName: group.categories.filter(e => !e.startsWith('#')).at(0) ?? '',
+        title: group.title,
+        href: group.href,
+      }))}>
+        { doesNotExist === true ? 
           <Alert severity="error">
             <AlertTitle>Error 404</AlertTitle>
             Group {staticGroupId} could not be found.
           </Alert>
-          : <></>
-          }
-          { good && doesNotExist === false && oneGroupData !== undefined ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
-        </div>
-      </main>
+        : <></>
+        }
+        { good && doesNotExist === false && oneGroupData !== undefined ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
+      </SidebarContainer>
     </>
   );
 }
