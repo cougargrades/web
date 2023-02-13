@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
 import { Group } from '@cougargrades/types'
+import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
 import Container from '@mui/material/Container'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
@@ -26,9 +27,10 @@ export interface GroupProps {
   staticDescription: string;
   doesNotExist?: boolean;
   isFakeGroup: boolean;
+  filterSubjects: string[];
 }
 
-export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist, isFakeGroup }: GroupProps) {
+export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist, isFakeGroup, filterSubjects }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
@@ -41,12 +43,12 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
       title: group.title,
       href: group.href,
     }))),
-    {
-      key: 'all-subjects',
-      categoryName: 'Other Groups',
-      title: 'All Subjects',
-      href: '/g/all-subjects',
-    },
+    ...(FAKE_GROUPS.map(group => ({
+      key: group.identifier,
+      categoryName: Array.isArray(group.categories) ? group.categories[0] : '',
+      title: group.shortName ?? group.name,
+      href: `/g/${group.identifier}`,
+    }))),
   ]
 
   const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${isFakeGroup ? `${undefined}` : staticGroupId}`)
@@ -82,7 +84,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
         { }
         {
           isFakeGroup && !doesNotExist
-          ? <AllSubjectsList />
+          ? <AllSubjectsList title={staticName} caption={staticDescription} onlySubjects={filterSubjects} />
           : (
             good && doesNotExist === false && oneGroupData !== undefined 
             ? <GroupContent data={oneGroupData} /> 
@@ -109,14 +111,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const FAKE_GROUPS: Group[] = [
+  ...curated_colleges.filter(college => !['college-exploratory'].includes(college.identifier)).map(college => ({
+    name: college.groupLongTitle,
+    shortName: college.groupShortTitle,
+    identifier: college.identifier,
+    description: `Every Subject available in this college/school.`,
+    courses: [],
+    sections: [],
+    relatedGroups: [],
+    keywords: [],
+    categories: ['Colleges/Schools'],
+    sources: [],
+  })),
   {
     name: 'All Subjects',
     identifier: 'all-subjects',
-    description: '',
+    description: 'Every Subject available at the University of Houston.',
     courses: [],
     sections: [],
+    relatedGroups: [],
     keywords: [],
-    categories: [],
+    categories: ['Other Groups'],
     sources: [],
   }
 ]
@@ -128,6 +143,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const groupData = isFakeGroup ? FAKE_GROUPS.find(e => e.identifier === groupId)! : await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''
+  const filterSubjects = isFakeGroup ? curated_colleges.find(e => e.identifier === groupId)?.subjects ?? [] : []
   return {
     props: {
       staticGroupId: extract(groupId),
@@ -135,6 +151,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
       staticDescription: description,
       doesNotExist: groupData === undefined,
       isFakeGroup,
+      filterSubjects,
     }
   };
 }

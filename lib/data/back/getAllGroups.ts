@@ -5,7 +5,7 @@ import { AllGroupsResult, AllGroupsResultItem, ALL_GROUPS_SENTINEL, group2Result
 
 export async function getAllGroups(): Promise<AllGroupsResult> {
   const db = firebase.firestore()
-  const query = db.collection('groups').where('categories', 'array-contains', '#UHCoreCurriculum')
+  const query = db.collection('groups').where('categories', 'array-contains', '#UHCoreCurriculum') // TODO: switch to #ShowInSidebar
   const querySnap = await query.get()
   const data: Group[] = querySnap.docs.filter(e => e.exists).map(e => e.data() as Group);
   
@@ -20,7 +20,8 @@ export async function getAllGroups(): Promise<AllGroupsResult> {
     ...(
       Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories.filter(cat => !cat.startsWith('#')) : []).flat()))
         .sort((a,b) => defaultComparator(a,b)) // [ '(All)', '(2022-2023)', '(2021-2022)', '(2020-2021)' ]
-        .slice(0,2) // don't endlessly list the groups, they're still accessible from a course directly
+        // TODO: TEMPORARY FIX until we switch to '#ShowInSidebar'
+        .slice(0,1) // don't endlessly list the groups, they're still accessible from a course directly
       ),
     //ALL_GROUPS_SENTINEL
   ];

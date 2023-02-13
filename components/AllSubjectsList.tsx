@@ -16,7 +16,13 @@ import { pluralize } from '../lib/i18n'
 import styles from './AllSubjectsList.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
 
-export function AllSubjectsList() {
+export interface AllSubjectsListProps {
+  title: string;
+  caption: string;
+  onlySubjects?: string[];
+}
+
+export function AllSubjectsList({ title, caption, onlySubjects }: AllSubjectsListProps) {
   const abbr = useAsync(async () => {
     const abbreviationMap = await (await import('@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json')).default
     return abbreviationMap
@@ -44,7 +50,7 @@ export function AllSubjectsList() {
   //   lastInitial: '',
   // })) : []
 
-  const results: TopResult[] = status === 'success' && abbreviationMap !== null ? subjects.map(subj => ({
+  const results: TopResult[] = status === 'success' && abbreviationMap !== null ? subjects.filter(subj => Array.isArray(onlySubjects) && onlySubjects.length > 0 ? onlySubjects.includes(subj) : true).map(subj => ({
     metricValue: 0,
     metricFormatted: '',
     metricTimeSpanFormatted: '',
@@ -61,10 +67,10 @@ export function AllSubjectsList() {
   return (
     <div className={styles.articleContainer}>
       <Typography variant="h4" color="text.primary">
-        All Subjects
+        {title}{/* All Subjects */}
       </Typography>
       <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-        Every Subject available at the University of Houston. Here, a &quot;Subject&quot; refers to the 3-4 character prefix before a course number (<em>ex: <abbr title="English">ENGL</abbr>, <abbr title="Mathematics">MATH</abbr></em>)
+        {caption} Here, a &quot;Subject&quot; refers to the 3-4 character prefix before a course number (<em>ex: <abbr title="English">ENGL</abbr>, <abbr title="Mathematics">MATH</abbr></em>)
       </Typography>
       <List sx={{ width: '100%' }}>
         {
