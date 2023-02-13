@@ -27,7 +27,7 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
 
   const settledData = await Promise.allSettled([
     (data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses) ? Util.populate<Course>(data.courses) : Promise.resolve<Course[]>([])),
-    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections) : Promise.resolve<Section[]>([])),
     (data && Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs) ? Util.populate<Group>(groupRefs) : Promise.resolve<Group[]>([])),
   ]);
 

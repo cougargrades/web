@@ -21,7 +21,7 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
   const settledData = await Promise.allSettled([
     (data && Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups) ? Util.populate<Group>(data.groups) : Promise.resolve<Group[]>([])),
     (data && Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors) ? Util.populate<Instructor>(data.instructors) : Promise.resolve<Instructor[]>([])),
-    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections) : Promise.resolve<Section[]>([])),
   ]);
   
   const [groupDataSettled, instructorDataSettled, sectionDataSettled] = settledData;
