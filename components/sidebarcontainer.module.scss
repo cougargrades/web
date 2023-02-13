@@ -20,8 +20,8 @@
     align-self: start;
     margin-bottom: unset;
     // TODO: only use with All Groups enabled
-    // max-height: 100vh;
-    // overflow-y: scroll;
+    max-height: 100vh;
+    overflow-y: auto;
   }
 }
 

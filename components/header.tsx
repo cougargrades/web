@@ -21,7 +21,7 @@ export default function Header() {
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
           <NewFeatureWrap featureID="all-subjects.v1" hideAfterClick>
-            <NavLink href="/g/all-subjects"><Emoji symbol="🗃️" />Groups</NavLink>
+            <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
           </NewFeatureWrap>
           <NewFeatureWrap featureID="popular.v1" hideAfterClick>
             <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
