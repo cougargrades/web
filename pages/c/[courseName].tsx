@@ -25,19 +25,23 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
+import { extract } from '../../lib/util'
+import { buildArgs } from '../../lib/environment'
+import { metaCourseDescription } from '../../lib/seo'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { extract } from '../../lib/util'
 
 export interface CourseProps {
   staticCourseName: string;
   staticDescription: string;
+  staticLongDescription?: string;
+  staticMetaDescription: string;
   staticHTML: string;
   doesNotExist?: boolean;
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, staticMetaDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
@@ -60,7 +64,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     <>
     <Head>
       <title>{staticCourseName} / CougarGrades.io</title>
-      <meta name="description" content={stone.t('meta.course.description', { staticCourseName, staticDescription })} />
+      <meta name="description" content={staticMetaDescription} />
     </Head>
     <Container>
       <PankoRow />
@@ -181,14 +185,17 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
   // console.time('getStaticPaths')
-  // const data = await getFirestoreCollection<Course>('catalog');
+  // //const data = await getFirestoreCollection<Course>('catalog');
+  // const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   // console.timeEnd('getStaticPaths')
+  // console.log(data)
   return {
     paths: [
       //{ params: { courseName: '' } },
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e._id }})) : [])
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
     ],
-    fallback: true
+    //fallback: true
+    fallback: 'blocking'
   }
 }
 
@@ -197,7 +204,14 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   const { params, locale } = context;
   const courseName = params?.courseName;
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
+  const { data: searchableData } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   const description = courseData !== undefined ? courseData.description : ''
+  const longDescription = searchableData.find(e => e.courseName === courseName)?.publicationTextContent ?? '';
+  const metaDescription = metaCourseDescription({
+    staticCourseName: extract(courseName),
+    staticDescription: description,
+    staticLongDescription: longDescription,
+  })
   const recentPublication = courseData && courseData.publications !== undefined && 
     Array.isArray(courseData.publications) &&
     courseData.publications.length > 0
@@ -212,6 +226,8 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
     props: { 
       staticCourseName: extract(courseName),
       staticDescription: description,
+      staticLongDescription: longDescription,
+      staticMetaDescription: metaDescription,
       staticHTML: content ?? '',
       doesNotExist: courseData === undefined,
     }

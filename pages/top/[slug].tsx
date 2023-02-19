@@ -62,7 +62,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
     <>
       <Head>
         <title>{router.isFallback ? `Popular / CougarGrades.io` : `${post.title} / CougarGrades.io Popular`}</title>
-        <meta name="description" content={post.content ?? "Popular courses on CougarGrades"} />
+        <meta name="description" content={post.content ?? 'Popular content on CougarGrades'} />
       </Head>
       <Container>
         <PankoRow />

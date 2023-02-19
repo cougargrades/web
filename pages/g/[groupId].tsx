@@ -16,21 +16,23 @@ import { useRosetta } from '../../lib/i18n'
 import { ObservableStatus } from '../../lib/data/Observable'
 import { extract } from '../../lib/util'
 import { SidebarContainer, SidebarItem } from '../../components/sidebarcontainer'
+import { AllSubjectsList } from '../../components/AllSubjectsList'
+import { metaFakeGroupDescription } from '../../lib/seo'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { AllSubjectsList } from '../../components/AllSubjectsList'
 
 export interface GroupProps {
   staticGroupId: string;
   staticName: string;
   staticDescription: string;
+  staticMetaDescription: string;
   doesNotExist?: boolean;
   isFakeGroup: boolean;
   filterSubjects: string[];
 }
 
-export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist, isFakeGroup, filterSubjects }: GroupProps) {
+export default function Groups({ staticGroupId, staticName, staticDescription, staticMetaDescription, doesNotExist, isFakeGroup, filterSubjects }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
@@ -67,8 +69,8 @@ export default function Groups({ staticGroupId, staticName, staticDescription, d
   return (
     <>
       <Head>
-        <title>{(staticName || staticGroupId) !== undefined ? `${staticName || staticGroupId} / ` : ''}CougarGrades.io</title>
-        <meta name="description" content={staticDescription || stone.t('meta.groups.description')} />
+        <title>{staticName} / CougarGrades.io</title>
+        <meta name="description" content={staticMetaDescription} />
       </Head>
       <Container>
         <PankoRow />
@@ -106,7 +108,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       //{ params: { groupId: '' } },
       //...(['production','preview'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
     ],
-    fallback: true
+    fallback: 'blocking'
   }
 }
 
@@ -115,7 +117,7 @@ const FAKE_GROUPS: Group[] = [
     name: college.groupLongTitle,
     shortName: college.groupShortTitle,
     identifier: college.identifier,
-    description: `Every Subject available in this college/school.`,
+    description: metaFakeGroupDescription(college.identifier, false),
     courses: [],
     sections: [],
     relatedGroups: [],
@@ -143,12 +145,21 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const groupData = isFakeGroup ? FAKE_GROUPS.find(e => e.identifier === groupId)! : await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''
+  const metaDescription = (
+    isFakeGroup 
+    && groupData 
+    && Array.isArray(groupData.categories) 
+    && groupData.categories.includes('Colleges/Schools')
+  )
+    ? metaFakeGroupDescription(groupData.identifier, true)
+    : (groupData?.description ?? '');
   const filterSubjects = isFakeGroup ? curated_colleges.find(e => e.identifier === groupId)?.subjects ?? [] : []
   return {
     props: {
       staticGroupId: extract(groupId),
       staticName: name,
       staticDescription: description,
+      staticMetaDescription: metaDescription,
       doesNotExist: groupData === undefined,
       isFakeGroup,
       filterSubjects,
