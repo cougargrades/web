@@ -20,7 +20,7 @@
     align-self: start;
     margin-bottom: unset;
     // TODO: only use with All Groups enabled
-    max-height: 100vh;
+    max-height: calc(100vh - 2rem);
     overflow-y: auto;
   }
 }
