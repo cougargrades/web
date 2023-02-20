@@ -39,7 +39,8 @@ interface InstructorCardProps {
 }
 
 interface InstructorCardShowMoreProps {
-  courseName: string;
+  cardTitle: string;
+  modalTitle?: string;
   data: CourseInstructorResult[];
 }
 
@@ -92,7 +93,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function InstructorCardShowMore({ courseName, data }: InstructorCardShowMoreProps) {
+export function InstructorCardShowMore({ cardTitle, modalTitle, data }: InstructorCardShowMoreProps) {
   const router = useRouter()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -110,7 +111,8 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
         <CardActionArea className={styles.cardActionArea} onClick={() => setOpen(true)}>
           <CardContent className={styles.cardContent}>
             <Typography className={styles.showMore} color="text.secondary">
-              View all {courseName} instructors
+              {/* View all {courseName} instructors */}
+              {cardTitle}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -132,7 +134,8 @@ export function InstructorCardShowMore({ courseName, data }: InstructorCardShowM
           >
             <CloseIcon />
           </IconButton>
-          All {courseName} instructors <br />
+          {/* All {courseName} instructors <br /> */}
+          {modalTitle ?? cardTitle} <br />
           <Typography variant="body1" color="text.secondary">{data.length.toLocaleString()} total</Typography>
         </DialogTitle>
         <DialogContent className={styles.showMoreContent}>

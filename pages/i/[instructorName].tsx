@@ -11,6 +11,8 @@ import Tooltip from '@mui/material/Tooltip'
 import Skeleton from '@mui/material/Skeleton'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 import RateReviewIcon from '@mui/icons-material/RateReview'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
@@ -20,7 +22,7 @@ import { PankoRow } from '../../components/panko'
 import { Badge, BadgeSkeleton } from '../../components/badge'
 import { EnrollmentInfo } from '../../components/enrollment'
 import { Carousel } from '../../components/carousel'
-import { InstructorCard, InstructorCardSkeleton } from '../../components/instructorcard'
+import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '../../components/instructorcard'
 import { EnhancedTable } from '../../components/datatable'
 import { CustomSkeleton } from '../../components/skeleton'
 import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
@@ -46,7 +48,7 @@ export interface InstructorProps {
   doesNotExist?: boolean;
 }
 
-export default function IndividualInstructor({ staticInstructorName, staticDepartmentText, staticMetaDescription }: InstructorProps) {
+export default function IndividualInstructor({ staticInstructorName, staticDepartmentText, staticMetaDescription, doesNotExist }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useInstructorData(staticInstructorName)
@@ -73,6 +75,22 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
       <PankoRow />
       <main>
         <div className={styles.instructorHero}>
+          {
+            (doesNotExist === true) ?
+            <Alert severity="error">
+              <AlertTitle>Error 404</AlertTitle>
+              Instructor &quot;<code className="plain">{staticInstructorName}</code>&quot; could not be found.
+            </Alert>
+            : null
+          }
+          {
+            (status === 'error' && doesNotExist === false) ?
+            <Alert severity="error">
+              <AlertTitle>Unknown Error</AlertTitle>
+              An error occured when generating this page.
+            </Alert>
+            : null
+          }
           <figure>
             { !isMissingProps ? <Typography variant="h1">{staticInstructorName}</Typography> : <CustomSkeleton width={325} height={75} />}
             { !isMissingProps ? <Typography variant="h4">{staticDepartmentText}</Typography> : <CustomSkeleton width={360} height={45} /> }
@@ -113,33 +131,83 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           </Tooltip>
         </ul>
         <h3>Related Groups</h3>
-        { status === 'success' ? data!.relatedGroups.map(e => (
-          <Tooltip key={e.key} title={e.description}>
-            <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
-          </Tooltip>
-        )) : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)}
+        {
+          status === 'success' 
+          ? (
+            data!.relatedGroups.length > 0
+            ? (
+              data!.relatedGroups.map(e => (
+                <Tooltip key={e.key} title={e.description}>
+                  <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
+                </Tooltip>
+              )) 
+            )
+            : (
+              <span>No data</span>
+            )
+          )
+          : [1].map(e => <CustomSkeleton key={e} width={150} height={32} />)
+        }
         <h3>Related Courses</h3>
-        <Carousel>
-          { status === 'success' ? data!.relatedCourses.slice(0,RELATED_COURSE_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>
-          ) : Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
-        </Carousel>
+        {
+          status === 'success'
+          ? (
+            data!.relatedCourses.length > 0
+            ? (
+              <Carousel>
+                {
+                  data!.relatedCourses.slice(0,RELATED_COURSE_LIMIT).map(e => <Tilty key={e.key} max={25}><InstructorCard data={e} /></Tilty>)
+                }
+                {/* I forgot there was an intentional reason why this wasn't included here */}
+                {
+                  false && data!.relatedCourses.length > RELATED_COURSE_LIMIT
+                  ? <InstructorCardShowMore
+                      cardTitle={`View all courses from ${staticInstructorName}`}
+                      modalTitle={`Courses from ${staticInstructorName}`}
+                      data={data!.relatedCourses}
+                    />
+                  : null
+                }
+              </Carousel>
+              
+            )
+            : (
+              <span>No data</span>
+            )
+          )
+          : (
+            <Carousel>
+              {Array.from(new Array(RELATED_COURSE_LIMIT).keys()).map(e => <InstructorCardSkeleton key={e} />)}
+            </Carousel>
+          )
+        }
         <h3>Data</h3>
       </main>
     </Container>
     <Container maxWidth="xl">
       <div className={styles.chartWrap}>
         {
-          status === 'success' && data!.dataChart.data.length > 0 ?
-          <Chart
-            width={'100%'}
-            height={450}
-            chartType="LineChart"
-            loader={<CustomSkeleton width={'100%'} height={350} />}
-            data={data!.dataChart.data}
-            options={data!.dataChart.options}
-            // prevent ugly red box when there's no data yet on first-mount
-            chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
-          />
+          status === 'success'
+          ? (
+            data!.dataChart.data.length > 0
+            ? (
+              <Chart
+                width={'100%'}
+                height={450}
+                chartType="LineChart"
+                loader={<CustomSkeleton width={'100%'} height={350} />}
+                data={data!.dataChart.data}
+                options={data!.dataChart.options}
+                // prevent ugly red box when there's no data yet on first-mount
+                chartEvents={[{ eventName: 'error', callback: (event) => event.google.visualization.errors.removeError(event.eventArgs[0].id) }]}
+              />
+            )
+            : (
+              <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                No chart data 📉🗑️
+              </div>
+            )
+          )
           :
           <LoadingBoxIndeterminate title="Loading sections..." />
         }
