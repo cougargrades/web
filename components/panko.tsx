@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Snackbar from '@mui/material/Snackbar'
 import IconButton from '@mui/material/IconButton'
@@ -145,6 +146,9 @@ export function generateBreadcrumbs(path: string) {
       if(array[1].toLowerCase() === 'g') {
         if(value === 'all-subjects') {
           return <span key={key}>All Subjects</span>
+        }
+        else if(value.startsWith('college')) {
+          return <span key={key}>{curated_colleges.find(college => college.identifier === value)?.groupLongTitle}</span>
         }
         else {
           return <span key={key}>Group ID #{decodeURI(value)}</span>
