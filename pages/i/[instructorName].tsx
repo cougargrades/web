@@ -191,7 +191,7 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
       ? `${instructorData.firstName} ${instructorData.lastName}`
       : extract(instructorName),
     staticDepartmentText: getDepartmentText(instructorData, 1),
-  })
+  }, instructorData)
   //console.timeEnd('getStaticProps')
 
   return {

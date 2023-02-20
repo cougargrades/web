@@ -5,6 +5,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
 import { Group } from '@cougargrades/types'
 import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
+import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
 import Container from '@mui/material/Container'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
@@ -128,7 +129,7 @@ const FAKE_GROUPS: Group[] = [
   {
     name: 'All Subjects',
     identifier: 'all-subjects',
-    description: 'Every Subject available at the University of Houston.',
+    description: `Every Subject available at the University of Houston. ${counts.num_subjects} Subjects in total.`,
     courses: [],
     sections: [],
     relatedGroups: [],
