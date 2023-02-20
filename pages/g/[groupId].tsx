@@ -75,7 +75,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, s
       <Container>
         <PankoRow />
       </Container>
-      <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems}>
+      <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems} showOverflowScrollers>
         { doesNotExist === true ? 
           <Alert severity="error">
             <AlertTitle>Error 404</AlertTitle>
