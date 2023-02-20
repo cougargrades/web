@@ -184,14 +184,11 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  // console.time('getStaticPaths')
-  // //const data = await getFirestoreCollection<Course>('catalog');
-  // const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
-  // console.timeEnd('getStaticPaths')
-  // console.log(data)
+  const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   return {
     paths: [
       //{ params: { courseName: '' } },
+      // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
       //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
     ],
     //fallback: true

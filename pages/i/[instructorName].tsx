@@ -30,6 +30,7 @@ import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
 import { LoadingBoxIndeterminate } from '../../components/loading'
 import { extract } from '../../lib/util'
+import { buildArgs } from '../../lib/environment'
 import { metaInstructorDescription } from '../../lib/seo'
 
 import styles from './instructor.module.scss'
@@ -167,13 +168,12 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  // console.time('getStaticPaths')
-  // const data = await getFirestoreCollection<Instructor>('instructors');
-  // console.timeEnd('getStaticPaths')
+  const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/instructors.json')
   return {
     paths: [
       //{ params: { courseName: '' } },
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e._id }})) : [])
+      // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e.legalName }})) : [])
     ],
     fallback: 'blocking'
   }
@@ -182,7 +182,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<InstructorProps> = async (context) => {
   //console.time('getStaticProps')
   const { params } = context;
-  //const { instructorName } = params
   const instructorName = params?.instructorName;
   const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
   const departmentText = getDepartmentText(instructorData)
