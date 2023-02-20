@@ -6,6 +6,7 @@ import styles from './badge.module.scss'
 type BadgeProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> & {
   extraClassNames?: string;
   title?: string;
+  suffix?: React.ReactNode;
   style?: CSSProperties;
   children: React.ReactNode;
 }
@@ -22,7 +23,10 @@ export function Badge(props: BadgeProps) {
       style={props.style}
       title={props.title}
     >
+      <span className={styles.badgeText}>
       {props.children}
+      </span>
+      <span>{props.suffix}</span>
     </span>
   );
 }
@@ -49,6 +53,8 @@ export const grade2Color: Record<Grade, Property.Color> = {
   'U': '#d87093',
   'NCR': '#d87093'
 }
+
+export const SEARCH_RESULT_COLOR: Property.Color = '#f0f8ff'//'#b0c4de' //'#f0f8ff'; // aliceblue
 
 // Based on https://github.com/cougargrades/web/blob/3d511fc56b0a90f2038883a71852245b726af7e3/src/components/instructors/GPABadge.js
 export function getGradeForGPA(n: number): Grade {

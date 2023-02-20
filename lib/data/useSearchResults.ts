@@ -1,11 +1,14 @@
+//import React from 'react'
 import { Course, Instructor, Group } from '@cougargrades/types'
 import useSWR from 'swr/immutable'
 import { useAsync } from 'react-use'
-import { search } from '@lyrasearch/lyra'
+import { RetrievedDoc, search } from '@lyrasearch/lyra'
+import type { Property } from 'csstype'
 import { Observable } from './Observable'
 import { getBadges } from './getBadges'
 import { useLyra } from '../lyra'
-import { grade2Color } from '../../components/badge'
+import { grade2Color, SEARCH_RESULT_COLOR } from '../../components/badge'
+import { average, normalizeOne, scaleToRange, shareOf, sum } from '../util'
 //import { firebaseApp } from '../ssg'
 //import { firebase } from '../firebase_admin'
 
@@ -13,7 +16,11 @@ export interface SearchResultBadge {
   key: string;
   text: string;
   color: string;
+  opacity?: number;
   caption?: string;
+  title?: string;
+  suffix?: string;
+  fontSize?: Property.FontSize;
 }
 
 export interface SearchResult {
@@ -22,7 +29,7 @@ export interface SearchResult {
   type: 'course' | 'instructor' | 'group';
   group: string; // What to display in the <li> divider in the search results
   title: string; // What the result is
-  badges: SearchResultBadge[]
+  badges: SearchResultBadge[];
 }
 
 export function course2Result(data: Course): SearchResult {
@@ -90,6 +97,11 @@ export const sortByTitle = (inputValue: string) => (a: SearchResult, b: SearchRe
   }
 };
 
+export function percentageOfBM25Score(score: number, otherResults: RetrievedDoc<any>[]) {
+  const otherScores = otherResults.map(e => e.score)
+  return shareOf(score, otherScores)
+}
+
 export function useLiteSearchResults(inputValue: string, enableLyra: boolean): Observable<SearchResult[]> {
   const { data: trendingData, error: trendingError } = useSWR<SearchResult[]>('/api/trending');
   const lyra = useLyra(enableLyra)
@@ -131,34 +143,61 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
   const courseHits = courseResults?.value?.hits
   const instructorHits = instructorResults?.value?.hits
 
-  const courseData: SearchResult[] = Array.isArray(courseHits) ? courseHits.map(hit => ({
-    key: hit.id,
-    href: hit.document.href,
-    type: 'course',
-    group: '📚 Courses',
-    title: `${hit.document.courseName}: ${hit.document.description}`,
-    badges: [
-      {
-        key: 'score',
-        text: `${hit.score.toFixed(2)}`,
-        color: grade2Color['I'],
-      }
-    ],
-  })) : [];
-  const instructorData: SearchResult[] = Array.isArray(instructorHits) ? instructorHits.map(hit => ({
-    key: hit.id,
-    href: hit.document.href,
-    type: 'instructor',
-    group: '👩‍🏫 Instructors',
-    title: `${hit.document.firstName} ${hit.document.lastName}`,
-    badges: [
-      {
-        key: 'score',
-        text: `${hit.score.toFixed(2)}`,
-        color: grade2Color['I'],
-      }
-    ],
-  })) : [];
+
+  const courseData: SearchResult[] = Array.isArray(courseHits) ? courseHits.map(hit => {
+    const normalizedScore = percentageOfBM25Score(hit.score, courseHits);
+    const normalizedHits = courseHits.map(e => percentageOfBM25Score(e.score, courseHits))
+    const averageScore = average(normalizedHits)
+    // only "significant" results should have a full opacity
+    const opacity = scaleToRange(normalizeOne(normalizedScore, normalizedHits), [0.35, 1.0])
+    return {
+      key: hit.id,
+      href: hit.document.href,
+      type: 'course',
+      group: '📚 Courses',
+      title: `${hit.document.courseName}: ${hit.document.description}`,
+      badges: [
+        {
+          key: 'score',
+          title: `${normalizedScore.toFixed(1)}% match, Okapi BM25 score: ${hit.score.toFixed(2)}`,
+          text: `${normalizedScore.toFixed(1)}%`,
+          suffix: ' 🔎',
+          color: SEARCH_RESULT_COLOR,
+          // only "significant" results should have a full opacity
+          opacity,
+          // make search result badges smaller
+          fontSize: '0.7em',
+        }
+      ],
+    }
+  }) : [];
+  const instructorData: SearchResult[] = Array.isArray(instructorHits) ? instructorHits.map(hit => {
+    const normalizedScore = percentageOfBM25Score(hit.score, instructorHits);
+    const normalizedHits = instructorHits.map(e => percentageOfBM25Score(e.score, instructorHits))
+    const averageScore = average(normalizedHits)
+    // only "significant" results should have a full opacity
+    const opacity = scaleToRange(normalizeOne(normalizedScore, normalizedHits), [0.35, 1.0])
+    return {
+      key: hit.id,
+      href: hit.document.href,
+      type: 'instructor',
+      group: '👩‍🏫 Instructors',
+      title: `${hit.document.firstName} ${hit.document.lastName}`,
+      badges: [
+        {
+          key: 'score',
+          title: `${normalizedScore.toFixed(1)}% match, Okapi BM25 score: ${hit.score.toFixed(2)}`,
+          text: `${normalizedScore.toFixed(1)}%`,
+          suffix: ' 🔎',
+          color: SEARCH_RESULT_COLOR,
+          // only "significant" results should have a full opacity
+          opacity,
+          // make search result badges smaller
+          fontSize: '0.7em',
+        }
+      ],
+    }
+  }) : [];
 
   try {
     return {

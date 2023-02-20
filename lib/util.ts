@@ -22,6 +22,31 @@ export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
 
+export const average = (x: number[]) => sum(x) / x.length
+
+/**
+ * Normalizes one element of a list
+ * @param x 
+ * @param of 
+ * @returns 
+ */
+export const normalizeOne = (x: number, of: number[]) => (
+  // prevent division by zero
+  Math.min(...of) === Math.max(...of)
+  ? 1 / of.length
+  : ((x - Math.min(...of)) / (Math.max(...of) - Math.min(...of)))
+)
+
+export const scaleToRange = (x: number, [min, max]: [number, number]) => x * (max - min) + min
+
+/**
+ * When provided a list of weights (`of`) and an individual weight (`x`), computes the percentage of weight that `x` occupies
+ * @param x 
+ * @param of 
+ * @returns 
+ */
+export const shareOf = (x: number, of: number[]) => x / sum(of) * 100
+
 export function isOverNDaysOld(d: Date, n: number): boolean {
   let n_days_ago = new Date()
   n_days_ago.setDate(n_days_ago.getDate() - n);

@@ -124,7 +124,6 @@ export default function SearchBar() {
   // For creating search result items
   const SearchListItem = (props: SearchListItemProps) => {
     const { option } = props
-
     return (
       <li {...props}>
         <div className={styles.searchListItem}>
@@ -138,7 +137,7 @@ export default function SearchBar() {
           </div>
           <div className={styles.badgeList}>
             {option.badges.map(e => (
-              <Badge key={e.key} style={{ backgroundColor: e.color }}>{e.text}</Badge>
+              <Badge key={e.key} title={e.title} suffix={e.suffix} style={{ backgroundColor: e.color, opacity: e.opacity, fontSize: e.fontSize }}>{e.text}</Badge>
             ))}
           </div>
         </div>
