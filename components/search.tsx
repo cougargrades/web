@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words'
 import NProgress from 'nprogress'
 import { logEvent } from 'firebase/analytics'
 import { searchInputAtom } from '../lib/recoil'
-import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
+import { SearchResult, useLiteSearchResults, useSearchResults } from '../lib/data/useSearchResults'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
 import { useAnalyticsRef } from '../lib/firebase'
@@ -47,9 +47,14 @@ export default function SearchBar() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [wasOpen, setWasOpen] = useState(false)
   // For actually performing searches
-  const { data, status } = useSearchResults(inputValue)
+  const { data, status } = useLiteSearchResults(inputValue, wasOpen)
   const loading = status !== 'success'
+
+  useEffect(() => {
+    if(open) setWasOpen(true)
+  }, [open])
 
   // For analytics
   useEffect(() => {

@@ -5,7 +5,7 @@ import { course2Result, instructor2Result, SearchResult } from './data/useSearch
 //import { getFirestoreDocument } from './ssg';
 import { getFirestoreDocument } from './data/back/getFirestoreData'
 import { DateYMDString } from './date'
-import { notNullish } from './util'
+import { notNullish, parseIntOrUndefined } from './util'
 
 const credential = JSON.parse(Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS as any, 'base64').toString());
 const propertyId = process.env.GA4_PROPERTY_ID
@@ -136,8 +136,6 @@ export interface PlusMetrics {
 
 export interface CoursePlusMetrics extends Course, PlusMetrics {}
 export interface InstructorPlusMetrics extends Instructor, PlusMetrics {}
-
-const parseIntOrUndefined = (x: string | undefined): number | undefined => x === undefined ? undefined : isNaN(parseInt(x)) ? undefined : parseInt(x)
 
 /**
  * Turn a report into a Course, Instructor, or undefined if the report's URL didn't correspond to a valid course

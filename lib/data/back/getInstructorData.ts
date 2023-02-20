@@ -5,7 +5,7 @@ import { InstructorResult } from '../useInstructorData';
 import { getRosetta } from '../../i18n';
 import { getBadges } from '../getBadges';
 import { Grade, grade2Color } from '../../../components/badge';
-import { getYear, seasonCode } from '../../util';
+import { getTotalEnrolled, getYear, seasonCode } from '../../util';
 import { group2Result, SectionPlus } from '../useCourseData';
 import { course2Result } from '../useAllGroups';
 import { Column } from '../../../components/datatable';
@@ -25,16 +25,9 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     .map(e => e[0])
     .map(e => db.doc(`/groups/${e}`) as FirebaseFirestore.DocumentReference<Group>);
 
-  // const searchSnapshots = await Promise.allSettled([
-  //   courseQuery.get(),
-  //   courseByDeptQuery.get(),
-  //   instructorQuery.get(),
-  //   groupQuery.get(),
-  // ])
-
   const settledData = await Promise.allSettled([
     (data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses) ? Util.populate<Course>(data.courses) : Promise.resolve<Course[]>([])),
-    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections) : Promise.resolve<Section[]>([])),
     (data && Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs) ? Util.populate<Group>(groupRefs) : Promise.resolve<Group[]>([])),
   ]);
 
@@ -43,21 +36,8 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
   const groupData = groupDataSettled.status === 'fulfilled' ? groupDataSettled.value : [];
 
-  // const courseData: Course[] = [...(
-  //   data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)
-  //   ? await Util.populate<Course>(data.courses)
-  //   : []
-  // )];
-  // const sectionData: Section[] = [...(
-  //   data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections)
-  //   ? await Util.populate<Section>(data.sections, 10, true)
-  //   : []
-  // )];
-  // const groupData: Group[] = [...(
-  //   data && Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs)
-  //   ? await Util.populate<Group>(groupRefs)
-  //   : []
-  // )];
+  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
 
   return {
     badges: [
@@ -300,7 +280,9 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     },
     courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
-    classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    //classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    classSize,
     //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
     sectionLoadingProgress: 100,
     rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? `https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${data.rmpLegacyId}` : undefined,

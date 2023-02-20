@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 import ErrorIcon from '@mui/icons-material/Error'
-import { FaqPostData, getAllPosts } from '../lib/faq'
+import { FaqPostData, getAllPosts } from '../../lib/faq'
 
 export interface FaqIndexProps {
   allPosts: FaqPostData[];
@@ -34,7 +34,8 @@ export default function FrequentlyAskedQuestions({ allPosts }: FaqIndexProps) {
       <div className="new-container">
         <Stack
           sx={{
-            height: '100px'
+            height: '100px',
+            paddingBottom: '25px',
           }}
           justifyContent="center"
           alignItems="center"

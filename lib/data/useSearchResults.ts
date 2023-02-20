@@ -1,7 +1,11 @@
 import { Course, Instructor, Group } from '@cougargrades/types'
 import useSWR from 'swr/immutable'
+import { useAsync } from 'react-use'
+import { search } from '@lyrasearch/lyra'
 import { Observable } from './Observable'
-import { getBadges } from './getBadges';
+import { getBadges } from './getBadges'
+import { useLyra } from '../lyra'
+import { grade2Color } from '../../components/badge'
 //import { firebaseApp } from '../ssg'
 //import { firebase } from '../firebase_admin'
 
@@ -85,6 +89,97 @@ export const sortByTitle = (inputValue: string) => (a: SearchResult, b: SearchRe
     return a.title.toUpperCase() < b.title.toUpperCase() ? -1 : (a.title.toUpperCase() > b.title.toUpperCase() ? 1 : 0);
   }
 };
+
+export function useLiteSearchResults(inputValue: string, enableLyra: boolean): Observable<SearchResult[]> {
+  const { data: trendingData, error: trendingError } = useSWR<SearchResult[]>('/api/trending');
+  const lyra = useLyra(enableLyra)
+
+  const courseResults = useAsync(async () => {
+    if (lyra.value !== undefined) {
+      const { courseDb } = lyra.value
+      return await search(courseDb, {
+        term: inputValue,
+        properties: ['courseName', 'description', 'publicationTextContent'],
+        boost: {
+          courseName: 2.0,
+          description: 1.0,
+          publicationTextContent: 0.5,
+        },
+        tolerance: 1,
+        limit: 10,
+      })
+    }
+    return undefined
+  }, [inputValue, lyra.value])
+
+  const instructorResults = useAsync(async () => {
+    if (lyra.value !== undefined) {
+      const { instructorDb } = lyra.value
+      return await search(instructorDb, {
+        term: inputValue,
+        properties: ['firstName', 'lastName'],
+        tolerance: 1,
+        limit: 10,
+      })
+    }
+    return undefined
+  }, [inputValue, lyra.value])
+
+  const allErrors = [lyra.error, courseResults.error, instructorResults.error]
+  const allLoading = [lyra.loading, courseResults.loading, instructorResults.loading]
+
+  const courseHits = courseResults?.value?.hits
+  const instructorHits = instructorResults?.value?.hits
+
+  const courseData: SearchResult[] = Array.isArray(courseHits) ? courseHits.map(hit => ({
+    key: hit.id,
+    href: hit.document.href,
+    type: 'course',
+    group: '📚 Courses',
+    title: `${hit.document.courseName}: ${hit.document.description}`,
+    badges: [
+      {
+        key: 'score',
+        text: `${hit.score.toFixed(2)}`,
+        color: grade2Color['I'],
+      }
+    ],
+  })) : [];
+  const instructorData: SearchResult[] = Array.isArray(instructorHits) ? instructorHits.map(hit => ({
+    key: hit.id,
+    href: hit.document.href,
+    type: 'instructor',
+    group: '👩‍🏫 Instructors',
+    title: `${hit.document.firstName} ${hit.document.lastName}`,
+    badges: [
+      {
+        key: 'score',
+        text: `${hit.score.toFixed(2)}`,
+        color: grade2Color['I'],
+      }
+    ],
+  })) : [];
+
+  try {
+    return {
+      data: [
+        ...(Array.isArray(trendingData) ? trendingData : [])
+          .filter(trend => trend.title.includes(inputValue)),
+        ...courseData,
+        ...instructorData,
+      ],
+      error: getFirst([ lyra.error, courseResults.error, instructorResults.error ]),
+      status: allErrors.some(e => e !== undefined) ? 'error' : allLoading.some(e => e) ? 'loading' : 'success'
+    }
+  }
+  catch(error) {
+    return {
+      data: [],
+      error: error as any,
+      status: 'error',
+    }
+  }
+}
 
 export function useSearchResults(inputValue: string): Observable<SearchResult[]> {
   const { data: searchData, error: searchError } = useSWR<SearchResult[]>(`/api/search?${new URLSearchParams({ q: inputValue.toLowerCase() })}`);

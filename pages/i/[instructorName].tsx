@@ -29,19 +29,24 @@ import { InstructorResult, useInstructorData } from '../../lib/data/useInstructo
 import { SectionPlus } from '../../lib/data/useCourseData'
 import { CoursePlus } from '../../lib/data/useGroupData'
 import { LoadingBoxIndeterminate } from '../../components/loading'
+import { extract } from '../../lib/util'
+import { buildArgs } from '../../lib/environment'
+import { metaInstructorDescription } from '../../lib/seo'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { extract } from '../../lib/util'
 
 
 export interface InstructorProps {
   staticInstructorName: string;
   staticDepartmentText: string;
+  staticShortDepartmentText?: string;
+  staticFullInstructorName?: string;
+  staticMetaDescription: string;
   doesNotExist?: boolean;
 }
 
-export default function IndividualInstructor({ staticInstructorName, staticDepartmentText }: InstructorProps) {
+export default function IndividualInstructor({ staticInstructorName, staticDepartmentText, staticMetaDescription }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useInstructorData(staticInstructorName)
@@ -62,7 +67,7 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
     <>
     <Head>
       <title>{staticInstructorName} / CougarGrades.io</title>
-      <meta name="description" content={stone.t('meta.instructor.description', { staticInstructorName, staticDepartmentText })} />
+      <meta name="description" content={staticMetaDescription} />
     </Head>
     <Container>
       <PankoRow />
@@ -103,8 +108,8 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of courses: { status === 'success' ? data!.courseCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title="Estimated average size of each section, # of total enrolled ÷ # of sections">
-            <li>Average number of students per section: { status === 'success' ? `~ ${data!.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           </Tooltip>
         </ul>
         <h3>Related Groups</h3>
@@ -163,44 +168,50 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  // console.time('getStaticPaths')
-  // const data = await getFirestoreCollection<Instructor>('instructors');
-  // console.timeEnd('getStaticPaths')
+  const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/instructors.json')
   return {
     paths: [
       //{ params: { courseName: '' } },
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e._id }})) : [])
+      // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e.legalName }})) : [])
     ],
-    fallback: true
+    fallback: 'blocking'
   }
 }
 
 export const getStaticProps: GetStaticProps<InstructorProps> = async (context) => {
   //console.time('getStaticProps')
   const { params } = context;
-  //const { instructorName } = params
   const instructorName = params?.instructorName;
   const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
   const departmentText = getDepartmentText(instructorData)
+  const metaDescription = metaInstructorDescription({
+    staticInstructorName: extract(instructorName),
+    staticFullInstructorName: instructorData !== undefined 
+      ? `${instructorData.firstName} ${instructorData.lastName}`
+      : extract(instructorName),
+    staticDepartmentText: getDepartmentText(instructorData, 1),
+  })
   //console.timeEnd('getStaticProps')
 
   return {
     props: {
       staticInstructorName: extract(instructorName),
       staticDepartmentText: departmentText,
+      staticMetaDescription: metaDescription,
       doesNotExist: instructorData === undefined,
     }
   };
 }
 
-function getDepartmentText(data: Instructor | undefined) {
+function getDepartmentText(data: Instructor | undefined, entries: number = 3) {
   // sort department entries in descending by value
   if(data !== undefined) {
     const depts: [keyof typeof abbreviationMap, number][] = Object.entries(data.departments) as any;
 
     const text = depts // [string, number][]
       .sort((a, b) => b[1] - a[1]) // sort
-      .slice(0, 3) // limit to 3 entries
+      .slice(0, entries) // limit to 3 entries
       .map(e => abbreviationMap[e[0]]) // ['MATH'] => ['Mathematics']
       .filter(e => e !== undefined) // remove those that didn't have an abbreviation
       .join(', '); // 'Mathematics, Computer Science'

@@ -1,6 +1,6 @@
 import styles from './emoji.module.scss'
 
-export function Emoji(props: { label: string, symbol: string } & Partial<React.HTMLAttributes<HTMLSpanElement>>) {
+export function Emoji(props: { label?: string, symbol: string } & Partial<React.HTMLAttributes<HTMLSpanElement>>) {
   return (
     <span 
       className={styles.emoji}

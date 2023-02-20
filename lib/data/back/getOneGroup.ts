@@ -8,7 +8,7 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
 
   const settledData = await Promise.allSettled([
     (data && Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses) ? Util.populate<CoursePlus>(data.courses) : Promise.resolve<CoursePlus[]>([])),
-    (data && includeSections && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+    (data && includeSections && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections) : Promise.resolve<Section[]>([])),
   ]);
   const [courseDataSettled, sectionDataSettled] = settledData
   const courseData = courseDataSettled.status === 'fulfilled' ? courseDataSettled.value : [];

@@ -25,19 +25,23 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
+import { extract } from '../../lib/util'
+import { buildArgs } from '../../lib/environment'
+import { metaCourseDescription } from '../../lib/seo'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { extract } from '../../lib/util'
 
 export interface CourseProps {
   staticCourseName: string;
   staticDescription: string;
+  staticLongDescription?: string;
+  staticMetaDescription: string;
   staticHTML: string;
   doesNotExist?: boolean;
 }
 
-export default function IndividualCourse({ staticCourseName, staticDescription, staticHTML, doesNotExist }: CourseProps) {
+export default function IndividualCourse({ staticCourseName, staticDescription, staticMetaDescription, staticHTML, doesNotExist }: CourseProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
@@ -60,7 +64,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     <>
     <Head>
       <title>{staticCourseName} / CougarGrades.io</title>
-      <meta name="description" content={stone.t('meta.course.description', { staticCourseName, staticDescription })} />
+      <meta name="description" content={staticMetaDescription} />
     </Head>
     <Container>
       <PankoRow />
@@ -108,7 +112,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           : 
           <CustomSkeleton width={'100%'} height={125} />
          }
-        <h6>Sources:</h6>
+        { status === 'success' && data?.publications.length === 0 ? null : <h6>Sources:</h6> }
         { status === 'success' ? data!.publications.map(e => (
           <Tooltip key={e.key} title={`Scraped on ${new Date(e.scrapeDate).toLocaleString()}`}>
             <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
@@ -123,8 +127,8 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of instructors: { status === 'success' ? data!.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title="Estimated average size of each section, # of total enrolled ÷ # of sections">
-            <li>Average number of students per section: { status === 'success' ? `~ ${data!.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           </Tooltip>
         </ul>
         <h3>Related Groups</h3>
@@ -180,15 +184,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
-  // console.time('getStaticPaths')
-  // const data = await getFirestoreCollection<Course>('catalog');
-  // console.timeEnd('getStaticPaths')
+  const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   return {
     paths: [
       //{ params: { courseName: '' } },
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e._id }})) : [])
+      // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
+      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
     ],
-    fallback: true
+    //fallback: true
+    fallback: 'blocking'
   }
 }
 
@@ -197,7 +201,14 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
   const { params, locale } = context;
   const courseName = params?.courseName;
   const courseData = await getFirestoreDocument<Course>(`/catalog/${courseName}`)
+  const { data: searchableData } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   const description = courseData !== undefined ? courseData.description : ''
+  const longDescription = searchableData.find(e => e.courseName === courseName)?.publicationTextContent ?? '';
+  const metaDescription = metaCourseDescription({
+    staticCourseName: extract(courseName),
+    staticDescription: description,
+    staticLongDescription: longDescription,
+  })
   const recentPublication = courseData && courseData.publications !== undefined && 
     Array.isArray(courseData.publications) &&
     courseData.publications.length > 0
@@ -212,6 +223,8 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
     props: { 
       staticCourseName: extract(courseName),
       staticDescription: description,
+      staticLongDescription: longDescription,
+      staticMetaDescription: metaDescription,
       staticHTML: content ?? '',
       doesNotExist: courseData === undefined,
     }

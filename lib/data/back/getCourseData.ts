@@ -2,7 +2,7 @@ import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargra
 import { Grade, grade2Color } from '../../../components/badge';
 import { Column, descendingComparator } from '../../../components/datatable';
 import { getRosetta } from '../../i18n';
-import { getYear, seasonCode } from '../../util';
+import { getTotalEnrolled, getYear, seasonCode } from '../../util';
 import { getBadges } from '../getBadges';
 import { getChartData } from '../getChartData';
 import { CourseResult, group2Result, instructor2Result, SectionPlus } from '../useCourseData'
@@ -21,13 +21,16 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
   const settledData = await Promise.allSettled([
     (data && Array.isArray(data.groups) && Util.isDocumentReferenceArray(data.groups) ? Util.populate<Group>(data.groups) : Promise.resolve<Group[]>([])),
     (data && Array.isArray(data.instructors) && Util.isDocumentReferenceArray(data.instructors) ? Util.populate<Instructor>(data.instructors) : Promise.resolve<Instructor[]>([])),
-    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections, 10, true) : Promise.resolve<Section[]>([])),
+    (data && Array.isArray(data?.sections) && Util.isDocumentReferenceArray(data.sections) ? Util.populate<Section>(data.sections) : Promise.resolve<Section[]>([])),
   ]);
   
   const [groupDataSettled, instructorDataSettled, sectionDataSettled] = settledData;
   const groupData = groupDataSettled.status === 'fulfilled' ? groupDataSettled.value : [];
   const instructorData = instructorDataSettled.status === 'fulfilled' ? instructorDataSettled.value : [];
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
+
+  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
 
   return {
     badges: [
@@ -156,7 +159,9 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
     ],
     instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
-    classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
+    //classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
+    classSize,
     sectionLoadingProgress: 100,
   };
 }

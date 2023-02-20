@@ -41,7 +41,8 @@ export function useTopResults({ metric, topic, limit, time }: TopOptions): Obser
   return {
     data: [
       ...(status === 'success' ? data!.map<TopResult>(e => ({
-        ...('catalogNumber' in e ? course2Result(e) : instructor2Result(e)),
+        // set the "caption" to an empty string
+        ...('catalogNumber' in e ? ({...course2Result(e), caption: ''}) : ({...instructor2Result(e), caption: ''})),
         metricValue: get_value(e),
         metricFormatted: formatMetric(get_value(e), metric),
         //metricTimeSpanFormatted: `${getYear(e.firstTaught)}`,
