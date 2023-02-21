@@ -57,12 +57,12 @@ export async function getDeploymentInfo(): Promise<MaintenanceResult[]> {
       workflow_id,
     })
 
-    console.log(workflow_runs)
+    //console.log(workflow_runs)
 
     // We're interested in runs that are `in_progress` or `queued`
     for(let run of workflow_runs.filter(run => ['queued', 'in_progress'].includes(run.status ?? ''))) {
       // We're going to need to see the jobs running to identify which Environment to associate it with
-      console.log(`run_id: ${run.id}, created_at: ${new Date(run.created_at).toLocaleString()}, status: ${run.status}, conclusion: ${run.conclusion}`)
+      //console.log(`run_id: ${run.id}, created_at: ${new Date(run.created_at).toLocaleString()}, status: ${run.status}, conclusion: ${run.conclusion}`)
       const { data: { jobs } } = await octokit.rest.actions.listJobsForWorkflowRun({
         owner,
         repo,
