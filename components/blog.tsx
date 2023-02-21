@@ -1,6 +1,7 @@
 import { AtomEntry, AtomFeed, useAtomFeed } from '@au5ton/use-atom-feed';
 import React from 'react'
 import TimeAgo from 'timeago-react'
+import type { TDate } from 'timeago-react'
 import { ReactFitty } from 'react-fitty'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
@@ -12,6 +13,7 @@ import { Badge } from './badge'
 import { buildArgs, VercelEnv } from '../lib/environment'
 
 import styles from './blog.module.scss'
+import { MaintenanceMonitor } from './MaintenanceMonitor';
 
 export const BLOG_URL = 'https://blog.cougargrades.io/atom.xml'
 //export const BLOG_URL = 'http://127.0.0.1:4000/atom.xml'
@@ -67,11 +69,62 @@ export function BlogNotifications() {
 
   return (
     <Stack className={styles.blogNotifications} alignItems="center" spacing={1}>
+      <MaintenanceMonitor />
       { notices.map(e => (
         <BlogNotice key={e.id} {...e} />
       ))}
     </Stack>
   );
+}
+
+export interface BlogNoticeReusableProps {
+  severity?: AlertColor;
+  variant?: "filled" | "standard" | "outlined" | undefined;
+  title: React.ReactNode;
+  icon?: React.ReactNode;
+  action?: string | (() => void);
+  time?: Date;
+  children: React.ReactNode;
+}
+
+export function BlogNoticeReusable({ title, severity, variant, icon, action, time, children }: BlogNoticeReusableProps) {
+  const sideAction = <>
+  <Stack direction="column" justifyContent="space-between" height="100%" maxWidth={75}>
+    {
+      time !== undefined
+      ? (
+        <ReactFitty><span title={time.toLocaleString()}><TimeAgo className={styles.blogNoticeTime} datetime={time} /></span></ReactFitty>
+      )
+      : (
+        <span>&nbsp;</span>
+      )
+    }
+    {
+      action !== undefined
+      ? (
+        typeof action === 'string'
+        ? (
+          <Button href={action} className={styles.blogNoticeAction} color="inherit" size="small">Open</Button>
+        )
+        : (
+          <Button onClick={action} className={styles.blogNoticeAction} color="inherit" size="small">Open</Button>
+        )
+      )
+      : (
+        <span>&nbsp;</span>
+      )
+    }
+  </Stack>
+  </>
+
+  return (
+    <Alert className={styles.blogNotice} severity={severity} variant={variant} icon={icon} action={sideAction}>
+      <AlertTitle>{title}</AlertTitle>
+      <div className={styles.blogNoticeContent}>
+        {children}
+      </div>
+    </Alert>
+  )
 }
 
 export function BlogNotice({ title, bodyHTML, href, severity, variant, updated }: BlogNotice & { [key: string]: any }) {
