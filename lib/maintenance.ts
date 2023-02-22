@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest'
+import { formatDuration } from '../i18n/time_duration';
 
 export type MaintenanceStatus = 'queued' | 'in_progress' | 'completed';
 
@@ -7,6 +8,7 @@ export interface MaintenanceProgress {
   conclusion: string | null;
   started_at: string;
   completed_at: string | null;
+  html_url: string | null;
   steps: {
     number: number;
     name: string;
@@ -14,6 +16,7 @@ export interface MaintenanceProgress {
     conclusion: string | null;
     started_at: string | null;
     completed_at: string | null;
+    duration_formatted: string | null;
   }[]
 }
 
@@ -85,6 +88,7 @@ export async function getDeploymentInfo(): Promise<MaintenanceResult[]> {
           conclusion: job.conclusion,
           started_at: job.started_at,
           completed_at: job.completed_at,
+          html_url: job.html_url,
           steps: steps.slice(firstRelevantStepIndex).map(step => ({
             number: step.number,
             name: step.name,
@@ -92,6 +96,11 @@ export async function getDeploymentInfo(): Promise<MaintenanceResult[]> {
             conclusion: step.conclusion,
             started_at: step.started_at === undefined ? null : step.started_at,
             completed_at: step.completed_at === undefined ? null : step.completed_at,
+            duration_formatted: (
+              typeof step.started_at === 'string' && typeof step.completed_at === 'string'
+              ? formatDuration(Math.abs(new Date(step.started_at).valueOf() - new Date(step.completed_at).valueOf()))
+              : null
+            )
           })),
         }
 

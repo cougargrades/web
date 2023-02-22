@@ -33,9 +33,9 @@ export const status2ClassName: Record<MaintenanceStatus, string> = {
 export function MaintenanceMonitor() {
   const data = useMaintenanceInfo()
 
-  useEffect(() => {
-    console.log(data)
-  },[])
+  // useEffect(() => {
+  //   console.log(data)
+  // },[])
 
   const newLocal = '';
   // useEffect(() => {
@@ -51,7 +51,9 @@ export function MaintenanceMonitor() {
         <BlogNoticeReusable
           severity="warning"
           variant="standard"
-          title="CougarGrades is undergoing maintenance"
+          title={
+            <span style={{ fontWeight: '600', fontSize: '1.1em' }}>CougarGrades is undergoing maintenance</span>
+          }
           icon={
             <Image
               src={in_progress}
@@ -61,12 +63,16 @@ export function MaintenanceMonitor() {
               style={{ animation: 'rotate-keyframes 1s linear infinite' }}
               alt="In Progress"
             />
-          }
-          action={undefined}
+          } 
+          action={typeof data.progress.html_url !== 'string' ? undefined : data.progress.html_url}
           time={new Date(data.progress.started_at)}>
-            <p>
+            <p style={{ marginBottom: '1rem' }}>
               {/* Deploying to <strong>{environmentName}</strong> */}
-              Our database is getting refreshed
+              Our database is getting refreshed.
+              During this period, data on the site <strong>may be missing</strong> and some features <strong>may not work as expected</strong>.
+            </p>
+            <p>
+              You can monitor the progress of the refresh with the progress bar below.
             </p>
             <span className="Progress" style={{ width: '100%', height: '12px', margin: '20px 0' }}>
               { data.progress.steps.map((step, index) => (
@@ -75,7 +81,13 @@ export function MaintenanceMonitor() {
                   Step #{index + 1}, {
                     step.started_at !== null
                     ? (
-                      <TimeAgo datetime={new Date(step.started_at)} />
+                      step.duration_formatted !== null
+                      ? (
+                        <>lasted {step.duration_formatted}</>
+                      )
+                      : (
+                        <>started <TimeAgo datetime={new Date(step.started_at)} /></>
+                      )
                     )
                     : 'not started'
                   }
