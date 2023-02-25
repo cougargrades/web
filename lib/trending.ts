@@ -168,7 +168,7 @@ export async function resolveReport(report: CleanedReport): Promise<CoursePlusMe
  */
 export async function getTrendingResults(limit: number = 5, criteria: AvailableMetric = 'activeUsers'): Promise<SearchResult[]> {
   const cleanedReport = await getAnalyticsReports(limit, criteria);
-  const TRENDING_TEXT = '🔥 Popular';
+  const TRENDING_TEXT = '🔥 Popular (Most Viewed)';
 
   const resolved: (Course | Instructor | undefined)[] = await Promise.all(cleanedReport.map(row => resolveReport(row)));
   return resolved
