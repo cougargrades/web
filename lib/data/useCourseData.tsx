@@ -62,11 +62,11 @@ export interface CourseInstructorResult {
 export function group2Result(data: Group): CourseGroupResult {
   const isCoreCurrGroup = Array.isArray(data.categories) && data.categories.includes('#UHCoreCurriculum');
   const isSubjectGroup = Array.isArray(data.categories) && data.categories.includes('#UHSubject');
-  const suffix = isCoreCurrGroup ? ' (Core)' : isSubjectGroup ? ' (Subject)' : '';
+  //const suffix = isCoreCurrGroup ? ' (Core)' : isSubjectGroup ? ' (Subject)' : '';
   return {
     key: data.identifier,
     href: `/g/${data.identifier}`,
-    title: `${data.name}${suffix}`,
+    title: `${data.name}`,
     description: data.description,
     count: Array.isArray(data.courses) ? data.courses.length : 0
   };
