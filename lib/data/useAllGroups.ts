@@ -3,6 +3,7 @@ import { DocumentReference } from '@cougargrades/types/dist/FirestoreStubs'
 import { CourseInstructorResult } from './useCourseData'
 import { getBadges } from './getBadges'
 import { defaultComparator, descendingComparator } from '../../components/datatable'
+import { isDocumentReferenceArray } from '@cougargrades/types/dist/Util'
 
 export type AllGroupsResultItem = { [key: string]: GroupResult[] };
 
@@ -34,6 +35,7 @@ export interface PopulatedGroupResult {
   courseCount?: number;
   sections: Section[];
   sectionCount?: number;
+  relatedGroups: LabeledLink[];
   sources: LabeledLink[];
 }
 
@@ -61,6 +63,10 @@ export function group2PopResult(data: GroupPlus): PopulatedGroupResult {
     courseCount: data.courseCount,
     sections: data.sections as Section[],
     sectionCount: data.sectionCount,
+    relatedGroups: Array.isArray(data.relatedGroups) && !isDocumentReferenceArray(data.relatedGroups) ? data.relatedGroups.map(group => ({
+      title: group.name,
+      url: `/g/${group.identifier}`,
+    })) : [],
     sources: Array.isArray(data.sources) ? data.sources.sort((a,b) => descendingComparator(a, b, 'title')).slice(0,3) : []
   }
 }
