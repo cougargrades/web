@@ -68,7 +68,7 @@ export function MaintenanceMonitor() {
           time={new Date(data.progress.started_at)}>
             <p style={{ marginBottom: '1rem' }}>
               {/* Deploying to <strong>{environmentName}</strong> */}
-              Our database is getting refreshed.
+              Our cloud-based database is getting refreshed.
               During this period, data on the site <strong>may be missing</strong> and some features <strong>may not work as expected</strong>.
             </p>
             <p>
@@ -78,7 +78,7 @@ export function MaintenanceMonitor() {
               { data.progress.steps.map((step, index) => (
                 <Tooltip key={step.number} placement="bottom" arrow title={
                   <>
-                  Step #{index + 1}, {
+                  {`${step.status === 'completed' ? '✅' : step.status === 'in_progress' ? '⏳' : '🕓'} ${step.name} (`}{
                     step.started_at !== null
                     ? (
                       step.duration_formatted !== null
@@ -90,7 +90,7 @@ export function MaintenanceMonitor() {
                       )
                     )
                     : 'not started'
-                  }
+                  }{')'}
                   </>
                 }>
                   {

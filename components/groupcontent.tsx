@@ -52,6 +52,20 @@ export function GroupContent({ data }: GroupContentProps) {
       <Typography gutterBottom variant="body1" color="text.secondary">
         {data.description}
       </Typography>
+      {
+        status === 'success' && data.relatedGroups.length > 0
+        ? (
+          <>
+          <h4>Related Groups:</h4> 
+          {
+            data.relatedGroups.map(e => (
+              <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
+            ))
+          }
+          </>
+        )
+        : null
+      }
       { ! isCoreGroup ? <></> : <>
         <h6>Sources:</h6> 
         { status === 'success' ? data.sources.map(e => (
