@@ -56,7 +56,7 @@ export function GroupContent({ data }: GroupContentProps) {
         status === 'success' && data.relatedGroups.length > 0
         ? (
           <>
-          <h4>Related Groups:</h4> 
+          <h4>Related Groups:</h4>
           {
             data.relatedGroups.map(e => (
               <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
