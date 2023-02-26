@@ -79,9 +79,12 @@ export async function getDeploymentInfo(): Promise<MaintenanceResult[]> {
 
         const PREVIEW_SENTINEL = `We're running in the Preview Environment`;
         const PRODUCTION_SENTINEL = `We're running in the Production Environment`;
+        
+        const FIRST_STEP_SENTINEL = `Test Firebase access`
+        const LAST_STEP_SENTINEL = `Post Setup Node.js`
 
-        const firstRelevantStepIndex = steps.findIndex(step => step.name === 'Download latest public data bundle')
-        const lastRelevantStepIndex = steps.findIndex(step => step.name === 'Post Setup Node.js')
+        const firstRelevantStepIndex = steps.findIndex(step => step.name === FIRST_STEP_SENTINEL)
+        const lastRelevantStepIndex = steps.findIndex(step => step.name === LAST_STEP_SENTINEL)
 
         // create a "Progress" object for this job
         const progress: MaintenanceProgress = {
@@ -90,7 +93,7 @@ export async function getDeploymentInfo(): Promise<MaintenanceResult[]> {
           started_at: job.started_at,
           completed_at: job.completed_at,
           html_url: job.html_url,
-          steps: steps.slice(firstRelevantStepIndex, lastRelevantStepIndex).map(step => ({
+          steps: steps.slice(firstRelevantStepIndex+1, lastRelevantStepIndex).map(step => ({
             number: step.number,
             name: step.name,
             status: step.status,
