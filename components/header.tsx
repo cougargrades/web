@@ -1,18 +1,13 @@
 import React from 'react'
-import Link from 'next/link'
-import Button from '@mui/material/Button'
-//import { useSigninCheck } from 'reactfire'
-import Search, { SearchBarSkeleton } from './search'
+import Search from './search'
 import { Emoji } from './emoji'
-import { FirestoreGuard } from '../lib/firebase'
+import { DropdownNavLink, NavLink } from './link'
+import { NewFeatureWrap } from './NewFeatureWrap'
 
 import styles from './header.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
 
-export const NavLink = ({ href, children }) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
-
 export default function Header() {
-  //const { status, data: signInCheckResult } = useSigninCheck({ requiredClaims: { admin: true }});
   return (
     <header className={styles.hero}>
       <div className="new-container">
@@ -24,8 +19,16 @@ export default function Header() {
           </h3>
         </hgroup>
         <nav className={styles.nav}>
-          <NavLink href="/"><Emoji label="home" symbol="🏠" />Home</NavLink>
-          <NavLink href="/g/10"><Emoji label="card file box" symbol="🗃️" />Groups</NavLink>
+          <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
+          <NewFeatureWrap featureID="all-subjects.v1" hideAfterClick>
+            <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
+          </NewFeatureWrap>
+          <NewFeatureWrap featureID="popular.v1" hideAfterClick>
+            <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
+          </NewFeatureWrap>
+          <NewFeatureWrap featureID="random.v1" hideAfterClick>
+            <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink>
+          </NewFeatureWrap>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
           <NavLink href="/about"><Emoji label="waving hand" symbol="👋" />About</NavLink>
           <NavLink href="/faq"><Emoji label="speech bubble" symbol="💬" />FAQ</NavLink>
@@ -35,9 +38,10 @@ export default function Header() {
             <NavLink href="/utilities"><Emoji label="hammer and wrench" symbol="🛠️" />Utilities</NavLink>
           </> : <></>} */}
         </nav>
-        <FirestoreGuard fallback={<SearchBarSkeleton />}>
+        <Search />
+        {/* <FirestoreGuard fallback={<SearchBarSkeleton />}>
           <Search />
-        </FirestoreGuard>
+        </FirestoreGuard> */}
       </div>
     </header>
   )

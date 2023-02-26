@@ -1,3 +1,5 @@
+import type { Enrollment, Section } from '@cougargrades/types'
+import { getRosetta } from './i18n'
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
@@ -11,13 +13,84 @@ export const seasonCode = (termCode: number): string => {
   return `${first}${second}`
 }
 
+export function formatTermCode(termCode: number): string {
+  const stone = getRosetta()
+  return `${stone.t(`season.${seasonCode(termCode)}`)} ${getYear(termCode)}`
+}
+
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
+
+export const average = (x: number[]) => sum(x) / x.length
+
+/**
+ * Normalizes one element of a list
+ * @param x 
+ * @param of 
+ * @returns 
+ */
+export const normalizeOne = (x: number, of: number[]) => (
+  // prevent division by zero
+  Math.min(...of) === Math.max(...of)
+  ? 1 / of.length
+  : ((x - Math.min(...of)) / (Math.max(...of) - Math.min(...of)))
+)
+
+export const scaleToRange = (x: number, [min, max]: [number, number]) => x * (max - min) + min
+
+/**
+ * When provided a list of weights (`of`) and an individual weight (`x`), computes the percentage of weight that `x` occupies
+ * @param x 
+ * @param of 
+ * @returns 
+ */
+export const shareOf = (x: number, of: number[]) => x / sum(of) * 100
 
 export function isOverNDaysOld(d: Date, n: number): boolean {
   let n_days_ago = new Date()
   n_days_ago.setDate(n_days_ago.getDate() - n);
 
   return d.valueOf() < n_days_ago.valueOf();
+}
+
+export const extract = (x: string | string[] | undefined): string => x === undefined ? '' : Array.isArray(x) ? x[0] : x;
+
+export const truncateWithEllipsis = (x: string, maxLength: number): string => x.length <= maxLength ? x : `${x.slice(0,maxLength-1)}\u2026`
+
+export function notNullish<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
+}
+
+export const parseIntOrUndefined = (x: string | undefined): number | undefined => x === undefined ? undefined : isNaN(parseInt(x)) ? undefined : parseInt(x)
+
+export function getRandomIndexes(length: number, count: number = 5): number[] {
+  const result: number[] = []
+  // loop `count` times
+  for(let i = 0; i < count; i++) {
+    let attempt = -1
+    // loop until attempt hasn't been done before
+    do {
+      attempt = Math.floor(Math.random() * length)
+    }
+    while(result.includes(attempt));
+    // add to results
+    result.push(attempt);
+  }
+
+  return result
+}
+
+export const getTotalEnrolled = (sec: Section) => sec.A + sec.B + sec.C + sec.D + sec.F + sec.NCR + sec.S + sec.W;
+
+/**
+ * May return `-1` if there were zero "occupied" sections
+ * @param enrollment 
+ * @param allSections 
+ * @returns 
+ */
+export const estimateClassSize = (enrollment: Enrollment, allSections: Section[]) => {
+  const numOccupiedSections = allSections.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = numOccupiedSections === 0 ? -1 : enrollment.totalEnrolled / numOccupiedSections
+  return classSize
 }

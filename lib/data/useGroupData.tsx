@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePrevious } from 'react-use'
-import { Course, Section, Util } from '@cougargrades/types'
-import { Observable } from './Observable'
-import { GroupResult, course2Result,  } from './useAllGroups'
+import useSWR from 'swr/immutable'
+import { Course } from '@cougargrades/types'
+import { Observable, ObservableStatus } from './Observable'
+import { course2Result, PopulatedGroupResult,  } from './useAllGroups'
 import { CourseInstructorResult } from './useCourseData'
 import { Column, defaultComparator } from '../../components/datatable'
 import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { useRosetta } from '../i18n'
-import { getYear, seasonCode } from '../util'
+import { estimateClassSize, getYear, seasonCode } from '../util'
 import { formatDropRateValue, formatGPAValue, formatSDValue } from './getBadges'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
+import { ENABLE_GROUP_SECTIONS } from '../../components/groupcontent'
 
 
 export type CoursePlus = Course & {
@@ -21,7 +22,7 @@ export type CoursePlus = Course & {
   standardDeviation: number,
   dropRate: number,
   totalEnrolled: number,
-  enrolledPerSection: number,
+  classSize: number,
 };
 
 export interface GroupDataResult {
@@ -37,46 +38,23 @@ export interface GroupDataResult {
   sectionLoadingProgress: number;
 }
 
-export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
+/**
+ * Necessary for remapping data into client-usable nodes
+ * @param data 
+ * @returns 
+ */
+export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataResult> {
   const stone = useRosetta()
-  const [courseData, setCourseData] = useState<Course[]>([]);
-  const [sectionData, setSectionData] = useState<Section[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${data.key}${ENABLE_GROUP_SECTIONS ? '/sections' : ''}`)
+  const sectionStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !data.key) ? 'loading' : 'success'
+  const sectionData = sectionStatus === 'success' ? oneGroupData!.sections : []
   const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
-  const previous = usePrevious(data.key)
-
-  // load courses + section data
-  useEffect(() => {
-    // prevent loading the same data again
-    if(previous !== data.key) {
-      setCourseData([]);
-      setSectionData([]);
-      setLoading(true);
-      setSectionLoadingProgress(0);
-      (async () => {
-        if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
-          setCourseData(
-            (await Util.populate<Course>(data.courses))
-              // filter out undefined because there might be some empty references
-              .filter(e => e !== undefined)
-              // sort courses by total enrolled
-              .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
-            ) 
-        }
-        // if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-        //   console.count('group populate section')
-        //   setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100)))
-        // }
-        setLoading(false)
-      })();
-    }
-  }, [data,previous])
 
   try {
     return {
       data: {
         topEnrolled: [
-          ...courseData.map(e => course2Result(e))
+          ...data.courses.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => course2Result(e))
         ],
         dataGrid: {
           columns: [
@@ -119,7 +97,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: '# Instructors',
               description: 'Number of instructors',
               type: 'number',
-              width: 110,
+              width: 100,
               padding: 4,
               valueFormatter: value => value.toLocaleString(),
             },
@@ -128,8 +106,8 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               headerName: '# Sections',
               description: 'Number of sections',
               type: 'number',
-              width: 95,
-              padding: 8,
+              width: 85,
+              padding: 6,
               valueFormatter: value => value.toLocaleString(),
             },
             {
@@ -142,11 +120,11 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
             {
-              field: 'enrolledPerSection',
+              field: 'classSize',
               headerName: 'Class Size',
-              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections',
+              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections. May include "empty" sections.',
               type: 'number',
-              width: 80,
+              width: 90,
               padding: 6,
               valueFormatter: value => isNaN(value) ? 'No data' : `~ ${value.toFixed(1)}`,
             },
@@ -158,7 +136,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForGPA(value)] }}>{formatGPAValue(value)}</Badge> : '',
             },
             {
               field: 'standardDeviation',
@@ -168,7 +146,7 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForStdDev(value)] }}>{formatSDValue(value)}</Badge> : '',
             },
             {
               field: 'dropRate',
@@ -178,20 +156,24 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color.get('W') }}>{formatDropRateValue(value)}</Badge>,
+              valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color['W'] }}>{formatDropRateValue(value)}</Badge>,
             },
           ],
           rows: [
-            ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
+            ...(data.courses.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
+              ...e,
               id: e._id,
-              instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
-              sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
+              //instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
+              instructorCount: e.instructorCount ?? 0,
+              //sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
+              sectionCount: e.sectionCount ?? 0,
               gradePointAverage: e.GPA.average,
               standardDeviation: e.GPA.standardDeviation,
               dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
               totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-              enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-              ...e,
+              classSize: e.enrollment !== undefined && e.sectionCount !== undefined ? (e.enrollment.totalEnrolled / e.sectionCount) : NaN,
+              // TODO: We can't do the code below because we don't have access to all the sectionData at this time
+              // classSize: e.enrollment !== undefined && e.sectionCount !== undefined ? estimateClassSize(e.enrollment, []) : NaN,
             })))
           ],
           //rows: [],
@@ -241,13 +223,13 @@ export function useGroupData(data: GroupResult): Observable<GroupDataResult> {
         sectionLoadingProgress,
       },
       error: undefined,
-      status: loading ? 'loading' : 'success',
+      status: sectionStatus,
     }
   }
   catch(error) {
     return {
       data: undefined,
-      error,
+      error: error as any,
       status: 'error',
     }
   }

@@ -1,21 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRecoilState } from 'recoil'
-import List from '@mui/material/List'
 import Container from '@mui/material/Container'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import TimeAgo from 'timeago-react'
-import { FakeLink } from '../../components/link'
 import { PankoRow } from '../../components/panko'
 import { FaqPostBody } from '../../components/faqpostbody'
-import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
 import { getPostBySlug, getAllPosts, FaqPostData, markdownToHtml } from '../../lib/faq'
-import { tocAtom } from '../../lib/recoil'
-import { useIsCondensed } from '../../lib/hook'
+import { SidebarContainer, SidebarItem } from '../../components/sidebarcontainer'
 
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -27,13 +20,22 @@ export interface FaqPostProps {
 
 export default function FaqPost({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
-  const [_, setTOCExpanded] = useRecoilState(tocAtom)
-  const condensed = useIsCondensed()
 
-  const handleClick = (other: FaqPostData) => {
-    router.push(`/faq/${other.slug}`, undefined, { scroll: false })
-    setTOCExpanded(false)
-  }
+  const sidebarItems: SidebarItem[] = Array.isArray(allPosts) ? allPosts.map(post => ({
+    key: post.slug,
+    categoryName: 'Frequently Asked Questions',
+    title: post.title,
+    href: `/faq/${post.slug}`,
+  })) : []
+
+  useEffect(() => {
+    for(let item of sidebarItems) {
+      if (item.href) {
+        router.prefetch(item.href)
+      }
+    }
+  },[sidebarItems])
+
   return (
     <>
       <Head>
@@ -43,45 +45,17 @@ export default function FaqPost({ post, allPosts }: FaqPostProps) {
       <Container>
         <PankoRow />
       </Container>
-      <main className={styles.main}>
-        <aside className={styles.nav}>
-          <TableOfContentsWrap condensedTitle={condensed ? 'Frequently Asked Questions' : ''}>
-            <List className={styles.sidebarList} subheader={condensed ? undefined : <GroupNavSubheader>Frequently Asked Questions</GroupNavSubheader>}>
-              {allPosts.map(other => (
-                <React.Fragment key={other.slug}>
-                  <FakeLink href={`/faq/${other.slug}`}>
-                    <ListItemButton
-                      selected={other.slug === post.slug}
-                      onClick={() => handleClick(other)}
-                      classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
-                      dense
-                      >
-                      <ListItemText
-                        primary={other.title}
-                        primaryTypographyProps={{
-                          color: (theme) => (other.slug === post.slug) ? theme.palette.text.primary : theme.palette.text.secondary,
-                          fontWeight: 'unset'
-                        }}
-                        />
-                    </ListItemButton>
-                  </FakeLink>
-                </React.Fragment>
-              ))}
-            </List>
-          </TableOfContentsWrap>
-        </aside>
-        <article>
-          <div className={styles.articleContainer}>
-            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-              Frequently Asked Question:
-            </Typography>
-            <FaqPostBody content={post.content} />
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Last modified: <TimeAgo datetime={post.date} locale={'en'} />
-            </Typography>
-          </div>
-        </article>
-      </main>
+      <SidebarContainer condensedTitle="Frequently Asked Questions" sidebarItems={sidebarItems}>
+        <div className={styles.articleContainer}>
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            Frequently Asked Question:
+          </Typography>
+          <FaqPostBody content={post.content ?? ''} />
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Last modified: <TimeAgo datetime={post.date ?? ''} locale={'en'} />
+          </Typography>
+        </div>
+      </SidebarContainer>
     </>
   );
 }
@@ -101,9 +75,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<FaqPostProps> = async ({ params }) => {
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug
+  const slug = Array.isArray(params?.slug) ? params?.slug[0] : params?.slug
   const allPosts = getAllPosts(['slug','title'])
-  const postFound = allPosts.map(e => e.slug).includes(slug);
+  const postFound = allPosts.map(e => e.slug).includes(slug) && slug !== undefined;
   const post = postFound ? getPostBySlug(slug, ['slug','title', 'date','content']) : {};
   if(postFound) {
     post.content = await markdownToHtml(post.content || '')

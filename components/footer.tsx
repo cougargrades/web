@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import { buildArgs } from '../lib/environment'
 import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
+import { ObservableStatus } from '../lib/data/Observable'
 
 interface SponsorshipInformation {
   totalSponsorCount: number,
@@ -12,7 +13,8 @@ interface SponsorshipInformation {
 }
 
 export default function Footer(props: { hideDisclaimer?: boolean }) {
-  const { data, error, isValidating } = useSWR<SponsorshipInformation>('https://github-org-stats-au5ton.vercel.app/api/sponsors');
+  const { data, error, isLoading } = useSWR<SponsorshipInformation>('https://github-org-stats-au5ton.vercel.app/api/sponsors');
+  const status: ObservableStatus = error ? 'error' : (isLoading || !data) ? 'loading' : 'success'
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
@@ -64,9 +66,9 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
             </div>
             <p className="text-muted">
               <small>{
-                isValidating ? '' : 
-                `${data.totalSponsorCount} people sponsor CougarGrades 
-                totalling $${data.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!`
+                status === 'success' ?  
+                `${data!.totalSponsorCount} people sponsor CougarGrades 
+                totalling $${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
               }</small>
             </p>
           </div>

@@ -22,7 +22,7 @@ export default function ErrorPage(props: ErrorProps) {
 
 ErrorPage.getInitialProps = (ctx: NextPageContext): ErrorProps => {
   const { res, err } = ctx;
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+  const statusCode = res && res.statusCode ? res.statusCode : err && err.statusCode ? err.statusCode : 404;
   const title = (res && res.statusMessage) ? res.statusMessage : err ? err.message : 'This page could not be found.';
   return { statusCode, title }
 }

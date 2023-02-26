@@ -2,16 +2,18 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
+import Autocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Highlighter from 'react-highlight-words'
 import NProgress from 'nprogress'
+import { logEvent } from 'firebase/analytics'
 import { searchInputAtom } from '../lib/recoil'
-import { SearchResult, useSearchResults } from '../lib/data/useSearchResults'
+import { SearchResult, useLiteSearchResults, useSearchResults } from '../lib/data/useSearchResults'
 import { Badge } from './badge'
 import { isMobile } from '../lib/util'
-import { useAnalyticsRef } from '../lib/hook'
+import { useAnalyticsRef } from '../lib/firebase'
+
 import styles from './search.module.scss'
 
 
@@ -43,16 +45,21 @@ export default function SearchBar() {
 
   // For state management
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<SearchResult>(null);
+  const [value, setValue] = useState<SearchResult | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [wasOpen, setWasOpen] = useState(false)
   // For actually performing searches
-  const { data, status } = useSearchResults(inputValue)
+  const { data, status } = useLiteSearchResults(inputValue, wasOpen)
   const loading = status !== 'success'
+
+  useEffect(() => {
+    if(open) setWasOpen(true)
+  }, [open])
 
   // For analytics
   useEffect(() => {
     if(analyticsRef.current !== null && inputValue.length > 0) {
-      analyticsRef.current.logEvent('search', { 
+      logEvent(analyticsRef.current, 'search', {
         search_term: inputValue
       })
     }
@@ -62,7 +69,7 @@ export default function SearchBar() {
   const router = useRouter();
   // Used for displaying rerouting progress bar
   useEffect(() => {
-    const handleStart = (url) => {
+    const handleStart = () => {
       console.time('reroute')
       NProgress.start()
     }
@@ -84,19 +91,21 @@ export default function SearchBar() {
 
   // Used for prefetching all options which are presented
   useEffect(() => {
-    for(let item of data) {
-      router.prefetch(item.href);
+    if (data) {
+      for(let item of data) {
+        router.prefetch(item.href);
+      }
     }
   }, [data]);
 
   // Used for actually issuing the redirect
-  const handleChange = (_, x: string | SearchResult) => {
+  const handleChange: AutocompleteProps<SearchResult, undefined, undefined, boolean | undefined>['onChange'] = (event, x) => {
     if(typeof x !== 'string' && x !== null) {
       // update the state
       setInputValue(x.title)
       setValue(null)
       // unselect the searchbar after choosing a result
-      elementRef.current.blur()
+      elementRef.current?.blur()
       // redirect to the selected result
       router.push(x.href, undefined, { scroll: false })
     }
@@ -115,7 +124,6 @@ export default function SearchBar() {
   // For creating search result items
   const SearchListItem = (props: SearchListItemProps) => {
     const { option } = props
-
     return (
       <li {...props}>
         <div className={styles.searchListItem}>
@@ -129,7 +137,7 @@ export default function SearchBar() {
           </div>
           <div className={styles.badgeList}>
             {option.badges.map(e => (
-              <Badge key={e.key} style={{ backgroundColor: e.color }}>{e.text}</Badge>
+              <Badge key={e.key} title={e.title} suffix={e.suffix} style={{ backgroundColor: e.color, opacity: e.opacity, fontSize: e.fontSize }}>{e.text}</Badge>
             ))}
           </div>
         </div>
@@ -156,7 +164,7 @@ export default function SearchBar() {
         isOptionEqualToValue={(option, value) => option.key === value.key}
         getOptionLabel={(option) => typeof option === 'string' ? option : option.title}
         groupBy={(option) => option.group}
-        options={data}
+        options={data ?? []}
         loading={loading}
         filterOptions={(x) => x}
         renderOption={(props, option) => <SearchListItem {...props} key={option.key} option={option} />}

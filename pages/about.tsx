@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import useSWR from 'swr'
+import useSWR from 'swr/immutable'
 import { ExternalLink } from '../components/link'
 import { Collaborator, CollaboratorProps, CollaboratorSkeleton } from '../components/collaborator'
 import { BlogNotifications } from '../components/blog'
@@ -21,7 +21,7 @@ export default function About() {
         <h3>Resources</h3>
         <p className={styles.links}>
           <ExternalLink href="https://github.com/cougargrades/web">Source Code</ExternalLink>
-          <ExternalLink href="https://github.com/cougargrades/api">Developer API</ExternalLink>
+          {/* <ExternalLink href="https://github.com/cougargrades/api">Developer API</ExternalLink> */}
           <ExternalLink href="https://github.com/cougargrades/publicdata">Public Data</ExternalLink>
         </p>
         <h3>Developers</h3>

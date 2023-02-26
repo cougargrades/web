@@ -154,14 +154,14 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
             <TableBody>
               {/* stableSort(rows, getComparator(order, orderBy)) */}
               {stableSort(rows, (a: T, b: T) => {
-                const col = columns.find(e => e.field === orderBy);
+                const col = columns.find(e => e.field === orderBy)!;
                 // If we're ordering by a string or a number, we can use the built-in comparator
                 if(['string','number'].includes(col.type)) {
                   return order === 'desc' ? descendingComparator(a, b, orderBy) : -descendingComparator(a, b, orderBy);
                 }
                 else {
                   // Otherwise, we have to rely on the user-supplied comparator
-                  return order === 'desc' ? col.sortComparator(a, b) : -col.sortComparator(a, b);
+                  return order === 'desc' ? col.sortComparator!(a, b)! : -col.sortComparator!(a, b);
                 }
               })
                 .map(row => (

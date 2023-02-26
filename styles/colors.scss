@@ -51,5 +51,10 @@
   --blue:   rgb(24, 113, 233);
   --green:  rgb(18, 192, 91);
   --yellow: rgb(249, 191, 15);
+
+  --maintenance-queued: rgba(0, 0, 0, 0.2);
+  @media (prefers-color-scheme: dark) {
+    --maintenance-queued: rgba(200, 200, 200, 0.6);
+  }
 }
 

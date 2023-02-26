@@ -2,23 +2,23 @@ import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRecoilState } from 'recoil'
+import useSWR from 'swr/immutable'
 import { Group } from '@cougargrades/types'
+import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
+import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
 import Container from '@mui/material/Container'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import { PankoRow } from '../../components/panko'
-import { FakeLink } from '../../components/link'
-import { getFirestoreCollection, getFirestoreDocument, onlyOne } from '../../lib/ssg'
-import { GroupNavSubheader, TableOfContentsWrap } from '../../components/groupnav'
+import { getFirestoreCollection, getFirestoreDocument } from '../../lib/data/back/getFirestoreData'
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent'
-import { GroupResult, useAllGroups, useOneGroup } from '../../lib/data/useAllGroups'
-import { buildArgs } from '../../lib/environment'
+import { AllGroupsResult, PopulatedGroupResult } from '../../lib/data/useAllGroups'
 import { useRosetta } from '../../lib/i18n'
-import { tocAtom } from '../../lib/recoil'
+import { ObservableStatus } from '../../lib/data/Observable'
+import { extract } from '../../lib/util'
+import { SidebarContainer, SidebarItem } from '../../components/sidebarcontainer'
+import { AllSubjectsList } from '../../components/AllSubjectsList'
+import { metaFakeGroupDescription } from '../../lib/seo'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -27,85 +27,74 @@ export interface GroupProps {
   staticGroupId: string;
   staticName: string;
   staticDescription: string;
+  staticMetaDescription: string;
   doesNotExist?: boolean;
+  isFakeGroup: boolean;
+  filterSubjects: string[];
 }
 
-export default function Groups({ staticGroupId, staticName, staticDescription, doesNotExist }: GroupProps) {
+export default function Groups({ staticGroupId, staticName, staticDescription, staticMetaDescription, doesNotExist, isFakeGroup, filterSubjects }: GroupProps) {
   const stone = useRosetta()
   const router = useRouter()
-  const { data, status } = useAllGroups();
-  const { data: oneGroupData, status: oneGroupStatus } = useOneGroup(staticGroupId)
-  const isMissingProps = staticGroupId === undefined
-  const good = !isMissingProps && status === 'success' && oneGroupStatus === 'success'
-  const [_, setTOCExpanded] = useRecoilState(tocAtom)
+  const { data, error: error2, isLoading: isLoading2 } = useSWR<AllGroupsResult>(`/api/group`)
+  const status: ObservableStatus = error2 ? 'error' : (isLoading2 || !data || !staticGroupId) ? 'loading' : 'success'
+  const allGroupsData = status === 'success' && data !== undefined ? data.core_curriculum : []
+  const sidebarItems: SidebarItem[] = [
+    ...(allGroupsData.map(group => ({
+      key: group.key,
+      categoryName: group.categories.filter(e => !e.startsWith('#')).at(0) ?? '',
+      title: group.title,
+      href: group.href,
+    }))),
+    ...(FAKE_GROUPS.map(group => ({
+      key: group.identifier,
+      categoryName: Array.isArray(group.categories) ? group.categories[0] : '',
+      title: group.shortName ?? group.name,
+      href: `/g/${group.identifier}`,
+    }))),
+  ]
 
-  const handleClick = (x: GroupResult) => {
-    router.push(x.href, undefined, { scroll: false })
-    setTOCExpanded(false)
-  }
+  const { data: oneGroupData, error, isLoading } = useSWR<PopulatedGroupResult>(`/api/group/${isFakeGroup ? `${undefined}` : staticGroupId}`)
+  const oneGroupStatus: ObservableStatus = error ? 'error' : (isLoading || !oneGroupData || !staticGroupId) ? 'loading' : 'success'
+  
+  const isMissingProps = staticGroupId === undefined
+  const good = !isMissingProps && oneGroupStatus === 'success'
 
   useEffect(() => {
-    if(good && data.categories.length > 0) {
-      // preload referenced areas
-      for(let key of data.categories) {
-        const cat = data.results[key];
-        for(let item of cat) {
-          router.prefetch(item.href)
-        }
-      }
+    // preload referenced areas
+    for(let item of allGroupsData) {
+      router.prefetch(item.href)
     }
-  },[good,data])
+  },[allGroupsData])
 
   return (
     <>
       <Head>
-        <title>{(staticName || staticGroupId) !== undefined ? `${staticName || staticGroupId} / ` : ''}CougarGrades.io</title>
-        <meta name="description" content={staticDescription || stone.t('meta.groups.description')} />
+        <title>{staticName} / CougarGrades.io</title>
+        <meta name="description" content={staticMetaDescription} />
       </Head>
       <Container>
         <PankoRow />
       </Container>
-      <main className={styles.main}>
-        <aside className={styles.nav}>
-          <TableOfContentsWrap condensedTitle="Select Group">
-          { good ? data.categories.map(cat => (
-            <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
-              {data.results[cat].map((e, index) => (
-                <React.Fragment key={e.key}>
-                  <FakeLink href={e.href}>
-                    <ListItemButton
-                      selected={e.key === staticGroupId}
-                      onClick={() => handleClick(e)}
-                      classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
-                      dense
-                      >
-                      <ListItemText
-                        primary={e.title}
-                        primaryTypographyProps={{
-                          color: (theme) => (e.key === staticGroupId) ? theme.palette.text.primary : theme.palette.text.secondary,
-                          fontWeight: 'unset'
-                        }}
-                        />
-                    </ListItemButton>
-                  </FakeLink>
-                </React.Fragment>
-              ))}
-            </List>
-          )) : <></>
-          }
-          </TableOfContentsWrap>
-        </aside>
-        <div>
-          { doesNotExist === true ? 
+      <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems} showOverflowScrollers>
+        { doesNotExist === true ? 
           <Alert severity="error">
             <AlertTitle>Error 404</AlertTitle>
             Group {staticGroupId} could not be found.
           </Alert>
-          : <></>
-          }
-          { good && doesNotExist === false ? <GroupContent data={oneGroupData} /> : <GroupContentSkeleton /> }
-        </div>
-      </main>
+        : <></>
+        }
+        { }
+        {
+          isFakeGroup && !doesNotExist
+          ? <AllSubjectsList title={staticName} caption={staticDescription} onlySubjects={filterSubjects} />
+          : (
+            good && doesNotExist === false && oneGroupData !== undefined 
+            ? <GroupContent data={oneGroupData} /> 
+            : <GroupContentSkeleton />
+          )
+        }
+      </SidebarContainer>
     </>
   );
 }
@@ -120,22 +109,61 @@ export const getStaticPaths: GetStaticPaths = async () => {
       //{ params: { groupId: '' } },
       //...(['production','preview'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
     ],
-    fallback: true
+    fallback: 'blocking'
   }
 }
 
+const FAKE_GROUPS: Group[] = [
+  ...curated_colleges.filter(college => !['college-exploratory'].includes(college.identifier)).map(college => ({
+    name: college.groupLongTitle,
+    shortName: college.groupShortTitle,
+    identifier: college.identifier,
+    description: metaFakeGroupDescription(college.identifier, false),
+    courses: [],
+    sections: [],
+    relatedGroups: [],
+    keywords: [],
+    categories: ['Colleges/Schools'],
+    sources: [],
+  })),
+  {
+    name: 'All Subjects',
+    identifier: 'all-subjects',
+    description: `Every Subject available at the University of Houston. ${counts.num_subjects} Subjects in total.`,
+    courses: [],
+    sections: [],
+    relatedGroups: [],
+    keywords: [],
+    categories: ['Other Groups'],
+    sources: [],
+  }
+]
+
 export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
   const { params } = context;
-  const { groupId } = params
-  const groupData = await getFirestoreDocument<Group>(`/groups/${groupId}`)
+  const groupId = params?.groupId;
+  const isFakeGroup = FAKE_GROUPS.map(e => e.identifier).includes(extract(groupId))
+  const groupData = isFakeGroup ? FAKE_GROUPS.find(e => e.identifier === groupId)! : await getFirestoreDocument<Group>(`/groups/${groupId}`)
   const name = groupData !== undefined ? groupData.name : ''
   const description = groupData !== undefined ? groupData.description : ''
+  const metaDescription = (
+    isFakeGroup 
+    && groupData 
+    && Array.isArray(groupData.categories) 
+    && groupData.categories.includes('Colleges/Schools')
+  )
+    ? metaFakeGroupDescription(groupData.identifier, true)
+    : (groupData?.description ?? '');
+  const filterSubjects = isFakeGroup ? curated_colleges.find(e => e.identifier === groupId)?.subjects ?? [] : []
   return {
     props: {
-      staticGroupId: onlyOne(groupId),
+      staticGroupId: extract(groupId),
       staticName: name,
       staticDescription: description,
+      staticMetaDescription: metaDescription,
       doesNotExist: groupData === undefined,
+      isFakeGroup,
+      filterSubjects,
     }
   };
 }

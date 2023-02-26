@@ -10,6 +10,10 @@
     padding: 1.5rem 0;
   }
 
+  s[rel="outdated"] {
+    opacity: 0.5;
+  }
+
   div[rel="table-wrap"] {
     max-width: 100%;
     overflow-x: scroll;

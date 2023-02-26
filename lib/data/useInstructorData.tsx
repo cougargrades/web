@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import { useFirestore, useFirestoreDocData } from 'reactfire'
-import { usePrevious } from 'react-use'
-import { Course, Group, Instructor, Section, Util } from '@cougargrades/types'
-import { Observable } from './Observable'
+import useSWR from 'swr/immutable'
+import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargrades/types'
+import { Observable, ObservableStatus } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { Badge, getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'
 import { Column, defaultComparator } from '../../components/datatable'
-import { useRosetta } from '../i18n'
+import { getRosetta, useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { EnrollmentInfoResult } from '../../components/enrollment'
 import { formatDropRateValue, formatGPAValue, formatSDValue, getBadges } from './getBadges'
@@ -15,7 +14,8 @@ import { CourseGroupResult, CourseInstructorResult, group2Result, SectionPlus } 
 import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
-import { useFakeFirestore } from '../firebase'
+//import { firebaseApp, getFirestoreDocument } from '../ssg'
+
 
 export interface InstructorResult {
   badges: SearchResultBadge[];
@@ -44,81 +44,19 @@ export interface InstructorResult {
 }
 
 /**
- * React hook for accessing the instructor data client-side
- * @param instructorName 
- * @returns 
+ * Necessary for including `valueFormatter` in table results
+ * Used client-side
  */
 export function useInstructorData(instructorName: string): Observable<InstructorResult> {
   const stone = useRosetta()
-  const db = useFakeFirestore()
-  const { data, error, status } = useFirestoreDocData<Instructor>(db.doc(`/instructors/${instructorName}`) as any)
-  const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
-  const isBadObject = typeof data === 'object' && Object.keys(data).length === 1
-  const isActualError = typeof instructorName === 'string' && instructorName !== '' && status !== 'loading' && isBadObject
-  const groupRefs = ! didLoadCorrectly ? [] : Object
-    .entries(data.departments)
-    .sort((a, b) => b[1] - a[1])
-    .map(e => e[0])
-    .map(e => db.doc(`/groups/${e}`) as firebase.default.firestore.DocumentReference<Group>);
-  const [courseData, setCourseData] = useState<Course[]>([]);
-  const [sectionData, setSectionData] = useState<Section[]>([]);
-  const [groupData, setGroupData] = useState<Group[]>([]);
-  const [sectionLoadingProgress, setSectionLoadingProgress] = useState<number>(0);
-  const previous = usePrevious(data?._id)
-  const sharedStatus = status === 'success' ? isActualError ? 'error' : isBadObject ? 'loading' : didLoadCorrectly ? 'success' : 'error' : status
 
-  // load courses + section + group data
-  useEffect(() => {
-    const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1;
-    // prevent loading the same data again
-    if(didLoadCorrectly && previous !== data._id) {
-      setCourseData([]);
-      setSectionData([]);
-      setGroupData([]);
-      setSectionLoadingProgress(0);
-      (async () => {
-        if(Array.isArray(data.courses) && Util.isDocumentReferenceArray(data.courses)) {
-          setCourseData(await Util.populate<Course>(data.courses))
-        }
-        if(Array.isArray(data.sections) && Util.isDocumentReferenceArray(data.sections)) {
-          console.count('instructor populate section')
-          setSectionData(await Util.populate<Section>(data.sections, 10, true, (p, total) => setSectionLoadingProgress(p/total*100), false, false))
-        }
-        if(Array.isArray(groupRefs) && Util.isDocumentReferenceArray(groupRefs)) {
-          setGroupData(await Util.populate<Group>(groupRefs))
-        }
-      })();
-    }
-  },[data,previous])
+  const { data, error, isLoading } = useSWR<InstructorResult>(`/api/instructor/${instructorName}`)
+  const status: ObservableStatus = error ? 'error' : (isLoading || !data || !instructorName) ? 'loading' : 'success'
 
   try {
     return {
       data: {
-        badges: [
-          ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
-        ],
-        enrollment: [
-          ...(didLoadCorrectly ? 
-              data.enrollment.totalEnrolled === 0 ? 
-              [{ key: 'nodata', title: 'No data', color: grade2Color.get('I'), value: -1, percentage: 100 }] : 
-              ['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW']
-              .map(k => ({
-                key: k,
-                title: k.substring(5), // 'totalA' => 'A'
-                color: grade2Color.get(k.substring(5) as Grade),
-                value: data.enrollment[k],
-                percentage: data.enrollment[k] !== undefined && data.enrollment[k].totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
-              })
-          ) : []),
-        ],
-        firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
-        lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',       
-        relatedGroups: [
-          ...(didLoadCorrectly ? groupData.map(e => group2Result(e)) : [])
-        ],
-        relatedCourses: [
-          ...(didLoadCorrectly ? courseData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => course2Result(e)) : [])
-        ],
+        ...(status === 'success' ? data : {} as any),
         sectionDataGrid: {
           columns: [
             {
@@ -139,7 +77,15 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             },
             {
               field: 'sectionNumber',
-              headerName: 'Section #',
+              headerName: 'Section',
+              description: 'Section Number',
+              type: 'number',
+              width: 75,
+            },
+            {
+              field: 'totalEnrolled',
+              headerName: '# Enrolled',
+              description: `Total number of students who have been enrolled in this section`,
               type: 'number',
               width: 90,
             },
@@ -151,6 +97,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: e !== 'NCR' ? 30 : 60,
               padding: 6,
             })),
+            // TODO: "Total Enrolled"
             {
               field: 'semesterGPA',
               headerName: 'GPA',
@@ -161,10 +108,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             },
           ],
           rows: [
-            ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
-              id: e._id,
-              ...e,
-            })) : [])
+            ...(status === 'success' ? data!.sectionDataGrid.rows : []),
           ],
         },
         courseDataGrid: {
@@ -231,9 +175,9 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
             {
-              field: 'enrolledPerSection',
+              field: 'classSize',
               headerName: 'Class Size',
-              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections',
+              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections. May include "empty" sections.',
               type: 'number',
               width: 80,
               padding: 6,
@@ -247,7 +191,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForGPA(value)] }}>{formatGPAValue(value)}</Badge> : '',
             },
             {
               field: 'standardDeviation',
@@ -257,7 +201,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
+              valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color[getGradeForStdDev(value)] }}>{formatSDValue(value)}</Badge> : '',
             },
             {
               field: 'dropRate',
@@ -267,81 +211,22 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: 60,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color.get('W') }}>{formatDropRateValue(value)}</Badge>,
+              valueFormatter: value => isNaN(parseFloat(`${value}`)) ? 'No data' : <Badge style={{ backgroundColor: grade2Color['W'] }}>{formatDropRateValue(value)}</Badge>,
             },
           ],
           rows: [
-            ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
-              id: e._id,
-              instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
-              sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
-              gradePointAverage: e.GPA.average,
-              standardDeviation: e.GPA.standardDeviation,
-              dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
-              totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-              enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-              ...e,
-            })))
+            ...(status === 'success' ? data!.courseDataGrid.rows : []),
           ],
         },
-        dataChart: {
-          data: [
-            ...(didLoadCorrectly ? getChartDataForInstructor(sectionData) : [])
-          ],
-          // https://developers.google.com/chart/interactive/docs/gallery/linechart?hl=en#configuration-options
-          options: {
-            title: `${instructorName} Average GPA Over Time by Course`,
-            vAxis: {
-              title: 'Average GPA',
-              gridlines: {
-                count: -1 //auto
-              },
-              maxValue: 4.0,
-              minValue: 0.0
-            },
-            hAxis: {
-              title: 'Semester',
-              gridlines: {
-                count: -1 //auto
-              },
-              //slantedText: false,
-              //showTextEvery: 1,
-              textStyle: {
-                fontSize: 12
-              },
-            },
-            chartArea: {
-              //width: '100%',
-              //width: '55%',
-              //width: '65%',
-              left: 'auto',
-              //left: 65, // default 'auto' or 65
-              right: 'auto',
-              //right: 35, // default 'auto' or 65
-              //left: (window.innerWidth < 768 ? 55 : (window.innerWidth < 992 ? 120 : null))
-            },
-            legend: {
-              position: 'bottom'
-            },
-            pointSize: 5,
-            interpolateNulls: true //lines between point gaps
-          }
-        },
-        courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
-        sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
-        classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
-        //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
-        sectionLoadingProgress,
-        rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? `https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${data.rmpLegacyId}` : undefined,
       },
       error,
-      status: sharedStatus,
+      status,
     }
   }
   catch(error) {
     return {
       data: undefined,
-      error,
+      error: error as any,
       status: 'error',
     }
   }

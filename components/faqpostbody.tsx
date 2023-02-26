@@ -1,6 +1,6 @@
 import markdownStyles from './faqpostbody.module.scss'
 
-export function FaqPostBody({ content }) {
+export function FaqPostBody({ content }: { content: string }) {
   return (
     <div>
       <div

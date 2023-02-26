@@ -1,5 +1,7 @@
 @import "./vars.scss";
 @import '@primer/css/progress/index.scss';
+@import '@primer/css/color-modes/index.scss';
+@import '@primer/css/utilities/colors.scss';
 @import '../components/emoji.module.scss';
 
 // For sticky footer
@@ -13,7 +15,7 @@ body {
   max-width: unset;
 }
 .new-container {
-  max-width: 750px;
+  max-width: 840px; // used to be 820px // used to be 750px, but an extra header button was added and we want everything to fit in one row right now
   padding-right: 2rem;
   padding-left: 2rem;
   margin-right: auto;
@@ -81,6 +83,16 @@ h4 {
 }
 h5, h6 {
   font-weight: 670;
+  letter-spacing: -0.015em;
+}
+h1.nul, h2.nul, h3.nul, h4.nul, h5.nul, h6.nul {
+  text-decoration: none;
+  border-bottom: none;
+}
+b.dense {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.57;
   letter-spacing: -0.015em;
 }
 
@@ -179,4 +191,31 @@ a.nostyle {
 
 [type=search] {
   -webkit-appearance: inherit!important;
+}
+
+@keyframes rotate-keyframes {
+  100% {
+    transform:rotate(360deg)
+  }
+}
+
+@keyframes in-progress-pulse {
+  // --color-attention-emphasis = #bf8700
+  0% {
+    background-color: var(--color-attention-emphasis);
+  }
+  50% {
+    background-color: hsl(42, 100%, 55%);
+  }
+  100% {
+    background-color: var(--color-attention-emphasis);
+  }
+}
+
+.MuiAlert-message {
+  width: 100%;
+}
+
+.color-bg-maintenance-queued {
+  background-color: var(--maintenance-queued);
 }

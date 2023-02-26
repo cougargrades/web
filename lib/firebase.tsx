@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-import { FirebaseAppProvider, preloadFirestore, useFirebaseApp } from 'reactfire'
-import { Firestore as FirestoreStub } from '@cougargrades/types/dist/FirestoreStubs'
+import React, { useEffect, useRef } from 'react'
+import { FirebaseAppProvider, useFirebaseApp } from 'reactfire'
+import { Analytics, getAnalytics, isSupported } from 'firebase/analytics'
 import { firebaseConfig } from './environment'
-import * as localstorage from './localstorage'
-import { isOverNDaysOld } from './util'
-import { isFirestoreLoadedAtom } from './recoil'
 
-import firebase from 'firebase/app'
-//import 'firebase/auth'
-import 'firebase/performance'
-import 'firebase/analytics'
-//import 'firebase/firestore'
-//import 'firebase/app-check'
+export function useAnalyticsRef() {
+  const app = useFirebaseApp()
+  const analyticsRef = useRef<Analytics>(null as any)
+
+  useEffect(() => {
+    (async () => {
+      if(await isSupported()) {
+        analyticsRef.current = getAnalytics(app)
+      }
+    })();
+  }, [])
+
+  return analyticsRef
+}
 
 export interface WrapperProps {
   children: React.ReactNode;
-}
-
-export interface WrapperWithFallback extends WrapperProps {
-  fallback?: React.ReactNode;
 }
 
 export const FirebaseAppProviderWrapper = (props: WrapperProps) => (
@@ -28,71 +28,3 @@ export const FirebaseAppProviderWrapper = (props: WrapperProps) => (
   </FirebaseAppProvider>
 );
 
-export function FirestorePreloader() {
-  const firebaseApp = useFirebaseApp()
-  const [, setIsFirestoreLoaded] = useRecoilState<boolean>(isFirestoreLoadedAtom)
-  useEffect(() => {
-    preloadFirestore({
-      firebaseApp,
-      setup: async firestore => {
-        try {
-          // set cache size to 300 megabytes
-          firestore().settings({ cacheSizeBytes: 300e6 })
-          
-          // determine if cache is too old to keep around (7 day age limit)
-          if(isOverNDaysOld(new Date(localstorage.get('cacheLastCleared')), 7)) {
-            console.debug('cache could potentially be out of date, clearing')
-            await firestore().clearPersistence()
-            localstorage.set('cacheLastCleared', new Date().toISOString())
-          }
-          else {
-            console.debug('cache is still fresh')
-          }
-
-          // enable cache
-          await firestore().enablePersistence({ synchronizeTabs: true });
-          console.log('[firebase.tsx] Persistence enabled')
-        }
-        catch(err) {
-          console.warn('[firebase.tsx] There was an issue calling enablePersistence. This is unfortunate, but safe to ignore. More:',err)
-        }
-        setIsFirestoreLoaded(true)
-      }
-    })
-  }, [])
-
-  return null;
-}
-
-export function FirestoreGuard(props: WrapperWithFallback) {
-  const [isFirestoreLoaded, _] = useRecoilState<boolean>(isFirestoreLoadedAtom)
-
-  return isFirestoreLoaded ? <>{props.children}</> : props.fallback ? <>{props.fallback}</> : null
-}
-
-export const firestoreStub: FirestoreStub = {
-  // somehow this works
-  doc: (x: any) => ({
-    firestore: { app: { name: '[DEFAULT]' }}, onSnapshot: (x: any) => (() => undefined)
-  }),
-  // somehow this works
-  collection: (x: any) => ({
-    where: (a: any, b: any, c: any) => ({
-      isEqual: () => false,
-      onSnapshot: (x: any) => (() => undefined)
-    }),
-    isEqual: () => false,
-    onSnapshot: (x: any) => (() => undefined)
-  }),
-  runTransaction: (x: any) => undefined,
-} as any
-
-export function useFakeFirestore() {
-  const app = useFirebaseApp()
-  const [isFirestoreLoaded, _] = useRecoilState<boolean>(isFirestoreLoadedAtom)
-  return isFirestoreLoaded ? app.firestore() : firestoreStub
-}
-
-export function isFakeFirestore(db: ReturnType<typeof useFakeFirestore>) {
-  return typeof db['useEmulator'] === 'undefined';
-}
