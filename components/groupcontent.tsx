@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Tilty from 'react-tilty'
 import { Chart } from 'react-google-charts'
@@ -59,7 +60,9 @@ export function GroupContent({ data }: GroupContentProps) {
           <h4>Related Groups:</h4>
           {
             data.relatedGroups.map(e => (
-              <Chip key={e.url} label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
+              <Tooltip key={e.url} title={e.tooltip}>
+                <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.url} clickable />
+              </Tooltip>
             ))
           }
           </>

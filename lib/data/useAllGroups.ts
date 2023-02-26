@@ -65,6 +65,7 @@ export function group2PopResult(data: GroupPlus): PopulatedGroupResult {
     sectionCount: data.sectionCount,
     relatedGroups: Array.isArray(data.relatedGroups) && !isDocumentReferenceArray(data.relatedGroups) ? data.relatedGroups.map(group => ({
       title: group.name,
+      tooltip: group.description,
       url: `/g/${group.identifier}`,
     })) : [],
     sources: Array.isArray(data.sources) ? data.sources.sort((a,b) => descendingComparator(a, b, 'title')).slice(0,3) : []
