@@ -104,7 +104,7 @@ export default function Home() {
               anyone can inspect it and use it in their own creative ways.
             </p>
             <p>
-              <ExternalLink href="https://github.com/cougargrades/publicdata">View Resources</ExternalLink>
+              <ExternalLink href="https://github.com/cougargrades/publicdata" openInNewTab>View Resources</ExternalLink>
             </p>
           </section>
           <section>
@@ -118,7 +118,7 @@ export default function Home() {
               repurposing our code, check us out on Github!
             </p>
             <p>
-              <ExternalLink href="https://github.com/orgs/cougargrades/people">View Collaborators</ExternalLink>
+              <ExternalLink href="https://github.com/orgs/cougargrades/people" openInNewTab>View Collaborators</ExternalLink>
             </p>
           </section>
         </div>

@@ -11,12 +11,25 @@ import interactivity from '../styles/interactivity.module.scss'
 
 export interface LinkProps {
   href: string;
+  openInNewTab?: boolean;
   children: React.ReactNode;
 }
 
 export const InternalLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button className={`${styles.linkbutton} ${interactivity.hoverActive}`} color="primary" variant="contained">{children}</Button></Link>
 
-export const ExternalLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button className={`${styles.linkbutton} ${interactivity.hoverActive}`} color="primary" variant="contained" endIcon={<ArrowForwardIcon />}>{children}</Button></Link>
+export const ExternalLink = ({ href, openInNewTab, children }: LinkProps) => (
+  <Button
+    className={`${styles.linkbutton} ${interactivity.hoverActive}`}
+    color="primary"
+    variant="contained"
+    endIcon={<ArrowForwardIcon />}
+    href={href}
+    target={openInNewTab ? "_blank" : undefined}
+    rel={openInNewTab ? "noreferrer" : undefined}
+    >
+    {children}
+  </Button>
+)
 
 export const FakeLink = (props: React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) => {
   const { href, children } = props

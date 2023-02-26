@@ -40,7 +40,7 @@ function TCCNSUpdateTooltip({ data }: TCCNSUpdateNoticeProps) {
       <div>
         <Typography variant="caption" color="inherit">{data.longMessage}</Typography>
       </div>
-      <a href={data.sourceHref} className={styles.tooltipLink}>
+      <a href={data.sourceHref} target="_blank" rel="noreferrer" className={styles.tooltipLink}>
         <IconButton
           size="small"
           color="inherit"
