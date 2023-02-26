@@ -20,13 +20,13 @@ export default function Header() {
         </hgroup>
         <nav className={styles.nav}>
           <NavLink href="/"><Emoji symbol="🏠" />Home</NavLink>
-          <NewFeatureWrap featureID="all-subjects.v1" hideAfterClick>
+          <NewFeatureWrap featureID="all-subjects.v1" hideAfterClick showUntil={new Date('2023-03-05T16:53:24.785Z')}>
             <NavLink href="/g/10"><Emoji symbol="🗃️" />Groups</NavLink>
           </NewFeatureWrap>
-          <NewFeatureWrap featureID="popular.v1" hideAfterClick>
+          <NewFeatureWrap featureID="popular.v1" hideAfterClick showUntil={new Date('2023-03-05T16:53:24.785Z')}>
             <NavLink href="/top"><Emoji symbol="🔥" />Popular</NavLink>
           </NewFeatureWrap>
-          <NewFeatureWrap featureID="random.v1" hideAfterClick>
+          <NewFeatureWrap featureID="random.v1" hideAfterClick showUntil={new Date('2023-03-05T16:53:24.785Z')}>
             <NavLink href="/random"><Emoji symbol="🔀" />Random</NavLink>
           </NewFeatureWrap>
           <NavLink href="https://blog.cougargrades.io"><Emoji label="megaphone" symbol="📣" />Updates</NavLink>
