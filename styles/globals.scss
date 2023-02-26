@@ -89,6 +89,12 @@ h1.nul, h2.nul, h3.nul, h4.nul, h5.nul, h6.nul {
   text-decoration: none;
   border-bottom: none;
 }
+b.dense {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.57;
+  letter-spacing: -0.015em;
+}
 
 .grade-a { background-color: #87cefa; }
 .grade-b { background-color: #90ee90; }

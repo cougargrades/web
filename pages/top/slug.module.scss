@@ -15,8 +15,9 @@
 .controlBox {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
   padding: 1rem 0;
   //background-color: rebeccapurple;
 }

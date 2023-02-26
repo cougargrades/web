@@ -1,5 +1,5 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
-import type { google } from '@google-analytics/data/build/protos/protos'
+import { google } from '@google-analytics/data/build/protos/protos'
 import { Course, Instructor } from '@cougargrades/types';
 import { course2Result, instructor2Result, SearchResult } from './data/useSearchResults';
 //import { getFirestoreDocument } from './ssg';
@@ -18,7 +18,9 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   }
 });
 
-
+/**
+ * Reference: https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/DateRange
+ */
 export type RelativeDate = 'today' | 'yesterday' | `${bigint}daysAgo` | DateYMDString;
 export type AvailableDimension = 'pagePath' | ''
 export type AvailableMetric = 'activeUsers' | 'screenPageViews'
@@ -92,7 +94,8 @@ type CleanedReport = {[key in (AvailableDimension | AvailableMetric)]: string};
  */
 export async function getAnalyticsReports(limit: number = 5, criteria: AvailableMetric = 'activeUsers', startDate: RelativeDate = '30daysAgo', filterOnly: 'course' | 'instructor' | undefined = undefined): Promise<CleanedReport[]> {
   const dimensions: AvailableDimension[] = ['pagePath']
-  const metrics: AvailableMetric[] = ['activeUsers', 'screenPageViews']
+  //const metrics: AvailableMetric[] = ['activeUsers', 'screenPageViews']
+  const metrics: AvailableMetric[] = [ criteria ]
   const dimensionFilter: ReportOptions['dimensionFilter'] | undefined = filterOnly === undefined ? undefined : {
     fieldName: 'pagePath',
     stringFilter: {

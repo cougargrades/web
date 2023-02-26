@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useAsync } from 'react-use'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import Container from '@mui/material/Container'
@@ -11,6 +12,9 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
+import Tooltip from '@mui/material/Tooltip'
 import { PankoRow } from '../../components/panko'
 import { FaqPostData } from '../../lib/faq'
 import { POPULAR_TABS, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top'
@@ -37,8 +41,13 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
   const [viewLimit, setViewLimit] = useState<TopLimit>(10)
   const [viewTime, setViewTime] = useState<TopTime>('all')
+  const [hideCore, setHideCore] = useState(false)
 
   const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime })
+  const coreCurriculum = useAsync(async () => {
+    const jsonData = await (await import('@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json')).default
+    return new Set(jsonData.map(row => `${row.department} ${row.catalogNumber}`))
+  }, [])
 
   useEffect(() => {
     if(status === 'success') {
@@ -55,8 +64,22 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
     }
     else {
       setViewTime('lastMonth')
+      setHideCore(false)
     }
   }, [viewMetric])
+
+  useEffect(() => {
+    // Doesn't actually do anything?
+    if (viewTopic === 'instructor') {
+      setHideCore(false)
+    }
+  }, [viewTopic])
+
+  // useEffect(() => {
+  //   if (hideCore === true && viewLimit === 10) {
+  //     setViewLimit(25)
+  //   }
+  // }, [hideCore])
 
   return (
     <>
@@ -89,34 +112,63 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
                 <MenuItem value={25}>Top 25</MenuItem>
                 <MenuItem value={50}>Top 50</MenuItem>
                 <MenuItem value={100}>Top 100</MenuItem>
+                <MenuItem value={250}>Top 250</MenuItem>
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel>Time Span</InputLabel>
               <Select label="Time Span" value={viewTime} onChange={(e) => setViewTime(e.target.value as any)}>
                 <MenuItem value="lastMonth" disabled={viewMetric === 'totalEnrolled'}>Last Month</MenuItem>
+                <MenuItem value="lastYear" disabled={viewMetric === 'totalEnrolled'}>Last Year</MenuItem>
                 <MenuItem value="all">All Time</MenuItem>
               </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <Tooltip title={viewTopic !== 'course' ? 'This option is not applicable to this page.' : ''}>
+                <FormControlLabel
+                  control={<Switch value={hideCore} onChange={e => setHideCore(e.target.checked)} />}
+                  label={
+                    <b className="dense">{`Hide "Core Curriculum" Courses`}</b>
+                  }
+                  labelPlacement="start"
+                  disabled={viewTopic !== 'course'}
+                  />
+              </Tooltip>
             </FormControl>
           </Box>
           <List sx={{ width: '100%' }}>
             {
-            status === 'error'
-            ? <>
-            <ErrorBoxIndeterminate />
-            </>
-            : status === 'loading'
-            ? <>
-            <LoadingBoxIndeterminate title="Loading..." />
-            </>
-            : <>
-            { data!.map((item, index, array) => (
-              <React.Fragment key={item.key}>
-                <TopListItem data={item} index={index} viewMetric={viewMetric} />
-                { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
-              </React.Fragment>
-            ))}
-            </>
+              status === 'success' && Array.isArray(data) && coreCurriculum.value !== undefined
+              ? (
+                <>
+                {
+                  data
+                  .filter(item => hideCore ? !coreCurriculum.value?.has(item.id) : true)
+                  .map((item, index, array) => (
+                    <React.Fragment key={item.key}>
+                      <TopListItem data={item} index={index} viewMetric={viewMetric} />
+                      { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
+                    </React.Fragment>
+                  ))
+                }
+                {
+                  data.filter(item => hideCore ? !coreCurriculum.value?.has(item.id) : true).length === 0
+                  ? (
+                    <Typography sx={{ textAlign: 'center' }} variant="body2" color="text.secondary">
+                      There are no results with the current filters. You may need to expand the Count to a larger number.
+                    </Typography>
+                  )
+                  : null
+                }
+                </>
+              )
+              : status === 'loading' 
+              ? (
+                <LoadingBoxIndeterminate title="Loading..." />
+              )
+              : (
+                <ErrorBoxIndeterminate />
+              )
             }
           </List>
         </div>

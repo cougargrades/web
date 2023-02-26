@@ -5,6 +5,8 @@ import { getTopResults, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib
 import { CoursePlusMetrics, InstructorPlusMetrics } from '../../lib/trending'
 import { extract } from '../../lib/util'
 
+const TOP_UPPER_LIMIT = 250
+
 export default async function Top(req: NextApiRequest, res: NextApiResponse<(CoursePlusMetrics | InstructorPlusMetrics)[]>) {
   // extract query strings
   const metric: TopMetric = extract(req.query['metric']) as TopMetric;
@@ -13,7 +15,7 @@ export default async function Top(req: NextApiRequest, res: NextApiResponse<(Cou
   const time: TopTime = extract(req.query['time']) as TopTime;
   // validate query strings
   const valid: boolean = ['course', 'instructor'].includes(topic)
-    && !isNaN(limit) && limit > 0 && limit <= 100
+    && !isNaN(limit) && limit > 0 && limit <= TOP_UPPER_LIMIT
     && ['totalEnrolled', 'activeUsers', 'screenPageViews'].includes(metric);
   // fetch results
   const data = valid ? await getTopResults({ metric, topic, limit, time }) : [];
