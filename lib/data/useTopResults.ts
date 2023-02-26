@@ -1,6 +1,6 @@
 import React from 'react'
 import useSWR from 'swr/immutable'
-import { TopMetric, TopOptions } from '../../lib/top_front'
+import { TopMetric, TopOptions } from '../top'
 import { getRosetta, useRosetta } from '../i18n'
 import { CoursePlusMetrics, InstructorPlusMetrics } from '../trending'
 import { formatTermCode, getYear, seasonCode } from '../util'

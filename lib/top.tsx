@@ -1,6 +1,6 @@
 import { FaqPostData } from './faq';
 
-export type { TopOptions, TopMetric, TopTopic, TopLimit, TopTime } from './top_back'
+export type { TopOptions, TopMetric, TopTopic, TopLimit, TopTime } from './data/back/getTopResults'
 
 export const POPULAR_TABS: FaqPostData[] = [
   {

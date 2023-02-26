@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import { Badge } from './badge'
-import { TopMetric } from '../lib/top_back';
+import type { TopMetric } from '../lib/data/back/getTopResults'
 
 import styles from './TopListItem.module.scss'
 //import interactivity from '../../styles/interactivity.module.scss'

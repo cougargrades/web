@@ -1,8 +1,8 @@
 import { Course, Instructor } from '@cougargrades/types';
 //import { firebaseApp } from './ssg';
-import { firebase } from './firebase_admin'
-import { AvailableMetric, CoursePlusMetrics, getAnalyticsReports, InstructorPlusMetrics, RelativeDate, resolveReport } from './trending'
-import { notNullish } from './util'
+import { firebase } from '../../firebase_admin'
+import { AvailableMetric, CoursePlusMetrics, getAnalyticsReports, InstructorPlusMetrics, RelativeDate, resolveReport } from '../../trending'
+import { notNullish } from '../../util'
 
 export type TopMetric = 'totalEnrolled' | AvailableMetric
 export type TopTopic = 'course' | 'instructor';

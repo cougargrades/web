@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { CACHE_CONTROL } from '../../lib/cache'
-import { getTopResults, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top_back'
+import { getTopResults, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/data/back/getTopResults'
 import { CoursePlusMetrics, InstructorPlusMetrics } from '../../lib/trending'
 import { extract } from '../../lib/util'
 

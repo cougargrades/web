@@ -11,7 +11,7 @@ import { copyText } from '../vendor/clipboard'
 import { useIsMobile } from '../lib/hook'
 import { Emoji } from './emoji'
 import { BlogNotifications } from './blog'
-import { POPULAR_TABS } from '../lib/top_front'
+import { POPULAR_TABS } from '../lib/top'
 
 import styles from './panko.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
