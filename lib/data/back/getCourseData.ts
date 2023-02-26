@@ -2,7 +2,7 @@ import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargra
 import { Grade, grade2Color } from '../../../components/badge';
 import { Column, descendingComparator } from '../../../components/datatable';
 import { getRosetta } from '../../i18n';
-import { getTotalEnrolled, getYear, seasonCode } from '../../util';
+import { estimateClassSize, getTotalEnrolled, getYear, seasonCode } from '../../util';
 import { getBadges } from '../getBadges';
 import { getChartData } from '../getChartData';
 import { CourseResult, group2Result, instructor2Result, SectionPlus } from '../useCourseData'
@@ -29,8 +29,7 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
   const instructorData = instructorDataSettled.status === 'fulfilled' ? instructorDataSettled.value : [];
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
 
-  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
-  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
+  const classSize = didLoadCorrectly ? estimateClassSize(data.enrollment, sectionData) : 0
 
   return {
     badges: [
@@ -57,41 +56,9 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
     ],
     dataGrid: {
       columns: [
-        {
-          field: 'term',
-          headerName: 'Term',
-          type: 'number',
-          width: 65,
-          //valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
-        },
-        {
-          field: 'sectionNumber',
-          headerName: 'Section #',
-          type: 'number',
-          width: 90,
-        },
-        {
-          field: 'primaryInstructorName',
-          headerName: 'Instructor',
-          type: 'string',
-          width: 95,
-        },
-        ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
-          field: e as any,
-          headerName: e,
-          description: `Number of ${e}s given for this section`,
-          type: 'number',
-          width: e !== 'NCR' ? 30 : 60,
-          padding: 6,
-        })),
-        {
-          field: 'semesterGPA',
-          headerName: 'GPA',
-          description: 'Grade Point Average for just this section',
-          type: 'number',
-          width: 60,
-          padding: 8,
-        } as any,
+        /**
+         * I don't think these columns matter on the back-end because functions can't be serialized anyway
+         */
       ],
       rows: [
         ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
@@ -99,6 +66,7 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
           id: e._id,
           primaryInstructorName: Array.isArray(e.instructorNames) ? `${e.instructorNames[0].lastName}, ${e.instructorNames[0].firstName}` : '',
           instructors: [],
+          totalEnrolled: getTotalEnrolled(e),
         })) : [])
       ],
     },

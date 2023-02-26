@@ -8,7 +8,7 @@ import { CourseInstructorResult } from './useCourseData'
 import { Column, defaultComparator } from '../../components/datatable'
 import { Badge, getGradeForGPA, getGradeForStdDev, grade2Color } from '../../components/badge'
 import { useRosetta } from '../i18n'
-import { getYear, seasonCode } from '../util'
+import { estimateClassSize, getYear, seasonCode } from '../util'
 import { formatDropRateValue, formatGPAValue, formatSDValue } from './getBadges'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
 import { ENABLE_GROUP_SECTIONS } from '../../components/groupcontent'
@@ -22,7 +22,7 @@ export type CoursePlus = Course & {
   standardDeviation: number,
   dropRate: number,
   totalEnrolled: number,
-  enrolledPerSection: number,
+  classSize: number,
 };
 
 export interface GroupDataResult {
@@ -120,11 +120,11 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
             {
-              field: 'enrolledPerSection',
+              field: 'classSize',
               headerName: 'Class Size',
-              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections',
+              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections. May include "empty" sections.',
               type: 'number',
-              width: 80,
+              width: 90,
               padding: 6,
               valueFormatter: value => isNaN(value) ? 'No data' : `~ ${value.toFixed(1)}`,
             },
@@ -171,8 +171,9 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               standardDeviation: e.GPA.standardDeviation,
               dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
               totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-              //enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-              enrolledPerSection: e.enrollment !== undefined && e.sectionCount !== undefined ? (e.enrollment.totalEnrolled / e.sectionCount) : NaN,
+              classSize: e.enrollment !== undefined && e.sectionCount !== undefined ? (e.enrollment.totalEnrolled / e.sectionCount) : NaN,
+              // TODO: We can't do the code below because we don't have access to all the sectionData at this time
+              // classSize: e.enrollment !== undefined && e.sectionCount !== undefined ? estimateClassSize(e.enrollment, []) : NaN,
             })))
           ],
           //rows: [],

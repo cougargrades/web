@@ -5,7 +5,7 @@ import { InstructorResult } from '../useInstructorData';
 import { getRosetta } from '../../i18n';
 import { getBadges } from '../getBadges';
 import { Grade, grade2Color } from '../../../components/badge';
-import { getTotalEnrolled, getYear, seasonCode } from '../../util';
+import { estimateClassSize, getTotalEnrolled, getYear, seasonCode } from '../../util';
 import { group2Result, SectionPlus } from '../useCourseData';
 import { course2Result } from '../useAllGroups';
 import { Column } from '../../../components/datatable';
@@ -36,8 +36,7 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
   const sectionData = sectionDataSettled.status === 'fulfilled' ? sectionDataSettled.value : [];
   const groupData = groupDataSettled.status === 'fulfilled' ? groupDataSettled.value : [];
 
-  const numOccupiedSections = sectionData.filter(sec => getTotalEnrolled(sec) > 0).length;
-  const classSize = didLoadCorrectly ? numOccupiedSections === 0 ? -1 : data.enrollment.totalEnrolled / numOccupiedSections : 0
+  const classSize = didLoadCorrectly ? estimateClassSize(data.enrollment, sectionData) : 0
 
   return {
     badges: [
@@ -67,44 +66,9 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     ],
     sectionDataGrid: {
       columns: [
-        {
-          field: 'term',
-          headerName: 'Term',
-          type: 'number',
-          width: 65,
-          //valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
-        },
-        {
-          field: 'courseName',
-          headerName: 'Course',
-          type: 'string',
-          width: 75,
-          padding: 8,
-          // eslint-disable-next-line react/display-name
-          //valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
-        },
-        {
-          field: 'sectionNumber',
-          headerName: 'Section #',
-          type: 'number',
-          width: 90,
-        },
-        ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
-          field: e as any,
-          headerName: e,
-          description: `Number of ${e}s given for this section`,
-          type: 'number',
-          width: e !== 'NCR' ? 30 : 60,
-          padding: 6,
-        })),
-        {
-          field: 'semesterGPA',
-          headerName: 'GPA',
-          description: 'Grade Point Average for just this section',
-          type: 'number',
-          width: 60,
-          padding: 8,
-        } as any,
+        /**
+         * I don't think these columns matter on the back-end because functions can't be serialized anyway
+         */
       ],
       rows: [
         ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
@@ -112,111 +76,15 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
           id: e._id,
           primaryInstructorName: Array.isArray(e.instructorNames) ? `${e.instructorNames[0].lastName}, ${e.instructorNames[0].firstName}` : '',
           instructors: [],
+          totalEnrolled: getTotalEnrolled(e),
         })) : [])
       ],
     },
     courseDataGrid: {
       columns: [
-        {
-          field: 'id',
-          headerName: 'Name',
-          type: 'string',
-          width: 65,
-          padding: 8,
-          // eslint-disable-next-line react/display-name
-          //valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
-        },
-        {
-          field: 'description',
-          headerName: 'Description',
-          type: 'string',
-          width: 105,
-          padding: 8,
-        },
-        {
-          field: 'firstTaught',
-          headerName: 'First Taught',
-          description: 'The oldest semester that this course was taught',
-          type: 'number',
-          width: 75,
-          padding: 6,
-          //valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
-        },
-        {
-          field: 'lastTaught',
-          headerName: 'Last Taught',
-          description: 'The most recent semester that this course was taught',
-          type: 'number',
-          width: 75,
-          padding: 6,
-          //valueFormatter: value => `${stone.t(`season.${seasonCode(value)}`)} ${getYear(value)}`,
-        },
-        {
-          field: 'instructorCount',
-          headerName: '# Instructors',
-          description: 'Number of instructors',
-          type: 'number',
-          width: 110,
-          padding: 4,
-          //valueFormatter: value => value.toLocaleString(),
-        },
-        {
-          field: 'sectionCount',
-          headerName: '# Sections',
-          description: 'Number of sections',
-          type: 'number',
-          width: 95,
-          padding: 8,
-          //valueFormatter: value => value.toLocaleString(),
-        },
-        {
-          field: 'totalEnrolled',
-          headerName: '# Enrolled',
-          description: 'Total number of students who have been enrolled in this course',
-          type: 'number',
-          width: 95,
-          padding: 8,
-          //valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
-        },
-        {
-          field: 'enrolledPerSection',
-          headerName: 'Class Size',
-          description: 'Estimated average size of each section, # of total enrolled ÷ # of sections',
-          type: 'number',
-          width: 80,
-          padding: 6,
-          //valueFormatter: value => isNaN(value) ? 'No data' : `~ ${value.toFixed(1)}`,
-        },
-        {
-          field: 'gradePointAverage',
-          headerName: 'GPA',
-          description: 'Average of Grade Point Average',
-          type: 'number',
-          width: 60,
-          padding: 8,
-          // eslint-disable-next-line react/display-name
-          //valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForGPA(value)) }}>{formatGPAValue(value)}</Badge> : '',
-        },
-        {
-          field: 'standardDeviation',
-          headerName: 'SD',
-          description: 'Standard deviation of GPA across all sections in a course',
-          type: 'number',
-          width: 60,
-          padding: 8,
-          // eslint-disable-next-line react/display-name
-          //valueFormatter: value => value !== 0 ? <Badge style={{ backgroundColor: grade2Color.get(getGradeForStdDev(value)) }}>{formatSDValue(value)}</Badge> : '',
-        },
-        {
-          field: 'dropRate',
-          headerName: '% W',
-          description: 'Drop rate, # of total Ws ÷ # of total enrolled',
-          type: 'number',
-          width: 60,
-          padding: 8,
-          // eslint-disable-next-line react/display-name
-          //valueFormatter: value => isNaN(value) ? 'No data' : <Badge style={{ backgroundColor: grade2Color.get('W') }}>{formatDropRateValue(value)}</Badge>,
-        },
+        /**
+         * I don't think these columns matter on the back-end because functions can't be serialized anyway
+         */
       ],
       rows: [
         ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
@@ -231,7 +99,7 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
           standardDeviation: e.GPA.standardDeviation,
           dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
           totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-          enrolledPerSection: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
+          classSize: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
         })))
       ],
     },

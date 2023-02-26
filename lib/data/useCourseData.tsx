@@ -14,6 +14,7 @@ import { getBadges } from './getBadges'
 export type SectionPlus = Section & {
   id: string,
   primaryInstructorName: string,
+  totalEnrolled?: number;
 };
 
 export interface CourseResult {
@@ -129,9 +130,9 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
             },
             {
               field: 'sectionNumber',
-              headerName: 'Section #',
+              headerName: 'Section',
               type: 'number',
-              width: 90,
+              width: 75,
             },
             {
               field: 'primaryInstructorName',
@@ -139,6 +140,13 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               type: 'string',
               width: 95,
               valueFormatter: value => <Link href={`/i/${encodeURI(value)}`}><a>{value}</a></Link>,
+            },
+            {
+              field: 'totalEnrolled',
+              headerName: '# Enrolled',
+              description: `Total number of students who have been enrolled in this section`,
+              type: 'number',
+              width: 90,
             },
             ...(['A','B','C','D','F','W','S','NCR']).map<Column<SectionPlus>>(e => ({
               field: e as any,

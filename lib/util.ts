@@ -1,4 +1,4 @@
-import type { Section } from '@cougargrades/types'
+import type { Enrollment, Section } from '@cougargrades/types'
 import { getRosetta } from './i18n'
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
@@ -82,3 +82,15 @@ export function getRandomIndexes(length: number, count: number = 5): number[] {
 }
 
 export const getTotalEnrolled = (sec: Section) => sec.A + sec.B + sec.C + sec.D + sec.F + sec.NCR + sec.S + sec.W;
+
+/**
+ * May return `-1` if there were zero "occupied" sections
+ * @param enrollment 
+ * @param allSections 
+ * @returns 
+ */
+export const estimateClassSize = (enrollment: Enrollment, allSections: Section[]) => {
+  const numOccupiedSections = allSections.filter(sec => getTotalEnrolled(sec) > 0).length;
+  const classSize = numOccupiedSections === 0 ? -1 : enrollment.totalEnrolled / numOccupiedSections
+  return classSize
+}

@@ -77,7 +77,15 @@ export function useInstructorData(instructorName: string): Observable<Instructor
             },
             {
               field: 'sectionNumber',
-              headerName: 'Section #',
+              headerName: 'Section',
+              description: 'Section Number',
+              type: 'number',
+              width: 75,
+            },
+            {
+              field: 'totalEnrolled',
+              headerName: '# Enrolled',
+              description: `Total number of students who have been enrolled in this section`,
               type: 'number',
               width: 90,
             },
@@ -89,6 +97,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               width: e !== 'NCR' ? 30 : 60,
               padding: 6,
             })),
+            // TODO: "Total Enrolled"
             {
               field: 'semesterGPA',
               headerName: 'GPA',
@@ -166,9 +175,9 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               valueFormatter: value => isNaN(value) ? 'No data' : value.toLocaleString(),
             },
             {
-              field: 'enrolledPerSection',
+              field: 'classSize',
               headerName: 'Class Size',
-              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections',
+              description: 'Estimated average size of each section, # of total enrolled ÷ # of sections. May include "empty" sections.',
               type: 'number',
               width: 80,
               padding: 6,
