@@ -57,8 +57,10 @@ export const grade2Color: Record<Grade, Property.Color> = {
 export const SEARCH_RESULT_COLOR: Property.Color = '#f0f8ff'//'#b0c4de' //'#f0f8ff'; // aliceblue
 
 // Based on https://github.com/cougargrades/web/blob/3d511fc56b0a90f2038883a71852245b726af7e3/src/components/instructors/GPABadge.js
-export function getGradeForGPA(n: number): Grade {
+export function getGradeForGPA(n: number | undefined): Grade {
   // 4.0 is rarely scored in practice
+  if (n === undefined) return 'I'
+  if (n === 0.0) return 'I'
   if (n > 3.5) return 'A'
   if (n > 2.5) return 'B'
   if (n > 1.5) return 'C'
@@ -68,7 +70,7 @@ export function getGradeForGPA(n: number): Grade {
   return 'I'
 }
 
-export function getGradeForStdDev(sd: number): Grade {
+export function getGradeForStdDev(sd: number | undefined): Grade {
   /**
    * For the standardDeviation values of all instructors (latest data: Summer 2019)
    * ===================================================
@@ -87,6 +89,8 @@ export function getGradeForStdDev(sd: number): Grade {
    * ============
    * sigma < 0.149 
    */
+  if (sd === undefined) return 'I'
+  if (sd === 0.0) return 'I'
   if (sd < 0.149) return 'A'
   if (sd < 0.286) return 'B'
   if (sd < 0.425) return 'C'
