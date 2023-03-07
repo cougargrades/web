@@ -42,7 +42,7 @@ export default function Groups({ staticGroupId, staticName, staticDescription, s
   const sidebarItems: SidebarItem[] = [
     ...(allGroupsData.map(group => ({
       key: group.key,
-      categoryName: group.categories.filter(e => !e.startsWith('#')).at(0) ?? '',
+      categoryName: group.categories.filter(e => !e.startsWith('#'))[0] ?? '',
       title: group.title,
       href: group.href,
     }))),
