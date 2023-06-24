@@ -13,12 +13,13 @@ export default async function Top(req: NextApiRequest, res: NextApiResponse<(Cou
   const topic: TopTopic = extract(req.query['topic']) as TopTopic;
   const limit: TopLimit = parseInt(extract(req.query['limit'])) as TopLimit;
   const time: TopTime = extract(req.query['time']) as TopTime;
+  const hideCore: boolean = extract(req.query['hideCore']) === 'true'
   // validate query strings
   const valid: boolean = ['course', 'instructor'].includes(topic)
     && !isNaN(limit) && limit > 0 && limit <= TOP_UPPER_LIMIT
     && ['totalEnrolled', 'activeUsers', 'screenPageViews'].includes(metric);
   // fetch results
-  const data = valid ? await getTopResults({ metric, topic, limit, time }) : [];
+  const data = valid ? await getTopResults({ metric, topic, limit, time, hideCore }) : [];
   res.setHeader('Cache-Control', CACHE_CONTROL);
   res.json(data);
 }

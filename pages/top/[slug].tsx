@@ -43,7 +43,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
   const [viewTime, setViewTime] = useState<TopTime>('all')
   const [hideCore, setHideCore] = useState(false)
 
-  const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime })
+  const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime, hideCore: hideCore })
   const coreCurriculum = useAsync(async () => {
     const jsonData = await (await import('@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json')).default
     return new Set(jsonData.map(row => `${row.department} ${row.catalogNumber}`))
