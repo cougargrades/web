@@ -28,8 +28,8 @@ export function formatMetric(value: number, metric: TopMetric): string {
   }
 }
 
-export function useTopResults({ metric, topic, limit, time }: TopOptions): Observable<TopResult[]> {
-  const queryString = new URLSearchParams({ metric, topic, limit: `${limit}`, time })
+export function useTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Observable<TopResult[]> {
+  const queryString = new URLSearchParams({ metric, topic, limit: `${limit}`, time, hideCore: `${hideCore}` })
   const { data, error, isLoading } = useSWR<(CoursePlusMetrics | InstructorPlusMetrics)[]>(`/api/top?${queryString}`);
   const status: ObservableStatus = error ? 'error' : (isLoading || !data) ? 'loading' : 'success'
 
