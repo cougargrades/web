@@ -334,6 +334,17 @@ pre {
 	overflow: auto;
 }
 
+/* Reference: https://css-tricks.com/styling-code-in-and-out-of-blocks/ */
+pre > code.hljs {
+	display: block;
+	overflow-x: scroll;
+	padding: 1rem 1.4rem;
+}
+pre:has(> code) {
+	overflow: hidden;
+	padding: 0;
+}
+
 pre code {
 	/* When <code> is in a <pre>, reset it's formatting to blend in */
 	background: inherit;
