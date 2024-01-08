@@ -10,6 +10,7 @@ import { useRosetta } from '../i18n'
 import { getYear, seasonCode } from '../util'
 import { EnrollmentInfoResult } from '../../components/enrollment'
 import { getBadges } from './getBadges'
+import { GPAValueWithWarning } from '../../components/GPAValueWithWarning'
 
 export type SectionPlus = Section & {
   id: string,
@@ -163,7 +164,8 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               type: 'number',
               width: 60,
               padding: 8,
-            } as any,
+              valueFormatter: (value, row) => <GPAValueWithWarning value={value} row={row} />
+            },
           ],
           rows: [
             ...(status === 'success' ? data!.dataGrid.rows : []),

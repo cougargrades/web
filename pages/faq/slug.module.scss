@@ -10,4 +10,17 @@
     padding-left: calc(1.5rem - 16px);
     padding-bottom: calc(1.5rem - 16px);
   }
+
+  img, video {
+    display: block;
+    max-width: 100%;
+    margin: 0 0 1rem;
+    border-radius: 10px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid rgba(97, 97, 97, 0.5);    
+  }
 }

@@ -24,6 +24,7 @@ import 'nprogress/nprogress.css'
 import '../styles/nprogress-custom.scss'
 import '../styles/globals.scss'
 import '../styles/colors.scss'
+import '../styles/syntax-highlighting.scss'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const theme = useTheme();
@@ -62,6 +63,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="twitter:description" content="Page description less than 200 characters" />
         <meta name="twitter:creator" content="@author_handle" />
         <meta name="twitter:image:src" content="http://www.example.com/image.jpg" />  */}
+        {/* Disable DarkReader as we're already dark-mode friendly */}
+        <meta name="color-scheme" content="light dark" />
+        <meta name="darkreader-lock" />
       </Head>
       <ThemeProvider theme={theme}>
         <RecoilRoot>

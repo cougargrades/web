@@ -219,3 +219,7 @@ a.nostyle {
 .color-bg-maintenance-queued {
   background-color: var(--maintenance-queued);
 }
+
+span.pale > a[href] {
+  color: hsl(212, 100%, 80%)!important;
+}

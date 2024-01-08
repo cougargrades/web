@@ -1,6 +1,6 @@
 {
   "name": "@cougargrades/web",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -45,6 +45,7 @@
     "react-use": "^17.2.4",
     "reactfire": "^4.2.2",
     "recoil": "^0.5.2",
+    "rehype-highlight": "^7.0.0",
     "rehype-raw": "^6.1.1",
     "rehype-sanitize": "^5.0.1",
     "rehype-stringify": "^9.0.3",

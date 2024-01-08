@@ -53,6 +53,9 @@ Small modifications were made.
 	--nc-d-lk-tx: #FFFFFF;
 	--nc-d-ac-1: #7928CA;
 	--nc-d-ac-tx: #FFFFFF;
+
+	--nc-bg-code: rgb(255, 255, 255);
+	--nc-d-bg-code: rgb(13, 17, 23);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,6 +70,8 @@ Small modifications were made.
 		--nc-lk-tx: var(--nc--dlk-tx);
 		--nc-ac-1: var(--nc-d-ac-1);
 		--nc-ac-tx: var(--nc--dac-tx);
+
+		--nc-bg-code: var(--nc-d-bg-code);
 	}
 }
 
@@ -303,7 +308,7 @@ samp {
 	font-size: 0.9em;
 }
 
-code:not(.plain),
+:not(pre) > code:not(.plain),
 samp,
 kbd,
 pre {
@@ -312,7 +317,10 @@ pre {
 	border: 1px solid var(--nc-bg-3);
 	border-radius: 4px;
 	padding: 3px 6px;
-	
+}
+
+pre:has(code.hljs) {
+	background-color: var(--nc-bg-code);
 }
 
 kbd {

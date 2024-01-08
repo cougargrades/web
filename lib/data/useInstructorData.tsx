@@ -14,6 +14,7 @@ import { CourseGroupResult, CourseInstructorResult, group2Result, SectionPlus } 
 import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
+import { GPAValueWithWarning } from '../../components/GPAValueWithWarning'
 //import { firebaseApp, getFirestoreDocument } from '../ssg'
 
 
@@ -105,6 +106,7 @@ export function useInstructorData(instructorName: string): Observable<Instructor
               type: 'number',
               width: 60,
               padding: 8,
+              valueFormatter: (value, row) => <GPAValueWithWarning value={value} row={row} />
             },
           ],
           rows: [

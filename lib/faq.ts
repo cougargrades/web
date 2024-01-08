@@ -11,6 +11,7 @@ import remarkRehype from 'remark-rehype'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeStringify from 'rehype-stringify'
+import rehypeHighlight from 'rehype-highlight'
 
 const postsDirectory = join(process.cwd(), '_posts')
 
@@ -63,15 +64,33 @@ export function getAllPosts(fields: string[] = []): FaqPostData[] {
 }
 
 export async function markdownToHtml(markdown: string) {
-  const schema = defaultSchema
-  schema!.tagNames!.push('iframe')
-  if(!Array.isArray(schema!.attributes!['iframe']))
-    schema!.attributes!['iframe'] = []
-  schema!.attributes!['iframe'].push('src')
   const result = await remark()
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
-    .use(rehypeSanitize, schema)
+    .use(rehypeHighlight)
+    .use(rehypeSanitize, {
+      ...defaultSchema,
+      tagNames: [
+        ...(defaultSchema.tagNames ?? []),
+        'iframe',
+      ],
+      attributes: {
+        ...defaultSchema.attributes,
+        'iframe': [
+          ...(defaultSchema.attributes?.['iframe'] ?? []),
+          'src'
+        ],
+        code: [
+          ...(defaultSchema.attributes?.['code'] ?? []),
+          // List of all allowed languages:
+          ['className', 'hljs', 'language-*', 'language-js', 'language-css', 'language-md', 'language-python']
+        ],
+        span: [
+          ...(defaultSchema.attributes?.['code'] ?? []),
+          ['className', 'hljs-addition', 'hljs-attr', 'hljs-attribute', 'hljs-built_in', 'hljs-bullet', 'hljs-char', 'hljs-code', 'hljs-comment', 'hljs-deletion', 'hljs-doctag', 'hljs-emphasis', 'hljs-formula', 'hljs-keyword', 'hljs-link', 'hljs-literal', 'hljs-meta', 'hljs-name', 'hljs-number', 'hljs-operator', 'hljs-params', 'hljs-property', 'hljs-punctuation', 'hljs-quote', 'hljs-regexp', 'hljs-section', 'hljs-selector-attr', 'hljs-selector-class', 'hljs-selector-id', 'hljs-selector-pseudo', 'hljs-selector-tag', 'hljs-string', 'hljs-strong', 'hljs-subst', 'hljs-symbol', 'hljs-tag', 'hljs-template-tag', 'hljs-template-variable', 'hljs-title', 'hljs-type', 'hljs-variable']
+        ]
+      }
+    })
     .use(rehypeStringify)
     //.use(html)
     .process(markdown)
