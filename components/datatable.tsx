@@ -76,13 +76,13 @@ export type Column<T> = { [K in keyof T]: ({
    * Function that allows to apply a formatter before rendering its value.
    * @default (value: T[K]) => T[K]
    */
-  valueFormatter: (value: T[K]) => string | React.ReactNode;
+  valueFormatter: (value: T[K], row: T) => string | React.ReactNode;
 } : {
   /**
    * Function that allows to apply a formatter before rendering its value.
    * @default (value: T[K]) => T[K]
    */
-  valueFormatter?: (value: T[K]) => string | React.ReactNode;
+  valueFormatter?: (value: T[K], row: T) => string | React.ReactNode;
 })) }[keyof T];
 
 export interface EnhancedTableProps<T> {
@@ -170,7 +170,7 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
                     tabIndex={-1}
                   >
                     {columns.map(({ field, align, padding, valueFormatter }) => (
-                      <TableCell key={field} align={align} style={{ paddingLeft: padding ?? 16, paddingRight: padding ?? 16 }}>{valueFormatter ? valueFormatter(row[field]) : row[field]}</TableCell>
+                      <TableCell key={field} align={align} style={{ paddingLeft: padding ?? 16, paddingRight: padding ?? 16 }}>{valueFormatter ? valueFormatter(row[field], row) : row[field]}</TableCell>
                     ))}
                   </TableRow>
                 ))}
