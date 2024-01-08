@@ -337,7 +337,7 @@ pre {
 /* Reference: https://css-tricks.com/styling-code-in-and-out-of-blocks/ */
 pre > code.hljs {
 	display: block;
-	overflow-x: scroll;
+	overflow-x: auto;
 	padding: 1rem 1.4rem;
 }
 pre:has(> code) {
