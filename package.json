@@ -4,9 +4,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
-    "build": "cross-env NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
-    "start": "cross-env next start",
+    "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
+    "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
+    "start": "next start",
     "lint": "next lint",
     "betterlint": "tsc --noEmit"
   },
