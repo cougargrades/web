@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
-import Link from 'next/link'
-import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
-import FlagIcon from '@mui/icons-material/Flag'
-import HelpIcon from '@mui/icons-material/Help'
 import DescriptionIcon from '@mui/icons-material/Description'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -15,7 +11,6 @@ import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -27,9 +22,11 @@ import ListSubheader from '@mui/material/ListSubheader'
 import { useSwipeable } from 'react-swipeable'
 import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
+import { Util } from '@cougargrades/types'
 import { Observable, ObservableStatus } from './Observable'
 import type { SSSearchResponse } from './back/simplesyllabus'
 import { getDocumentViewUrl, getThumbnailUrl } from './simplesyllabus'
+import { formatTermCode } from '../util'
 
 import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from '../../components/instructorcard.module.scss'
@@ -69,6 +66,35 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+/**
+ * 
+ * @param term_names 
+ * @returns Distinct term names in chronological descending order
+ */
+function getDistinctTermNamesChronologically(term_names?: string[]): string[] {
+  let term_codes: number[] = [];
+  try {
+    term_codes = term_names?.map(t => Util.termCode(t)) ?? [];
+    // If for WHATEVER REASON a termName -> termCode conversion failed...
+    if (term_codes.some(tc => isNaN(tc))) {
+      throw new Error('TermCodes contained NaN');
+    }
+    // Otherwise...
+    else {
+      return Array.from(new Set(term_codes))
+        .sort()
+        .reverse()
+        .map(tc => formatTermCode(tc));
+    }
+  }
+  catch (err) {
+    console.warn('[useSearchSimpleSyllabus] TermName -> TermCode conversion failed at some point in the sorting process. err?', err, 'term_names?', term_names, 'term_codes?', term_codes);
+    // Fallback to just using the input and sorting some other way
+    return Array.from(new Set(term_names ?? []))
+      .sort();
+  }
+}
+
 export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -77,7 +103,10 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
     onSwipedDown: () => open ? setOpen(false) : null,
     preventDefaultTouchmoveEvent: true,
   })
-  const distinct_term_names = Array.from(new Set<string>(data?.items.map(r => r.term_name) ?? [])).sort()
+  
+  // Use the snippet below to verify sorting if troubleshooting in the future 
+  //const distinct_term_names = getDistinctTermNamesChronologically([...data?.items.map(r => r.term_name) ?? [], 'Fall 2024', 'Spring 2024', 'Spring 2026']);
+  const distinct_term_names = getDistinctTermNamesChronologically(data?.items.map(r => r.term_name));
 
   return (
     <>
