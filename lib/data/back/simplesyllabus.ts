@@ -1,3 +1,10 @@
+import { z } from 'zod'
+
+export const Example = z.object({
+    hello: z.string()
+})
+export type Example = z.infer<typeof Example>
+
 
 /**
  * https://uh.simplesyllabus.com/api2/doc-library-search?search=ACCT%207337&term_statuses%5B%5D=future&term_statuses%5B%5D=current
