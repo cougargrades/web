@@ -38,3 +38,5 @@ yarn-error.log*
 
 # tsc
 tsconfig.tsbuildinfo
+.env*.local
+.npmrc
