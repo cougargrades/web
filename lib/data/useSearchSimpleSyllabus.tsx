@@ -123,9 +123,7 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
                 {/* <Divider /> */}
                 {data?.items.filter(r => r.term_name === termName).map(item => (
                   <React.Fragment key={`item-${termName}-${item.code}`}>
-                    <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getDocumentViewUrl(item.code)} target="_blank" secondaryAction={
-                        <ExternalLink href={getPDFDocumentUrl(item.code)} openInNewTab>PDF</ExternalLink>
-                      }>
+                    <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getDocumentViewUrl(item.code)} target="_blank">
                       <ListItemAvatar>
                         <Avatar alt="Thumbnail" src={getThumbnailUrl(item.code)} style={{ overflow: 'initial' }} />
                       </ListItemAvatar>
