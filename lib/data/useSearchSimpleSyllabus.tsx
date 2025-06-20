@@ -29,8 +29,7 @@ import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
 import { Observable, ObservableStatus } from './Observable'
 import type { SSSearchResponse } from './back/simplesyllabus'
-import { getDocumentViewUrl, getPDFDocumentUrl, getThumbnailUrl } from './simplesyllabus'
-import { ExternalLink } from '../../components/link'
+import { getDocumentViewUrl, getThumbnailUrl } from './simplesyllabus'
 
 import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from '../../components/instructorcard.module.scss'
@@ -125,7 +124,7 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
                   <React.Fragment key={`item-${termName}-${item.code}`}>
                     <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getDocumentViewUrl(item.code)} target="_blank">
                       <ListItemAvatar>
-                        <Avatar alt="Thumbnail" src={getThumbnailUrl(item.code)} style={{ overflow: 'initial' }} />
+                        <Avatar alt="Thumbnail" src={getThumbnailUrl(item.code)} style={{ overflow: 'initial' }} imgProps={{ style: { marginBottom: 0 }}} />
                       </ListItemAvatar>
                       <ListItemText primary={`${item.title}${item.subtitle !== '' ? ` - ${item.subtitle}` : ''}`} secondary={item.editors?.[0]?.full_name ?? ''} />
                     </ListItem>
