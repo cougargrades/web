@@ -8,7 +8,7 @@ import { days_to_seconds, hours_to_seconds, minutes_to_seconds } from './to_seco
 export const PROD_CACHE_CONTROL =    `public, must-revalidate, max-age=${hours_to_seconds(1)}, s-maxage=${days_to_seconds(1)}, stale-while-revalidate=${days_to_seconds(7)}`;
 export const PREVIEW_CACHE_CONTROL = `public, must-revalidate, max-age=${minutes_to_seconds(5)}, s-maxage=${hours_to_seconds(1)}, stale-while-revalidate=${days_to_seconds(3)}`;
 export const LIVE_CACHE_CONTROL =    `public, must-revalidate, max-age=${15}, stale-while-revalidate=${minutes_to_seconds(60)}`;
-export const OFF_MAINTENANCE_CACHE_CONTROL = `public, must-revalidate, max-age=${minutes_to_seconds(15)}, s-maxage=${days_to_seconds(1)}, stale-while-revalidate=${days_to_seconds(1)}`;
+export const OFF_MAINTENANCE_CACHE_CONTROL = `public, must-revalidate, max-age=${0}, s-maxage=${minutes_to_seconds(5)}, stale-while-revalidate=${days_to_seconds(1)}`;
 export const ON_MAINTENANCE_CACHE_CONTROL = `public, must-revalidate, max-age=${0}, s-maxage=${minutes_to_seconds(2)}, stale-while-revalidate=${minutes_to_seconds(60)}`;
 
 const vercelEnv = buildArgs.vercelEnv
