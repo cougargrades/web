@@ -5,6 +5,7 @@ import { buildArgs } from '../lib/environment'
 import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 import { ObservableStatus } from '../lib/data/Observable'
+import { useLatestTerm } from '../lib/data/useLatestTerm'
 
 interface SponsorshipInformation {
   totalSponsorCount: number,
@@ -15,6 +16,8 @@ interface SponsorshipInformation {
 export default function Footer(props: { hideDisclaimer?: boolean }) {
   const { data, error, isLoading } = useSWR<SponsorshipInformation>('https://github-org-stats-au5ton.vercel.app/api/sponsors');
   const status: ObservableStatus = error ? 'error' : (isLoading || !data) ? 'loading' : 'success'
+  const { data: termData } = useLatestTerm();
+  const latestTermFormatted = termData?.latestTermFormatted ?? null;
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
@@ -40,8 +43,10 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                   buildDate,
                 ).toLocaleDateString()}
               </span>
-              { vercelEnv !== 'production' ? <>
               <br />
+              Latest Data: <span>{latestTermFormatted ?? 'Unknown'}</span>
+              <br />
+              { vercelEnv !== 'production' ? <>
               Environment: {vercelEnv}
               </> : <></>}
               <br />

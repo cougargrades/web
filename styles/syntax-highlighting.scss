@@ -259,6 +259,7 @@ pre {
 }
 pre:has(code.hljs[class*="language-"])::before {
   // content: 'Python';
+  content: attr(rel);
   font-family: var(--nc-font-sans);
   font-style: italic;
   font-size: 0.75em;
@@ -268,7 +269,7 @@ pre:has(code.hljs[class*="language-"])::before {
   right: calc(1.4em / 2);
 }
 
-pre:has(code.hljs.language-python)::before {
-  content: 'Python';
-}
+// pre:has(code.hljs.language-python)::before {
+//   content: 'Python';
+// }
 
