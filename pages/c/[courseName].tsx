@@ -28,6 +28,7 @@ import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
 import { extract } from '../../lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaCourseDescription } from '../../lib/seo'
+import { SimpleSyllabusLauncher, useSearchSimpleSyllabus } from '../../lib/data/useSearchSimpleSyllabus'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -45,6 +46,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useCourseData(staticCourseName)
+  const { data: sylData, status: sylStatus } = useSearchSimpleSyllabus(staticCourseName)
   const isMissingProps = staticCourseName === undefined
   const RELATED_INSTRUCTOR_LIMIT = 4;
 
@@ -106,6 +108,11 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           { status === 'success' ? data!.tccnsUpdates.map((value, index) => (
             <TCCNSUpdateNotice key={index} data={value} />
           )) : null}
+          {
+            sylStatus === 'success' && sylData !== null && sylData?.sys.success === true && sylData.items.length > 0
+            ? <SimpleSyllabusLauncher data={sylData} />
+            : null
+          }
         </div>
         { !isMissingProps ? 
           <div dangerouslySetInnerHTML={{ __html: staticHTML }}></div>

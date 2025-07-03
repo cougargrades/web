@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
+    "dev:win32": "cross-env NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
     "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
+    "build:win32": "cross-env NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "start": "next start",
     "lint": "next lint",
     "betterlint": "tsc --noEmit"
@@ -24,6 +26,7 @@
     "@octokit/rest": "^19.0.7",
     "@primer/css": "^19.1.1",
     "bootstrap": "^5.0.1",
+    "cross-env": "^7.0.3",
     "firebase": "^9.16.0",
     "firebase-admin": "^9.12.0",
     "fitty": "^2.3.5",
@@ -55,7 +58,8 @@
     "rosetta": "^1.1.0",
     "sass": "^1.45.2",
     "swr": "^2.0.1",
-    "timeago-react": "^3.0.2"
+    "timeago-react": "^3.0.2",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@au5ton/snooze": "^1.0.3",
