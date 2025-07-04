@@ -30,4 +30,11 @@
     border: 0;
     margin-bottom: 10px;
   }
+
+  ol > li::marker {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.334;
+    color: #c8102e;
+  }
 }
