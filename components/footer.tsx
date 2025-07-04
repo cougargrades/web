@@ -57,6 +57,8 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
           </div>
           <div className={`col-sm ${styles.sponsorRoot}`}>
             <div className={styles.sponsor}>
+              {/* So... Vercel cancelled our sponsorship... */}
+              {/*  
               <Tooltip title="CougarGrades.io is sponsored by Vercel">
                 <a href="https://vercel.com/?utm_source=cougargrades&utm_campaign=oss">
                   <Image 
@@ -67,9 +69,10 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                   />
                 </a>
               </Tooltip>
+              */}
               <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
             </div>
-            <p className="text-muted">
+            <p className="text-muted" style={{ textAlign: 'right' }}>
               <small>{
                 status === 'success' ?  
                 `${data!.totalSponsorCount} people sponsor CougarGrades 
