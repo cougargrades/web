@@ -7,7 +7,7 @@ id: 4
 ## Sometimes the "GPA" column is inconsistent with the letter grades that the students actually received. What does this mean? What should I believe?
 
 <details>
-  <summary>Outdated FAQ from before January 7, 2024</summary>
+  <summary>Outdated answer from before January 7, 2024</summary>
 
   This is a very clever observation, and there's supposedly a rational explanation for this.
   Generally speaking, the data we receive from UH looks like this:
