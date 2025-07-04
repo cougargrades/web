@@ -162,6 +162,7 @@ export async function markdownToHtml(markdown: string) {
         pre: [
           ...(defaultSchema.attributes?.['pre'] ?? []),
           'rel',
+          'style'
         ],
         span: [
           ...(defaultSchema.attributes?.['code'] ?? []),
