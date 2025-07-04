@@ -96,6 +96,9 @@ Spring 2021,CIVE,3434,3,20513,Fluid Mech and Hydraulic Engr,Momen,Mostafa,19,24,
     </pre>
 </details>
 
+5. If you haven't already, [create an account on GitHub](https://github.com/why-github). This is where the code and data for CougarGrades lives.
+5. Make a [Fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) of the [CougarGrades publicdata repository](https://github.com/cougargrades/publicdata)
+5. Add the documents you received from the university to the following folder: [`documents/edu.uh.grade_distribution`](https://github.com/cougargrades/publicdata/tree/master/documents/edu.uh.grade_distribution)
 5. Make a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to our [publicdata GitHub repository](https://github.com/cougargrades/publicdata) adding the Excel/CSV documents that you received without transformations along with proof that they came from UH by providing the EML file of the correspondence with the university
     - See: [Beginner's guide to GitHub: Creating a pull request](https://github.blog/developer-skills/github/beginners-guide-to-github-creating-a-pull-request/)
     - Gmail instructions: [https://support.google.com/mail/answer/9261412?hl=en](https://support.google.com/mail/answer/9261412?hl=en)
