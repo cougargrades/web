@@ -60,7 +60,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                       </Typography>
                       <ul style={{ marginBottom: '0.4rem' }}>
                         {missingData.map(term => 
-                          <li>
+                          <li key={term.termCode}>
                             {term.formattedTerm} (Ended <TimeAgo datetime={term.termEndDate} title={term.termEndDate.toLocaleDateString()} locale={'en'} />)
                           </li>
                         )}
