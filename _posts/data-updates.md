@@ -1,6 +1,6 @@
 ---
 title: 'When will Fall/Spring/Summer 20XX data get added?'
-date: '2025-07-04T00:09:02.241Z'
+date: '2025-07-06T10:49:53.850Z'
 id: 2
 ---
 
