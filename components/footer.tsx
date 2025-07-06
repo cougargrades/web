@@ -1,11 +1,15 @@
-import Image from 'next/image'
-import Tooltip from '@mui/material/Tooltip'
+import Link from 'next/link'
+// import Image from 'next/image'
 import useSWR from 'swr'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import ErrorIcon from '@mui/icons-material/Error'
+import TimeAgo from 'timeago-react'
 import { buildArgs } from '../lib/environment'
-import sponsor from '../public/powered-by-vercel.svg'
+// import sponsor from '../public/powered-by-vercel.svg'
 import styles from './footer.module.scss'
 import { ObservableStatus } from '../lib/data/Observable'
-import { useLatestTerm } from '../lib/data/useLatestTerm'
+import { generateMissingDataMailToLink, useLatestTerm, useMissingData } from '../lib/data/useLatestTerm'
 
 interface SponsorshipInformation {
   totalSponsorCount: number,
@@ -17,6 +21,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
   const { data, error, isLoading } = useSWR<SponsorshipInformation>('https://github-org-stats-au5ton.vercel.app/api/sponsors');
   const status: ObservableStatus = error ? 'error' : (isLoading || !data) ? 'loading' : 'success'
   const { data: termData } = useLatestTerm();
+  const { data: missingData } = useMissingData();
   const latestTermFormatted = termData?.latestTermFormatted ?? null;
   const { commitHash, version, buildDate, vercelEnv } = buildArgs; // hopefully works
   return (
@@ -44,7 +49,32 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                 ).toLocaleDateString()}
               </span>
               <br />
-              Latest Data: <span>{latestTermFormatted ?? 'Unknown'}</span>
+              Latest Data: <span>{latestTermFormatted ?? 'Unknown'}</span>{' '}
+              {
+                missingData && missingData.length > 0
+                ? <>
+                  <Tooltip placement="bottom" arrow enterTouchDelay={100} leaveTouchDelay={10_000} title={
+                    <>
+                      <Typography color="inherit" variant="subtitle1" sx={{ paddingTop: '0' }}>
+                        Grade Data from <strong>{missingData.length}</strong> {missingData.length === 1 ? 'semester is' : 'semesters are'} missing.
+                      </Typography>
+                      <ul style={{ marginBottom: '0.4rem' }}>
+                        {missingData.map(term => 
+                          <li key={term.termCode}>
+                            {term.formattedTerm} (Ended <TimeAgo datetime={term.termEndDate} title={term.termEndDate.toLocaleDateString()} locale={'en'} />)
+                          </li>
+                        )}
+                      </ul>
+                      Would you like to see this data added to the site? You may be able to help!
+                      To learn more, <span className="pale"><Link href="/faq/data-updates" >read our FAQ</Link></span>.
+                      {/* Also <a href={generateMissingDataMailToLink(missingData)}>bazinga</a> */}
+                    </>
+                  }>
+                    <ErrorIcon fontSize="small" color="warning" />
+                  </Tooltip>
+                </>
+                : ''
+              }
               <br />
               { vercelEnv !== 'production' ? <>
               Environment: {vercelEnv}

@@ -6,11 +6,13 @@ export const randRange = (min: number, max: number) => Math.random() * (max - mi
 // https://getbootstrap.com/docs/5.0/layout/breakpoints/
 export const isMobile = () => typeof window !== 'undefined' ? window && window.document ? window.document.body.clientWidth < 576 : false : false
 
-export const seasonCode = (termCode: number): string => {
+export type SeasonCode = '01' | '02' | '03';
+
+export const seasonCode = (termCode: number): SeasonCode => {
   const second = termCode % 10
   termCode = Math.floor(termCode / 10)
   const first = termCode % 10
-  return `${first}${second}`
+  return `${first}${second}` as SeasonCode
 }
 
 export function formatTermCode(termCode: number): string {

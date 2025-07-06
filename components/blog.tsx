@@ -67,6 +67,8 @@ export function BlogNotifications() {
   const { data } = useAtomFeed(BLOG_URL);
   const notices = getNotices(data)
 
+  // TODO: insert our own notices based on missing data
+
   return (
     <Stack className={styles.blogNotifications} alignItems="center" spacing={1}>
       <MaintenanceMonitor />

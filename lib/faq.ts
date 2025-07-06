@@ -146,6 +146,7 @@ export async function markdownToHtml(markdown: string) {
       ...defaultSchema,
       tagNames: [
         ...(defaultSchema.tagNames ?? []),
+        'u',
         'iframe',
       ],
       attributes: {
@@ -167,6 +168,10 @@ export async function markdownToHtml(markdown: string) {
         span: [
           ...(defaultSchema.attributes?.['code'] ?? []),
           ['className', 'hljs-addition', 'hljs-attr', 'hljs-attribute', 'hljs-built_in', 'hljs-bullet', 'hljs-char', 'hljs-code', 'hljs-comment', 'hljs-deletion', 'hljs-doctag', 'hljs-emphasis', 'hljs-formula', 'hljs-keyword', 'hljs-link', 'hljs-literal', 'hljs-meta', 'hljs-name', 'hljs-number', 'hljs-operator', 'hljs-params', 'hljs-property', 'hljs-punctuation', 'hljs-quote', 'hljs-regexp', 'hljs-section', 'hljs-selector-attr', 'hljs-selector-class', 'hljs-selector-id', 'hljs-selector-pseudo', 'hljs-selector-tag', 'hljs-string', 'hljs-strong', 'hljs-subst', 'hljs-symbol', 'hljs-tag', 'hljs-template-tag', 'hljs-template-variable', 'hljs-title', 'hljs-type', 'hljs-variable']
+        ],
+        img: [
+          'src',
+          'style'
         ]
       }
     })

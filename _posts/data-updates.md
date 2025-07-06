@@ -1,6 +1,6 @@
 ---
 title: 'When will Fall/Spring/Summer 20XX data get added?'
-date: '2025-07-04T00:09:02.241Z'
+date: '2025-07-06T10:49:53.850Z'
 id: 2
 ---
 
@@ -45,14 +45,24 @@ Please see the below instructions for how additional data can be added to the si
 
 #### CougarGrades Volunteer Data Request Process:
 
-1. Identify how up-to-date the CougarGrades dataset is by looking at the _"Latest Data"_ field in the footer of our website
-2. Determine which semesters (if any) are missing from CougarGrades as a result
-    - For Example:
-        - The "Latest Data" says "Fall 2024", but it is September 2025.
-        - You can conclude that Spring 2025 and Summer 2025 are missing.
-3. Request for the missing data from UH by following their official process:
+1. 🛑 **HEADS UP**. This process is for volunteers (potentially you) to do the following:
+    - You will send a formal request data to the University of Houston on behalf of the CougarGrades project
+    - You will interact with a representative of the University of Houston over email
+    - You will hopefully receive grade data in the form of CSV files or Microsoft Excel spreadsheets from the representative you interacted
+    - You will upload the grade data (the CSV/Excel files) you received to the CougarGrades project on GitHub
+        - Alternatively, you will forward the files you received to <u>contact\[at\]cougargrades.io</u>
+1. **🛑 If these things don't sound like things you're up for, don't go any further! Stop now!** We appreciate you coming this far.
+1. Determine which semesters (if any) are missing from CougarGrades. This can be done by looking at the _"Latest Data"_ field in the footer of our website.
+    - If a **"⚠️" is visible**, then some semesters are missing from our grade dataset. Hover your mouse over this symbol to reveal which semesters we're looking for.
+    ![missing data](/img/missing_data.png)
+    - If this symbol cannot be found, then our grade dataset is currently up-to-date. There's nothing left for you to do!
+1. Request for the missing data from UH by following their official process:
     - [https://uh.edu/ir/request-data/](https://uh.edu/ir/request-data/)
-4. In your request and in their response, ensure that the data is received in the format described in our source code:
+    - **Alternatively:**
+        - An email template is provided below that should be sent to <u>publicinfo@uh.edu</u>. Clicking the link below will open the email template in the email client associated with your operating system.
+        - <a href="mailto:publicinfo@uh.edu?body=Dear%20Public%20Information%20Officer%2C%0A%0APursuant%20to%20the%20Texas%20Public%20Information%20Act%2C%20I%20am%20making%20a%20request%20for%20information%20from%20the%20University%20of%20Houston.%0A%0AHere%20is%20my%20personal%20information%3A%0AName%3A%20YOUR%20NAME%0APhone%20%23%3A%20YOUR%20PHONE%20NUMBER%0AAddress%3A%20YOUR%20ADDRESS%0A%0AI%20am%20requesting%20official%20course%20grade%20distribution%20data%20for%20all%20UH%20undergraduate%20and%20graduate%20courses%20from%20Spring%202025.%20The%20data%20should%20match%20the%20format%20used%20in%20past%20UH%20public%20records%2C%20as%20shown%20in%3A%0Ahttps%3A%2F%2Fgithub.com%2Fcougargrades%2Fpublicdata%2Ftree%2Fmaster%2Fdocuments%2Fedu.uh.grade_distribution%0A%0AEach%20record%20should%20include%3A%0A%E2%80%A2%20Term%0A%E2%80%A2%20Subject%20Code%0A%E2%80%A2%20Course%20Number%0A%E2%80%A2%20Section%20Number%0A%E2%80%A2%20Instructor%28s%29%0A%E2%80%A2%20Grade%20counts%20for%20A%2C%20B%2C%20C%2C%20D%2C%20F%2C%20W%2C%20etc.%0A%0APlease%20provide%20the%20data%20in%20CSV%20or%20a%20similar%20machine-readable%20format.&subject=Public%20Information%20Data%20Request%20Form%2C%20University%20of%20Houston">[📧 Email Template]</a>
+
+5. In your request and in their response, ensure that the data is received in the format described in our source code:
     - [https://github.com/cougargrades/publicdata/tree/master/documents/edu.uh.grade_distribution](https://github.com/cougargrades/publicdata/tree/master/documents/edu.uh.grade_distribution)
 
 <details>
@@ -96,21 +106,29 @@ Spring 2021,CIVE,3434,3,20513,Fluid Mech and Hydraulic Engr,Momen,Mostafa,19,24,
     </pre>
 </details>
 
-5. If you haven't already, [create an account on GitHub](https://github.com/why-github). This is where the code and data for CougarGrades lives.
-5. Make a [Fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) of the [CougarGrades publicdata repository](https://github.com/cougargrades/publicdata)
-5. Add the documents you received from the university to the following folder: [`documents/edu.uh.grade_distribution`](https://github.com/cougargrades/publicdata/tree/master/documents/edu.uh.grade_distribution)
-5. Make a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to our [publicdata GitHub repository](https://github.com/cougargrades/publicdata) adding the Excel/CSV documents that you received without transformations along with proof that they came from UH by providing the EML file of the correspondence with the university
-    - See: [Beginner's guide to GitHub: Creating a pull request](https://github.blog/developer-skills/github/beginners-guide-to-github-creating-a-pull-request/)
-    - Gmail instructions: [https://support.google.com/mail/answer/9261412?hl=en](https://support.google.com/mail/answer/9261412?hl=en)
-    - Outlook instructions: [https://support.microsoft.com/en-us/office/save-an-outlook-message-as-a-eml-file-a-pdf-file-or-as-a-draft-4821bcd4-7687-4d6d-a486-b89a291a56e2](https://support.microsoft.com/en-us/office/save-an-outlook-message-as-a-eml-file-a-pdf-file-or-as-a-draft-4821bcd4-7687-4d6d-a486-b89a291a56e2#:~:text=In%20Mail%2C%20from%20the%20message,the%20menu%2C%20select%20Save%20as.)
-5. On GitHub, make sure your Pull Request [allows for changes from maintainers](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork). This allows the CougarGrades developers to correct any simple formatting issues with the data from UH you've submitted while you still retain full credit for the contribution.
+6. Wait until you've received the grade data from a representative of the University of Houston. _This may take some time._
+1. Now that you've acquired the data, do one of the following:
+    - **If you have experience using GitHub and would like to be credited in our [About page](/about):**
+        1. Make a [Fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) of the [CougarGrades publicdata repository](https://github.com/cougargrades/publicdata)
+        1. Add the documents you received from the university to the following folder: [`/documents/edu.uh.grade_distribution`](https://github.com/cougargrades/publicdata/tree/master/documents/edu.uh.grade_distribution)
+        1. Make a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to our [publicdata GitHub repository](https://github.com/cougargrades/publicdata) adding the Excel/CSV documents that you received without transformations along with proof that they came from UH by providing the EML file of the correspondence with the university
+            - See: [Beginner's guide to GitHub: Creating a pull request](https://github.blog/developer-skills/github/beginners-guide-to-github-creating-a-pull-request/)
+            - Gmail instructions: [https://support.google.com/mail/answer/9261412?hl=en](https://support.google.com/mail/answer/9261412?hl=en)
+            - Outlook instructions: [https://support.microsoft.com/en-us/office/save-an-outlook-message-as-a-eml-file-a-pdf-file-or-as-a-draft-4821bcd4-7687-4d6d-a486-b89a291a56e2](https://support.microsoft.com/en-us/office/save-an-outlook-message-as-a-eml-file-a-pdf-file-or-as-a-draft-4821bcd4-7687-4d6d-a486-b89a291a56e2#:~:text=In%20Mail%2C%20from%20the%20message,the%20menu%2C%20select%20Save%20as.)
+        1. On GitHub, make sure your Pull Request [allows for changes from maintainers](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork). This allows the CougarGrades developers to correct any simple formatting issues with the data from UH you've submitted while you still retain full credit for the contribution.
 
-    ![Allow edits from maintainers checkbox](https://github.blog/wp-content/uploads/2016/09/01fa90ba-7443-11e6-952f-a35a34d07c62.png)
+            ![Allow edits from maintainers checkbox](https://github.blog/wp-content/uploads/2016/09/01fa90ba-7443-11e6-952f-a35a34d07c62.png)
 
-5. On GitHub, I will review your pull request to include the data within the data set. At that point, my goals in the review process are:
-    1. To verify the authenticity by viewing the EML file
-    1. Check that the data is in the format the source code is expecting. (Don't worry, we'll help if it isn't!)
-    1. Verify that the source code doesn't break when I include the new data (it shouldn't, but gotta be careful!)
-5. If all things are good, your Pull Request will be merged and the data you provide will be included in the "publicdata" repository. **As of now, you are a contributor to CougarGrades!** Your contribution will be reflected in our [About page](/about) as a contributor to the project.
-5. I will run the [automated scripts for deployment](https://github.com/cougargrades/deployment) and the site will be updated to reflect the new data.
-5. Do it again, 3 times a year in total 🫠 (Spring/Summer/Fall)
+        1. On GitHub, I will review your pull request to include the data within the data set. At that point, my goals in the review process are:
+            1. To verify the authenticity by viewing the EML file
+            1. Check that the data is in the format the source code is expecting. (Don't worry, we'll help if it isn't!)
+            1. Verify that the source code doesn't break when I include the new data (it shouldn't, but gotta be careful!)
+        1. If all things are good, your Pull Request will be merged and the data you provide will be included in the "publicdata" repository. **As of now, you are a contributor to CougarGrades!** Your contribution will be reflected in our [About page](/about) as a contributor to the project.
+    - **If you would like to contribute the grade data anonymously over email:**
+        1. Forward your correspondance with the UH representative and the grade data (CSV/Excel files) as attachments to <u>contact\[at\]cougargrades.io</u>
+        1. I will review your email and the data attached to ensure it's valid and is the type of data CougarGrades uses
+        1. You will remain anonymous and at no point will your information be shared
+        1. The grade data you provided will be uploaded to the [CougarGrades publicdata repository](https://github.com/cougargrades/publicdata) without any association to you
+
+1. Now that the grade data has been acquired and added to the project, I will run the [automated scripts for deployment](https://github.com/cougargrades/deployment) and the site will be updated to reflect the new data.
+1. Do it again, 3 times a year in total 🫠 (Spring/Summer/Fall)
