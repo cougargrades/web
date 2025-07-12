@@ -248,30 +248,32 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: [
       //{ params: { courseName: '' } },
       // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
-      //...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e.legalName }})) : [])
+      ...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { instructorName: e.legalName.toLowerCase() }})) : [])
     ],
-    fallback: 'blocking'
+    fallback: true, // Do front-end ISR when the page isn't already generated
+    //fallback: 'blocking', // Do server-side ISR when the page isn't already generated
   }
 }
 
 export const getStaticProps: GetStaticProps<InstructorProps> = async (context) => {
   //console.time('getStaticProps')
   const { params } = context;
-  const instructorName = params?.instructorName;
-  const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
+  const instructorName = extract(params?.instructorName);
+  const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName.toLowerCase()}`)
+  const instructorNameCapitalized = instructorData?.fullName ?? instructorName;
   const departmentText = getDepartmentText(instructorData)
   const metaDescription = metaInstructorDescription({
-    staticInstructorName: extract(instructorName),
+    staticInstructorName: instructorName,
     staticFullInstructorName: instructorData !== undefined 
       ? `${instructorData.firstName} ${instructorData.lastName}`
-      : extract(instructorName),
+      : instructorName,
     staticDepartmentText: getDepartmentText(instructorData, 1),
   }, instructorData)
   //console.timeEnd('getStaticProps')
 
   return {
     props: {
-      staticInstructorName: extract(instructorName),
+      staticInstructorName: instructorNameCapitalized,
       staticDepartmentText: departmentText,
       staticMetaDescription: metaDescription,
       doesNotExist: instructorData === undefined,

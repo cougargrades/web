@@ -17,7 +17,7 @@ import { getChartDataForInstructor } from '../getChartDataForInstructor';
 export async function getInstructorData(instructorName: string): Promise<InstructorResult> {
   const stone = getRosetta()
   const db = firebase.firestore();
-  const data = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
+  const data = await getFirestoreDocument<Instructor>(`/instructors/${instructorName.toLowerCase()}`)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const groupRefs = ! didLoadCorrectly ? [] : Object
     .entries(data.departments)

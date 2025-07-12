@@ -3,6 +3,7 @@ import { Course, Instructor, Group } from '@cougargrades/types'
 import useSWR from 'swr/immutable'
 import { useAsync } from 'react-use'
 import { RetrievedDoc, search } from '@lyrasearch/lyra'
+import { z } from 'zod/mini'
 import type { Property } from 'csstype'
 import { Observable } from './Observable'
 import { getBadges } from './getBadges'
@@ -23,10 +24,13 @@ export interface SearchResultBadge {
   fontSize?: Property.FontSize;
 }
 
+export const SearchResultType = z.enum(['course', 'instructor', 'group']);
+export type SearchResultType = z.infer<typeof SearchResultType>
+
 export interface SearchResult {
   key: string; // used for react, same as document path
   href: string; // where to redirect the user when selected
-  type: 'course' | 'instructor' | 'group';
+  type: SearchResultType;
   group: string; // What to display in the <li> divider in the search results
   title: string; // What the result is
   badges: SearchResultBadge[];
