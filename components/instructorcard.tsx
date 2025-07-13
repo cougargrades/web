@@ -161,7 +161,7 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
                         ))}
                       </Box>
                     }>
-                      <ListItemText primary={item.id} secondary={item.caption} />
+                      <ListItemText primary={item.altTitle ?? item.title} secondary={item.caption} />
                     </ListItem>
                     { index !== (array.length - 1) ? <Divider /> : ''}
                   </React.Fragment>
