@@ -26,13 +26,23 @@ export function useLyra(enable: boolean = false) {
           legalName: 'string',
         }
       })
-      const courseIndex = await (await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')).data
-      const instructorIndex = await (await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/instructors.json')).data
+      const groupDb = await create({
+        schema: {
+          href: 'string',
+          identifier: 'string',
+          name: 'string',
+          description: 'string',
+        }
+      })
+      const courseIndex = (await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')).data;
+      const instructorIndex = (await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/instructors.json')).data;
+      const groupIndex = (await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/groups.json')).default;
   
-      await insertBatch(courseDb, courseIndex)
-      await insertBatch(instructorDb, instructorIndex)
+      await insertBatch(courseDb, courseIndex);
+      await insertBatch(instructorDb, instructorIndex);
+      await insertBatch(groupDb, groupIndex);
       
-      return { courseDb, instructorDb }
+      return { courseDb, instructorDb, groupDb }
     }
     return
   }, [enable])
