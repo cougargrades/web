@@ -154,7 +154,7 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
                 {/* <Divider /> */}
                 {sortedData.filter(e => e.lastInitial === lastInitial).map(item => (
                   <React.Fragment key={`item-${lastInitial}-${item.id}`}>
-                    <ListItem button className={styles.badgeStackListItem} onClick={() => router.push(item.href)} secondaryAction={
+                    <ListItem button className={styles.badgeStackListItem} component="a" href={item.href} secondaryAction={
                       <Box className={styles.badgeStack}>
                         {item.badges.map(e => (
                           <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em' }}>{e.text}</Badge>
