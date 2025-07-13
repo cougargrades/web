@@ -11,7 +11,7 @@ import { getRandomIndexes, notNullish } from '../../util'
 export async function getRandomInstuctors(count: number = 5): Promise<Instructor[]> {
   const randomCourseNames: string[] = getRandomIndexes(all_instructors.length, count).map(index => all_instructors[index]);
   const settledData = await Promise.allSettled(randomCourseNames.map(instructorName => (
-    getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
+    getFirestoreDocument<Instructor>(`/instructors/${instructorName.toLowerCase()}`)
   )))
 
   return [

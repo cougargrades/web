@@ -160,6 +160,9 @@ export function generateBreadcrumbs(path: string) {
       if(array[1].toLowerCase() === 'top') {
         return <span key={key}>{POPULAR_TABS.find(e => e.slug === value)?.title ?? '???'}</span>
       }
+      if(array[1].toLowerCase() === 'i') {
+        return <span key={key} style={{ textTransform: 'capitalize' }}>{decodeURI(value)}</span>
+      }
     }
     return <span key={key}>{decodeURI(value)}</span>
   })
