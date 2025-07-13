@@ -260,7 +260,7 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
   const { params } = context;
   const instructorName = extract(params?.instructorName);
   const instructorData = await getFirestoreDocument<Instructor>(`/instructors/${instructorName.toLowerCase()}`)
-  const instructorNameCapitalized = instructorData?.fullName ?? instructorName;
+  const instructorNameCapitalized = instructorData !== undefined ? `${instructorData.lastName}, ${instructorData.firstName}` : instructorName;
   const departmentText = getDepartmentText(instructorData)
   const metaDescription = metaInstructorDescription({
     staticInstructorName: instructorName,
