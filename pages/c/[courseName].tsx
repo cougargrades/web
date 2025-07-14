@@ -248,7 +248,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: [
       //{ params: { courseName: '' } },
       // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
-      ...(buildArgs.vercelEnv === 'production' || true ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
+      ...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
     ],
     fallback: true, // Do front-end ISR when the page isn't already generated
     //fallback: 'blocking', // Do server-side ISR when the page isn't already generated
