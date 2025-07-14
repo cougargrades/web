@@ -158,7 +158,10 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
         </span>
         <br />
         <Typography variant="body1" color="text.secondary">
-          &copy; 2025 Rate My Professors, LLC. All Rights Reserved
+          Search results for: <code>{instructorFirstName} {instructorLastName}</code>
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          &copy; 2025 Rate My Professors, LLC. All Rights Reserved.
         </Typography>
       </DialogTitle>
       <DialogContent className={instructorCardStyles.showMoreContent}>
