@@ -131,7 +131,7 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
       onClick={() => setOpen(true)}
       style={{ marginRight: '0.35rem', marginBottom: '0.35rem' }}
       >
-      {data?.length ?? 0} results on RateMyProfessors.com
+      {data?.length ?? 0} {(data?.length ?? 0) === 1 ? 'result' : 'results'} on RateMyProfessors.com
     </Button>
     <Dialog
       fullScreen={fullScreen}
