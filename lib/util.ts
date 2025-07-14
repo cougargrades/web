@@ -132,3 +132,7 @@ export function estimateGPA(section: Section): number {
   points += GPA_WEIGHTS['F'] * F;
   return points / (totalEnrolled - (W + S + NCR));
 }
+
+export function stringContainsOneOf(value: string, ...candidates: string[]): boolean {
+  return candidates.some(c => value.toLowerCase().includes(c.toLowerCase()))
+}

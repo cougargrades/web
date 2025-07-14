@@ -34,6 +34,7 @@ import { LoadingBoxIndeterminate } from '../../components/loading'
 import { extract } from '../../lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaInstructorDescription } from '../../lib/seo'
+import { RMPLauncher, useSearchRMP } from '../../lib/data/useSearchRMP'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -41,6 +42,8 @@ import interactivity from '../../styles/interactivity.module.scss'
 
 export interface InstructorProps {
   staticInstructorName: string;
+  staticInstructorFirstName: string;
+  staticInstructorLastName: string;
   staticDepartmentText: string;
   staticShortDepartmentText?: string;
   staticFullInstructorName?: string;
@@ -48,10 +51,11 @@ export interface InstructorProps {
   doesNotExist?: boolean;
 }
 
-export default function IndividualInstructor({ staticInstructorName, staticDepartmentText, staticMetaDescription, doesNotExist }: InstructorProps) {
+export default function IndividualInstructor({ staticInstructorName, staticInstructorFirstName, staticInstructorLastName, staticDepartmentText, staticMetaDescription, doesNotExist }: InstructorProps) {
   const stone = useRosetta()
   const router = useRouter()
   const { data, status } = useInstructorData(staticInstructorName)
+  const { data: rmpData, status: rmpStatus } = useSearchRMP(staticInstructorFirstName, staticInstructorLastName);
   const isMissingProps = staticInstructorName === undefined
   const RELATED_COURSE_LIMIT = 4;
 
@@ -108,7 +112,13 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
           </figure>
         </div>
         <div className={styles.rmpLink}>
-          { status === 'success' && data?.rmpHref !== undefined ? <>
+          {
+            rmpStatus === 'success' && Array.isArray(rmpData) && rmpData.length > 0
+            ? <RMPLauncher instructorFirstName={staticInstructorFirstName} instructorLastName={staticInstructorLastName} data={rmpData} />
+            // Fallback to the old button if there's a problem with the live RMP integration
+            : (
+              status === 'success' && data?.rmpHref !== undefined
+              ? <>
               <Button 
                 variant="text"
                 size="small"
@@ -121,7 +131,9 @@ export default function IndividualInstructor({ staticInstructorName, staticDepar
                 >
                 Linked with RateMyProfessors.com
               </Button>
-            </> : null
+            </>
+            : null
+            )
           }
         </div>
         { status === 'success' ? <>
@@ -274,6 +286,8 @@ export const getStaticProps: GetStaticProps<InstructorProps> = async (context) =
   return {
     props: {
       staticInstructorName: instructorNameCapitalized,
+      staticInstructorFirstName: instructorData?.firstName ?? '',
+      staticInstructorLastName: instructorData?.lastName ?? '',
       staticDepartmentText: departmentText,
       staticMetaDescription: metaDescription,
       doesNotExist: instructorData === undefined,

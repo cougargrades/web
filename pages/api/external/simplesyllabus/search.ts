@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { CACHE_CONTROL } from '../../../../lib/cache'
 import * as simplesyllabus from '../../../../lib/data/back/simplesyllabus'
 import { extract } from '../../../../lib/util'
-import { z } from 'zod/v4-mini'
 
 
 export default async function SearchSyllabi(req: NextApiRequest, res: NextApiResponse<Awaited<ReturnType<typeof simplesyllabus.search>>>) {
