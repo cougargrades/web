@@ -110,9 +110,21 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
           }>
             {/* secondary={`${item.department} • ${item.school.name}`} */}
           <ListItemText
-            primary={`${item.firstName} ${item.lastName}`}
+            primary={
+              <>
+              <span style={{ display: 'inline-flex', gap: '20px' }}>
+                <span>
+                  {`${item.firstName} ${item.lastName}` }
+                </span>
+                {
+                  item._searchScore >= 0.85
+                  ? <Chip color="info" label={`Likely Match`} title={`Dice-Sørensen coefficient: ${item._searchScore.toFixed(3)}`}  size="small" />
+                  : null
+                }
+              </span>
+              </>
+            }
             secondary={`${item.department}`}
-            title={`${item._searchScore}`}
             />
         </ListItem>
         { index !== (array.length - 1) ? <Divider /> : ''}
