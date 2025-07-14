@@ -29,3 +29,14 @@
     vertical-align: inherit!important;
   }
 }
+
+.linkMinimumStyle {
+  @extend .linkUnstyled;
+
+  // &:hover {
+  //   text-decoration: underline!important;
+  // }
+  &:active {
+    filter: brightness(0.75);
+  }
+}

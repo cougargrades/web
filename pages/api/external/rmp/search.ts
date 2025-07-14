@@ -3,15 +3,10 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { CACHE_CONTROL } from '../../../../lib/cache'
 import * as rmp from '../../../../lib/data/back/rmp'
-import type { RMPRankedSearchResult, RMPSearchResult } from '../../../../lib/data/back/rmp'
-import { UH_RMP_SCHOOL_IDS } from '../../../../lib/data/rmp'
+import type { RMPRankedSearchResult } from '../../../../lib/data/back/rmp'
 import { extract } from '../../../../lib/util'
 
-import { create, insertBatch, search } from '@lyrasearch/lyra'
-import { percentageOfBM25Score } from '../../../../lib/data/useSearchResults'
-
 import { diceCoefficient } from 'dice-coefficient'
-
 
 export default async function SearchRMP(req: NextApiRequest, res: NextApiResponse<RMPRankedSearchResult[]>) {
   const { query, strict } = req.query;
@@ -20,11 +15,6 @@ export default async function SearchRMP(req: NextApiRequest, res: NextApiRespons
 
   // Query the RMP API
   let data = await rmp.search(searchTerm);
-
-  // De-duplicate the results
-  data = Array.from(new Set(data.map(d => d.id)))
-    .map(rmpProfId => data.find(d => d.id === rmpProfId))
-    .filter(d => d !== undefined)
   
   // Augment the data we got with the search ranks
   let results: RMPRankedSearchResult[] = data.map(d => {

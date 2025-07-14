@@ -10,7 +10,7 @@ import { group2Result, SectionPlus } from '../useCourseData';
 import { course2Result } from '../useAllGroups';
 import { Column } from '../../../components/datatable';
 import { getChartDataForInstructor } from '../getChartDataForInstructor';
-import { getRMPViewableUrl } from '../rmp';
+import { getRMPProfessorViewableUrl } from '../rmp';
 
 /**
  * Used server-side
@@ -154,6 +154,6 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     classSize,
     //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
     sectionLoadingProgress: 100,
-    rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? getRMPViewableUrl(data.rmpLegacyId) : undefined,
+    rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? getRMPProfessorViewableUrl(data.rmpLegacyId) : undefined,
   }
 }

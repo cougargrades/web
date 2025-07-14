@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
-    "dev:win32": "cross-env NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
+    "dev:win32": "cross-env NODE_OPTIONS=\"--inspect\" NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
     "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "build:win32": "cross-env NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "start": "next start",
@@ -25,7 +25,6 @@
     "@mui/material": "^5.11.10",
     "@octokit/rest": "^19.0.7",
     "@primer/css": "^19.1.1",
-    "api-rmp": "1.1.5",
     "bootstrap": "^5.0.1",
     "cross-env": "^7.0.3",
     "dice-coefficient": "^2.1.1",

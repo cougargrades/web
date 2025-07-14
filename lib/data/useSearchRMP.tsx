@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
 import Button from '@mui/material/Button'
-import DescriptionIcon from '@mui/icons-material/Description'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import Dialog from '@mui/material/Dialog'
@@ -28,10 +26,11 @@ import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
 import { Observable, ObservableStatus } from './Observable'
 import type { RMPRankedSearchResult } from './back/rmp'
-import { getRMPProfessorSearchUrl, getRMPViewableUrl, UH_RMP_SCHOOL_IDS } from './rmp'
+import { getRMPProfessorSearchUrl, getRMPProfessorViewableUrl, getRMPSchoolViewableUrl, UH_RMP_SCHOOL_IDS } from './rmp'
 
 import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from '../../components/instructorcard.module.scss'
+import linkStyles from '../../components/link.module.scss'
 
 
 /**
@@ -98,10 +97,10 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
   function renderListItem(item: RMPRankedSearchResult, index: number, array: RMPRankedSearchResult[]) {
     return (
       <React.Fragment key={item.id}>
-        <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getRMPViewableUrl(item.legacyId.toString())} target="_blank" rel="noreferrer" secondaryAction={
-            <Tooltip title={`${item.avgRating} in Overall Quality Based on ${item.numRatings} rating(s)`} placement="top-start" arrow>
+        <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getRMPProfessorViewableUrl(item.legacyId.toString())} target="_blank" rel="noreferrer" secondaryAction={
+            <Tooltip title={`${item.avgRatingRounded} in Overall Quality Based on ${item.numRatings} rating(s)`} placement="top-start" arrow>
               <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                <Rating value={item.avgRating} precision={0.1} readOnly />
+                <Rating value={item.avgRatingRounded} precision={0.1} readOnly />
                 <Typography color="inherit" variant="caption" sx={{ paddingTop: '0' }}>
                   {item.numRatings} rating(s)
                 </Typography>
@@ -189,20 +188,28 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
             <li key={rmpSchool.id}>
               <ul>
                 <ListSubheader>
-                  {
-                    UH_RMP_SCHOOL_IDS.includes(rmpSchool.id)
-                    ? <>
-                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <img
-                          src={"/img/uh_red.png"}
-                          alt="University of Houston symbol"
-                          style={{ width: '1.5em', height: '1.5em', paddingRight: 'calc(1.5em / 2)', margin: '0' }}
-                        />
-                        <span>{rmpSchool.name}</span>
-                      </span>
-                    </>
-                    : <>{rmpSchool.name}</>
-                  }
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    {
+                      UH_RMP_SCHOOL_IDS.includes(rmpSchool.id)
+                      ? <>
+                      <img
+                        src={"/img/uh_red.png"}
+                        alt="University of Houston symbol"
+                        style={{ width: '1.5em', height: '1.5em', paddingRight: 'calc(1.5em / 2 - 10px)', margin: '0' }}
+                      />
+                      </>
+                      : null
+                    }
+                    <a className={linkStyles.linkMinimumStyle} href={getRMPSchoolViewableUrl(rmpSchool.legacyId.toString())} target="_blank" rel="noreferrer">
+                      {rmpSchool.name}
+                    </a>
+                    <Typography variant="inherit" color="text.disabled" style={{ fontWeight: '400' }}>
+                      &mdash;
+                    </Typography>
+                    <Typography variant="inherit" color="text.disabled" style={{ fontSize: '0.9em', fontStyle: 'italic' }}>
+                      {rmpSchool.city}, {rmpSchool.state}
+                    </Typography>
+                  </span>
                 </ListSubheader>
                 {data.filter(item => item.school.id === rmpSchool.id).map((item, index, array) => renderListItem(item, index, array))}
               </ul>

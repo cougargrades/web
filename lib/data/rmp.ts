@@ -8,7 +8,11 @@ export const UH_RMP_SCHOOL_IDS = [
     'U2Nob29sLTE4MTcw', // "University of Houston College of Nursing" = https://www.ratemyprofessors.com/school/18170
 ]
 
-export function getRMPViewableUrl(rmpLegacyId: string): string {
+export function getRMPSchoolViewableUrl(rmpLegacyId: string): string {
+    return `https://www.ratemyprofessors.com/school/${rmpLegacyId}`
+}
+
+export function getRMPProfessorViewableUrl(rmpLegacyId: string): string {
     return `https://www.ratemyprofessors.com/professor/${rmpLegacyId}`
 }
 
