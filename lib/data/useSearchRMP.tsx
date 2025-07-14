@@ -19,6 +19,7 @@ import Divider from '@mui/material/Divider'
 import ListSubheader from '@mui/material/ListSubheader'
 import Rating from '@mui/material/Rating'
 import Tooltip from '@mui/material/Tooltip'
+import Chip from '@mui/material/Chip'
 import CloseIcon from '@mui/icons-material/Close'
 import RateReviewIcon from '@mui/icons-material/RateReview'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -107,9 +108,10 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
               </span>
             </Tooltip>
           }>
+            {/* secondary={`${item.department} • ${item.school.name}`} */}
           <ListItemText
             primary={`${item.firstName} ${item.lastName}`}
-            secondary={`${item.department} • ${item.school.name}`}
+            secondary={`${item.department}`}
             title={`${item._searchScore}`}
             />
         </ListItem>
@@ -148,7 +150,13 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
         >
           <CloseIcon />
         </IconButton>
-        RateMyProfessors.com Results<br />
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '15px' }}>
+          RateMyProfessors.com Results
+          <Tooltip title="The data below comes directly from a 3rd party service. It is not stored by CougarGrades and can be removed or changed at any time." arrow>
+            <Chip label="Live Data" color="primary" size="small" />
+          </Tooltip>
+        </span>
+        <br />
         <Typography variant="body1" color="text.secondary">
           &copy; 2025 Rate My Professors, LLC. All Rights Reserved
         </Typography>
