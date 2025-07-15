@@ -99,7 +99,7 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
     return (
       <React.Fragment key={item.id}>
         <ListItem button className={instructorCardStyles.badgeStackListItem} component="a" href={getRMPProfessorViewableUrl(item.legacyId.toString())} target="_blank" rel="noreferrer" secondaryAction={
-            <Tooltip title={`${item.avgRatingRounded} in Overall Quality Based on ${item.numRatings} rating(s)`} placement="top-start" arrow>
+            <Tooltip title={`${item.avgRatingRounded.toFixed(1)} in Overall Quality Based on ${item.numRatings} rating(s)`} placement="top-start" arrow>
               <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                 <Rating value={item.avgRatingRounded} precision={0.1} readOnly />
                 <Typography color="inherit" variant="caption" sx={{ paddingTop: '0' }}>
