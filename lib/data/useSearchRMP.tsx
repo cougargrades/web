@@ -116,9 +116,10 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
                 <span>
                   {`${item.firstName} ${item.lastName}` }
                 </span>
+                {/*<Chip color="info" label={`Likely Match`} title={`Dice-Sørensen coefficient: ${item._searchScore.toFixed(3)}`}  size="small" />*/}
                 {
                   item._searchScore >= 0.85
-                  ? <Chip color="info" label={`Likely Match`} title={`Dice-Sørensen coefficient: ${item._searchScore.toFixed(3)}`}  size="small" />
+                  ? null
                   : null
                 }
               </span>
