@@ -31,6 +31,7 @@ import { getRMPProfessorSearchUrl, getRMPProfessorViewableUrl, getRMPSchoolViewa
 import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from '../../components/instructorcard.module.scss'
 import linkStyles from '../../components/link.module.scss'
+import styles from './useSearchRMP.module.scss'
 
 
 /**
@@ -187,8 +188,8 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
           {rmpDistinctSchools.map(rmpSchool => (
             <li key={rmpSchool.id}>
               <ul>
-                <ListSubheader>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ListSubheader className={styles.listSubHeader}>
+                  <span className={styles.listSubHeaderFlex}>
                     {
                       UH_RMP_SCHOOL_IDS.includes(rmpSchool.id)
                       ? <>
@@ -200,13 +201,15 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
                       </>
                       : null
                     }
-                    <a className={linkStyles.linkMinimumStyle} href={getRMPSchoolViewableUrl(rmpSchool.legacyId.toString())} target="_blank" rel="noreferrer">
+                    <a className={`${linkStyles.linkMinimumStyle} ${styles.listSubHeader_School}`}
+                    href={getRMPSchoolViewableUrl(rmpSchool.legacyId.toString())} target="_blank" rel="noreferrer"
+                    >
                       {rmpSchool.name}
                     </a>
-                    <Typography variant="inherit" color="text.disabled" style={{ fontWeight: '400' }}>
+                    <Typography variant="inherit" color="text.disabled" className={styles.listSubHeader_Hyphen}>
                       &mdash;
                     </Typography>
-                    <Typography variant="inherit" color="text.disabled" style={{ fontSize: '0.9em', fontStyle: 'italic' }}>
+                    <Typography variant="inherit" color="text.disabled" className={styles.listSubHeader_Location}>
                       {rmpSchool.city}, {rmpSchool.state}
                     </Typography>
                   </span>
