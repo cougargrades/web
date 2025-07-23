@@ -19,6 +19,8 @@ import Avatar from '@mui/material/Avatar'
 import Divider from '@mui/material/Divider'
 import CloseIcon from '@mui/icons-material/Close'
 import ListSubheader from '@mui/material/ListSubheader'
+import Tooltip from '@mui/material/Tooltip'
+import Chip from '@mui/material/Chip'
 import { useSwipeable } from 'react-swipeable'
 import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
@@ -130,7 +132,13 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
         >
           <CloseIcon />
         </IconButton>
-        Related Syllabi<br />
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '15px' }}>
+          Related Syllabi
+          <Tooltip title="The data below comes directly from a 3rd party service. It is not stored by CougarGrades and can be removed or changed at any time." arrow>
+            <Chip label="Live Data" color="primary" size="small" />
+          </Tooltip>
+        </span>
+        <br />
         <Typography variant="body1" color="text.secondary">
           Powered by <a href="https://uh.simplesyllabus.com/" target="_blank" rel="noreferrer">Simple Syllabus</a>, the offical UH platform for course syllabi
         </Typography>

@@ -19,7 +19,7 @@
     text-decoration: none!important;
     font-variant: inherit!important;
     font-weight: inherit!important;
-    line-height: inherit!important;
+    // line-height: inherit!important;
     font-family: inherit!important;
     border-radius: inherit!important;
     border: inherit!important;
@@ -27,5 +27,16 @@
     box-shadow: inherit!important;
     padding: inherit!important;
     vertical-align: inherit!important;
+  }
+}
+
+.linkMinimumStyle {
+  @extend .linkUnstyled;
+
+  // &:hover {
+  //   text-decoration: underline!important;
+  // }
+  &:active {
+    filter: brightness(0.75);
   }
 }

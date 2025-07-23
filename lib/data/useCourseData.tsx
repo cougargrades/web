@@ -54,6 +54,7 @@ export interface CourseInstructorResult {
   key: string; // used for react, same as document path
   href: string; // where to redirect the user when selected
   title: string; // typically the instructor's full name (ex: Tyler James Beck)
+  altTitle?: string; // this is used as a workaround to store the last-name-first fullname (ex: Beck, James Tyler)
   subtitle: string; // typically the instructor's associated departments (ex: Applied Music, Music)
   caption: string; // typically the number of courses and sections (ex: 4 courses • 5 sections)
   badges: SearchResultBadge[];
@@ -79,6 +80,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     key: data._path,
     href: `/i/${data._id}`,
     title: data.fullName,
+    altTitle: `${data.lastName}, ${data.firstName}`,
     subtitle: generateSubjectString(data),
     caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
     badges: getBadges(data.GPA, data.enrollment),

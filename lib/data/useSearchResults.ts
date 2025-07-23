@@ -3,6 +3,7 @@ import { Course, Instructor, Group } from '@cougargrades/types'
 import useSWR from 'swr/immutable'
 import { useAsync } from 'react-use'
 import { RetrievedDoc, search } from '@lyrasearch/lyra'
+import { z } from 'zod/mini'
 import type { Property } from 'csstype'
 import { Observable } from './Observable'
 import { getBadges } from './getBadges'
@@ -23,10 +24,13 @@ export interface SearchResultBadge {
   fontSize?: Property.FontSize;
 }
 
+export const SearchResultType = z.enum(['course', 'instructor', 'group']);
+export type SearchResultType = z.infer<typeof SearchResultType>
+
 export interface SearchResult {
   key: string; // used for react, same as document path
   href: string; // where to redirect the user when selected
-  type: 'course' | 'instructor' | 'group';
+  type: SearchResultType;
   group: string; // What to display in the <li> divider in the search results
   title: string; // What the result is
   badges: SearchResultBadge[];
@@ -137,12 +141,29 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
     return undefined
   }, [inputValue, lyra.value])
 
-  const allErrors = [lyra.error, courseResults.error, instructorResults.error]
-  const allLoading = [lyra.loading, courseResults.loading, instructorResults.loading]
+  const groupResults = useAsync(async () => {
+    if (lyra.value !== undefined) {
+      const { groupDb } = lyra.value;
+      return await search(groupDb, {
+        term: inputValue,
+        properties: ['identifier', 'name', 'description'],
+        boost: {
+          identifier: 2.0,
+          name: 1.0,
+          description: 0.5,
+        },
+        tolerance: 1,
+        limit: 10,
+      })
+    }
+  }, [inputValue, lyra.value])
+
+  const allErrors = [lyra.error, courseResults.error, instructorResults.error, groupResults.error]
+  const allLoading = [lyra.loading, courseResults.loading, instructorResults.loading, groupResults.loading]
 
   const courseHits = courseResults?.value?.hits
   const instructorHits = instructorResults?.value?.hits
-
+  const groupHits = groupResults?.value?.hits
 
   const courseData: SearchResult[] = Array.isArray(courseHits) ? courseHits.map(hit => {
     const normalizedScore = percentageOfBM25Score(hit.score, courseHits);
@@ -198,6 +219,33 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
       ],
     }
   }) : [];
+  const groupData: SearchResult[] = Array.isArray(groupHits) ? groupHits.map(hit => {
+    const normalizedScore = percentageOfBM25Score(hit.score, groupHits);
+    const normalizedHits = groupHits.map(e => percentageOfBM25Score(e.score, groupHits))
+    const averageScore = average(normalizedHits)
+    // only "significant" results should have a full opacity
+    const opacity = scaleToRange(normalizeOne(normalizedScore, normalizedHits), [0.35, 1.0])
+    return {
+      key: hit.id,
+      href: hit.document.href,
+      type: 'group',
+      group: '🗃️ Groups',
+      title: `${hit.document.name}`,
+      badges: [
+        {
+          key: 'score',
+          title: `${normalizedScore.toFixed(1)}% match, Okapi BM25 score: ${hit.score.toFixed(2)}`,
+          text: `${normalizedScore.toFixed(1)}%`,
+          suffix: ' 🔎',
+          color: SEARCH_RESULT_COLOR,
+          // only "significant" results should have a full opacity
+          opacity,
+          // make search result badges smaller
+          fontSize: '0.7em',
+        }
+      ],
+    }
+  }) : [];
 
   try {
     return {
@@ -206,8 +254,9 @@ export function useLiteSearchResults(inputValue: string, enableLyra: boolean): O
           .filter(trend => trend.title.includes(inputValue)),
         ...courseData,
         ...instructorData,
+        ...groupData,
       ],
-      error: getFirst([ lyra.error, courseResults.error, instructorResults.error ]),
+      error: getFirst(allErrors),
       status: allErrors.some(e => e !== undefined) ? 'error' : allLoading.some(e => e) ? 'loading' : 'success'
     }
   }

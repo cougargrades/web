@@ -1,12 +1,5 @@
 import { z } from 'zod/v4'
 
-export const Example = z.object({
-    hello: z.string()
-})
-export type Example = z.infer<typeof Example>
-
-
-
 /*
 {
     "code": "megwtcr68",

@@ -49,7 +49,12 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
     firstTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.firstTaught)}`)} ${getYear(data.firstTaught)}` : '',
     lastTaught: didLoadCorrectly ? `${stone.t(`season.${seasonCode(data.lastTaught)}`)} ${getYear(data.lastTaught)}` : '',
     relatedGroups: [
-      ...(didLoadCorrectly ? groupData.map(e => group2Result(e)) : [])
+      /**
+       * 2025-07-13: This is in reverse alphabetical order.
+       * Why? So that "2024-2025" appears before "2021-2022", even if "English" appears before "Communication".
+       * I suppose this could be more sophisticated, but that's a lot of work.
+       */
+      ...(didLoadCorrectly ? groupData.sort((a,b) => b.name.localeCompare(a.name)).map(e => group2Result(e)) : [])
     ],
     relatedInstructors: [
       ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])

@@ -10,6 +10,7 @@ import { group2Result, SectionPlus } from '../useCourseData';
 import { course2Result } from '../useAllGroups';
 import { Column } from '../../../components/datatable';
 import { getChartDataForInstructor } from '../getChartDataForInstructor';
+import { getRMPProfessorViewableUrl } from '../rmp';
 
 /**
  * Used server-side
@@ -17,7 +18,7 @@ import { getChartDataForInstructor } from '../getChartDataForInstructor';
 export async function getInstructorData(instructorName: string): Promise<InstructorResult> {
   const stone = getRosetta()
   const db = firebase.firestore();
-  const data = await getFirestoreDocument<Instructor>(`/instructors/${instructorName}`)
+  const data = await getFirestoreDocument<Instructor>(`/instructors/${instructorName.toLowerCase()}`)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
   const groupRefs = ! didLoadCorrectly ? [] : Object
     .entries(data.departments)
@@ -153,6 +154,6 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
     classSize,
     //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
     sectionLoadingProgress: 100,
-    rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? `https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${data.rmpLegacyId}` : undefined,
+    rmpHref: didLoadCorrectly && data.rmpLegacyId !== undefined ? getRMPProfessorViewableUrl(data.rmpLegacyId) : undefined,
   }
 }

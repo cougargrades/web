@@ -155,7 +155,7 @@ export async function resolveReport(report: CleanedReport): Promise<CoursePlusMe
   }
   else if(report.pagePath.startsWith('/i/')) {
     const instructorName = report.pagePath.substring('/i/'.length).trim();
-    const instructorData = await getFirestoreDocument<InstructorPlusMetrics>(`/instructors/${instructorName}`);
+    const instructorData = await getFirestoreDocument<InstructorPlusMetrics>(`/instructors/${instructorName.toLowerCase()}`);
     if (instructorData) instructorData.activeUsers = parseIntOrUndefined(report?.activeUsers)
     if (instructorData) instructorData.screenPageViews = parseIntOrUndefined(report?.screenPageViews)
     return instructorData;
