@@ -66,7 +66,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                         )}
                       </ul>
                       Would you like to see this data added to the site? You may be able to help!
-                      To learn more, <span className="pale"><Link href="/faq/data-updates" >read our FAQ</Link></span>.
+                      To learn more, <span className="pale"><Link href="/faq/data-updates" legacyBehavior>read our FAQ</Link></span>.
                       {/* Also <a href={generateMissingDataMailToLink(missingData)}>bazinga</a> */}
                     </>
                   }>
