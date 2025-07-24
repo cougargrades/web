@@ -40,3 +40,5 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 .env*.local
 .npmrc
+# OpenNext build output
+.open-next
