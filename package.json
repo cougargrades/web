@@ -15,7 +15,9 @@
     "lint": "next lint",
     "betterlint": "tsc --noEmit",
     "preview": "opennextjs-cloudflare build && wrangler dev",
+    "preview:win32": "opennextjs-cloudflare build; wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy",
+    "deploy:win32": "opennextjs-cloudflare build; wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "overrides": {
