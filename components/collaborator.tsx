@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Skeleton from '@mui/material/Skeleton'
 import styles from './collaborator.module.scss'
 

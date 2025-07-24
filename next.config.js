@@ -38,4 +38,4 @@ const config = {
     ignoreBuildErrors: true,
   }
 }
-module.exports = withTM(config);
+module.exports = config;//withTM(config);

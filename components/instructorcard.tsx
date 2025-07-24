@@ -53,7 +53,7 @@ interface InstructorCardEmptyProps {
 export function InstructorCard({ data, fitSubtitle, variant, elevation }: InstructorCardProps) {
   return (
     <Card sx={{ width: 250, height: 150 }} variant={variant} elevation={elevation} className={`${styles.instructorCard} ${interactivity.hoverActive}`}>
-      <Link href={data.href} passHref>
+      <Link href={data.href} passHref legacyBehavior>
         <CardActionArea className={styles.cardActionArea}>
           <CardContent className={styles.cardContent}>
             <Box className={styles.badgeRow} component={ReactFitty} minSize={8} maxSize={11}>
@@ -183,7 +183,7 @@ export function InstructorCardEmpty({ text, onClick, href }: InstructorCardEmpty
   return (
     <Card variant="outlined" sx={{ width: 250, height: 150 }} className={styles.instructorCard}>
       { href ? 
-      <Link href={href} passHref>
+      <Link href={href} passHref legacyBehavior>
         <CardActionArea className={styles.cardActionArea} onClick={onClick}>
           <CardContent className={styles.cardContent}>
             <Typography className={styles.showMore} color="text.secondary">

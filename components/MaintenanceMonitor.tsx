@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import useSWR from 'swr'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Tooltip from '@mui/material/Tooltip';
 import TimeAgo from 'timeago-react'
 import type { Property } from 'csstype'

@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { useRecoilState } from 'recoil'
 import Button from '@mui/material/Button'
 import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
@@ -53,6 +53,11 @@ export default function Home() {
           </div>
           <div className="col-sm-6">
             <figure>
+              {/* <img
+                src={slotmachine}
+                alt="Top 48 most enrolled courses at UH."
+                className={styles.visaid}
+              /> */}
               <Image
                 src={slotmachine}
                 alt="Top 48 most enrolled courses at UH."

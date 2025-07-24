@@ -15,7 +15,7 @@ export interface LinkProps {
   children: React.ReactNode;
 }
 
-export const InternalLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button className={`${styles.linkbutton} ${interactivity.hoverActive}`} color="primary" variant="contained">{children}</Button></Link>
+export const InternalLink = ({ href, children }: LinkProps) => <Link href={href} passHref legacyBehavior><Button className={`${styles.linkbutton} ${interactivity.hoverActive}`} color="primary" variant="contained">{children}</Button></Link>
 
 export const ExternalLink = ({ href, openInNewTab, children }: LinkProps) => (
   <Button
@@ -36,7 +36,7 @@ export const FakeLink = (props: React.DetailedHTMLProps<React.AnchorHTMLAttribut
   return <a {...props} href={href} onClick={e => e.preventDefault()} className="nostyle">{children}</a>
 }
 
-export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
+export const NavLink = ({ href, children }: LinkProps) => <Link href={href} passHref legacyBehavior><Button variant="contained" disableElevation className={interactivity.hoverActive}>{children}</Button></Link>;
 
 export interface DropdownNavLinkProps {
   href?: string;
@@ -60,7 +60,7 @@ export function DropdownNavLink({ href, children, options }: DropdownNavLinkProp
   <>
     {
       href !== undefined
-      ? <Link href={href} passHref>
+      ? <Link href={href} passHref legacyBehavior>
           <Button ref={buttonRef} title="Long-press to view more options" variant="contained" disableElevation className={interactivity.hoverActive} {...longPressEvent} data-has-contextmenu={true}>{children}</Button>
         </Link>
       : <Button ref={buttonRef} variant="contained" disableElevation className={interactivity.hoverActive} onClick={handleOpen}>{children}</Button>

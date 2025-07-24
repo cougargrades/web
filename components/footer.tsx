@@ -1,5 +1,5 @@
 import Link from 'next/link'
-// import Image from 'next/image'
+// import Image from 'next/legacy/image'
 import useSWR from 'swr'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'

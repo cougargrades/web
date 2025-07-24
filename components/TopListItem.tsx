@@ -23,7 +23,7 @@ interface TopListItemProps {
 
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
   return (
-    <Link href={item.href} passHref>
+    <Link href={item.href} passHref legacyBehavior>
       <ListItemButton component="a" alignItems="flex-start">
         <ListItemIcon className={styles.topItemIcon}>
           <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
