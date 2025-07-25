@@ -1,3 +1,4 @@
+'use client';
 import { useMemo } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme } from '@mui/material/styles'
