@@ -1,0 +1,60 @@
+.progressWrap {
+  margin-bottom: 8px;
+}
+
+.legend {
+  font-size: 14px;
+  line-height: 1.5;
+  //
+  list-style: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
+  word-wrap: break-word;
+
+  li {
+    display: inline;
+  }
+
+  a {
+    display: inline-flex;
+    text-decoration: none;
+    font-size: 12px;
+    margin-right: 16px;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-width: 85px;
+  }
+
+  svg {
+    fill: currentColor;
+    display: inline-block;
+    overflow: visible;
+    width: 16px;
+    height: 16px;
+    //transform: scale(1.0);
+    font-size: 12px;
+    margin-right: 8px;
+  }
+
+  // first span
+  svg + span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #24292e;
+    margin-right: 4px;
+    @media (prefers-color-scheme: dark) {
+      color: #c9d1d9;
+    }
+  }
+
+  // all spans
+  span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #586069;
+    @media (prefers-color-scheme: dark) {
+      color: #8b949e;
+    }
+  }
+}

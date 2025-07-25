@@ -1,0 +1,37 @@
+/*
+ * Fix scrollbars
+ */
+@mixin scrollbar {
+  $thumb: rgba(127, 127, 127, 0.5);
+  $track: rgba(255, 255, 255, 0);
+
+  & {
+    scrollbar-color: $thumb $track; /* thumb and track color */
+    scrollbar-width: thin;
+  }
+  // &::-webkit-scrollbar {
+  //   width: 2px;
+  //   height: 2px;
+  // }
+
+  // &::-webkit-scrollbar-track {
+  //   background: $track;
+  // }
+
+  // &::-webkit-scrollbar-thumb {
+  //   background: $thumb;
+  //   //border-right: 1px solid white;
+  // }
+}
+
+
+// https://stackoverflow.com/a/4407335
+@mixin noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Opera and Firefox */
+}

@@ -1,0 +1,225 @@
+@import "./vars.scss";
+@import '@primer/css/progress/index.scss';
+@import '@primer/css/color-modes/index.scss';
+@import '@primer/css/utilities/colors.scss';
+@import '../components/emoji.module.scss';
+
+// For sticky footer
+#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body {
+  padding: 0;
+  max-width: unset;
+}
+.new-container {
+  max-width: 840px; // used to be 820px // used to be 750px, but an extra header button was added and we want everything to fit in one row right now
+  padding-right: 2rem;
+  padding-left: 2rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*
+ * Big boi font sizes
+ */
+:root {
+  --fontSize: calc(100vw / 80);
+}
+@media (min-width: 1429px) {
+  :root {
+    --fontSize: 18px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  :root {
+    --fontSize: calc(100vw / 30);
+  }
+}
+@media only screen and (max-device-width: 812px) and (orientation: landscape) {
+  :root {
+    --fontSize: 1.7vw;
+  }
+}
+
+:root {
+  --stampBase: 12px;
+
+  @media (min-width: 350px) {
+    --stampBase: 14px;
+  }
+  @media (min-width: 390px) {
+    --stampBase: 16px;
+  }
+}
+
+
+// Borrowed from raster2.css
+// See: https://github.com/rsms/raster/blob/master/src/elements.css
+html {
+  letter-spacing: -0.01em;
+  text-size-adjust: 100%;
+  font-variant-ligatures: contextual common-ligatures;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'cv10' 1; /* G */
+}
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  word-break: break-word;
+}
+h2 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+h5, h6 {
+  font-weight: 670;
+  letter-spacing: -0.015em;
+}
+h1.nul, h2.nul, h3.nul, h4.nul, h5.nul, h6.nul {
+  text-decoration: none;
+  border-bottom: none;
+}
+b.dense {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.57;
+  letter-spacing: -0.015em;
+}
+
+.grade-a { background-color: #87cefa; }
+.grade-b { background-color: #90ee90; }
+.grade-c { background-color: #ffff00; }
+.grade-d { background-color: #ffa07a; }
+.grade-f { background-color: #cd5c5c; }
+.grade-i { background-color: #d3d3d3; }
+.grade-q { background-color: #8a2be2; }
+
+
+
+// Makes scrollbars look nicer in Chromium based browsers
+// (Makes them look more like Firefox's ;))
+
+$transparent: rgba(0,0,0,0.0);
+$ff-scrollbar-track: hsl(0, 0%, 97%); // was #FAFAFA
+$ff-scrollbar-thumb: #C2C2C2;
+$ff-scrollbar-thumb-hover: #7D7D7D;
+//$ff-scrollbar-dm-track: rgba(96, 96, 96, 0.5);
+$ff-scrollbar-dm-track: #303030;
+$ff-scrollbar-dm-thumb: #757575;
+$ff-scrollbar-dm-thumb-hover: #9A9A9A;
+
+*::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 15px;
+  background-clip: padding-box;
+  border: 4px solid $transparent;
+  -webkit-border-radius: 7px;
+  background-color: $transparent;
+  //-webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+*::-webkit-scrollbar-track {
+  background-color: $ff-scrollbar-track;
+  @media (prefers-color-scheme: dark) {
+    background-color: $ff-scrollbar-dm-track;
+  }
+}
+*::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-border-radius: 7px;
+  background-color: $ff-scrollbar-thumb;
+  -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+  &:hover {
+    background-color: $ff-scrollbar-thumb-hover;
+  }
+  @media (prefers-color-scheme: dark) {
+    background-color: $ff-scrollbar-dm-thumb;
+    &:hover {
+      background-color: $ff-scrollbar-dm-thumb-hover;
+    }
+  }
+}
+
+// For the uploader
+.upload-item-enter {
+  opacity: 0;
+}
+.upload-item-enter-active {
+  opacity: 1;
+  color: green;
+  background: rgba(0,255,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 100ms ease-in;
+}
+.upload-item-exit {
+  opacity: 1;
+}
+.upload-item-exit-active {
+  opacity: 0;
+  color: red;
+  background: rgba(255,0,0,0.1);
+  border-radius: 0.25rem;
+  transition: opacity 100ms ease-in;
+}
+
+@media (prefers-color-scheme: dark) {
+  .google-visualization-tooltip path {
+    fill: $dm-fore;
+  }
+  .goog-tooltip div {
+    background-color: $dm-fore!important;
+  }
+}
+
+a.nostyle {
+  color: unset;
+  text-decoration: none;
+  &:hover {
+    color: unset!important;
+  }
+}
+
+[type=search] {
+  -webkit-appearance: inherit!important;
+}
+
+@keyframes rotate-keyframes {
+  100% {
+    transform:rotate(360deg)
+  }
+}
+
+@keyframes in-progress-pulse {
+  // --color-attention-emphasis = #bf8700
+  0% {
+    background-color: var(--color-attention-emphasis);
+  }
+  50% {
+    background-color: hsl(42, 100%, 55%);
+  }
+  100% {
+    background-color: var(--color-attention-emphasis);
+  }
+}
+
+.MuiAlert-message {
+  width: 100%;
+}
+
+.color-bg-maintenance-queued {
+  background-color: var(--maintenance-queued);
+}
+
+span.pale > a[href] {
+  color: hsl(212, 100%, 80%)!important;
+}

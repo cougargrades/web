@@ -1,0 +1,14 @@
+
+
+.tooltipLink {
+  pointer-events: auto !important;
+  font-weight: bold;
+  text-decoration: none;
+  //color: #3291FF;
+  color: unset;
+  transition: 0.125s ease 0s;
+  &:hover {
+    //color: #0072f5!important;
+    color: hsl(212, 100%, 80%)!important;
+  }
+}

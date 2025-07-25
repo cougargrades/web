@@ -1,0 +1,17 @@
+.links {
+  a {
+    margin: 4px;  
+  }
+}
+
+.collaborators_wrap {
+  display: flex;
+  //justify-items: flex-start;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+}
+
+// see: https://stackoverflow.com/a/41566570
+.cryptedmail:after {
+  content: attr(data-name) "@" attr(data-domain) "." attr(data-tld); 
+}
