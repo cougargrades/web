@@ -32,6 +32,7 @@
         "pattern": "next.cf.cougargrades.io"
       },
 			"vars": {
+				"NODE_ENV": "development",
 				"NEXTJS_ENV": "development",
 				"EXAMPLE_VARIABLE": "foo"
 			},
@@ -49,6 +50,7 @@
         "pattern": "cf.cougargrades.io"
       },
 			"vars": {
+				"NODE_ENV": "production",
 				"NEXTJS_ENV": "production",
 				"EXAMPLE_VARIABLE": "bar"
 			},

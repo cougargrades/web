@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
     // Automatically redirect based on the user's preferred locale
     localeDetection: false,
   },
+  serverExternalPackages: [
+    '@emotion/styled',
+    '@emotion/react',
+    '@emotion/cache',
+    '@emotion/use-insertion-effect-with-fallbacks',
+    '@emotion/utils'
+  ]
   // typescript: {
   //   // This old ass nextjs version won't typescript correctly... fuck it
   //   ignoreBuildErrors: true,
