@@ -102,13 +102,13 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               */}
               <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
             </div>
-            <p className="text-muted" style={{ textAlign: 'right' }}>
+            <Typography variant="inherit" color="text.disabled" style={{ textAlign: 'right' }}>
               <small>{
                 status === 'success' ?  
                 `${data!.totalSponsorCount} people sponsor CougarGrades 
                 totalling $${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
               }</small>
-            </p>
+            </Typography>
           </div>
         </div>
       </div>
