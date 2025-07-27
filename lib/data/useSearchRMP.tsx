@@ -78,7 +78,7 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
   const [open, setOpen] = useState(false)
   const handlers = useSwipeable({
     onSwipedDown: () => open ? setOpen(false) : null,
-    preventDefaultTouchmoveEvent: true,
+    preventScrollOnSwipe: true,
   })
 
   let rmpDistinctSchools = Array.from(new Set(data.map(d => d.school.id)))

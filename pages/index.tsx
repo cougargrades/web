@@ -1,16 +1,16 @@
 import React from 'react'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { useRecoilState } from 'recoil'
 import Button from '@mui/material/Button'
 import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
 import { BlogNotifications } from '../components/blog'
 import { ExternalLink } from '../components/link'
 import { searchInputAtom } from '../lib/recoil'
-import slotmachine from '../public/slotmachine.svg'
-import wordcloud from '../public/wordcloud.svg'
+import slotmachine from '@/public/slotmachine.svg'
+import wordcloud from '@/public/wordcloud.svg'
 
-import styles from '../styles/Homepage.module.scss'
-import interactivity from '../styles/interactivity.module.scss'
+import styles from '@/styles/Homepage.module.scss'
+import interactivity from '@/styles/interactivity.module.scss'
 
 export default function Home() {
   const [searchInputRef, _] = useRecoilState(searchInputAtom)

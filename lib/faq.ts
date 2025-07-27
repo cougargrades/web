@@ -32,7 +32,7 @@ function getFormattedLanguageName(name: string): string | undefined {
  * - https://github.com/rehypejs/rehype-highlight/blob/8fbc0ebd3a0c488e7f024ef5af6983c4b49686d1/lib/index.js
  * - https://github.com/highlightjs/highlight.js/blob/6a52185d9b855130b5acaccef143a7bd602e7885/src/languages/cpp.js#L554
  */
-export const annotateProgrammingLanguageName: Plugin<any[], Root, Root> = () => async (root, file) => {
+export const annotateProgrammingLanguageName: Plugin<any[], Root, Root> = () => async (root: Root, file: Root) => {
   /* Determines the language used based on the CSS class */
   const getLanguageFromCssClass = (node: Element): string | undefined => {
     const classes = node.properties?.className;

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-// import Image from 'next/image'
+// import Image from 'next/legacy/image'
 import useSWR from 'swr'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -66,7 +66,7 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
                         )}
                       </ul>
                       Would you like to see this data added to the site? You may be able to help!
-                      To learn more, <span className="pale"><Link href="/faq/data-updates" >read our FAQ</Link></span>.
+                      To learn more, <span className="pale"><Link href="/faq/data-updates" legacyBehavior>read our FAQ</Link></span>.
                       {/* Also <a href={generateMissingDataMailToLink(missingData)}>bazinga</a> */}
                     </>
                   }>
@@ -102,13 +102,13 @@ export default function Footer(props: { hideDisclaimer?: boolean }) {
               */}
               <iframe className={styles.githubSponsor} src="https://github.com/sponsors/au5ton/button" title="Sponsor au5ton" width="116" height="35" ></iframe>
             </div>
-            <p className="text-muted" style={{ textAlign: 'right' }}>
+            <Typography variant="inherit" color="text.disabled" style={{ textAlign: 'right' }}>
               <small>{
                 status === 'success' ?  
                 `${data!.totalSponsorCount} people sponsor CougarGrades 
                 totalling $${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
               }</small>
-            </p>
+            </Typography>
           </div>
         </div>
       </div>

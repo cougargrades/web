@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import useSWR from 'swr'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Tooltip from '@mui/material/Tooltip';
 import TimeAgo from 'timeago-react'
 import type { Property } from 'csstype'
@@ -8,7 +8,7 @@ import type { MaintenanceResult, MaintenanceStatus } from '../lib/maintenance'
 import { buildArgs, VercelEnv } from '../lib/environment'
 import { BlogNoticeReusable } from './blog';
 
-import in_progress from '../public/in_progress.svg'
+import in_progress from '@/public/in_progress.svg'
 
 const environmentName: 'Preview' | 'Production' = buildArgs.vercelEnv === 'production' ? 'Production' : 'Preview';
 

@@ -19,7 +19,7 @@ interface TCCNSUpdateNoticeProps {
 
 export function TCCNSUpdateNotice({ data }: TCCNSUpdateNoticeProps) {
   return (
-    <Link href={data.courseHref} passHref>
+    <Link href={data.courseHref} passHref legacyBehavior>
       <Tooltip title={<TCCNSUpdateTooltip data={data} />} placement="bottom">
         <Button variant="text" size="small" color="warning" className={interactivity.hoverActive} style={{ marginRight: '0.35rem', marginBottom: '0.35rem' }} startIcon={<FlagIcon />}>
           {data.shortMessage}

@@ -1,3 +1,4 @@
+'use client';
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import type { AppProps } from 'next/app'
@@ -68,6 +69,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="darkreader-lock" />
       </Head>
       <ThemeProvider theme={theme}>
+        {/* @ts-ignore */}
         <RecoilRoot>
           <SWRConfig value={{
             fetcher: (resource, init) => fetch(resource, init).then(res => res.json()),
@@ -82,7 +84,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </SWRConfig>
         </RecoilRoot>
       </ThemeProvider>
-      
     </>
   );
 }

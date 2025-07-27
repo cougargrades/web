@@ -170,7 +170,7 @@ export function EnhancedTable<T extends { id: string | number }>({ title, column
                     tabIndex={-1}
                   >
                     {columns.map(({ field, align, padding, valueFormatter }) => (
-                      <TableCell key={field} align={align} style={{ paddingLeft: padding ?? 16, paddingRight: padding ?? 16 }}>{valueFormatter ? valueFormatter(row[field], row) : row[field]}</TableCell>
+                      <TableCell key={field} align={align} style={{ paddingLeft: padding ?? 16, paddingRight: padding ?? 16 }}>{valueFormatter ? valueFormatter(row[field], row) : row[field] as any}</TableCell>
                     ))}
                   </TableRow>
                 ))}

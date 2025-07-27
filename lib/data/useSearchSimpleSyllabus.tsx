@@ -103,7 +103,7 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
   const [open, setOpen] = useState(false)
   const handlers = useSwipeable({
     onSwipedDown: () => open ? setOpen(false) : null,
-    preventDefaultTouchmoveEvent: true,
+    preventScrollOnSwipe: true,
   })
   
   // Use the snippet below to verify sorting if troubleshooting in the future 

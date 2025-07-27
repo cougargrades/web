@@ -14,6 +14,9 @@ export const firebaseConfig = {
 
 export type VercelEnv = 'production' | 'preview' | 'development';
 
+const isNullish = (x: any) => x === null || x === undefined;
+const isNullishOrWhitespace = (x: any) => isNullish(x) || (typeof(x) === 'string' && x.trim() === '');
+
 export const buildArgs: {
   commitHash: string,
   version: string,
@@ -23,5 +26,5 @@ export const buildArgs: {
   commitHash: process.env.NEXT_PUBLIC_GIT_SHA ?? '',
   version: process.env.NEXT_PUBLIC_VERSION ?? '',
   buildDate: process.env.NEXT_PUBLIC_BUILD_DATE ?? '',
-  vercelEnv: (process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'development'
+  vercelEnv: isNullishOrWhitespace(process.env.NEXT_PUBLIC_VERCEL_ENV) ? 'development' : ((process.env.NEXT_PUBLIC_VERCEL_ENV as any) ?? 'development'),
 };
