@@ -109,7 +109,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
       //{ params: { groupId: '' } },
-      ...(['production','preview'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
+      ...(['production'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
     ],
     fallback: 'blocking'
   }
