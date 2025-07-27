@@ -30,7 +30,6 @@
     "@mui/material": "^5.18.0",
     "@mui/material-nextjs": "^5.18.0",
     "@octokit/rest": "^19.0.7",
-    "@opennextjs/cloudflare": "^1.6.1",
     "@primer/css": "^19.1.1",
     "bootstrap": "^5.0.1",
     "dice-coefficient": "^2.1.1",
