@@ -1,2 +1,0 @@
-# Load .env.development* files when running `wrangler dev`
-EXAMPLE_SECRET=hunter2
