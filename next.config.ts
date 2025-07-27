@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { CACHE_CONTROL } from './lib/cache'
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -23,6 +24,36 @@ const nextConfig: NextConfig = {
           },                    
         ],
       },
+      // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
+      {
+        source: '/c/:courseName',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: CACHE_CONTROL
+          }
+        ]
+      },
+      // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
+      {
+        source: '/i/:instructorName',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: CACHE_CONTROL
+          }
+        ]
+      },
+      // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
+      {
+        source: '/g/:groupId',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: CACHE_CONTROL
+          }
+        ]
+      }
     ]
   },
   i18n: {
