@@ -9,7 +9,7 @@
     "dev": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
     "dev:turbo": "next dev --turbopack",
     "dev:win32": "cross-env NODE_OPTIONS=\"--inspect\" NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next dev",
-    "build": "NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
+    "build": "NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$(git rev-parse --short HEAD) NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "build:win32": "cross-env NEXT_PUBLIC_VERCEL_ENV=$VERCEL_ENV NEXT_PUBLIC_GIT_SHA=$VERCEL_GIT_COMMIT_SHA NEXT_PUBLIC_VERSION=$npm_package_version NEXT_PUBLIC_BUILD_DATE=$(date) next build",
     "start": "next start",
     "lint": "next lint",
