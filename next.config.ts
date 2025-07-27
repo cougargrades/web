@@ -69,18 +69,9 @@ const nextConfig: NextConfig = {
        * The problem is Vercel CHARGES FOR CACHED REQUESTS, so we can't cache "truly immutable" requests in a proxy or browser. 🙄
        * 
        * As a workaround, the following Cache Rules are put into place on the Cloudflare side:
-       * 
-       * - Cache `_next/data/{hash}/{locale}/c/*.json` for 7 days
-       *  - Uri Path -> wildcard -> /_next/data/ * / * / c / *.json
-       *  - Edge TTL -> 7 days
-       * - Cache `_next/data/{hash}/{locale}/i/*.json` for 7 days
-       *  - Uri Path -> wildcard -> /_next/data/ * / * / i / *.json
-       *  - Edge TTL -> 7 days
-       * - Cache `_next/data/{hash}/{locale}/g/*.json` for 7 days
-       *  - Uri Path -> wildcard -> /_next/data/ * / * / g / *.json
-       *  - Edge TTL -> 7 days
-       * 
        */
+      // (http.request.uri.path wildcard r"/_next/data/*/*/c/*.json") or (http.request.uri.path wildcard r"/_next/data/*/*/i/*.json") or (http.request.uri.path wildcard r"/_next/data/*/*/g/*.json") or (http.request.uri.path wildcard r"/_next/data/*/*/faq.json") or (http.request.uri.path wildcard r"/_next/data/*/*/faq/*.json") or (http.request.uri.path wildcard r"/_next/data/*/*/top.json") or (http.request.uri.path wildcard r"/_next/data/*/*/top/*.json")
+      
     ]
   },
   i18n: {
