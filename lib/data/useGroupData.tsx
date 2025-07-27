@@ -65,7 +65,7 @@ export function useGroupData(data: PopulatedGroupResult): Observable<GroupDataRe
               width: 65,
               padding: 8,
               // eslint-disable-next-line react/display-name
-              valueFormatter: value => <Link href={`/c/${encodeURI(value)}`}><a>{value}</a></Link>,
+              valueFormatter: value => <Link href={`/c/${encodeURI(value)}`} legacyBehavior><a>{value}</a></Link>,
             },
             {
               field: 'description',

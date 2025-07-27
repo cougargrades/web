@@ -19,6 +19,7 @@ import { extract } from '../../lib/util'
 import { SidebarContainer, SidebarItem } from '../../components/sidebarcontainer'
 import { AllSubjectsList } from '../../components/AllSubjectsList'
 import { metaFakeGroupDescription } from '../../lib/seo'
+import { buildArgs } from '../../lib/environment'
 
 import styles from './group.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -102,12 +103,13 @@ export default function Groups({ staticGroupId, staticName, staticDescription, s
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
   // console.time('getStaticPaths')
-  // const data = await getFirestoreCollection<Group>('groups');
+  const data = await getFirestoreCollection<Group>('groups');
+  //console.log(`[getStaticPaths] /g/[groupId], ${data.length} groups`);
   // console.timeEnd('getStaticPaths')
   return {
     paths: [
       //{ params: { groupId: '' } },
-      //...(['production','preview'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
+      ...(['production'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { groupId: e.identifier }})) : [])
     ],
     fallback: 'blocking'
   }
@@ -164,6 +166,7 @@ export const getStaticProps: GetStaticProps<GroupProps> = async (context) => {
       doesNotExist: groupData === undefined,
       isFakeGroup,
       filterSubjects,
-    }
+    },
+    revalidate: false
   };
 }

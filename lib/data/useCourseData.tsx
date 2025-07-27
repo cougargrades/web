@@ -142,7 +142,7 @@ export function useCourseData(courseName: string): Observable<CourseResult> {
               headerName: 'Instructor',
               type: 'string',
               width: 95,
-              valueFormatter: value => <Link href={`/i/${encodeURI(value)}`}><a>{value}</a></Link>,
+              valueFormatter: value => <Link href={`/i/${encodeURI(value)}`} legacyBehavior><a>{value}</a></Link>,
             },
             {
               field: 'totalEnrolled',

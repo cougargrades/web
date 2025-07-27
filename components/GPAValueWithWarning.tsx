@@ -27,7 +27,7 @@ export function GPAValueWithWarning({ value, row }: GPAValueWithWarningProps) {
               What is this?
             </Typography>
             Some inconsistencies have been detected with this GPA value. This may be a result of incorrectly calculated data provided by UH.
-            To learn more, <span className="pale"><Link href="/faq/interim-grading-theory" >read our FAQ</Link></span>.
+            To learn more, <span className="pale"><Link href="/faq/interim-grading-theory" legacyBehavior>read our FAQ</Link></span>.
           </>
         }>
           <ErrorIcon fontSize="small" color="warning" />

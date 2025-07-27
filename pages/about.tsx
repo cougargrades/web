@@ -1,3 +1,4 @@
+'use client';
 import Head from 'next/head'
 import useSWR from 'swr/immutable'
 import { ExternalLink } from '../components/link'

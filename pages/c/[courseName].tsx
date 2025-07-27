@@ -244,14 +244,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
 // See: https://nextjs.org/docs/basic-features/data-fetching#fallback-true
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
+  //console.log(`[getStaticPaths] /c/[courseName], ${data.length} courses`);
   return {
     paths: [
       //{ params: { courseName: '' } },
       // Uncomment when this bug is fixed: https://github.com/cougargrades/web/issues/128
-      ...(buildArgs.vercelEnv === 'production' ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
+      ...(['production'].includes(buildArgs.vercelEnv) ? data.map(e => ( { params: { courseName: e.courseName }})) : [])
     ],
-    fallback: true, // Do front-end ISR when the page isn't already generated
-    //fallback: 'blocking', // Do server-side ISR when the page isn't already generated
+    //fallback: true, // Do front-end ISR when the page isn't already generated
+    fallback: 'blocking', // Do server-side ISR when the page isn't already generated
   }
 }
 
@@ -286,7 +287,8 @@ export const getStaticProps: GetStaticProps<CourseProps> = async (context) => {
       staticMetaDescription: metaDescription,
       staticHTML: content ?? '',
       doesNotExist: courseData === undefined,
-    }
+    },
+    revalidate: false
   };
 
 }

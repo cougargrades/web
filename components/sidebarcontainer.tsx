@@ -37,7 +37,7 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
   const condensed = useIsCondensed()
   const [_, setTOCExpanded] = useRecoilState(tocAtom)
   const scrollRef = React.useRef<HTMLElement>(null);
-  const { atTop, atBottom, topIsVisible, bottomIsVisible, isSticky } = useNotableScrollPosition(scrollRef, 30, 32)
+  const { atTop, atBottom, topIsVisible, bottomIsVisible, isSticky } = useNotableScrollPosition(scrollRef as any, 30, 32)
 
   /**
    * Show the Top Hint if:
