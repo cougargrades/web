@@ -23,7 +23,7 @@ export const TEMPORAL_CACHE_CONTROL = (serverDuration: Temporal.Duration, client
 export const OFF_MAINTENANCE_CACHE_CONTROL = `public, must-revalidate, max-age=${0}, stale-while-revalidate=${minutes_to_seconds(5)}`;
 export const ON_MAINTENANCE_CACHE_CONTROL = `public, must-revalidate, max-age=${0}, stale-while-revalidate=${minutes_to_seconds(1)}`;
 export const LATEST_TERM_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
-export const TRENDING_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
+export const TRENDING_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
 export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
 
 const vercelEnv = buildArgs.vercelEnv
