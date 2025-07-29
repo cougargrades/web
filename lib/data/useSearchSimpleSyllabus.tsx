@@ -21,13 +21,15 @@ import CloseIcon from '@mui/icons-material/Close'
 import ListSubheader from '@mui/material/ListSubheader'
 import Tooltip from '@mui/material/Tooltip'
 import Chip from '@mui/material/Chip'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { useSwipeable } from 'react-swipeable'
 import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
 import { Util } from '@cougargrades/types'
+import { LiveDataBadge, LiveDataDisclaimer } from '@/components/LiveDataDisclaimer'
 import { Observable, ObservableStatus } from './Observable'
 import type { SSSearchResponse } from './back/simplesyllabus'
-import { getDocumentViewUrl, getThumbnailUrl } from './simplesyllabus'
+import { getDocumentViewUrl, getSearchResultsUrl, getThumbnailUrl, SYLLABUS_CACHE_LIFETIME } from './simplesyllabus'
 import { formatTermCode } from '../util'
 
 import interactivity from '../../styles/interactivity.module.scss'
@@ -57,6 +59,7 @@ export function useSearchSimpleSyllabus(query: string, strictSearch: boolean = t
 
 export interface SimpleSyllabusLauncherProps {
   data: SSSearchResponse;
+  courseName: string;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -97,7 +100,7 @@ function getDistinctTermNamesChronologically(term_names?: string[]): string[] {
   }
 }
 
-export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
+export function SimpleSyllabusLauncher({ data, courseName }: SimpleSyllabusLauncherProps) {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [open, setOpen] = useState(false)
@@ -134,14 +137,13 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
         </IconButton>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '15px' }}>
           Related Syllabi
-          <Tooltip title="The data below comes directly from a 3rd party service. It is not stored by CougarGrades and can be removed or changed at any time." arrow>
-            <Chip label="Live Data" color="primary" size="small" />
-          </Tooltip>
+          <LiveDataBadge />
         </span>
         <br />
         <Typography variant="body1" color="text.secondary">
-          Powered by <a href="https://uh.simplesyllabus.com/" target="_blank" rel="noreferrer">Simple Syllabus</a>, the offical UH platform for course syllabi
+          Powered by <a href="https://uh.simplesyllabus.com/" target="_blank" rel="noreferrer">Simple Syllabus</a>, the offical UH platform for course syllabi.
         </Typography>
+        <LiveDataDisclaimer cacheLifetime={SYLLABUS_CACHE_LIFETIME}/>
       </DialogTitle>
       <DialogContent className={instructorCardStyles.showMoreContent}>
         <List
@@ -174,6 +176,10 @@ export function SimpleSyllabusLauncher({ data }: SimpleSyllabusLauncherProps) {
         </List>
       </DialogContent>
       <DialogActions>
+        <Button variant="contained" color="primary" href={getSearchResultsUrl(courseName)} target="_blank" rel="noreferrer" endIcon={<ArrowForwardIcon />}>
+          More Results
+        </Button>
+        <span style={{ flex: '1' }}></span>
         <Button variant="contained" color="primary" onClick={() => setOpen(false)}>Close</Button>
       </DialogActions>
     </Dialog>

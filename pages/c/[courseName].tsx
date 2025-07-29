@@ -110,7 +110,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           )) : null}
           {
             sylStatus === 'success' && sylData !== null && sylData?.sys.success === true && sylData.items.length > 0
-            ? <SimpleSyllabusLauncher data={sylData} />
+            ? <SimpleSyllabusLauncher data={sylData} courseName={staticCourseName} />
             : null
           }
         </div>

@@ -24,9 +24,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { useSwipeable } from 'react-swipeable'
 import { useThrottle } from 'react-use'
 import useSWR from 'swr/immutable'
+import { LiveDataBadge, LiveDataDisclaimer } from '@/components/LiveDataDisclaimer'
 import { Observable, ObservableStatus } from './Observable'
 import type { RMPRankedSearchResult } from './back/rmp'
-import { getRMPProfessorSearchUrl, getRMPProfessorViewableUrl, getRMPSchoolViewableUrl, UH_RMP_SCHOOL_IDS } from './rmp'
+import { getRMPProfessorSearchUrl, getRMPProfessorViewableUrl, getRMPSchoolViewableUrl, RMP_CACHE_LIFETIME, UH_RMP_SCHOOL_IDS } from './rmp'
 
 import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from '../../components/instructorcard.module.scss'
@@ -165,9 +166,7 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
         </IconButton>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '15px' }}>
           RateMyProfessors.com Results
-          <Tooltip title="The data below comes directly from a 3rd party service. It is not stored by CougarGrades and can be removed or changed at any time." arrow>
-            <Chip label="Live Data" color="primary" size="small" />
-          </Tooltip>
+          <LiveDataBadge />
         </span>
         <br />
         <Typography variant="body1" color="text.secondary">
@@ -176,6 +175,7 @@ export function RMPLauncher({ instructorFirstName, instructorLastName, data }: R
         <Typography variant="body1" color="text.secondary">
           &copy; 2025 Rate My Professors, LLC. All Rights Reserved.
         </Typography>
+        <LiveDataDisclaimer cacheLifetime={RMP_CACHE_LIFETIME} />
       </DialogTitle>
       <DialogContent className={instructorCardStyles.showMoreContent}>
         <List

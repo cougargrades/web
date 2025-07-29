@@ -1,4 +1,7 @@
 import type { RMPSearchResult } from './back/rmp'
+import { Temporal } from 'temporal-polyfill'
+
+export const RMP_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 14 });
 
 // On RMP, UH has different campuses listed that are part of the same university (not just the "UH System")
 export const UH_RMP_SCHOOL_IDS = [

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CACHE_CONTROL } from '../../lib/cache'
+import { PROD_CACHE_LIFETIME, TEMPORAL_CACHE_CONTROL, TOP_RECENT_CACHE_LIFETIME } from '../../lib/cache'
 import { getTopResults, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/data/back/getTopResults'
 import { CoursePlusMetrics, InstructorPlusMetrics } from '../../lib/trending'
 import { extract } from '../../lib/util'
@@ -20,6 +20,8 @@ export default async function Top(req: NextApiRequest, res: NextApiResponse<(Cou
     && ['totalEnrolled', 'activeUsers', 'screenPageViews'].includes(metric);
   // fetch results
   const data = valid ? await getTopResults({ metric, topic, limit, time, hideCore }) : [];
-  res.setHeader('Cache-Control', CACHE_CONTROL);
+  // determine cache control by the recency of the records requested ()
+  const cacheLifetime = time === 'all' ? PROD_CACHE_LIFETIME : TOP_RECENT_CACHE_LIFETIME;
+  res.setHeader('Cache-Control', TEMPORAL_CACHE_CONTROL(cacheLifetime));
   res.json(data);
 }

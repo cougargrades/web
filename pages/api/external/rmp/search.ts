@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-import { CACHE_CONTROL } from '../../../../lib/cache'
+import { TEMPORAL_CACHE_CONTROL } from '../../../../lib/cache'
 import * as rmp from '../../../../lib/data/back/rmp'
+import { RMP_CACHE_LIFETIME} from '../../../../lib/data/rmp'
 import type { RMPRankedSearchResult } from '../../../../lib/data/back/rmp'
 import { extract } from '../../../../lib/util'
 
@@ -42,6 +42,6 @@ export default async function SearchRMP(req: NextApiRequest, res: NextApiRespons
   // Sort the results
   results.sort((a,b) => b._searchScore - a._searchScore);
 
-  res.setHeader('Cache-Control', CACHE_CONTROL);
+  res.setHeader('Cache-Control', TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME));
   res.json(results);
 }

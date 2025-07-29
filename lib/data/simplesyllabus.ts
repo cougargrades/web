@@ -1,3 +1,6 @@
+import { Temporal } from 'temporal-polyfill'
+
+export const SYLLABUS_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 7 });
 
 /**
  * Thumbnail URLs: https://uh.simplesyllabus.com/api2/doc-png/{{ doc_code }}
@@ -37,4 +40,8 @@ export function getEmbeddableHTMLUrl(docCode: string) {
  */
 export function getDocumentViewUrl(docCode: string) {
     return `https://uh.simplesyllabus.com/doc/${docCode}?mode=view`
+}
+
+export function getSearchResultsUrl(query: string) {
+    return `https://uh.simplesyllabus.com/en-US/syllabus-library?search=${encodeURIComponent(query)}`;
 }
