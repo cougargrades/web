@@ -28,35 +28,36 @@ const nextConfig: NextConfig = {
         ],
       },
       // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
-      {
-        source: '/c/:courseName',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: CACHE_CONTROL
-          }
-        ]
-      },
-      // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
-      {
-        source: '/i/:instructorName',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: CACHE_CONTROL
-          }
-        ]
-      },
-      // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
-      {
-        source: '/g/:groupId',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: CACHE_CONTROL
-          }
-        ]
-      },
+      // 2025-07-29: Don't hard cache your HTML, outdated JS issues
+      // {
+      //   source: '/c/:courseName',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: CACHE_CONTROL
+      //     }
+      //   ]
+      // },
+      // // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
+      // {
+      //   source: '/i/:instructorName',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: CACHE_CONTROL
+      //     }
+      //   ]
+      // },
+      // // We need our ISR/pre-rendered pages to be cached in Cloudflare, not just in the "Vercel ISR/pre-render cache"
+      // {
+      //   source: '/g/:groupId',
+      //   headers: [
+      //     {
+      //       key: 'Cache-Control',
+      //       value: CACHE_CONTROL
+      //     }
+      //   ]
+      // },
       /**
        * We also want to cache the `/_next/data/{hash}/{locale}/c/*.json` files that Next.js uses to hydrate the front-end.
        * Next.js claims that items with this URL are "truly immutable" and as a result we can't override ANY headers for these assets.
