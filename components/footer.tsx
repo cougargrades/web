@@ -1,6 +1,6 @@
 import Link from 'next/link'
 // import Image from 'next/legacy/image'
-import useSWR from 'swr'
+import useSWR from 'swr/immutable'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import ErrorIcon from '@mui/icons-material/Error'
