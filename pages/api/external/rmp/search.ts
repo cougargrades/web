@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { TEMPORAL_CACHE_CONTROL } from '../../../../lib/cache'
 import * as rmp from '../../../../lib/data/back/rmp'
-import { RMP_CACHE_LIFETIME} from '../../../../lib/data/rmp'
+import { RMP_CACHE_LIFETIME } from '../../../../lib/data/rmp'
 import type { RMPRankedSearchResult } from '../../../../lib/data/back/rmp'
 import { extract } from '../../../../lib/util'
 
