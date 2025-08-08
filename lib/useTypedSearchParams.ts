@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import * as z4 from 'zod/v4/core';
 import { TransitionOptions, useSearchParams } from './useSearchParams';
 
@@ -11,6 +11,9 @@ export type SetURLSearchParams<T extends z4.$ZodType<object>> = (
 ) => void;
 
 
+/**
+ * Wrapper around `useSearchParams` that validates with Zod.
+ */
 export function useTypedSearchParams<T extends z4.$ZodType<{}>>(schema: T, defaultInit?: z4.output<T>): [z4.output<T>, SetURLSearchParams<T>]  {
   //const [searchParams, setSearchParams] = useSearchParams({ age: '99', foo: 'false' });
   const [searchParams, setSearchParams] = useSearchParams(defaultInit);
@@ -28,31 +31,4 @@ export function useTypedSearchParams<T extends z4.$ZodType<{}>>(schema: T, defau
   )
 
   return [parsedSearchParams, setTypedSearchParams]
-
-  // TODO: probably some mapping
-  // let setSearchParams = useCallback<SetURLSearchParams>(
-  //         (nextInit, navigateOptions) => {
-  //         const newSearchParams = createSearchParams(
-  //             typeof nextInit === "function"
-  //             ? nextInit(new URLSearchParams(searchParams))
-  //             : nextInit,
-  //         );
-  //         hasSetSearchParamsRef.current = true;
-  //         if (navigateOptions?.replace === true) {
-  //             router.replace(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-  //         }
-  //         else {
-  //             router.push(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-  //         }
-  //         },
-  //         [router, searchParams],
-  //     );
-
-  //z4.parse(schema, searchParams)
 }
-
-// const MySchema = z.object({
-//   age: z.coerce.number().optional(),
-//   foo: z.coerce.boolean().optional(),
-// });
-// type MySchema = z.infer<typeof MySchema>

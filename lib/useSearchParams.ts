@@ -1,14 +1,11 @@
-import { useState, useRef, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback } from 'react'
 import { type NextRouter, useRouter,  } from 'next/router';
 import { useSearchParams as useNextSearchParams } from 'next/navigation'
-import { z } from 'zod'
-import { useLocation } from 'react-use';
 
 /**
  * Based on React router's implementation, but adapted for Next.js
  */
 
-//function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
 
 export type ParamKeyValuePair = [string, string];
 
@@ -79,7 +76,6 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
     let defaultSearchParamsRef = useRef(createSearchParams(defaultInit));
     let hasSetSearchParamsRef = useRef(false);
 
-    //let location = useLocation();
     let nextSearchParams = useNextSearchParams(); // needed because of SSR?
     let searchParams = useMemo(
         () =>
@@ -87,15 +83,12 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
         // Once we call that we want those to take precedence, otherwise you can't
         // remove a param with setSearchParams({}) if it has an initial value
         getSearchParamsForLocation(
-            //location.search ?? '',
             nextSearchParams.toString(),
             hasSetSearchParamsRef.current ? null : defaultSearchParamsRef.current,
         ),
-        //[location.search],
         [nextSearchParams]
     );
 
-    //let navigate = useNavigate();
     //let router = useRouter();
     let setSearchParams = useCallback<SetURLSearchParams>(
         (nextInit, navigateOptions) => {
@@ -119,20 +112,3 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
 
   return [searchParams, setSearchParams];
 }
-
-// export function useTypedRouter<T extends z.ZodType>(schema: T): z.infer<typeof T> {
-//     const { query, ...router } = useRouter();
-
-//     //router.push()
-    
-//     const parsedQuery = schema.parse(query)
-//     console.log('parsedQuery?', parsedQuery);
-//     const searchParams = new URLSearchParams(parsedQuery as any);
-
-//     console.log('loop?', searchParams, searchParams.toString());
-
-//     return {
-//         query: parsedQuery,
-//         ...router
-//     }
-// }

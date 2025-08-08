@@ -23,11 +23,10 @@ import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components
 import { TopResult, useTopResults } from '../../lib/data/useTopResults'
 import { TopListItem } from '../../components/TopListItem'
 import { SidebarContainer } from '../../components/sidebarcontainer'
-import { useSearchParams } from '@/lib/useSearchParams'
+import { useTypedSearchParams } from '@/lib/useTypedSearchParams'
 
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { useTypedSearchParams } from '@/lib/useTypedSearchParams'
 
 
 export interface FaqPostProps {
@@ -46,19 +45,11 @@ type TopQueryParams = z.infer<typeof TopQueryParams>
 
 export default function TopPage({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
-  // const { query, ...router } = useTypedRouter(MySchema);
-  // console.log('query?', query, 'router?', router);
-
-  //const [searchParams, setSearchParams] = useSearchParams({ age: '99', foo: 'false' });
   const [searchParams, setSearchParams] = useTypedSearchParams(TopQueryParams, { viewLimit: 10, viewTime: 'all', hideCore: false });
   const { viewLimit, viewTime, hideCore } = searchParams
   const setViewLimit = (x: number) => setSearchParams({ ...searchParams, viewLimit: x })
   const setViewTime = (x: TopTime) => setSearchParams({ ...searchParams, viewTime: x })
   const setHideCore = (x: boolean) => setSearchParams({ ...searchParams, hideCore: x });
-  
-  useEffect(() => {
-    console.log('searchParams changed?', searchParams);
-  }, [searchParams]);
 
   const viewMetric: TopMetric = post?.slug?.includes('viewed') ? 'screenPageViews' : 'totalEnrolled'
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
@@ -121,22 +112,6 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
         //disabled: post.slug?.endsWith('instructors')
       }))}>
         <div className={styles.articleContainer}>
-          {/* <button onClick={() => {
-            setSearchParams((prev) => {
-              prev.set('age', `${parseInt(prev.get('age') ?? '0') + 1}`);
-              return prev;
-            }, { replace: true })
-          }}>
-            +1 Age ({searchParams.get('age')})
-          </button> */}
-          {/* <button onClick={() => {
-            setSearchParams(prev => {
-              prev.age = (prev.age ?? 0) + 1;
-              return prev;
-            }, { replace: true });
-          }}>
-            +1 Age ({searchParams.age})
-          </button> */}
           <Typography variant="h4" color="text.primary">
             {post.title}
           </Typography>
