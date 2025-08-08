@@ -89,7 +89,7 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
         [nextSearchParams]
     );
 
-    //let router = useRouter();
+    let router = useRouter();
     let setSearchParams = useCallback<SetURLSearchParams>(
         (nextInit, navigateOptions) => {
         const newSearchParams = createSearchParams(
@@ -99,12 +99,12 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
         );
         hasSetSearchParamsRef.current = true;
         if (navigateOptions?.replace === true) {
-            //router.replace(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            window.history.replaceState(undefined, '', `${location.pathname}?${newSearchParams}`)
+            router.replace(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
+            //window.history.replaceState(undefined, '', `${location.pathname}?${newSearchParams}`)
         }
         else {
-            //router.push(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            window.history.pushState(undefined, '', `${location.pathname}?${newSearchParams}`)
+            router.push(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
+            //window.history.pushState(undefined, '', `${location.pathname}?${newSearchParams}`)
         }
         },
         [searchParams],
