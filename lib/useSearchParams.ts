@@ -1,6 +1,6 @@
 import { useRef, useMemo, useCallback } from 'react'
 import { type NextRouter, useRouter,  } from 'next/router';
-import { useSearchParams as useNextSearchParams } from 'next/navigation'
+import { useIsomorphicSearchParams } from './useIsomorphicSearchParams';
 
 /**
  * Based on React router's implementation, but adapted for Next.js
@@ -75,21 +75,22 @@ function getSearchParamsForLocation(
 export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchParams, SetURLSearchParams] {
     let defaultSearchParamsRef = useRef(createSearchParams(defaultInit));
     let hasSetSearchParamsRef = useRef(false);
+    let router = useRouter();
 
-    let nextSearchParams = useNextSearchParams(); // needed because of SSR?
+    //let serverSearchParams = useNextSearchParams(); // ineffective because it's empty on first render and is client-only
+    let serverSearchParams = useIsomorphicSearchParams();
     let searchParams = useMemo(
         () =>
         // Only merge in the defaults if we haven't yet called setSearchParams.
         // Once we call that we want those to take precedence, otherwise you can't
         // remove a param with setSearchParams({}) if it has an initial value
         getSearchParamsForLocation(
-            nextSearchParams.toString(),
+            serverSearchParams.toString(),
             hasSetSearchParamsRef.current ? null : defaultSearchParamsRef.current,
         ),
-        [nextSearchParams]
+        [serverSearchParams]
     );
-
-    let router = useRouter();
+    
     let setSearchParams = useCallback<SetURLSearchParams>(
         (nextInit, navigateOptions) => {
         const newSearchParams = createSearchParams(
@@ -100,11 +101,11 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
         hasSetSearchParamsRef.current = true;
         if (navigateOptions?.replace === true) {
             router.replace(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            //window.history.replaceState(undefined, '', `${location.pathname}?${newSearchParams}`)
+            //window.history.replaceState(undefined, '', `${location.pathname}?${newSearchParams}`) // can't use because it fucks with the Next.js lifecycle
         }
         else {
             router.push(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            //window.history.pushState(undefined, '', `${location.pathname}?${newSearchParams}`)
+            //window.history.pushState(undefined, '', `${location.pathname}?${newSearchParams}`) // can't use because it fucks with the Next.js lifecycle
         }
         },
         [searchParams],

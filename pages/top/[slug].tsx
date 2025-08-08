@@ -39,7 +39,7 @@ const parseInt2 = (x: string | number) => typeof x === 'number' ? x : parseInt(x
 const TopQueryParams = z.object({
   viewLimit: z.coerce.number(),
   viewTime: z.enum(['all', 'lastMonth', 'lastYear']),
-  hideCore: z.coerce.boolean(),
+  hideCore: z.stringbool(),
 });
 type TopQueryParams = z.infer<typeof TopQueryParams>
 
