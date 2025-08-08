@@ -1,5 +1,5 @@
 import { useRef, useMemo, useCallback } from 'react'
-import { type NextRouter, useRouter,  } from 'next/router';
+import { type NextRouter, useRouter } from 'next/router';
 import { useIsomorphicSearchParams } from './useIsomorphicSearchParams';
 
 /**
@@ -77,7 +77,6 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
     let hasSetSearchParamsRef = useRef(false);
     let router = useRouter();
 
-    //let serverSearchParams = useNextSearchParams(); // ineffective because it's empty on first render and is client-only
     let serverSearchParams = useIsomorphicSearchParams();
     let searchParams = useMemo(
         () =>
@@ -101,11 +100,9 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit): [URLSearchPa
         hasSetSearchParamsRef.current = true;
         if (navigateOptions?.replace === true) {
             router.replace(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            //window.history.replaceState(undefined, '', `${location.pathname}?${newSearchParams}`) // can't use because it fucks with the Next.js lifecycle
         }
         else {
             router.push(`${location.pathname}?${newSearchParams}`, undefined, navigateOptions);
-            //window.history.pushState(undefined, '', `${location.pathname}?${newSearchParams}`) // can't use because it fucks with the Next.js lifecycle
         }
         },
         [searchParams],
