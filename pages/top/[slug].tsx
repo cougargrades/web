@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAsync } from 'react-use'
+import { z } from 'zod'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import Container from '@mui/material/Container'
@@ -22,9 +23,11 @@ import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components
 import { TopResult, useTopResults } from '../../lib/data/useTopResults'
 import { TopListItem } from '../../components/TopListItem'
 import { SidebarContainer } from '../../components/sidebarcontainer'
+import { useSearchParams } from '@/lib/useSearchParams'
 
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
+import { useTypedSearchParams } from '@/lib/useTypedSearchParams'
 
 
 export interface FaqPostProps {
@@ -34,14 +37,34 @@ export interface FaqPostProps {
 
 const parseInt2 = (x: string | number) => typeof x === 'number' ? x : parseInt(x)
 
+const TopQueryParams = z.object({
+  viewLimit: z.coerce.number(),
+  viewTime: z.enum(['all', 'lastMonth', 'lastYear']),
+  hideCore: z.coerce.boolean(),
+});
+type TopQueryParams = z.infer<typeof TopQueryParams>
+
 export default function TopPage({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
+  // const { query, ...router } = useTypedRouter(MySchema);
+  // console.log('query?', query, 'router?', router);
+
+  //const [searchParams, setSearchParams] = useSearchParams({ age: '99', foo: 'false' });
+  const [searchParams, setSearchParams] = useTypedSearchParams(TopQueryParams, { viewLimit: 10, viewTime: 'all', hideCore: false });
+  const { viewLimit, viewTime, hideCore } = searchParams
+  const setViewLimit = (x: number) => setSearchParams({ ...searchParams, viewLimit: x })
+  const setViewTime = (x: TopTime) => setSearchParams({ ...searchParams, viewTime: x })
+  const setHideCore = (x: boolean) => setSearchParams({ ...searchParams, hideCore: x });
+  
+  useEffect(() => {
+    console.log('searchParams changed?', searchParams);
+  }, [searchParams]);
 
   const viewMetric: TopMetric = post?.slug?.includes('viewed') ? 'screenPageViews' : 'totalEnrolled'
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
-  const [viewLimit, setViewLimit] = useState<TopLimit>(10)
-  const [viewTime, setViewTime] = useState<TopTime>('all')
-  const [hideCore, setHideCore] = useState(false)
+  // const [viewLimit, setViewLimit] = useState<TopLimit>(10)
+  // const [viewTime, setViewTime] = useState<TopTime>('all')
+  //const [hideCore, setHideCore] = useState(false)
 
   const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime, hideCore: hideCore })
   const coreCurriculum = useAsync(async () => {
@@ -98,6 +121,22 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
         //disabled: post.slug?.endsWith('instructors')
       }))}>
         <div className={styles.articleContainer}>
+          {/* <button onClick={() => {
+            setSearchParams((prev) => {
+              prev.set('age', `${parseInt(prev.get('age') ?? '0') + 1}`);
+              return prev;
+            }, { replace: true })
+          }}>
+            +1 Age ({searchParams.get('age')})
+          </button> */}
+          {/* <button onClick={() => {
+            setSearchParams(prev => {
+              prev.age = (prev.age ?? 0) + 1;
+              return prev;
+            }, { replace: true });
+          }}>
+            +1 Age ({searchParams.age})
+          </button> */}
           <Typography variant="h4" color="text.primary">
             {post.title}
           </Typography>
