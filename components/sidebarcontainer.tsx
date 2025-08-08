@@ -32,6 +32,13 @@ export interface SidebarContainerProps {
   children: React.ReactNode;
 }
 
+function relativeURL(str?: string): URL | undefined {
+  if (str === undefined || str === null) {
+    return undefined;
+  }
+  return new URL(str, 'https://localhost');
+}
+
 export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, children }: SidebarContainerProps) {
   const router = useRouter()
   const condensed = useIsCondensed()
@@ -102,7 +109,7 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
                 <React.Fragment key={e.key}>
                   <FakeLink href={e.href ?? "#"} style={{ cursor: e.disabled ? 'not-allowed' : 'auto' }}>
                     <ListItemButton
-                      selected={e.href === router.asPath}
+                      selected={relativeURL(e.href)?.pathname.toLowerCase() === relativeURL(router.asPath)?.pathname.toLowerCase()}
                       onClick={() => handleClick(e.href)}
                       classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
                       disabled={e.disabled}
