@@ -108,8 +108,12 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
                   valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
                 }}
                 yAxis={{
-                  min: item.sparklineData.yAxis[0],
-                  max: item.sparklineData.yAxis[1],
+                  // min: undefined,
+                  // max: undefined,
+                  min: item.sparklineData.yAxis.min,
+                  max: item.sparklineData.yAxis.max,
+                  // min: item.href.startsWith('/c/') ? item.sparklineData.yAxis.min : undefined,
+                  // max: item.href.startsWith('/c/') ? item.sparklineData.yAxis.max : undefined,
                 }}
                 sx={{
                   maxWidth: '150px',
