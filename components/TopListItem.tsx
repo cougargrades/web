@@ -11,7 +11,7 @@ import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { areaElementClasses } from '@mui/x-charts/LineChart';
 import { Badge } from './badge'
 import { TopResult } from '../lib/data/useTopResults'
-import { formatTermCode } from '@/lib/util'
+import { arrayLastEntries, formatTermCode } from '@/lib/util'
 import type { TopMetric } from '../lib/data/back/getTopResults'
 
 
@@ -40,7 +40,7 @@ function AreaGradient({ id, color }: { id: string, color: string }) {
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
   const theme = useTheme();
   const primaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
-  console.log('item?', item);
+  //console.log('item?', item);
   return (
     <Link href={item.href} passHref legacyBehavior>
       <ListItemButton component="a" alignItems="flex-start">
@@ -93,7 +93,8 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
             ? <>
               <SparkLineChart
                 //data={[1, 4, 1, 4, 1, 4, 1, 4, 1, 4]} // [1, 4, 2, 5, 7, 2, 4, 6, 9, 3]
-                data={item.sparklineData.data}
+                data={item.sparklineData.data} // all data
+                //data={arrayLastEntries(item.sparklineData.data, 3 * 5)} // last 5 years
                 height={100}
                 area
                 color={primaryColor}
@@ -103,6 +104,7 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
                 xAxis={{
                   scaleType: 'point',
                   data: item.sparklineData.xAxis,
+                  //data: arrayLastEntries(item.sparklineData.xAxis, 3 * 5),
                   // data: [
                   //   201301, //new Date(2022, 5, 1),
                   //   201302, //new Date(2022, 5, 2),

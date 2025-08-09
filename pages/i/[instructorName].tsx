@@ -35,6 +35,7 @@ import { extract } from '../../lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaInstructorDescription } from '../../lib/seo'
 import { RMPLauncher, useSearchRMP } from '../../lib/data/useSearchRMP'
+import { SeasonalAvailabilityInfo } from '@/components/SeasonalAvailabilityInfo'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -145,10 +146,19 @@ export default function IndividualInstructor({ staticInstructorName, staticInstr
           <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of courses: { status === 'success' ? data!.courseCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
-            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          </Tooltip>
+          <li>
+            <Tooltip arrow disableInteractive title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+              <span>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</span>
+            </Tooltip>
+          </li>
+          
         </ul>
+        <h3>Seasonal Availability</h3>
+        {
+          status === 'success'
+          ? <SeasonalAvailabilityInfo style={{ paddingTop: '10px' }} seasonalAvailability={data!.seasonalAvailability} />
+          : <CustomSkeleton width={'100%'} height={12} margin={0} />
+        }
         <h3>Related Groups</h3>
         {
           status === 'success' 

@@ -16,6 +16,7 @@ export interface EnrollmentInfoResult {
   color: string;
   value: number;
   percentage: number;
+  tooltip?: string;
 }
 
 export function EnrollmentInfo(props: EnrollmentInfoProps & BoxProps) {
@@ -25,7 +26,7 @@ export function EnrollmentInfo(props: EnrollmentInfoProps & BoxProps) {
       <span className={`Progress ${styles.progressWrap}`} style={{ height: barHeight }}>
         { data.map(e => (
           e.percentage === 0 ? <React.Fragment key={e.key}></React.Fragment> : 
-          <Tooltip key={e.key} placement="bottom" arrow title={e.value === -1 ? '' : `${e.value.toLocaleString()} total students have received ${e.title}s`}>
+          <Tooltip key={e.key} placement="bottom" arrow title={e.tooltip}>
             <span className="Progress-item" style={{ width: `${e.percentage}%`, backgroundColor: e.color }}></span>
           </Tooltip>
         ))}
