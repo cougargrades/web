@@ -1,5 +1,6 @@
 import React from 'react'
 import useSWR from 'swr/immutable'
+import type { SparklineData } from '@cougargrades/types'
 import { TopMetric, TopOptions } from '../top'
 import { getRosetta, useRosetta } from '../i18n'
 import { CoursePlusMetrics, InstructorPlusMetrics } from '../trending'
@@ -12,6 +13,7 @@ export interface TopResult extends CourseInstructorResult {
   metricValue: number;
   metricFormatted: string;
   metricTimeSpanFormatted: string;
+  sparklineData?: SparklineData;
 }
 
 /**
@@ -47,6 +49,7 @@ export function useTopResults({ metric, topic, limit, time, hideCore }: TopOptio
         metricFormatted: formatMetric(get_value(e), metric),
         //metricTimeSpanFormatted: `${getYear(e.firstTaught)}`,
         metricTimeSpanFormatted: formatTermCode(e.firstTaught),
+        sparklineData: e.sparklineData,
       })) : [])
     ],
     status,
