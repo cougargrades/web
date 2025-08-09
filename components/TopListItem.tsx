@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { TopResult } from '../lib/data/useTopResults'
+import { useTheme } from '@mui/material/styles'
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import { areaElementClasses } from '@mui/x-charts/LineChart';
 import { Badge } from './badge'
+import { TopResult } from '../lib/data/useTopResults'
 import type { TopMetric } from '../lib/data/back/getTopResults'
+
 
 import styles from './TopListItem.module.scss'
 //import interactivity from '../../styles/interactivity.module.scss'
@@ -21,7 +25,21 @@ interface TopListItemProps {
   hidePosition?: boolean;
 }
 
+function AreaGradient({ id, color }: { id: string, color: string }) {
+  return (
+    <defs>
+      <linearGradient id={id} x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stopColor={color} stopOpacity={0.3} />
+        <stop offset="100%" stopColor={color} stopOpacity={0} />
+      </linearGradient>
+    </defs>
+  );
+}
+
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
+  const theme = useTheme();
+  const primaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
+  console.log('item?', item);
   return (
     <Link href={item.href} passHref legacyBehavior>
       <ListItemButton component="a" alignItems="flex-start">
@@ -65,9 +83,44 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
             }
           </>}
         />
-        <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
-          {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
-        </Typography>
+        <div className={styles.metricSparklineContainer}>
+          <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
+            {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
+          </Typography>
+          <SparkLineChart
+            data={[1, 4, 2, 5, 7, 2, 4, 6, 9, 3]}
+            height={100}
+            area
+            color={primaryColor}
+            showHighlight
+            showTooltip
+            valueFormatter={(value: number | null) => value === null ? `N/A` : `${value} enrolled`}
+            xAxis={{
+              scaleType: 'point',
+              data: [
+                new Date(2022, 5, 1),
+                new Date(2022, 5, 2),
+                new Date(2022, 5, 3),
+                new Date(2022, 5, 4),
+                new Date(2022, 5, 5),
+                new Date(2022, 5, 6),
+                new Date(2022, 5, 7),
+                new Date(2022, 5, 8),
+                new Date(2022, 5, 9),
+                new Date(2022, 5, 10),
+              ],
+              valueFormatter: (value) => value.toISOString().slice(0, 10),
+            }}
+            sx={{
+              maxWidth: '150px',
+              [`& .${areaElementClasses.root}`]: {
+                fill: `url(#sparkline-area-gradient)`,
+              },
+            }}
+            >
+            <AreaGradient id="sparkline-area-gradient" color={primaryColor} />
+          </SparkLineChart>
+        </div>
       </ListItemButton>
     </Link>
   )

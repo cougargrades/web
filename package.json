@@ -29,6 +29,7 @@
     "@mui/icons-material": "^5.18.0",
     "@mui/material": "^5.18.0",
     "@mui/material-nextjs": "^5.18.0",
+    "@mui/x-charts": "^8.10.0",
     "@octokit/rest": "^19.0.7",
     "@primer/css": "^19.1.1",
     "bootstrap": "^5.0.1",

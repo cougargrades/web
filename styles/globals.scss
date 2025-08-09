@@ -223,3 +223,8 @@ a.nostyle {
 span.pale > a[href] {
   color: hsl(212, 100%, 80%)!important;
 }
+
+// Fixes chart toolip
+table.MuiChartsTooltip-table {
+  margin-bottom: 0;
+}
