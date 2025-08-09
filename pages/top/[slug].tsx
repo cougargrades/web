@@ -18,9 +18,9 @@ import Switch from '@mui/material/Switch'
 import Tooltip from '@mui/material/Tooltip'
 import { PankoRow } from '../../components/panko'
 import { FaqPostData } from '../../lib/faq'
-import { POPULAR_TABS, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top'
+import { POPULAR_TABS, TopMetric, TopTime, TopTopic } from '../../lib/top'
 import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading'
-import { TopResult, useTopResults } from '../../lib/data/useTopResults'
+import { useTopResults } from '../../lib/data/useTopResults'
 import { TopListItem } from '../../components/TopListItem'
 import { SidebarContainer } from '../../components/sidebarcontainer'
 import { useTypedSearchParams } from '@/lib/useTypedSearchParams'
@@ -47,9 +47,9 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
   const [searchParams, setSearchParams] = useTypedSearchParams(TopQueryParams, { viewLimit: 10, viewTime: 'all', hideCore: false });
   const { viewLimit, viewTime, hideCore } = searchParams
-  const setViewLimit = (x: number) => setSearchParams({ ...searchParams, viewLimit: x })
-  const setViewTime = (x: TopTime) => setSearchParams({ ...searchParams, viewTime: x })
-  const setHideCore = (x: boolean) => setSearchParams({ ...searchParams, hideCore: x });
+  const setViewLimit = (x: number) => setSearchParams({ ...searchParams, viewLimit: x }, { replace: true, scroll: false })
+  const setViewTime = (x: TopTime) => setSearchParams({ ...searchParams, viewTime: x }, { replace: true, scroll: false })
+  const setHideCore = (x: boolean) => setSearchParams({ ...searchParams, hideCore: x }, { replace: true, scroll: false });
 
   const viewMetric: TopMetric = post?.slug?.includes('viewed') ? 'screenPageViews' : 'totalEnrolled'
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
@@ -70,7 +70,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
         router.prefetch(item.href)
       }
     }
-  },[status,data,allPosts])
+  },[status, data, allPosts])
 
   useEffect(() => {
     if (viewMetric === 'totalEnrolled') {
@@ -140,7 +140,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <Tooltip title={viewTopic !== 'course' ? 'This option is not applicable to this page.' : ''}>
                 <FormControlLabel
-                  control={<Switch value={hideCore} onChange={e => setHideCore(e.target.checked)} />}
+                  control={<Switch value={hideCore} defaultChecked={hideCore} onChange={e => setHideCore(e.target.checked)} />}
                   label={
                     <b className="dense">{`Hide "Core Curriculum" Courses`}</b>
                   }
