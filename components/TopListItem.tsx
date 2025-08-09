@@ -107,6 +107,10 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
                   data: arrayLastEntries(item.sparklineData.xAxis, 3 * 10), // last 10 years
                   valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
                 }}
+                yAxis={{
+                  min: item.sparklineData.yAxis[0],
+                  max: item.sparklineData.yAxis[1],
+                }}
                 sx={{
                   maxWidth: '150px',
                   [`& .${areaElementClasses.root}`]: {
