@@ -39,6 +39,10 @@ function relativeURL(str?: string): URL | undefined {
   return new URL(str, 'https://localhost');
 }
 
+function isSamePath(url1?: string, url2?: string): boolean {
+  return relativeURL(url1)?.pathname.toLowerCase() === relativeURL(url2)?.pathname.toLowerCase()
+}
+
 export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, children }: SidebarContainerProps) {
   const router = useRouter()
   const condensed = useIsCondensed()
@@ -109,7 +113,7 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
                 <React.Fragment key={e.key}>
                   <FakeLink href={e.href ?? "#"} style={{ cursor: e.disabled ? 'not-allowed' : 'auto' }}>
                     <ListItemButton
-                      selected={relativeURL(e.href)?.pathname.toLowerCase() === relativeURL(router.asPath)?.pathname.toLowerCase()}
+                      selected={isSamePath(e.href, router.asPath)}
                       onClick={() => handleClick(e.href)}
                       classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
                       disabled={e.disabled}
@@ -119,7 +123,7 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
                       <ListItemText
                         primary={e.title}
                         primaryTypographyProps={{
-                          color: (theme) => (e.href === router.asPath) ? theme.palette.text.primary : theme.palette.text.secondary,
+                          color: (theme) => isSamePath(e.href, router.asPath) ? theme.palette.text.primary : theme.palette.text.secondary,
                           fontWeight: 'unset'
                         }}
                         />
