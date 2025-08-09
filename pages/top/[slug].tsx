@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useAsync } from 'react-use'
+import { z } from 'zod'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import Container from '@mui/material/Container'
@@ -17,11 +18,12 @@ import Switch from '@mui/material/Switch'
 import Tooltip from '@mui/material/Tooltip'
 import { PankoRow } from '../../components/panko'
 import { FaqPostData } from '../../lib/faq'
-import { POPULAR_TABS, TopLimit, TopMetric, TopTime, TopTopic } from '../../lib/top'
+import { POPULAR_TABS, TopMetric, TopTime, TopTopic } from '../../lib/top'
 import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading'
-import { TopResult, useTopResults } from '../../lib/data/useTopResults'
+import { useTopResults } from '../../lib/data/useTopResults'
 import { TopListItem } from '../../components/TopListItem'
 import { SidebarContainer } from '../../components/sidebarcontainer'
+import { useTypedSearchParams } from '@/lib/useTypedSearchParams'
 
 import styles from './slug.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -34,14 +36,26 @@ export interface FaqPostProps {
 
 const parseInt2 = (x: string | number) => typeof x === 'number' ? x : parseInt(x)
 
+const TopQueryParams = z.object({
+  viewLimit: z.coerce.number(),
+  viewTime: z.enum(['all', 'lastMonth', 'lastYear']),
+  hideCore: z.stringbool(),
+});
+type TopQueryParams = z.infer<typeof TopQueryParams>
+
 export default function TopPage({ post, allPosts }: FaqPostProps) {
   const router = useRouter()
+  const [searchParams, setSearchParams] = useTypedSearchParams(TopQueryParams, { viewLimit: 10, viewTime: 'all', hideCore: false });
+  const { viewLimit, viewTime, hideCore } = searchParams
+  const setViewLimit = (x: number) => setSearchParams({ ...searchParams, viewLimit: x }, { replace: true, scroll: false })
+  const setViewTime = (x: TopTime) => setSearchParams({ ...searchParams, viewTime: x }, { replace: true, scroll: false })
+  const setHideCore = (x: boolean) => setSearchParams({ ...searchParams, hideCore: x }, { replace: true, scroll: false });
 
   const viewMetric: TopMetric = post?.slug?.includes('viewed') ? 'screenPageViews' : 'totalEnrolled'
   const viewTopic: TopTopic = post?.slug?.includes('instructor') ? 'instructor' : 'course'
-  const [viewLimit, setViewLimit] = useState<TopLimit>(10)
-  const [viewTime, setViewTime] = useState<TopTime>('all')
-  const [hideCore, setHideCore] = useState(false)
+  // const [viewLimit, setViewLimit] = useState<TopLimit>(10)
+  // const [viewTime, setViewTime] = useState<TopTime>('all')
+  //const [hideCore, setHideCore] = useState(false)
 
   const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime, hideCore: hideCore })
   const coreCurriculum = useAsync(async () => {
@@ -56,7 +70,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
         router.prefetch(item.href)
       }
     }
-  },[status,data,allPosts])
+  },[status, data, allPosts])
 
   useEffect(() => {
     if (viewMetric === 'totalEnrolled') {
@@ -126,7 +140,7 @@ export default function TopPage({ post, allPosts }: FaqPostProps) {
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <Tooltip title={viewTopic !== 'course' ? 'This option is not applicable to this page.' : ''}>
                 <FormControlLabel
-                  control={<Switch value={hideCore} onChange={e => setHideCore(e.target.checked)} />}
+                  control={<Switch value={hideCore} defaultChecked={hideCore} onChange={e => setHideCore(e.target.checked)} />}
                   label={
                     <b className="dense">{`Hide "Core Curriculum" Courses`}</b>
                   }
