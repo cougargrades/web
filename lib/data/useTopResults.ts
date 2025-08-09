@@ -49,7 +49,7 @@ export function useTopResults({ metric, topic, limit, time, hideCore }: TopOptio
         metricFormatted: formatMetric(get_value(e), metric),
         //metricTimeSpanFormatted: `${getYear(e.firstTaught)}`,
         metricTimeSpanFormatted: formatTermCode(e.firstTaught),
-        sparklineData: e.sparklineData,
+        sparklineData: e.enrollmentSparklineData,
       })) : [])
     ],
     status,

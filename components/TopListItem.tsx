@@ -92,31 +92,19 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
             item.sparklineData !== undefined
             ? <>
               <SparkLineChart
-                //data={[1, 4, 1, 4, 1, 4, 1, 4, 1, 4]} // [1, 4, 2, 5, 7, 2, 4, 6, 9, 3]
-                data={item.sparklineData.data} // all data
-                //data={arrayLastEntries(item.sparklineData.data, 3 * 5)} // last 5 years
+                //data={item.sparklineData.data} // all data
+                data={arrayLastEntries(item.sparklineData.data, 3 * 10)} // last 10 years
                 height={100}
                 area
                 color={primaryColor}
+                curve="linear"
                 showHighlight
                 showTooltip
                 valueFormatter={(value: number | null) => value === null ? `N/A` : `${value} enrolled`}
                 xAxis={{
                   scaleType: 'point',
-                  data: item.sparklineData.xAxis,
-                  //data: arrayLastEntries(item.sparklineData.xAxis, 3 * 5),
-                  // data: [
-                  //   201301, //new Date(2022, 5, 1),
-                  //   201302, //new Date(2022, 5, 2),
-                  //   201303, //new Date(2022, 5, 3),
-                  //   201401, //new Date(2022, 5, 4),
-                  //   201402, //new Date(2022, 5, 5),
-                  //   201403, //new Date(2022, 5, 6),
-                  //   201501, //new Date(2022, 5, 7),
-                  //   201502, //new Date(2022, 5, 8),
-                  //   201503, //new Date(2022, 5, 9),
-                  //   201601, //new Date(2022, 5, 10),
-                  // ],
+                  //data: item.sparklineData.xAxis, // all data
+                  data: arrayLastEntries(item.sparklineData.xAxis, 3 * 10), // last 10 years
                   valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
                 }}
                 sx={{
