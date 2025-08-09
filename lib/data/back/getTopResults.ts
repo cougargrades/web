@@ -25,6 +25,7 @@ export interface TopOptions {
 }
 
 export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<(CoursePlusMetrics | InstructorPlusMetrics)[]> {
+  const seen = new Set<string>();
   if (metric === 'totalEnrolled') {
     const db = firebase.firestore();
     const stream = db
@@ -47,8 +48,12 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
       if (hideCore && data && 'instructors' in data && core_curriculum.has(data._id)) {
         continue;
       }
-      // otherwise, push it
-      snapshots.push(snap);
+      if (!seen.has(data._id)) {
+        // otherwise, push it
+        snapshots.push(snap);
+        // mark as seen
+        seen.add(data._id);
+      }
     }
     
     return [
@@ -77,6 +82,15 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
       ...(
         resolved
           .filter(notNullish)
+          .filter(item => {
+            if (!seen.has(item._id)) {
+              seen.add(item._id);
+              return true;
+            }
+            else {
+              return false;
+            }
+          })
           .slice(0, limit)
           .map(e => ({
             ...e,
