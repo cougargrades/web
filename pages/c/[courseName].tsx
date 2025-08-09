@@ -25,10 +25,11 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
-import { extract } from '../../lib/util'
+import { extract, formatSeasonCode, SeasonCode } from '@/lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaCourseDescription } from '../../lib/seo'
 import { SimpleSyllabusLauncher, useSearchSimpleSyllabus } from '../../lib/data/useSearchSimpleSyllabus'
+import { SeasonalAvailabilityInfo } from '@/components/SeasonalAvailabilityInfo'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -60,7 +61,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     }
   }
 
-  const tccnsUpdateAsterisk = status === 'success' && data!.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
+  const tccnsUpdateAsterisk = (
+    status === 'success' && data!.tccnsUpdates.length > 0
+    ? (
+      <Tooltip arrow disableInteractive placement="right" title={`${staticCourseName} has been involved in some course number changes by UH.`}>
+        <span>*</span>
+      </Tooltip>
+    )
+    : null
+  );
 
   return (
     <>
@@ -134,10 +143,18 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of instructors: { status === 'success' ? data!.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
           <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
-            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          </Tooltip>
+          <li>
+            <Tooltip arrow disableInteractive title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+              <span>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</span>
+            </Tooltip>
+          </li>
         </ul>
+        <h3>Seasonal Availability</h3>
+        {
+          status === 'success'
+          ? <SeasonalAvailabilityInfo style={{ paddingTop: '10px' }} seasonalAvailability={data!.seasonalAvailability} />
+          : <CustomSkeleton width={'100%'} height={12} margin={0} />
+        }
         <h3>Related Groups</h3>
         {
           status === 'success' 

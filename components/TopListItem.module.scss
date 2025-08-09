@@ -50,3 +50,22 @@ $topItemSpace: 7px;
     display: none;
   }
 }
+
+.metricSparklineContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  @media(min-width: 991px) {
+    // flex-shrink: 0;
+    // max-width: 170px;
+  }
+  @media (max-width: 450px) {
+    max-width: 80px;
+  }
+  // @media (min-width: 766px) and (max-width: 991px) {
+  //   flex: 1;
+  // }
+  // @media(max-width: 991px) {
+  //   flex: 1;
+  // }
+}

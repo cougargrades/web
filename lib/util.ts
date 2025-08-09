@@ -20,6 +20,11 @@ export function formatTermCode(termCode: number): string {
   return `${stone.t(`season.${seasonCode(termCode)}`)} ${getYear(termCode)}`
 }
 
+export function formatSeasonCode(seasonCode: SeasonCode): string {
+  const stone = getRosetta()
+  return stone.t(`season.${seasonCode}`);
+}
+
 export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
@@ -135,4 +140,9 @@ export function estimateGPA(section: Section): number {
 
 export function stringContainsOneOf(value: string, ...candidates: string[]): boolean {
   return candidates.some(c => value.toLowerCase().includes(c.toLowerCase()))
+}
+
+export function arrayLastEntries<T>(array: T[], numberOfEntries: number): T[] {
+  //arr.slice(Math.max(arr.length - 5, 0))
+  return array.slice(Math.max(array.length - numberOfEntries, 0));
 }

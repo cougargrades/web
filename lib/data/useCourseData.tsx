@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import useSWR from 'swr/immutable'
-import { Group, Instructor, PublicationInfo, TCCNSUpdateInfo, Section } from '@cougargrades/types'
+import { Group, Instructor, PublicationInfo, TCCNSUpdateInfo, Section, SparklineData } from '@cougargrades/types'
 import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
 import { Observable, ObservableStatus } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
@@ -11,6 +11,7 @@ import { getYear, seasonCode } from '../util'
 import { EnrollmentInfoResult } from '../../components/enrollment'
 import { getBadges } from './getBadges'
 import { GPAValueWithWarning } from '../../components/GPAValueWithWarning'
+import { SeasonalAvailability } from './seasonableAvailability'
 
 export type SectionPlus = Section & {
   id: string,
@@ -40,6 +41,8 @@ export interface CourseResult {
   classSize: number;
   sectionLoadingProgress: number;
   tccnsUpdates: TCCNSUpdateInfo[];
+  enrollmentSparklineData?: SparklineData;
+  seasonalAvailability: SeasonalAvailability;
 }
 
 export interface CourseGroupResult {

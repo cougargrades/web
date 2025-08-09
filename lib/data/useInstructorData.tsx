@@ -15,6 +15,7 @@ import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
 import { GPAValueWithWarning } from '../../components/GPAValueWithWarning'
+import { SeasonalAvailability } from './seasonableAvailability'
 //import { firebaseApp, getFirestoreDocument } from '../ssg'
 
 
@@ -42,6 +43,7 @@ export interface InstructorResult {
   classSize: number;
   sectionLoadingProgress: number;
   rmpHref?: string;
+  seasonalAvailability: SeasonalAvailability;
 }
 
 /**
