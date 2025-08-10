@@ -151,6 +151,7 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
       }
     },
     seasonalAvailability: getSeasonalAvailability(sectionData),
+    enrollmentSparklineData: data?.enrollmentSparklineData,
     courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,

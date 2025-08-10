@@ -26,12 +26,12 @@ interface TopListItemProps {
   hidePosition?: boolean;
 }
 
-function AreaGradient({ id, color }: { id: string, color: string }) {
+export function AreaGradient({ id, color, opacity }: { id: string, color: string, opacity?: [number, number] }) {
   return (
     <defs>
       <linearGradient id={id} x1="50%" y1="0%" x2="50%" y2="100%">
-        <stop offset="0%" stopColor={color} stopOpacity={0.3} />
-        <stop offset="100%" stopColor={color} stopOpacity={0} />
+        <stop offset="0%" stopColor={color} stopOpacity={opacity?.[0] ?? 0.3} />
+        <stop offset="100%" stopColor={color} stopOpacity={opacity?.[1] ?? 0} />
       </linearGradient>
     </defs>
   );

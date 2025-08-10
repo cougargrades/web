@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import useSWR from 'swr/immutable'
-import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargrades/types'
+import { Course, Enrollment, Group, Instructor, Section, SparklineData, Util } from '@cougargrades/types'
 import { Observable, ObservableStatus } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { Badge, getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'
@@ -44,6 +44,7 @@ export interface InstructorResult {
   sectionLoadingProgress: number;
   rmpHref?: string;
   seasonalAvailability: SeasonalAvailability;
+  enrollmentSparklineData?: SparklineData;
 }
 
 /**

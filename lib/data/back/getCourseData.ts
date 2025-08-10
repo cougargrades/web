@@ -129,11 +129,12 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
             color: grade2Color[k.substring(5) as Grade] ?? grade2Color['I'],
             value: data.enrollment[k],
             percentage: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
-            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? '(?)' : `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s`,
+            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s` : undefined,
           })
       ) : []),
     ],
     seasonalAvailability: getSeasonalAvailability(sectionData),
+    enrollmentSparklineData: data?.enrollmentSparklineData,
     instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,

@@ -13,7 +13,13 @@ export function getSeasonalAvailability(sections: Section[]): SeasonalAvailabili
         '02': 0,
         '03': 0,
     };
+    const seen = new Set<string>();
     for(let sec of sections) {
+        const seenKey = `${sec.term}_${sec.sectionNumber}`;
+        if (seen.has(seenKey)) {
+            continue;
+        }
+        seen.add(seenKey);
         const season = seasonCode(sec.term);
         const enrolled = getTotalEnrolled(sec);
         measured[season] += enrolled;
