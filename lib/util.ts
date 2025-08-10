@@ -1,12 +1,15 @@
 import type { Enrollment, Section } from '@cougargrades/types'
 import { getRosetta } from './i18n'
+import { z } from 'zod'
 
 export const randRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
 // https://getbootstrap.com/docs/5.0/layout/breakpoints/
 export const isMobile = () => typeof window !== 'undefined' ? window && window.document ? window.document.body.clientWidth < 576 : false : false
 
-export type SeasonCode = '01' | '02' | '03';
+export const SeasonCode = z.enum(['01', '02', '03']);
+//export type SeasonCode = '01' | '02' | '03';
+export type SeasonCode = z.infer<typeof SeasonCode>;
 
 export const seasonCode = (termCode: number): SeasonCode => {
   const second = termCode % 10
@@ -29,7 +32,7 @@ export const getYear = (termCode: number) => Math.floor(termCode / 100)
 
 export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
 
-export const average = (x: number[]) => sum(x) / x.length
+export const average = (x: number[]) => sum(x) / x.length;
 
 /**
  * Normalizes one element of a list

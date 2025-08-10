@@ -8,8 +8,6 @@ import { EnrollmentInfo, EnrollmentInfoResult } from './enrollment';
 import { grade2Color } from './badge';
 
 
-
-
 export const season2Color: Record<SeasonCode, Property.Color> = {
   '01': '#F6BE00',
   '02': '#00866C',

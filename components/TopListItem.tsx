@@ -39,7 +39,7 @@ export function AreaGradient({ id, color, opacity }: { id: string, color: string
 
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
   const theme = useTheme();
-  const primaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
+  const dynamicPrimaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
   //console.log('item?', item);
   return (
     <Link href={item.href} passHref legacyBehavior>
@@ -96,7 +96,7 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
                 data={arrayLastEntries(item.sparklineData.data, 3 * 10)} // last 10 years
                 height={100}
                 area
-                color={primaryColor}
+                color={dynamicPrimaryColor}
                 curve="linear"
                 showHighlight
                 showTooltip
@@ -122,7 +122,7 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
                   },
                 }}
                 >
-                <AreaGradient id="sparkline-area-gradient" color={primaryColor} />
+                <AreaGradient id="sparkline-area-gradient" color={dynamicPrimaryColor} />
               </SparkLineChart>
             </>
             : <>
