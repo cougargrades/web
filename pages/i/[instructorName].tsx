@@ -234,7 +234,7 @@ export default function IndividualInstructor({ staticInstructorName, staticInstr
                 </>
               )
               : <>
-                <LoadingBoxIndeterminate title="Loading ..." />
+                <LoadingBoxIndeterminate title="Loading sections..." />
               </>
             }
           </div>

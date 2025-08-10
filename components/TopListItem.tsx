@@ -39,6 +39,7 @@ export function AreaGradient({ id, color, opacity }: { id: string, color: string
 
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
   const theme = useTheme();
+  // This is used because it looks prettier with the transparency and draws less attention to it
   const dynamicPrimaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
   //console.log('item?', item);
   return (

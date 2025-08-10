@@ -233,7 +233,7 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
                 </>
               )
               : <>
-                <LoadingBoxIndeterminate title="Loading ..." />
+                <LoadingBoxIndeterminate title="Loading sections..." />
               </>
             }
           </div>
