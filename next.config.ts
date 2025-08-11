@@ -4,7 +4,7 @@ import { CACHE_CONTROL } from './lib/cache'
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: false,
-  transpilePackages: ['react-fitty'],
+  transpilePackages: ['react-fitty', '@mui/x-charts'],
   images: {
     domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com'],
   },

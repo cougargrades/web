@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { TopResult } from '../lib/data/useTopResults'
+import { useTheme } from '@mui/material/styles'
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import { areaElementClasses } from '@mui/x-charts/LineChart';
 import { Badge } from './badge'
+import { TopResult } from '../lib/data/useTopResults'
+import { arrayLastEntries, formatTermCode } from '@/lib/util'
 import type { TopMetric } from '../lib/data/back/getTopResults'
+
 
 import styles from './TopListItem.module.scss'
 //import interactivity from '../../styles/interactivity.module.scss'
@@ -21,7 +26,22 @@ interface TopListItemProps {
   hidePosition?: boolean;
 }
 
+export function AreaGradient({ id, color, opacity }: { id: string, color: string, opacity?: [number, number] }) {
+  return (
+    <defs>
+      <linearGradient id={id} x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stopColor={color} stopOpacity={opacity?.[0] ?? 0.3} />
+        <stop offset="100%" stopColor={color} stopOpacity={opacity?.[1] ?? 0} />
+      </linearGradient>
+    </defs>
+  );
+}
+
 export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
+  const theme = useTheme();
+  // This is used because it looks prettier with the transparency and draws less attention to it
+  const dynamicPrimaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
+  //console.log('item?', item);
   return (
     <Link href={item.href} passHref legacyBehavior>
       <ListItemButton component="a" alignItems="flex-start">
@@ -65,9 +85,52 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
             }
           </>}
         />
-        <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
-          {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
-        </Typography>
+        <div className={styles.metricSparklineContainer}>
+          <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
+            {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
+          </Typography>
+          {
+            item.sparklineData !== undefined
+            ? <>
+              <SparkLineChart
+                //data={item.sparklineData.data} // all data
+                data={arrayLastEntries(item.sparklineData.data, 3 * 10)} // last 10 years
+                height={100}
+                area
+                color={dynamicPrimaryColor}
+                curve="linear"
+                showHighlight
+                showTooltip
+                valueFormatter={(value: number | null) => value === null ? `N/A` : `${value} enrolled`}
+                xAxis={{
+                  scaleType: 'point',
+                  //data: item.sparklineData.xAxis, // all data
+                  data: arrayLastEntries(item.sparklineData.xAxis, 3 * 10), // last 10 years
+                  valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
+                }}
+                yAxis={{
+                  // min: undefined,
+                  // max: undefined,
+                  min: item.sparklineData.yAxis.min,
+                  max: item.sparklineData.yAxis.max,
+                  // min: item.href.startsWith('/c/') ? item.sparklineData.yAxis.min : undefined,
+                  // max: item.href.startsWith('/c/') ? item.sparklineData.yAxis.max : undefined,
+                }}
+                sx={{
+                  maxWidth: '150px',
+                  [`& .${areaElementClasses.root}`]: {
+                    fill: `url(#sparkline-area-gradient)`,
+                  },
+                }}
+                >
+                <AreaGradient id="sparkline-area-gradient" color={dynamicPrimaryColor} />
+              </SparkLineChart>
+            </>
+            : <>
+            {/* 📉 */}
+            </>
+          }
+        </div>
       </ListItemButton>
     </Link>
   )

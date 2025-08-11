@@ -16,3 +16,18 @@ export interface Observable<T> {
   error: Error | undefined;
   //firstValuePromise: Promise<void>;
 }
+
+// export type Observable<T> =
+//   {
+//     status: 'success',
+//     data: T,
+//     error: undefined
+//   } | {
+//     status: 'loading',
+//     data: undefined,
+//     error: undefined;
+//   } | {
+//     status: 'error',
+//     data: undefined,
+//     error: Error;
+//   };
