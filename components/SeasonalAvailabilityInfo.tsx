@@ -9,9 +9,10 @@ import { grade2Color } from './badge';
 
 
 export const season2Color: Record<SeasonCode, Property.Color> = {
-  '01': '#F6BE00',
-  '02': '#00866C',
-  '03': '#71250E'
+  '01': 'var(--season-01)',
+  '02': 'var(--season-02)',
+  '03': 'var(--season-03)',
+  //'04': 'var(--season-04)',
 }
 
 export interface SeasonalAvailabilityInfoProps {

@@ -47,10 +47,16 @@
   /*
    * Seasonal colors
    */
-  --season-01: var(--uh-gold, #F6BE00); // Spring
-  --season-02: var(--uh-green, #00866C); // Summer
-  --season-03: #71250E; // Fall
-  --season-04: #fff; // Winter (placeholder, we don't do winter semesters)
+  // Use rgb/hex as a fallback
+  --season-01: #36c99d; // Spring
+  --season-02: #fdd500; // Summer
+  --season-03: #ff6735; // Fall
+  --season-04: #65B2FE; // Winter (placeholder, we don't do winter semesters)
+  // Use OKLAB if available (tested in Firefox 112, last version to not support oklab)
+  --season-01: oklab(75% -0.13492 0.0287); // Spring
+  --season-02: oklab(88% -0.01694 0.18133); // Summer
+  --season-03: oklab(75% 0.18696 0.13282); // Fall
+  
 
   /*
     * From Raster: https://github.com/rsms/raster/blob/master/src/helpers.css
