@@ -217,27 +217,23 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
           )
         }
         <h3 style={{ marginBottom: '16px' }}>Enrollment Data</h3>
-        <div className={styles.enrollmentOverTimeWrap}>
-          <div className={styles.enrollmentOverTime}>
-            {
-              status === 'success'
-              ? (
-                data?.enrollmentSparklineData !== undefined
-                ? <>
-                  <EnrollmentOverTimeInfo chartTitle={`${staticCourseName} Enrollment Over Time by Semester`} enrollmentSparklineData={data.enrollmentSparklineData} />
-                </>
-                : <>
-                  <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    No chart data 📉🗑️
-                  </div>
-                </>
-              )
-              : <>
-                <LoadingBoxIndeterminate title="Loading sections..." />
-              </>
-            }
-          </div>
-        </div>
+        {
+          status === 'success'
+          ? (
+            data?.enrollmentSparklineData !== undefined
+            ? <>
+              <EnrollmentOverTimeInfo chartTitle={`${staticCourseName} Enrollment Over Time by Semester`} enrollmentSparklineData={data.enrollmentSparklineData} />
+            </>
+            : <>
+              <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                No chart data 📉🗑️
+              </div>
+            </>
+          )
+          : <>
+            <LoadingBoxIndeterminate title="Loading sections..." />
+          </>
+        }
         <h3>Grade Data</h3>
       </main>
     </Container>

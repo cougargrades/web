@@ -120,17 +120,6 @@
   }
 }
 
-.enrollmentOverTimeWrap {
-  display: flex;
-  justify-content: center;
-}
-.enrollmentOverTime {
-  width: 100%;
-  @media (min-width: 768px) {
-    width: 75%;
-  }
-}
-
 .loadingFlex {
   display: flex!important;
   flex-direction: column;
