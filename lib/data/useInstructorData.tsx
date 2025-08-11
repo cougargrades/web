@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import useSWR from 'swr/immutable'
-import { Course, Enrollment, Group, Instructor, Section, Util } from '@cougargrades/types'
+import { Course, Enrollment, Group, Instructor, Section, SparklineData, Util } from '@cougargrades/types'
 import { Observable, ObservableStatus } from './Observable'
 import { SearchResultBadge } from './useSearchResults'
 import { Badge, getGradeForGPA, getGradeForStdDev, Grade, grade2Color } from '../../components/badge'
@@ -15,6 +15,7 @@ import { course2Result } from './useAllGroups'
 import { CoursePlus } from './useGroupData'
 import { getChartDataForInstructor } from './getChartDataForInstructor'
 import { GPAValueWithWarning } from '../../components/GPAValueWithWarning'
+import { SeasonalAvailability } from './seasonableAvailability'
 //import { firebaseApp, getFirestoreDocument } from '../ssg'
 
 
@@ -42,6 +43,8 @@ export interface InstructorResult {
   classSize: number;
   sectionLoadingProgress: number;
   rmpHref?: string;
+  seasonalAvailability: SeasonalAvailability;
+  enrollmentSparklineData?: SparklineData;
 }
 
 /**

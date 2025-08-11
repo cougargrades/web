@@ -7,6 +7,8 @@ import { getBadges } from '../getBadges';
 import { getChartData } from '../getChartData';
 import { CourseResult, group2Result, instructor2Result, SectionPlus } from '../useCourseData'
 import { getFirestoreDocument } from './getFirestoreData';
+import { getSeasonalAvailability } from '../seasonableAvailability';
+import { EnrollmentInfoResult } from '@/components/enrollment';
 
 /**
  * Used in serverless functions
@@ -121,15 +123,18 @@ export async function getCourseData(courseName: string): Promise<CourseResult> {
           data.enrollment.totalEnrolled === 0 ? 
           [{ key: 'nodata', title: 'No data', color: grade2Color['I'], value: -1, percentage: 100 }] : 
           (['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW'] as (keyof Enrollment)[])
-          .map(k => ({
+          .map<EnrollmentInfoResult>(k => ({
             key: k,
             title: k.substring(5), // 'totalA' => 'A'
             color: grade2Color[k.substring(5) as Grade] ?? grade2Color['I'],
             value: data.enrollment[k],
             percentage: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
+            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s` : undefined,
           })
       ) : []),
     ],
+    seasonalAvailability: getSeasonalAvailability(sectionData),
+    enrollmentSparklineData: data?.enrollmentSparklineData,
     instructorCount: didLoadCorrectly ? Array.isArray(data.instructors) ? data.instructors.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,

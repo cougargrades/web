@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
@@ -35,6 +36,8 @@ import { extract } from '../../lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaInstructorDescription } from '../../lib/seo'
 import { RMPLauncher, useSearchRMP } from '../../lib/data/useSearchRMP'
+import { SeasonalAvailabilityInfo } from '@/components/SeasonalAvailabilityInfo'
+import { EnrollmentOverTimeInfo } from '@/components/EnrollmentOverTime'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -139,16 +142,30 @@ export default function IndividualInstructor({ staticInstructorName, staticInstr
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data!.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
-        <h3>Basic Information</h3>
-        <ul>
-          <li>Earliest record: { status === 'success' ? data!.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of courses: { status === 'success' ? data!.courseCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
-            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          </Tooltip>
-        </ul>
+        <Grid container spacing={0}>
+          <Grid item xs={12} md={6}>
+            <h3 style={{ width: '90%' }}>Basic Information</h3>
+            <ul>
+              <li>Earliest record: { status === 'success' ? data!.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Number of courses: { status === 'success' ? data!.courseCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>
+                <Tooltip arrow disableInteractive title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+                  <span>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</span>
+                </Tooltip>
+              </li>
+            </ul>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <h3 style={{ width: '90%' }}>Seasonal Availability</h3>
+            {
+              status === 'success'
+              ? <SeasonalAvailabilityInfo style={{ paddingTop: '10px' }} seasonalAvailability={data!.seasonalAvailability} />
+              : <CustomSkeleton width={'100%'} height={12} margin={0} />
+            }
+          </Grid>
+        </Grid>
         <h3>Related Groups</h3>
         {
           status === 'success' 
@@ -200,7 +217,25 @@ export default function IndividualInstructor({ staticInstructorName, staticInstr
             </Carousel>
           )
         }
-        <h3>Data</h3>
+        <h3 style={{ marginBottom: '16px' }}>Enrollment Data</h3>
+        {
+          status === 'success'
+          ? (
+            data?.enrollmentSparklineData !== undefined
+            ? <>
+              <EnrollmentOverTimeInfo chartTitle={`${staticInstructorFirstName} ${staticInstructorLastName} Enrollment Over Time by Semester`} enrollmentSparklineData={data.enrollmentSparklineData} />
+            </>
+            : <>
+              <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                No chart data 📉🗑️
+              </div>
+            </>
+          )
+          : <>
+            <LoadingBoxIndeterminate title="Loading sections..." />
+          </>
+        }
+        <h3>Grade Data</h3>
       </main>
     </Container>
     <Container maxWidth="xl">

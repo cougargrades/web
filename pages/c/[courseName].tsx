@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
+import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -25,10 +26,12 @@ import { EnrollmentInfo } from '../../components/enrollment'
 import { CustomSkeleton } from '../../components/skeleton'
 import { LoadingBoxIndeterminate, LoadingBoxLinearProgress } from '../../components/loading'
 import { TCCNSUpdateNotice } from '../../components/tccnsupdatenotice'
-import { extract } from '../../lib/util'
+import { extract } from '@/lib/util'
 import { buildArgs } from '../../lib/environment'
 import { metaCourseDescription } from '../../lib/seo'
 import { SimpleSyllabusLauncher, useSearchSimpleSyllabus } from '../../lib/data/useSearchSimpleSyllabus'
+import { SeasonalAvailabilityInfo } from '@/components/SeasonalAvailabilityInfo'
+import { EnrollmentOverTimeInfo } from '@/components/EnrollmentOverTime'
 
 import styles from './course.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
@@ -60,7 +63,15 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
     }
   }
 
-  const tccnsUpdateAsterisk = status === 'success' && data!.tccnsUpdates.length > 0 ? <Tooltip title={`${staticCourseName} has been involved in some course number changes by UH.`} placement="right"><span>*</span></Tooltip> : null;
+  const tccnsUpdateAsterisk = (
+    status === 'success' && data!.tccnsUpdates.length > 0
+    ? (
+      <Tooltip arrow disableInteractive placement="right" title={`${staticCourseName} has been involved in some course number changes by UH.`}>
+        <span>*</span>
+      </Tooltip>
+    )
+    : null
+  );
 
   return (
     <>
@@ -128,16 +139,30 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
         { status === 'success' ? <>
           <EnrollmentInfo className={styles.enrollmentBar} data={data!.enrollment} barHeight={12} />          
         </> : <CustomSkeleton width={'100%'} height={12} margin={0} /> }
-        <h3>Basic Information</h3>
-        <ul>
-          <li>Earliest record: { status === 'success' ? data!.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of instructors: { status === 'success' ? data!.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          <Tooltip placement="bottom-start" title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
-            <li>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
-          </Tooltip>
-        </ul>
+        <Grid container spacing={0}>
+          <Grid item xs={12} md={6}>
+            <h3 style={{ width: '90%' }}>Basic Information</h3>
+            <ul>
+              <li>Earliest record: { status === 'success' ? data!.firstTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Latest record: { status === 'success' ? data!.lastTaught : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Number of instructors: { status === 'success' ? data!.instructorCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>Number of sections: { status === 'success' ? data!.sectionCount : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</li>
+              <li>
+                <Tooltip arrow disableInteractive title={`Estimated average size of each section, # of total enrolled ÷ # of sections. Excludes "empty" sections.`}>
+                  <span>Average number of students per section: { status === 'success' ? data!.classSize < 0 ? 'N/A' : `~ ${data?.classSize.toFixed(1)}` : <Skeleton variant="text" style={{ display: 'inline-block' }} width={80} height={25} /> }</span>
+                </Tooltip>
+              </li>
+            </ul>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <h3 style={{ width: '90%' }}>Seasonal Availability</h3>
+            {
+              status === 'success'
+              ? <SeasonalAvailabilityInfo style={{ paddingTop: '10px' }} seasonalAvailability={data!.seasonalAvailability} />
+              : <CustomSkeleton width={150} height={150} margin={0} />
+            }
+          </Grid>
+        </Grid>
         <h3>Related Groups</h3>
         {
           status === 'success' 
@@ -191,7 +216,25 @@ export default function IndividualCourse({ staticCourseName, staticDescription, 
             </Carousel>
           )
         }
-        <h3>Data</h3>
+        <h3 style={{ marginBottom: '16px' }}>Enrollment Data</h3>
+        {
+          status === 'success'
+          ? (
+            data?.enrollmentSparklineData !== undefined
+            ? <>
+              <EnrollmentOverTimeInfo chartTitle={`${staticCourseName} Enrollment Over Time by Semester`} enrollmentSparklineData={data.enrollmentSparklineData} />
+            </>
+            : <>
+              <div style={{ width: '100%', height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                No chart data 📉🗑️
+              </div>
+            </>
+          )
+          : <>
+            <LoadingBoxIndeterminate title="Loading sections..." />
+          </>
+        }
+        <h3>Grade Data</h3>
       </main>
     </Container>
     <Container maxWidth="xl">

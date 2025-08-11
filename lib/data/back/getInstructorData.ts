@@ -11,6 +11,8 @@ import { course2Result } from '../useAllGroups';
 import { Column } from '../../../components/datatable';
 import { getChartDataForInstructor } from '../getChartDataForInstructor';
 import { getRMPProfessorViewableUrl } from '../rmp';
+import { EnrollmentInfoResult } from '@/components/enrollment';
+import { getSeasonalAvailability } from '../seasonableAvailability';
 
 /**
  * Used server-side
@@ -48,12 +50,13 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
           data.enrollment.totalEnrolled === 0 ? 
           [{ key: 'nodata', title: 'No data', color: grade2Color['I'], value: -1, percentage: 100 }] : 
           (['totalA','totalB','totalC','totalD','totalF','totalS','totalNCR','totalW'] as (keyof Enrollment)[])
-          .map(k => ({
+          .map<EnrollmentInfoResult>(k => ({
             key: k,
             title: k.substring(5), // 'totalA' => 'A'
             color: grade2Color[k.substring(5) as Grade] ?? grade2Color['I'],
             value: data.enrollment[k],
             percentage: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
+            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? '(?)' : `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s`,
           })
       ) : []),
     ],
@@ -147,6 +150,8 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
         interpolateNulls: true //lines between point gaps
       }
     },
+    seasonalAvailability: getSeasonalAvailability(sectionData),
+    enrollmentSparklineData: data?.enrollmentSparklineData,
     courseCount: didLoadCorrectly ? Array.isArray(data.courses) ? data.courses.length : 0 : 0,
     sectionCount: didLoadCorrectly ? Array.isArray(data.sections) ? data.sections.length : 0 : 0,
     //classSize: didLoadCorrectly && Array.isArray(data.sections) ? data.enrollment.totalEnrolled / data.sections.length : 0,
