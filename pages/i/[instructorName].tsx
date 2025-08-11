@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import useSWR from 'swr/immutable'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
@@ -36,11 +37,10 @@ import { buildArgs } from '../../lib/environment'
 import { metaInstructorDescription } from '../../lib/seo'
 import { RMPLauncher, useSearchRMP } from '../../lib/data/useSearchRMP'
 import { SeasonalAvailabilityInfo } from '@/components/SeasonalAvailabilityInfo'
+import { EnrollmentOverTimeInfo } from '@/components/EnrollmentOverTime'
 
 import styles from './instructor.module.scss'
 import interactivity from '../../styles/interactivity.module.scss'
-import { EnrollmentOverTimeInfo } from '@/components/EnrollmentOverTime'
-import Grid from '@mui/material/Grid'
 
 
 export interface InstructorProps {
