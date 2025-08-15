@@ -56,7 +56,7 @@ export async function getInstructorData(instructorName: string): Promise<Instruc
             color: grade2Color[k.substring(5) as Grade] ?? grade2Color['I'],
             value: data.enrollment[k],
             percentage: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? data.enrollment[k] / data.enrollment.totalEnrolled * 100 : 0,
-            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? '(?)' : `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s`,
+            tooltip: data.enrollment[k] !== undefined && data.enrollment.totalEnrolled !== 0 ? `${data.enrollment[k].toLocaleString()} total students have received ${k.substring(5)}s` : undefined,
           })
       ) : []),
     ],
