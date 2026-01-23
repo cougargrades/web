@@ -1,60 +1,68 @@
-# @cougargrades/web
+# TanStack Start - Cloudflare Example
 
-[![Preview Environment](https://img.shields.io/github/deployments/cougargrades/web/Preview?label=Preview%20Environment)](https://next.cougargrades.io/)
-[![Production Environment](https://img.shields.io/github/deployments/cougargrades/web/Production?label=Production%20Environment)](https://cougargrades.io)
+A TanStack Start example demonstrating deployment to Cloudflare Workers.
 
-React app that powers cougargrades.io
+- [TanStack Router Docs](https://tanstack.com/router)
+- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
 
-## Project Board
+## Start a new project based on this example
 
-See: https://github.com/orgs/cougargrades/projects/2
+To start a new project based on this example, run:
 
-## Project Status
-
-| Project                  | Version | Status          | URL                            |
-|--------------------------|---------|-----------------|--------------------------------|
-| cougargrades.io (beta)   | 0.4.5   | Offline 💤      | N/A                            |
-| cougargrades.io (1.X.X)  | 1.X.X   | Live 🚀         | https://cougargrades.io/       |
-| cougargrades.io HTTP API | 2.0.0   | Live 🚀         | https://api.cougargrades.io    |
-
-### Continuous Deployment
-
-Active commits to the `next` branch (the default branch) are automatically deployed to [next.cougargrades.io](https://next.cougargrades.io/) for preview. When things are ready to move to production, a pull request will be made from `next` into the `master` branch, which will be automatically deployed to production. Commits **cannot** be made directly to `master`.
-
-## Development
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-### Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+```sh
+npx gitpick TanStack/router/tree/main/examples/react/start-basic-cloudflare start-basic-cloudflare
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting Started
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+From your terminal:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```sh
+pnpm install
+pnpm dev
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+This starts your app in development mode, rebuilding assets on file changes.
 
-### Learn More
+## Build
 
-To learn more about Next.js, take a look at the following resources:
+To build the app for production:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+pnpm build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Preview
 
-### Deploy on Vercel
+To preview the production build locally:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+pnpm preview
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deploy to Cloudflare
 
+To deploy your app to Cloudflare Workers:
+
+```sh
+pnpm run deploy
+```
+
+## Accessing Cloudflare Bindings
+
+You can access Cloudflare bindings in server functions by using importable `env`:
+
+```ts
+import { env } from 'cloudflare:workers'
+```
+
+See `src/routes/index.tsx` for an example.
+
+## Cloudflare Configuration
+
+This example includes:
+
+- Wrangler configuration for Cloudflare Workers
+- Type generation for Cloudflare bindings
+- Server-side rendering on the edge
+- Access to Cloudflare platform features (KV, D1, R2, etc.)
