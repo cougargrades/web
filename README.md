@@ -1,4 +1,4 @@
-# TanStack Start - Cloudflare Example (test)
+# TanStack Start - Cloudflare Example
 
 A TanStack Start example demonstrating deployment to Cloudflare Workers.
 

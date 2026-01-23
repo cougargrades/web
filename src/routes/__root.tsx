@@ -7,10 +7,27 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import * as React from 'react'
-import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
-import { NotFound } from '~/components/NotFound'
-import appCss from '~/styles/app.css?url'
+import { ThemeProvider } from '@mui/material/styles'
+import { RecoilRoot } from 'recoil'
+// import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
+// import { NotFound } from '~/components/NotFound'
+import { useTheme } from '~/lib/theme'
+import Layout from '~/components/layout'
+
 import { seo } from '~/utils/seo'
+
+//import appCss from '~/styles/app.css?url'
+import '~/styles/new.css'
+import '~/styles/new.css';
+import 'bootstrap/dist/css/bootstrap-grid.css'
+import 'bootstrap/dist/css/bootstrap-utilities.css'
+import 'nprogress/nprogress.css'
+import '~/styles/nprogress-custom.scss'
+import '~/styles/globals.scss'
+import '~/styles/colors.scss'
+import '~/styles/syntax-highlighting.scss'
+
+
 
 export const Route = createRootRoute({
   head: () => ({
@@ -20,16 +37,18 @@ export const Route = createRootRoute({
       },
       {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        content: 'minimum-scale=1, initial-scale=1, width=device-width',
       },
       ...seo({
-        title:
-          'TanStack Start | Type-Safe, Client-First, Full-Stack React Framework',
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: `CougarGrades.io: Grade distribution data for UH`,
+        description: `Analyze grade distribution data for any past University of Houston course. Compare past instructors, compare multiple courses. Open source data and code.`,
       }),
+      {
+        name: 'google-site-verification',
+        content: `6Ci3V-jOwFCqFvntbRrkdoxF7MB4DC5gI_wWNz9fNTI`
+      }
     ],
     links: [
-      { rel: 'stylesheet', href: appCss },
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
@@ -57,72 +76,29 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  errorComponent: DefaultCatchBoundary,
-  notFoundComponent: () => <NotFound />,
+  // errorComponent: DefaultCatchBoundary,
+  // notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const theme = useTheme();
+
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: 'font-bold',
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{' '}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Posts
-          </Link>{' '}
-          <Link
-            to="/users"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Users
-          </Link>{' '}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Pathless Layout
-          </Link>{' '}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Deferred
-          </Link>{' '}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
+        <div id="__next">
+          <ThemeProvider theme={theme}>
+            <RecoilRoot>
+              <Layout>
+                {children}
+              </Layout>
+            </RecoilRoot>
+          </ThemeProvider>
         </div>
-        <hr />
-        {children}
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
