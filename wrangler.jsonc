@@ -7,4 +7,8 @@
   "vars": {
     "MY_VAR": "Hello from Cloudflare",
   },
+  // Place the worker near the GCP region where the Firebase database is
+  "placement": {
+    "region": "gcp:us-central1"
+  }
 }
