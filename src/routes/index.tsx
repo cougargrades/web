@@ -22,7 +22,8 @@ export const Route = createFileRoute('/')({
 const getData = createServerFn().handler(() => {
   return {
     message: `Running in ${navigator.userAgent}`,
-    myVar: env.MY_VAR,
+    //myVar: env.MY_VAR,
+    myVar: '',
   }
 })
 
