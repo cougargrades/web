@@ -18,6 +18,7 @@ import { Route as UsersIndexRouteImport } from './routes/users.index'
 import { Route as PostsIndexRouteImport } from './routes/posts.index'
 import { Route as UsersUserIdRouteImport } from './routes/users.$userId'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
+import { Route as CCourseNameRouteImport } from './routes/c/$courseName'
 import { Route as ApiUsersRouteImport } from './routes/api/users'
 import { Route as PostsPostIdDeepRouteImport } from './routes/posts_.$postId.deep'
 import { Route as ApiUsersUserIdRouteImport } from './routes/api/users.$userId'
@@ -67,6 +68,11 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
   path: '/$postId',
   getParentRoute: () => PostsRoute,
 } as any)
+const CCourseNameRoute = CCourseNameRouteImport.update({
+  id: '/c/$courseName',
+  path: '/c/$courseName',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiUsersRoute = ApiUsersRouteImport.update({
   id: '/api/users',
   path: '/api/users',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/c/$courseName': typeof CCourseNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/redirect': typeof RedirectRoute
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/c/$courseName': typeof CCourseNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts': typeof PostsIndexRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
   '/api/users': typeof ApiUsersRouteWithChildren
+  '/c/$courseName': typeof CCourseNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/users'
     | '/api/users'
+    | '/c/$courseName'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts/'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/redirect'
     | '/api/users'
+    | '/c/$courseName'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/users'
     | '/api/users'
+    | '/c/$courseName'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts/'
@@ -174,6 +186,7 @@ export interface RootRouteChildren {
   RedirectRoute: typeof RedirectRoute
   UsersRoute: typeof UsersRouteWithChildren
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
+  CCourseNameRoute: typeof CCourseNameRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
 
@@ -242,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdRouteImport
       parentRoute: typeof PostsRoute
     }
+    '/c/$courseName': {
+      id: '/c/$courseName'
+      path: '/c/$courseName'
+      fullPath: '/c/$courseName'
+      preLoaderRoute: typeof CCourseNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/users': {
       id: '/api/users'
       path: '/api/users'
@@ -309,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   RedirectRoute: RedirectRoute,
   UsersRoute: UsersRouteWithChildren,
   ApiUsersRoute: ApiUsersRouteWithChildren,
+  CCourseNameRoute: CCourseNameRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
 export const routeTree = rootRouteImport

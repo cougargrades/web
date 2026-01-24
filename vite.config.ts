@@ -16,8 +16,14 @@ export default defineConfig({
     }),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tanstackStart({
+      // prerender: {
+      //   enabled: true,
+      // },
       spa: {
-        enabled: true
+        enabled: true,
+        prerender: {
+          enabled: true,
+        }
       }
     }),
     viteReact(),

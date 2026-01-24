@@ -1,6 +1,11 @@
-import { buildArgs } from './environment';
-import { days_to_seconds, hours_to_seconds, minutes_to_seconds } from './to_seconds'
+//import { buildArgs } from './environment';
 import { Temporal } from 'temporal-polyfill'
+
+const minutes_to_seconds = (minutes: number) => Temporal.Duration.from({ minutes }).seconds;
+const hours_to_seconds = (hours: number) => Temporal.Duration.from({ hours }).seconds;
+const days_to_seconds = (days: number) => Temporal.Duration.from({ days }).seconds;
+const weeks_to_seconds = (weeks: number) => Temporal.Duration.from({ weeks }).seconds;
+
 
 export const PROD_CACHE_LIFETIME = Temporal.Duration.from({ days: 180 });
 
@@ -26,5 +31,5 @@ export const LATEST_TERM_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
 export const TRENDING_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
 export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
 
-const vercelEnv = buildArgs.vercelEnv
+const vercelEnv = 'preview' //buildArgs.vercelEnv
 export const CACHE_CONTROL = vercelEnv === 'preview' ? PREVIEW_CACHE_CONTROL : PROD_CACHE_CONTROL;

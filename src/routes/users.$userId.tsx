@@ -1,6 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { NotFound } from 'src/components/NotFound'
-import { UserErrorComponent } from 'src/components/UserError'
 import type { User } from '~/utils/users'
 
 export const Route = createFileRoute('/users/$userId')({
@@ -18,14 +16,11 @@ export const Route = createFileRoute('/users/$userId')({
       throw new Error('Failed to fetch user')
     }
   },
-  errorComponent: UserErrorComponent,
   component: UserComponent,
-  notFoundComponent: () => {
-    return <NotFound>User not found</NotFound>
-  },
 })
 
 function UserComponent() {
+  const {} = Route.useParams();
   const user = Route.useLoaderData()
 
   return (

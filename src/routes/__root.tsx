@@ -4,8 +4,11 @@ import {
   Link,
   Scripts,
   createRootRoute,
+  createRootRouteWithContext,
 } from '@tanstack/react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import * as React from 'react'
 import { ThemeProvider } from '@mui/material/styles'
 import { RecoilRoot } from 'recoil'
@@ -26,6 +29,7 @@ import '~/styles/nprogress-custom.scss'
 import '~/styles/globals.scss'
 import '~/styles/colors.scss'
 import '~/styles/syntax-highlighting.scss'
+
 
 
 
@@ -83,6 +87,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
+  const queryClient = new QueryClient();
 
   return (
     <html>
@@ -92,14 +97,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <div id="__next">
           <ThemeProvider theme={theme}>
+            {/* @ts-ignore */}
             <RecoilRoot>
-              <Layout>
-                {children}
-              </Layout>
+              <QueryClientProvider client={queryClient}>
+                <Layout>
+                  {children}
+                </Layout>
+              </QueryClientProvider>
             </RecoilRoot>
           </ThemeProvider>
         </div>
         <TanStackRouterDevtools position="bottom-right" />
+        {/* <ReactQueryDevtools buttonPosition="bottom-left" /> */}
         <Scripts />
       </body>
     </html>
