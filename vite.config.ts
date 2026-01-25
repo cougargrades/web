@@ -28,4 +28,11 @@ export default defineConfig({
     }),
     viteReact(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ['import', 'global-builtin'],
+      }
+    }
+  }
 })
