@@ -3,6 +3,10 @@ import { Hono } from 'hono'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import * as simplesyllabus from '@cougargrades/vendor/simplesyllabus'
+import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
+import { Temporal } from 'temporal-polyfill'
+
+export const SYLLABUS_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 7 });
 
 const app = new Hono()
 
@@ -19,7 +23,7 @@ app.get('/search',
       result.items = result.items.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
     }
 
-    //ctx.header('Cache-Control', 'TODO');
+    ctx.header('Cache-Control', TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME));
     return ctx.json(result);
   }
 )

@@ -10,15 +10,24 @@ importers:
 
   src/apps/api:
     dependencies:
+      '@cougargrades/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@cougargrades/vendor':
         specifier: workspace:*
         version: link:../../packages/vendor
       '@hono/zod-validator':
         specifier: ^0.7.6
         version: 0.7.6(hono@4.11.9)(zod@4.3.6)
+      dice-coefficient:
+        specifier: ^2.1.1
+        version: 2.1.1
       hono:
         specifier: ^4.11.9
         version: 4.11.9
+      temporal-polyfill:
+        specifier: ^0.3.0
+        version: 0.3.0
       zod:
         specifier: ^4
         version: 4.3.6
@@ -75,6 +84,19 @@ importers:
 
   src/packages/models:
     dependencies:
+      zod:
+        specifier: ^4
+        version: 4.3.6
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
+  src/packages/utils:
+    dependencies:
+      temporal-polyfill:
+        specifier: ^0.3.0
+        version: 0.3.0
       zod:
         specifier: ^4
         version: 4.3.6
@@ -904,6 +926,10 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
+  dice-coefficient@2.1.1:
+    resolution: {integrity: sha512-vPTcHmOQAuGvU6eyBtj7QCBwDJh2I7QpbBU51lbgfv7592KjBl6dm0baRBSh9ekt2X91MNAz7OpJrXCIUtDzlw==}
+    hasBin: true
+
   electron-to-chromium@1.5.286:
     resolution: {integrity: sha512-9tfDXhJ4RKFNerfjdCcZfufu49vg620741MNs26a9+bhLThdB+plgMeou98CAaHu/WATj2iHOOHTp1hWtABj2A==}
 
@@ -1203,6 +1229,9 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  n-gram@2.0.2:
+    resolution: {integrity: sha512-S24aGsn+HLBxUGVAUFOwGpKs7LBcG4RudKU//eWzt/mQ97/NMKQxDWHyHx63UNWk/OOdihgmzoETn1tf5nQDzQ==}
+
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -1324,6 +1353,12 @@ packages:
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
+
+  temporal-polyfill@0.3.0:
+    resolution: {integrity: sha512-qNsTkX9K8hi+FHDfHmf22e/OGuXmfBm9RqNismxBrnSmZVJKegQ+HYYXT+R7Ha8F/YSm2Y34vmzD4cxMu2u95g==}
+
+  temporal-spec@0.3.0:
+    resolution: {integrity: sha512-n+noVpIqz4hYgFSMOSiINNOUOMFtV5cZQNCmmszA6GiVFVRt3G7AqVyhXjhCSmowvQn+NsGn+jMDMKJYHd3bSQ==}
 
   tinyglobby@0.2.15:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
@@ -2187,6 +2222,10 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
+  dice-coefficient@2.1.1:
+    dependencies:
+      n-gram: 2.0.2
+
   electron-to-chromium@1.5.286: {}
 
   error-stack-parser-es@1.0.5: {}
@@ -2481,6 +2520,8 @@ snapshots:
 
   ms@2.1.3: {}
 
+  n-gram@2.0.2: {}
+
   nanoid@3.3.11: {}
 
   natural-compare@1.4.0: {}
@@ -2612,6 +2653,12 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
+
+  temporal-polyfill@0.3.0:
+    dependencies:
+      temporal-spec: 0.3.0
+
+  temporal-spec@0.3.0: {}
 
   tinyglobby@0.2.15:
     dependencies:
