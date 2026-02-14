@@ -1,5 +1,6 @@
 // books.ts
 import { Hono } from 'hono'
+import { cache } from 'hono/cache'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import * as rmp from '@cougargrades/vendor/rmp'
@@ -18,6 +19,10 @@ app.get('/search',
     query: z.string().nonempty(),
     strict: z.coerce.boolean().optional(),
   })),
+  cache({
+    cacheName: 'cougargrades-api',
+    cacheControl: TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),
+  }),
   async (ctx) => {
     const { query, strict } = ctx.req.valid('query');
 
@@ -50,7 +55,6 @@ app.get('/search',
     // Sort the results
     results.sort((a,b) => b._searchScore - a._searchScore);
 
-    ctx.header('Cache-Control', TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME));
     return ctx.json(results);
   }
 )

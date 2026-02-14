@@ -1,5 +1,6 @@
 // books.ts
 import { Hono } from 'hono'
+import { cache } from 'hono/cache'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import * as simplesyllabus from '@cougargrades/vendor/simplesyllabus'
@@ -16,6 +17,10 @@ app.get('/search',
     query: z.string().nonempty(),
     strict: z.coerce.boolean().optional(),
   })),
+  cache({
+    cacheName: 'cougargrades-api',
+    cacheControl: TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),
+  }),
   async (ctx) => {
     const { query, strict } = ctx.req.valid('query');
 
@@ -23,8 +28,7 @@ app.get('/search',
     if (strict === true && result?.sys.success === true && result.items) {
       result.items = result.items.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
     }
-
-    ctx.header('Cache-Control', TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME));
+    
     return ctx.json(result);
   }
 )
