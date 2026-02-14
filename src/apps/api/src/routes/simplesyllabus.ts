@@ -20,7 +20,7 @@ app.get('/search',
     }
 
     //ctx.header('Cache-Control', 'TODO');
-    ctx.json(result);
+    return ctx.json(result);
   }
 )
 
