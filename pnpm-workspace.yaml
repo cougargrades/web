@@ -1,2 +1,2 @@
 shellEmulator: true
-packages: []
+packages: ['src/apps/**', 'src/packages/**', '!**/src/test/**']
