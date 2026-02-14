@@ -10,9 +10,18 @@ importers:
 
   src/apps/api:
     dependencies:
+      '@cougargrades/vendor':
+        specifier: workspace:*
+        version: link:../../packages/vendor
+      '@hono/zod-validator':
+        specifier: ^0.7.6
+        version: 0.7.6(hono@4.11.9)(zod@4.3.6)
       hono:
         specifier: ^4.11.9
         version: 4.11.9
+      zod:
+        specifier: ^4
+        version: 4.3.6
     devDependencies:
       wrangler:
         specifier: ^4.4.0
@@ -63,6 +72,26 @@ importers:
       vite:
         specifier: ^8.0.0-beta.13
         version: 8.0.0-beta.14(@types/node@24.10.13)(esbuild@0.27.3)
+
+  src/packages/models:
+    dependencies:
+      zod:
+        specifier: ^4
+        version: 4.3.6
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
+  src/packages/vendor:
+    dependencies:
+      zod:
+        specifier: ^4
+        version: 4.3.6
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.9.3
 
 packages:
 
@@ -398,6 +427,12 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@hono/zod-validator@0.7.6':
+    resolution: {integrity: sha512-Io1B6d011Gj1KknV4rXYz4le5+5EubcWEU/speUjuw9XMMIaP3n78yXLhjd2A3PXaXaUwEAluOiAyLqhBEJgsw==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      zod: ^3.25.0 || ^4.0.0
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1719,6 +1754,11 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@hono/zod-validator@0.7.6(hono@4.11.9)(zod@4.3.6)':
+    dependencies:
+      hono: 4.11.9
+      zod: 4.3.6
 
   '@humanfs/core@0.19.1': {}
 
