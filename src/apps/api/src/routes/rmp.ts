@@ -7,6 +7,7 @@ import type { RMPRankedSearchResult } from '@cougargrades/vendor/rmp'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
 import { diceCoefficient } from 'dice-coefficient'
+import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../cache'
 
 export const RMP_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 14 });
 
@@ -49,7 +50,7 @@ app.get('/search',
     // Sort the results
     results.sort((a,b) => b._searchScore - a._searchScore);
 
-    ctx.header('Cache-Control', TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME));
+    ctx.header('Cache-Control', TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME));
     return ctx.json(results);
   }
 )
