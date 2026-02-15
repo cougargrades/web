@@ -3,7 +3,9 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./cacheControl": "./src/cacheControl.ts"
+    "./cacheControl": "./src/cacheControl.ts",
+    "./nullish": "./src/nullish.ts",
+    "./zod": "./src/zod.ts"
   },
   "dependencies": {
     "temporal-polyfill": "^0.3.0",

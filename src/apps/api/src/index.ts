@@ -16,7 +16,7 @@ app.use('*', cors({
   ],
   allowMethods: ['POST', 'GET', 'OPTIONS'],
   maxAge: 600,
-}))
+}));
 
 app.get('/', (c) => {
   return c.text('Hello Hono!')

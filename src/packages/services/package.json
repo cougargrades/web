@@ -1,0 +1,23 @@
+{
+  "name": "@cougargrades/services",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./DocumentReference": "./src/DocumentReferenceService.ts",
+    "./SimpleSyllabusService": "./src/SimpleSyllabusService.ts"
+  },
+  "dependencies": {
+    "@cougargrades/models": "workspace:*",
+    "@cougargrades/utils": "workspace:*",
+    "@cougargrades/vendor": "workspace:*",
+    "lodash-es": "^4.17.23",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

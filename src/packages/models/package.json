@@ -2,7 +2,7 @@
   "name": "@cougargrades/models",
   "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "zod": "^4"
