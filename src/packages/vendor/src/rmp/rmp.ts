@@ -24,7 +24,7 @@ export function getRMPProfessorSearchUrl(query: string): string {
 
 
 export type RMPSearchResult = z.infer<typeof RMPSearchResult>
-export type RMPRankedSearchResult = RMPSearchResult & { _searchScore: number; };
+
 export const RMPSearchResult = z.object({
     id: z.string(),
     legacyId: z.number(),
@@ -46,6 +46,11 @@ export const RMPSearchResult = z.object({
         state: z.string(),
     })
 })
+
+export type RMPRankedSearchResult = z.infer<typeof RMPRankedSearchResult>
+export const RMPRankedSearchResult = z.intersection(RMPSearchResult, z.object({
+    _searchScore: z.number(),
+}))
 
 /**
  * Search for a professor at all UH campuses (deduplicated responses)
