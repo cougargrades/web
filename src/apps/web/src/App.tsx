@@ -16,7 +16,7 @@ function App() {
   const { isPending: isPendingDR, data: dataDR, error: errorDR } = useQuery({ 
     queryKey: ['data-example'],
     queryFn: async () => {
-      return await documentReferenceService.getDocumentByPath(`/catalog/ENGL 1301`, Course)
+      return await documentReferenceService.GetDocumentByPath(`/catalog/ENGL 1301`, Course)
     },
   })
 
