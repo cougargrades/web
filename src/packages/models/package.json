@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "@cougargrades/utils": "workspace:*",
-    "zod": "^4"
+    "lodash-es": "^4.17.23",
+    "zod": "^4.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "typescript": "^5"
   },
   "scripts": {

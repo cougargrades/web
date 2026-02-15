@@ -14,7 +14,8 @@ import { z } from 'zod'
  * @returns 
  */
 export function is<TSchema extends z4.$ZodType>(input: unknown, schema: TSchema): input is z4.output<TSchema> {
-  return z4.safeParse(schema, input).success
+  const parsed = z4.safeParse(schema, input);
+  return parsed.success
 }
 
 export type SafeParseResult<T> = z4.util.SafeParseResult<T>

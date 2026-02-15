@@ -1,13 +1,14 @@
 
 import * as z4 from 'zod/v4/core'
 import { z } from 'zod'
-import { trimEnd } from 'lodash-es'
-import { DocumentReference } from '@cougargrades/models'
-import { SafeParseResult } from '@cougargrades/utils/zod'
+import * as path from '@std/path'
+import { trimEnd, trimStart } from 'lodash-es'
+import { DocumentReference, ToDocumentReference } from '@cougargrades/models'
 
 import { BaseDataService } from './private/BaseDataService'
-import { isNullish } from '@cougargrades/utils/nullish'
+import { isNullish, isNullishOrWhitespace } from '@cougargrades/utils/nullish'
 
+const DEFAULT_EXTENSION = '.json';
 
 export class DocumentReferenceService extends BaseDataService {
   constructor() {
@@ -15,12 +16,14 @@ export class DocumentReferenceService extends BaseDataService {
   }
 
   public async GetDocumentByPath<TSchema extends z4.$ZodType>(documentPath: string, schema: TSchema): Promise<z4.output<TSchema> | null> {
-    const docRef = DocumentReference.parse(`FSDR://${documentPath.split('/').map(part => encodeURIComponent(part)).join('/')}.json`);
+    const docRef = ToDocumentReference(documentPath);
     return await this.GetDocument(docRef, schema);
   }
 
   public async GetDocument<TSchema extends z4.$ZodType>(documentRef: DocumentReference, schema: TSchema): Promise<z4.output<TSchema> | null> {
-    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}${documentRef.pathname}`);
+    const HAS_EXTENSION = !isNullishOrWhitespace(path.extname(documentRef.pathname));
+    const subpath = HAS_EXTENSION ? documentRef.pathname : `${documentRef.pathname}${DEFAULT_EXTENSION}`;
+    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}${subpath}`);
     if (!res.ok) {
       console.error(`[DocumentReferenceService] Failed to resolve DocumentReference (${res.status} ${res.statusText}) at: ${documentRef.pathname}`);
       return null;
@@ -28,7 +31,6 @@ export class DocumentReferenceService extends BaseDataService {
     try {
       const data = await res.json();
       const parsed = z4.safeParse(schema, data);
-      debugger;
       if (!parsed.success) return null;
       return parsed.data;
     }

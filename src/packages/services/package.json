@@ -8,14 +8,16 @@
     "./GroupService": "./src/GroupService.ts",
     "./InstructorService": "./src/InstructorService.ts",
     "./RmpService": "./src/RmpService.ts",
+    "./SectionService": "./src/SectionService.ts",
     "./SimpleSyllabusService": "./src/SimpleSyllabusService.ts"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
     "@cougargrades/vendor": "workspace:*",
+    "@std/path": "jsr:^1.1.4",
     "lodash-es": "^4.17.23",
-    "zod": "^4"
+    "zod": "^4.1"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",

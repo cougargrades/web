@@ -18,10 +18,10 @@ function RootComponent() {
         <Link to="/about" className="[&.active]:font-bold">
           About
         </Link>
-        <Link to="/posts/$postId" params={{ postId: '123' }} className="[&.active]:font-bold">
+        <Link to="/posts/$postId" params={{ postId: 'ENGL 1301' }} className="[&.active]:font-bold">
           Post 123
         </Link>
-        <Link to="/posts/$postId" params={{ postId: '456' }} className="[&.active]:font-bold">
+        <Link to="/posts/$postId" params={{ postId: 'COSC 2430' }} className="[&.active]:font-bold">
           Post 456
         </Link>
       </div>

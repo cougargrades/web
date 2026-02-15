@@ -4,6 +4,7 @@ export * from './Instructor'
 export * from './Section'
 export * from './Enrollment'
 export * from './Group'
+export * from './Helpers'
 export * from './SparklineData'
 export * from './DocumentReference'
 

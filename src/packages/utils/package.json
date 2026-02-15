@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "temporal-polyfill": "^0.3.0",
-    "zod": "^4"
+    "zod": "^4.1"
   },
   "devDependencies": {
     "typescript": "^5"

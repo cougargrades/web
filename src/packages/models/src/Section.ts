@@ -31,7 +31,14 @@ export const Section = z.object({
   S: z.number(),
   NCR: z.number(),
   semesterGPA: z.number().nullable(),
-  get course() {
-    return z.union([ DocumentReference, Course ])
-  }
+  /**
+   * Apparently, we never actually initialized this field with real data.
+   * 
+   * See:
+   * - https://github.com/cougargrades/types/blob/966ce2211f5f44dc94fcfa897db5fe8eab31b278/src/GradeDistributionCSVRow.ts#L83
+   * - https://github.com/cougargrades/publicdata/blob/4ef72d43e0fdf7e46c00db5c1e0e48fd99cadba0/mock-database/src/_mockDatabase.ts#L133
+   */
+  // get course() {
+  //   return z.union([ DocumentReference, Course ])
+  // }
 })

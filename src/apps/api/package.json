@@ -13,7 +13,7 @@
     "dice-coefficient": "^2.1.1",
     "hono": "^4.11.9",
     "temporal-polyfill": "^0.3.0",
-    "zod": "^4"
+    "zod": "^4.1"
   },
   "devDependencies": {
     "wrangler": "^4.65.0"
