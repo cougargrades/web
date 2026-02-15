@@ -5,6 +5,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@cougargrades/utils": "workspace:*",
     "zod": "^4"
   },
   "devDependencies": {

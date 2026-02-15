@@ -1,0 +1,86 @@
+/*
+  * UH Official
+  * http://www.uh.edu/marcom/guidelines-policies/brand/visual-identity/#color
+*/
+$uh-red: #c8102e;
+$uh-brick: #960C22;
+$uh-chocolate: #640817;
+
+$uh-teal: #00b388;
+$uh-green: #00866C;
+$uh-forest: #005950;
+
+$uh-gold: #F6BE00;
+$uh-mustard: #D89B00;
+$uh-ocher: #B97800;
+
+$uh-gray: #888b8d;
+$uh-grey: $uh-gray;
+$uh-slate: #54585a;
+$uh-black: #000000;
+
+$uh-cream: #fff9d9;
+$uh-white: #ffffff;
+
+/*
+  * UH Custom
+*/
+$uh-maya-blue: #65B2FE;
+$uh-orchid: #DC89DC;
+
+/*
+  * Color scheme inspired by aggiescheduler.com
+*/
+$grade-a: rgb(135, 206, 250);
+$grade-b: rgb(144, 238, 144);
+$grade-c: rgb(255, 255, 0);
+$grade-d: rgb(255, 160, 122);
+$grade-f: rgb(205, 92, 92);
+$grade-i: rgb(211, 211, 211);
+$grade-q: rgb(138, 43, 226);
+$grade-text: rgba(0, 0, 0, 0.54);
+$grade-stddev-high: royalblue;
+$grade-stddev-low: rgb(155, 173, 226);
+
+/*
+  Dark mode stuff (legacy)
+*/
+$dm-text: #dad7d2;
+$dm-fore: #343a40;
+$dm-back: #181a1b;
+$dm-red:  #f25e76;
+$dm-text-muted: rgba(255, 255, 255, 0.5);
+$lm-text-muted: #65757d;
+
+
+/*
+  Misc
+*/
+$google-softwhite: #efefef;
+$cg-softwhite: #f7f7f7;
+
+/*
+  New.css
+  From: https://github.com/xz/new.css/blob/master/theme/night.css
+*/
+$night-nc-tx-1: #ffffff;
+$night-nc-tx-2: #eeeeee;
+$night-nc-bg-1: #000000;
+$night-nc-bg-2: #111111;
+$night-nc-bg-3: #222222;
+$night-nc-lk-1: #3291FF;
+$night-nc-lk-2: #0070F3;
+$night-nc-lk-tx: #FFFFFF;
+$night-nc-ac-1: #7928CA;
+$night-nc-ac-tx: #FFFFFF;
+
+$default-nc-tx-1: #000000;
+$default-nc-tx-2: #1A1A1A;
+$default-nc-bg-1: #FFFFFF;
+$default-nc-bg-2: #F6F8FA;
+$default-nc-bg-3: #E5E7EB;
+$default-nc-lk-1: #0070F3;
+$default-nc-lk-2: #0366D6;
+$default-nc-lk-tx: #FFFFFF;
+$default-nc-ac-1: #79FFE1;
+$default-nc-ac-tx: #0C4047;

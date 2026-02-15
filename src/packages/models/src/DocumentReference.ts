@@ -1,5 +1,6 @@
 
 import { z } from 'zod'
+import { is } from '@cougargrades/utils/zod'
 
 export type DocumentReference = z.infer<typeof DocumentReference>;
 // "FSDR:///catalog/ENGL 1370"
@@ -9,3 +10,5 @@ export type DocumentReference = z.infer<typeof DocumentReference>;
  * Here, FSDR stands for "FireStore Document Reference", given that CougarGrades was originally powered by Google Firestore
  */
 export const DocumentReference = z.url({ protocol: /^fsdr$/ }).transform(val => new URL(val));
+
+export const IsDocumentReferenceArray = (input: unknown) => is(input, DocumentReference.array());
