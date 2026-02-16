@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { query, SAMPLE_QUERY } from '../lib/sqlite-demo'
+import { query, query2, SAMPLE_QUERY } from '../lib/sqlite-demo'
 
 export const Route = createFileRoute('/sqlite-demo')({
   component: RouteComponent,
@@ -13,7 +13,7 @@ function RouteComponent() {
   // })
 
   async function doThing() {
-    const data = await query(SAMPLE_QUERY);
+    const data = await query2(SAMPLE_QUERY);
     console.log('data?', data);
   }
   
