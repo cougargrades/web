@@ -3,10 +3,14 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./github": "./src/github/maintenance.ts",
     "./rmp": "./src/rmp/rmp.ts",
     "./simplesyllabus": "./src/simplesyllabus/simplesyllabus.ts"
   },
   "dependencies": {
+    "@cougargrades/utils": "workspace:*",
+    "@octokit/rest": "^19.0.13",
+    "temporal-polyfill": "^0.3.0",
     "zod": "^4"
   },
   "devDependencies": {
