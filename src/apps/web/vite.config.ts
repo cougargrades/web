@@ -25,4 +25,7 @@ export default defineConfig({
     }),
     viteReact(),
   ],
+  optimizeDeps: {
+    exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],
+  }
 })

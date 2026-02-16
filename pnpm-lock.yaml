@@ -47,6 +47,9 @@ importers:
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      '@sqlite.org/sqlite-wasm':
+        specifier: 3.51.2-build6
+        version: 3.51.2-build6
       '@tanstack/react-devtools':
         specifier: ^0.7.11
         version: 0.7.11(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(csstype@3.2.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)
@@ -68,6 +71,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.4(react@19.2.4)
+      sqlite-wasm-http:
+        specifier: ^1.2.0
+        version: 1.2.0
       zod:
         specifier: ^4.1
         version: 4.3.6
@@ -928,6 +934,10 @@ packages:
   '@speed-highlight/core@1.2.14':
     resolution: {integrity: sha512-G4ewlBNhUtlLvrJTb88d2mdy2KRijzs4UhnlrOSRT4bmjh/IqNElZa3zkrZ+TC47TwtlDWzVLFADljF1Ijp5hA==}
 
+  '@sqlite.org/sqlite-wasm@3.51.2-build6':
+    resolution: {integrity: sha512-5ibsgipkqcLINZ5qNSp5KfrtL6KwiNVtwBksNO6zhTghhLmEf3/u1sPoAkgH5RzuLpMw7zi50IWgkZ0WhfqpaA==}
+    engines: {node: '>=22'}
+
   '@tanstack/devtools-client@0.0.3':
     resolution: {integrity: sha512-kl0r6N5iIL3t9gGDRAv55VRM3UIyMKVH83esRGq7xBjYsRLe/BeCIN2HqrlJkObUXQMKhy7i8ejuGOn+bDqDBw==}
     engines: {node: '>=18'}
@@ -1384,6 +1394,10 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  lru-cache@7.18.3:
+    resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
+    engines: {node: '>=12'}
+
   miniflare@4.20260212.0:
     resolution: {integrity: sha512-Lgxq83EuR2q/0/DAVOSGXhXS1V7GDB04HVggoPsenQng8sqEDR3hO4FigIw5ZI2Sv2X7kIc30NCzGHJlCFIYWg==}
     engines: {node: '>=18.0.0'}
@@ -1530,6 +1544,10 @@ packages:
   source-map@0.7.6:
     resolution: {integrity: sha512-i5uvt8C3ikiWeNZSVZNWcfZPItFQOsYTUAOkcUPGd8DqDy1uOUikjt5dG+uRlwyvR108Fb9DOd4GvXfT0N2/uQ==}
     engines: {node: '>= 12'}
+
+  sqlite-wasm-http@1.2.0:
+    resolution: {integrity: sha512-mTZw4MHSw/dsO7PhAZeV14WIiVw/e8ECJSDV5oMEgInbCw+ITP/Y8YqbzggDiWRoPpbJ+uPoOXe5myIQbX6XxQ==}
+    engines: {node: '>=18.0.0'}
 
   supports-color@10.2.2:
     resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
@@ -2332,6 +2350,8 @@ snapshots:
 
   '@speed-highlight/core@1.2.14': {}
 
+  '@sqlite.org/sqlite-wasm@3.51.2-build6': {}
+
   '@tanstack/devtools-client@0.0.3':
     dependencies:
       '@tanstack/devtools-event-client': 0.3.5
@@ -2812,6 +2832,8 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  lru-cache@7.18.3: {}
+
   miniflare@4.20260212.0:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
@@ -2973,6 +2995,10 @@ snapshots:
   source-map@0.6.1: {}
 
   source-map@0.7.6: {}
+
+  sqlite-wasm-http@1.2.0:
+    dependencies:
+      lru-cache: 7.18.3
 
   supports-color@10.2.2: {}
 
