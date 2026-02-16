@@ -1,6 +1,7 @@
 
 import { z } from 'zod'
-import { auth, firestore as _firestore } from '@googleapis/firestore'
+//import { auth, firestore as _firestore } from '@googleapis/firestore'
+import { createFirestoreClient } from 'firebase-rest-firestore'
 
 export type FirestoreCredentials = z.infer<typeof FirestoreCredentials>
 /**
@@ -21,20 +22,24 @@ export const FirestoreCredentials = z.object({
   client_x509_cert_url: z.string().optional(),
 })
 
-//JSON.parse(atob(env.GOOGLE_APPLICATION_CREDENTIALS))
+// Ex: const docs = await db.projects.databases.documents.list({ parent: `projects/cougargrades-testing/databases/(default)/documents`, collectionId: 'environment' });
+
+// export function firestore(credentials: FirestoreCredentials) {
+//   const authClient = new auth.JWT();
+//   authClient.fromJSON(credentials);
+//   authClient.scopes = ['https://www.googleapis.com/auth/datastore'];
+
+//   const db = _firestore({
+//     version: 'v1',
+//     auth: authClient,
+//   })
+//   return db;
+// }
 
 export function firestore(credentials: FirestoreCredentials) {
-  const authClient = new auth.JWT();
-  authClient.fromJSON(credentials);
-  authClient.scopes = ['https://www.googleapis.com/auth/datastore'];
-  //const cred = await authClient.authorize()
-  //const cred = await authClient.getCredentials();
-
-  const db = _firestore({
-    version: 'v1',
-    auth: authClient,
-    //credentials: cred,
-    //auth: cred
+  return createFirestoreClient({
+    projectId: credentials.project_id,
+    privateKey: credentials.private_key,
+    clientEmail: credentials.client_email,
   })
-  return db;
 }
