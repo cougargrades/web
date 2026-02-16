@@ -2,13 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cougargrades-api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-02-14"
-  // "compatibility_flags": [
-  //   "nodejs_compat"
-  // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
+  "compatibility_date": "2026-02-14",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "vars": {
+    "GOOGLE_APPLICATION_CREDENTIALS": "JSON.parse(base64_decode({\"type\":\"service_account\",\"project_id\":\"...\", ...))"
+  },
+  // "sec"
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",

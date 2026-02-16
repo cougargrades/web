@@ -3,12 +3,16 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./firestore": "./src/firestore/firestore.ts",
+    "./firestore_grpc": "./src/firestore/firestore_grpc.ts",
     "./github": "./src/github/maintenance.ts",
     "./rmp": "./src/rmp/rmp.ts",
     "./simplesyllabus": "./src/simplesyllabus/simplesyllabus.ts"
   },
   "dependencies": {
     "@cougargrades/utils": "workspace:*",
+    "@google-cloud/firestore": "^8.3.0",
+    "@googleapis/firestore": "^18.2.0",
     "@octokit/rest": "^19.0.13",
     "temporal-polyfill": "^0.3.0",
     "zod": "^4"
