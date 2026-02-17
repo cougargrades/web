@@ -7,3 +7,4 @@ export const GOOGLE_APPLICATION_CREDENTIALS = FirestoreCredentials.parse(JSON.pa
 // export const DATABASE_ID = '(default)';
 
 export const firestore = () => _firestore(GOOGLE_APPLICATION_CREDENTIALS);
+export const db = firestore();

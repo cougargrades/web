@@ -21,7 +21,6 @@ export const DocumentReference = z.coerce.string()
       }
     }
     catch (err) {
-      debugger;
       ctx.addIssue('Must be a valid/parsable URL')
     }
   })

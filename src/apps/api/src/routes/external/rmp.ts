@@ -8,7 +8,7 @@ import type { RMPRankedSearchResult } from '@cougargrades/vendor/rmp'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
 import { diceCoefficient } from 'dice-coefficient'
-import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../cache'
+import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../../cache'
 
 export const RMP_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 14 });
 

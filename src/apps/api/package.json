@@ -8,6 +8,7 @@
     "wrangler": "wrangler"
   },
   "dependencies": {
+    "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
     "@cougargrades/vendor": "workspace:*",
     "@hono/zod-validator": "^0.7.6",

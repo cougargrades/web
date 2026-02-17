@@ -10,6 +10,9 @@ importers:
 
   src/apps/api:
     dependencies:
+      '@cougargrades/models':
+        specifier: workspace:*
+        version: link:../../packages/models
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../../packages/utils
