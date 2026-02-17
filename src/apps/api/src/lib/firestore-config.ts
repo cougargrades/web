@@ -11,4 +11,4 @@ export const firestore = () => {
   const GOOGLE_APPLICATION_CREDENTIALS = FirestoreCredentials.parse(JSON.parse(atob(env.GOOGLE_APPLICATION_CREDENTIALS)));
   return _firestore(GOOGLE_APPLICATION_CREDENTIALS);
 }
-export const db = firestore();
+//export const db = firestore();

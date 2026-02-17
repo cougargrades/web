@@ -4,7 +4,7 @@ import { cache } from 'hono/cache'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Section } from '@cougargrades/models';
-import { db } from '../lib/firestore-config'
+import { firestore } from '../lib/firestore-config'
 import { DURATION_ZERO } from '../cache'
 
 const app = new Hono()
@@ -15,10 +15,11 @@ app.get('/',
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
-     const snap = await db.collection('sections')
-      .orderBy('term', 'desc')
-      .limit(1)
-      .get();
+    const db = firestore();
+    const snap = await db.collection('sections')
+    .orderBy('term', 'desc')
+    .limit(1)
+    .get();
   
     if (snap.empty) return ctx.json(null);
     if (snap.docs.length === 0) return ctx.json(null);
