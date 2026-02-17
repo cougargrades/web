@@ -1,6 +1,8 @@
 
 # @cougargrades/api
 
+test
+
 This is the HTTP API that powers 3rd party data in CougarGrades. Data that is provided by `@cougargrades/vendor` is accessible here through this API to abstract away, increase caching, and most importantly to fix CORS issues.
 
 CougarGrade's own data is not served by this API, but by https://data.cougargrades.io
