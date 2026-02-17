@@ -21,6 +21,8 @@
   },
   "env": {
     "preview": {
+      "workers_dev": true,
+      "routes": [],
       "vars": {
       },
     }
