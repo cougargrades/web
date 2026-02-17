@@ -1,7 +1,8 @@
 
 import { z } from 'zod'
 //import { auth, firestore as _firestore } from '@googleapis/firestore'
-import { createFirestoreClient } from 'firebase-rest-firestore'
+import { createFirestoreClient, Query, QuerySnapshot } from 'firebase-rest-firestore'
+import { isNullish } from '@cougargrades/utils/nullish'
 
 export type FirestoreCredentials = z.infer<typeof FirestoreCredentials>
 /**
@@ -42,4 +43,30 @@ export function firestore(credentials: FirestoreCredentials) {
     privateKey: credentials.private_key,
     clientEmail: credentials.client_email,
   })
+}
+
+/**
+ * "Streams" in the results of a query by iterating (potentially endlessly) by using a sliding window of size `chunkSize`
+ * @param query 
+ * @param chunkSize 
+ */
+export async function* stream(query: Query, chunkSize: number = 25) {
+  // If a limit or offset is already provided, then don't manipulate them
+  if (!isNullish(query._queryConstraints.limit) || !isNullish(query._queryConstraints.offset)) {
+    const snap = await query.get()
+    for(let doc of snap.docs) {
+      yield doc;
+    }
+  }
+
+  let i = 0;
+  let snap: QuerySnapshot;
+  do {
+    snap = await query.limit(chunkSize).offset(i).get();
+    for(let doc of snap.docs) {
+      yield doc;
+    }
+    i += chunkSize;
+  }
+  while (!snap.empty);
 }

@@ -3,8 +3,9 @@ import { cors } from 'hono/cors'
 
 import rmp from './routes/external/rmp'
 import simplesyllabus from './routes/external/simplesyllabus'
-import latest_term from './routes/latest_term'
 import environment from './routes/environment'
+import latest_term from './routes/latest_term'
+import top from './routes/top'
 
 const app = new Hono()
 
@@ -26,7 +27,8 @@ app.get('/', (ctx) => {
 
 app.route('/api/external/rmp', rmp);
 app.route('/api/external/simplesyllabus', simplesyllabus);
-app.route('/api/latest_term', latest_term);
 app.route('/api/environment', environment);
+app.route('/api/latest_term', latest_term);
+app.route('/api/top', top);
 
 export default app

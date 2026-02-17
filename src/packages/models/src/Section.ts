@@ -42,3 +42,6 @@ export const Section = z.object({
   //   return z.union([ DocumentReference, Course ])
   // }
 })
+
+export type SectionThin = z.infer<typeof SectionThin>
+export const SectionThin = Section.omit({ instructors: true })

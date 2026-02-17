@@ -20,7 +20,7 @@ export const Group = z.object({
   get relatedGroups() {
     return z.union([ DocumentReference.array(), Group.array() ])
   },
-  keywords: z.string().array(),
+  //keywords: z.string().array(),
   categories: z.string().array(),
   get sources() {
     return LabeledLink.array()

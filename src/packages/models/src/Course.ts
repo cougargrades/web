@@ -51,7 +51,7 @@ export const Course = z.object({
   get groups() {
     return z.union([ DocumentReference.array(), Group.array() ])
   },
-  keywords: z.string().array(),
+  //keywords: z.string().array(),
   firstTaught: z.number(),
   lastTaught: z.number(),
   enrollment: Enrollment,
@@ -59,3 +59,6 @@ export const Course = z.object({
   tccnsUpdates: TCCNSUpdateInfo.array(),
   enrollmentSparklineData: SparklineData.nullish(),
 })
+
+export type CourseThin = z.infer<typeof CourseThin>
+export const CourseThin = Course.omit({ sections: true, instructors: true, groups: true, publications: true, tccnsUpdates: true })

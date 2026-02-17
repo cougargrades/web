@@ -17,7 +17,7 @@ export const Instructor = z.object({
   departments: z.partialRecord(z.string(), z.number()),
   firstTaught: z.number(),
   lastTaught: z.number(),
-  keywords: z.string().array(),
+  //keywords: z.string().array(),
   get courses() {
     return z.union([ DocumentReference.array(), Course.array() ])
   },
@@ -30,3 +30,5 @@ export const Instructor = z.object({
   enrollmentSparklineData: SparklineData.nullish(),
 })
 
+export type InstructorThin = z.infer<typeof InstructorThin>
+export const InstructorThin = Instructor.omit({ courses: true, sections: true })

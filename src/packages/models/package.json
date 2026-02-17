@@ -2,7 +2,8 @@
   "name": "@cougargrades/models",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./dto": "./src/dto/index.ts"
   },
   "dependencies": {
     "@cougargrades/utils": "workspace:*",
