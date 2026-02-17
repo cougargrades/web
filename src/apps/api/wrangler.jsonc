@@ -17,16 +17,10 @@
     }
   ],
   "vars": {
-    //"GOOGLE_APPLICATION_CREDENTIALS": "JSON.parse(base64_decode({\"type\":\"service_account\",\"project_id\":\"...\", ...))",
-    // Fake credential that passes the build step (since we validate the environment variable early)
-    // {"type":"service_account","project_id":"cougargrades-testing","private_key_id":"(redacted)","private_key":"-----BEGIN PRIVATE KEY-----\n(redacted)\n-----END PRIVATE KEY-----\n","client_email":"(redacted)","client_id":"(redacted)","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"(redacted)"}
-    "GOOGLE_APPLICATION_CREDENTIALS": "eyJ0eXBlIjoic2VydmljZV9hY2NvdW50IiwicHJvamVjdF9pZCI6ImZha2UtY291Z2FyZ3JhZGVzIiwicHJpdmF0ZV9rZXlfaWQiOiIocmVkYWN0ZWQpIiwicHJpdmF0ZV9rZXkiOiItLS0tLUJFR0lOIFBSSVZBVEUgS0VZLS0tLS1cbihyZWRhY3RlZClcbi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS1cbiIsImNsaWVudF9lbWFpbCI6IihyZWRhY3RlZCkiLCJjbGllbnRfaWQiOiIocmVkYWN0ZWQpIiwiYXV0aF91cmkiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvYXV0aCIsInRva2VuX3VyaSI6Imh0dHBzOi8vb2F1dGgyLmdvb2dsZWFwaXMuY29tL3Rva2VuIiwiYXV0aF9wcm92aWRlcl94NTA5X2NlcnRfdXJsIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vb2F1dGgyL3YxL2NlcnRzIiwiY2xpZW50X3g1MDlfY2VydF91cmwiOiIocmVkYWN0ZWQpIn0"
   },
   "env": {
     "preview": {
       "vars": {
-        // Fake credential that passes the build step (since we validate the environment variable early)
-        "GOOGLE_APPLICATION_CREDENTIALS": "eyJ0eXBlIjoic2VydmljZV9hY2NvdW50IiwicHJvamVjdF9pZCI6ImZha2UtY291Z2FyZ3JhZGVzIiwicHJpdmF0ZV9rZXlfaWQiOiIocmVkYWN0ZWQpIiwicHJpdmF0ZV9rZXkiOiItLS0tLUJFR0lOIFBSSVZBVEUgS0VZLS0tLS1cbihyZWRhY3RlZClcbi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS1cbiIsImNsaWVudF9lbWFpbCI6IihyZWRhY3RlZCkiLCJjbGllbnRfaWQiOiIocmVkYWN0ZWQpIiwiYXV0aF91cmkiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvYXV0aCIsInRva2VuX3VyaSI6Imh0dHBzOi8vb2F1dGgyLmdvb2dsZWFwaXMuY29tL3Rva2VuIiwiYXV0aF9wcm92aWRlcl94NTA5X2NlcnRfdXJsIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vb2F1dGgyL3YxL2NlcnRzIiwiY2xpZW50X3g1MDlfY2VydF91cmwiOiIocmVkYWN0ZWQpIn0"
       },
     }
   },

@@ -4,7 +4,7 @@ import { FirestoreCredentials, firestore as _firestore } from '@cougargrades/ven
 
 export const GOOGLE_APPLICATION_CREDENTIALS = FirestoreCredentials.parse(JSON.parse(atob(env.GOOGLE_APPLICATION_CREDENTIALS)));
 
-console.debug(`🔥 Using Firestore ProjectID = '${GOOGLE_APPLICATION_CREDENTIALS.project_id}'`);
+console.log(`🔥 Using Firestore ProjectID = '${GOOGLE_APPLICATION_CREDENTIALS.project_id}'`);
 // export const PROJECT_ID = GOOGLE_APPLICATION_CREDENTIALS.project_id;
 // export const DATABASE_ID = '(default)';
 
