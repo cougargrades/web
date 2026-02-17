@@ -9,6 +9,7 @@
   "observability": {
     "enabled": true
   },
+  "preview_urls": true,
   "routes": [
     {
       "pattern": "api.cougargrades.io",

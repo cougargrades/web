@@ -17,9 +17,9 @@ app.get('/',
   async (ctx) => {
     const db = firestore();
     const snap = await db.collection('sections')
-    .orderBy('term', 'desc')
-    .limit(1)
-    .get();
+      .orderBy('term', 'desc')
+      .limit(1)
+      .get();
   
     if (snap.empty) return ctx.json(null);
     if (snap.docs.length === 0) return ctx.json(null);
