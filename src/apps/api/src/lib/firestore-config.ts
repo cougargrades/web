@@ -6,5 +6,7 @@ export const GOOGLE_APPLICATION_CREDENTIALS = FirestoreCredentials.parse(JSON.pa
 // export const PROJECT_ID = GOOGLE_APPLICATION_CREDENTIALS.project_id;
 // export const DATABASE_ID = '(default)';
 
-export const firestore = () => _firestore(GOOGLE_APPLICATION_CREDENTIALS);
+export const firestore = () => {
+  return _firestore(GOOGLE_APPLICATION_CREDENTIALS);
+}
 export const db = firestore();
