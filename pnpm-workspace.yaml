@@ -1,2 +1,9 @@
+packages:
+  - src/apps/**
+  - src/packages/**
+  - '!**/src/test/**'
+
+# overrides:
+#   firebase-rest-firestore: link:../../firebase-rest-firestore
+
 shellEmulator: true
-packages: ['src/apps/**', 'src/packages/**', '!**/src/test/**']
