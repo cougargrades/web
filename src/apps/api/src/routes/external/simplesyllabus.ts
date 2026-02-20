@@ -8,7 +8,7 @@ import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
 import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../../cache'
 
-export const SYLLABUS_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 7 });
+export const SYLLABUS_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 1 });
 
 const app = new Hono()
 

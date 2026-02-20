@@ -4,6 +4,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./cacheControl": "./src/cacheControl.ts",
+    "./comparator": "./src/comparator.ts",
     "./nullish": "./src/nullish.ts",
     "./zod": "./src/zod.ts"
   },

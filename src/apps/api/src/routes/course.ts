@@ -7,7 +7,7 @@ import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { TopOptions } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
-import { getTopResults } from '../lib/getTopResults'
+import { getCourseData } from '../lib/getCourseResults'
 
 const app = new Hono()
 
@@ -17,14 +17,15 @@ app.get('/:courseName',
   })),
   cache({
     cacheName: 'cougargrades-api',
+    // TODO: use real cache time
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { courseName } = ctx.req.valid('param');
-    console.log('courseName?', courseName);
+    const results = await getCourseData(courseName);
 
     //const results = await getTopResults({ metric, topic, limit, time, hideCore })
-    return ctx.json('hello course');
+    return ctx.json(results);
   }
 )
 

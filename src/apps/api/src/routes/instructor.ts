@@ -17,6 +17,7 @@ app.get('/:instructorName',
   })),
   cache({
     cacheName: 'cougargrades-api',
+    // TODO: use real cache time
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {

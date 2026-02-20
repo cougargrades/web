@@ -40,8 +40,17 @@ export const IsDocumentReference = (input: unknown) => is(input, DocumentReferen
 export const IsDocumentReferenceArray = (input: unknown) => is(input, DocumentReference.array());
 
 /**
- * Converts document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`) into DocumentReferences
+ * Converts document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`) into DocumentReferences (ex: `FSDR:///...`)
  * @param documentPath 
  * @returns 
  */
 export const ToDocumentReference = (documentPath: string) => DocumentReference.parse(`FSDR:///${trimStart(documentPath, '/').split('/').map(part => encodeURIComponent(part)).join('/')}`);
+
+/**
+ * Converts DocumentReferences (ex: `FSDR:///...`) into document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`)
+ * @param docRef 
+ * @returns 
+ */
+export function ToDocumentPath(docRef: DocumentReference) {
+  return docRef.pathname.split('/').map(part => decodeURIComponent(part)).join('/')
+}

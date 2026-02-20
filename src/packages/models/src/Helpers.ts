@@ -2,9 +2,10 @@
 import { is } from '@cougargrades/utils/zod'
 import { trimStart } from 'lodash-es'
 import { DocumentReference } from './DocumentReference';
-import { Section } from './Section';
+import { GetTotalEnrolled, Section } from './Section';
 import { Course } from './Course';
 import { Instructor } from './Instructor';
+import { Enrollment } from './Enrollment';
 
 export function ToQueryKeys(input: DocumentReference | Course | Instructor | Section): string[] {
   // DocumentReferences already have paths defined
@@ -30,3 +31,21 @@ export function ToQueryKeys(input: DocumentReference | Course | Instructor | Sec
     return []
   }
 }
+
+/**
+ * May return `-1` if there were zero "occupied" sections
+ * @param enrollment 
+ * @param allSections 
+ * @returns 
+ */
+export const EstimateClassSize = (enrollment: Enrollment, allSections: Section[]) => {
+  const numOccupiedSections = allSections.filter(sec => GetTotalEnrolled(sec) > 0).length;
+  const classSize = numOccupiedSections === 0 ? -1 : enrollment.totalEnrolled / numOccupiedSections
+  return classSize
+}
+
+export const sum = (x: number[]) => x.reduce((a, b) => a + b, 0)
+
+export const average = (x: number[]) => sum(x) / x.length;
+
+

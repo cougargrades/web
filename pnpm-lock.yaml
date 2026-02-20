@@ -121,6 +121,9 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      csstype:
+        specifier: ^3.2.3
+        version: 3.2.3
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -181,7 +184,7 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       zod:
-        specifier: ^4
+        specifier: ^4.1
         version: 4.3.6
     devDependencies:
       typescript:

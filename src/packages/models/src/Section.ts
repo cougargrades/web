@@ -45,3 +45,5 @@ export const Section = z.object({
 
 export type SectionThin = z.infer<typeof SectionThin>
 export const SectionThin = Section.omit({ instructors: true })
+
+export const GetTotalEnrolled = (sec: Section) => sec.A + sec.B + sec.C + sec.D + sec.F + sec.NCR + sec.S + sec.W;

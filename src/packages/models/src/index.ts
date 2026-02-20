@@ -7,6 +7,7 @@ export * from './Group'
 export * from './Helpers'
 export * from './SparklineData'
 export * from './DocumentReference'
+export * from './TermCode'
 
 export * as GPA from './GPA'
 export * as Average from './Statistics/Average'
