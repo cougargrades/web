@@ -16,7 +16,7 @@ export type TopOptions = z.infer<typeof TopOptions>
 export const TopOptions = z.object({
   metric: TopMetric,
   topic: TopTopic,
-  limit: z.coerce.number().lte(250),
+  limit: z.coerce.number().int().min(1).max(250),
   time: TopTime,
   hideCore: z.coerce.boolean().default(false),
 })
@@ -28,9 +28,9 @@ export const PlusMetrics = z.object({
 })
 
 export type CoursePlusMetrics = z.infer<typeof CoursePlusMetrics>
-//export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
-export const CoursePlusMetrics = z.intersection(Course, PlusMetrics)
+export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
+//export const CoursePlusMetrics = z.intersection(Course, PlusMetrics)
 
 export type InstructorPlusMetrics = z.infer<typeof InstructorPlusMetrics>
-//export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
-export const InstructorPlusMetrics = z.intersection(Instructor, PlusMetrics)
+export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
+//export const InstructorPlusMetrics = z.intersection(Instructor, PlusMetrics)
