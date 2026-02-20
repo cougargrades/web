@@ -1,7 +1,8 @@
 
 import { z } from 'zod'
 //import { auth, firestore as _firestore } from '@googleapis/firestore'
-import { createFirestoreClient, Query, QuerySnapshot } from 'firebase-rest-firestore'
+// TODO: change back after merge: https://github.com/nabettu/firebase-rest-firestore/pull/7
+import { createFirestoreClient, Query, QuerySnapshot } from '@cougargrades/firebase-rest-firestore'
 import { isNullish } from '@cougargrades/utils/nullish'
 
 export type FirestoreCredentials = z.infer<typeof FirestoreCredentials>

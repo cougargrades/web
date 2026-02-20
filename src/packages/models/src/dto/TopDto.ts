@@ -28,7 +28,9 @@ export const PlusMetrics = z.object({
 })
 
 export type CoursePlusMetrics = z.infer<typeof CoursePlusMetrics>
-export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
+//export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
+export const CoursePlusMetrics = z.intersection(Course, PlusMetrics)
 
 export type InstructorPlusMetrics = z.infer<typeof InstructorPlusMetrics>
-export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
+//export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
+export const InstructorPlusMetrics = z.intersection(Instructor, PlusMetrics)

@@ -105,6 +105,9 @@ importers:
 
   src/packages/models:
     dependencies:
+      '@cougargrades/firebase-rest-firestore':
+        specifier: ^1.6.1
+        version: 1.6.1
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../utils
@@ -165,15 +168,15 @@ importers:
 
   src/packages/vendor:
     dependencies:
+      '@cougargrades/firebase-rest-firestore':
+        specifier: ^1.6.1
+        version: 1.6.1
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../utils
       '@octokit/rest':
         specifier: ^19.0.13
         version: 19.0.13
-      firebase-rest-firestore:
-        specifier: ^1.5.0
-        version: 1.5.0
       temporal-polyfill:
         specifier: ^0.3.0
         version: 0.3.0
@@ -324,6 +327,10 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cougargrades/firebase-rest-firestore@1.6.1':
+    resolution: {integrity: sha512-qv22dLW/5CJ4t14CtpMxYLb4Sj/KvArcUhTzlaOoG/xqhBVXv8W15VD3hT/Ec1AMmvWKWRapZcqGBjwLZc8xoQ==}
+    engines: {node: '>=20.8.1'}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1248,10 +1255,6 @@ packages:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
 
-  firebase-rest-firestore@1.5.0:
-    resolution: {integrity: sha512-hFhvx5I8GRDilMwQjDqJcJVZeh25akhTAZFOITqHL13PGTVmkyN4B2IBd3A4EKQRchwqecD8wBmu+i6Sb3hz2A==}
-    engines: {node: '>=20.8.1'}
-
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -1625,6 +1628,9 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  urlpattern-polyfill@10.1.0:
+    resolution: {integrity: sha512-IGjKp/o0NL3Bso1PymYURCJxMPNAf/ILOpendP9f5B6e1rTJgdgiOvgfoT8VxCAdY+Wisb9uhGaJJf3yZ2V9nw==}
+
   use-sync-external-store@1.6.0:
     resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
     peerDependencies:
@@ -1885,6 +1891,11 @@ snapshots:
 
   '@cloudflare/workerd-windows-64@1.20260212.0':
     optional: true
+
+  '@cougargrades/firebase-rest-firestore@1.6.1':
+    dependencies:
+      jose: 4.15.9
+      urlpattern-polyfill: 10.1.0
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -2736,10 +2747,6 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
-  firebase-rest-firestore@1.5.0:
-    dependencies:
-      jose: 4.15.9
-
   fsevents@2.3.3:
     optional: true
 
@@ -3075,6 +3082,8 @@ snapshots:
       browserslist: 4.28.1
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  urlpattern-polyfill@10.1.0: {}
 
   use-sync-external-store@1.6.0(react@19.2.4):
     dependencies:

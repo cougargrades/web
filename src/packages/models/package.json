@@ -6,6 +6,7 @@
     "./dto": "./src/dto/index.ts"
   },
   "dependencies": {
+    "@cougargrades/firebase-rest-firestore": "^1.6.1",
     "@cougargrades/utils": "workspace:*",
     "lodash-es": "^4.17.23",
     "zod": "^4.1"
