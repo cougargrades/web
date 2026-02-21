@@ -1,6 +1,10 @@
 
 export * from './Badges'
+export * from './CourseInstructorResult'
 export * from './CourseResult'
 export * from './EnrollmentInfoResult'
+export * from './GroupResult'
+export * from './InstructorResult'
+export * from './Plus'
 export * from './SeasonalAvailability'
 export * from './TopDto'

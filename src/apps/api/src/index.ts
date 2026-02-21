@@ -6,6 +6,7 @@ import simplesyllabus from './routes/external/simplesyllabus'
 import environment from './routes/environment'
 import latest_term from './routes/latest_term'
 import top from './routes/top'
+import trending from './routes/trending'
 import course from './routes/course'
 import instructor from './routes/instructor'
 import group from './routes/group'
@@ -33,6 +34,7 @@ app.route('/api/external/simplesyllabus', simplesyllabus);
 app.route('/api/environment', environment);
 app.route('/api/latest_term', latest_term);
 app.route('/api/top', top);
+app.route('/api/trending', trending);
 app.route('/api/course', course);
 app.route('/api/instructor', instructor);
 app.route('/api/group', group);

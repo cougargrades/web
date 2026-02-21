@@ -14,7 +14,7 @@ export const Instructor = z.object({
   firstName: z.string(),
   lastName: z.string(),
   fullName: z.string(),
-  departments: z.partialRecord(z.string(), z.number()),
+  departments: z.record(z.string(), z.number()),
   firstTaught: z.number(),
   lastTaught: z.number(),
   //keywords: z.string().array(),

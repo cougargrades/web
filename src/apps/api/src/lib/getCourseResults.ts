@@ -3,14 +3,15 @@ import { CourseResult, EnrollmentInfoResult, getBadges, getSeasonalAvailability,
 import { descendingComparator } from '@cougargrades/utils/comparator'
 
 import { getFirestoreDocument, getFirestoreDocuments, getFirestoreDocumentSafe } from './firestore-config';
+import { getChartData } from './getChartData';
 
 /**
  * Used in serverless functions
  * @param courseName 
  * @returns 
  */
-export async function getCourseData(courseName: string): Promise<CourseResult> {
-  const { data } = await getFirestoreDocumentSafe(`/catalog/${courseName}`, Course)
+export async function getCourseResults(courseName: string): Promise<CourseResult> {
+  const { data } = await getFirestoreDocumentSafe(`catalog/${courseName}`, Course)
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
 
   const settledData = await Promise.allSettled([

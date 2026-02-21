@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cougargrades-api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-02-12",
+  "compatibility_date": "2026-02-14",
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],

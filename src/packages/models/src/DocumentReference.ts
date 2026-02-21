@@ -52,5 +52,6 @@ export const ToDocumentReference = (documentPath: string) => DocumentReference.p
  * @returns 
  */
 export function ToDocumentPath(docRef: DocumentReference) {
-  return docRef.pathname.split('/').map(part => decodeURIComponent(part)).join('/')
+  // `firebase-rest-firestore` doesn't like it when document paths begin with `/`
+  return trimStart(docRef.pathname.split('/').map(part => decodeURIComponent(part)).join('/'), '/');
 }

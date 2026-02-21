@@ -5,9 +5,8 @@ import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { TopOptions } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
-import { getCourseData } from '../lib/getCourseResults'
+import { getCourseResults } from '../lib/getCourseResults'
 
 const app = new Hono()
 
@@ -22,9 +21,7 @@ app.get('/:courseName',
   }),
   async (ctx) => {
     const { courseName } = ctx.req.valid('param');
-    const results = await getCourseData(courseName);
-
-    //const results = await getTopResults({ metric, topic, limit, time, hideCore })
+    const results = await getCourseResults(courseName);
     return ctx.json(results);
   }
 )

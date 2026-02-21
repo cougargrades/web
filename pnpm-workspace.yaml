@@ -3,7 +3,7 @@ packages:
   - src/packages/**
   - '!**/src/test/**'
 
-# overrides:
-#   firebase-rest-firestore: link:../../firebase-rest-firestore
+onlyBuiltDependencies:
+  - workerd
 
 shellEmulator: true

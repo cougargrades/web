@@ -5,7 +5,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
-    "wrangler": "wrangler"
+    "wrangler": "wrangler",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",
@@ -18,6 +19,6 @@
     "zod": "^4.1"
   },
   "devDependencies": {
-    "wrangler": "^4.65.0"
+    "wrangler": "^4.67.0"
   }
 }
