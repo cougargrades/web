@@ -6,21 +6,30 @@ import { describeRoute, resolver } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { TopOptions } from '@cougargrades/models/dto'
+import { AllGroupsResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
-import { getTopResults } from '../lib/getTopResults'
+import { getAllGroups } from '../lib/getAllGroups'
 
 const app = new Hono()
 
 app.get('/',
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(AllGroupsResult) }
+        }
+      }
+    }
+  }),
   cache({
     cacheName: 'cougargrades-api',
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
-
-    //const results = await getTopResults({ metric, topic, limit, time, hideCore })
-    return ctx.json('hello all groups');
+    const results = await getAllGroups();
+    return ctx.json(results);
   }
 )
 app.get('/:groupId',

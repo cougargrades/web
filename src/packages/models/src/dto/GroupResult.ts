@@ -34,6 +34,14 @@ export const GroupResult = LiteGroupResult.extend({
 //   relatedGroups: LabeledLink.array(),
 // })
 
+export type AllGroupsResult = z.infer<typeof AllGroupsResult>
+export const AllGroupsResult = z.object({
+  categories: z.string().array(),
+  core_curriculum: LiteGroupResult.array(),
+  all_groups: LiteGroupResult.array(),
+})
+
+
 export function group2Result(data: Group): LiteGroupResult {
   return {
     key: data.identifier,
