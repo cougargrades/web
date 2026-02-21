@@ -2,8 +2,10 @@
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
 import { zValidator } from '@hono/zod-validator'
+import { describeRoute, resolver } from 'hono-openapi'
 import { z } from 'zod'
 import * as simplesyllabus from '@cougargrades/vendor/simplesyllabus'
+import { SSSearchResponse } from '@cougargrades/vendor/simplesyllabus'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
 import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../../cache'
@@ -17,6 +19,16 @@ app.get('/search',
     query: z.string().nonempty(),
     strict: z.coerce.boolean().optional(),
   })),
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(SSSearchResponse.nullable()) }
+        }
+      }
+    }
+  }),
   cache({
     cacheName: 'cougargrades-api',
     cacheControl: TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),

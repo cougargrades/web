@@ -1,6 +1,8 @@
 
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
+import { describeRoute, resolver } from 'hono-openapi'
+import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Section } from '@cougargrades/models';
@@ -10,6 +12,16 @@ import { DURATION_ZERO } from '../cache'
 const app = new Hono()
 
 app.get('/',
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(z.number().nullable()) }
+        }
+      }
+    }
+  }),
   cache({
     cacheName: 'cougargrades-api',
     // TODO: use real cache time

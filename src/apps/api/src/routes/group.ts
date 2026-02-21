@@ -2,6 +2,7 @@
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
 import { zValidator } from '@hono/zod-validator'
+import { describeRoute, resolver } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'

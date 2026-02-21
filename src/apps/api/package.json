@@ -12,9 +12,13 @@
     "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
     "@cougargrades/vendor": "workspace:*",
+    "@hono/standard-validator": "^0.2.2",
+    "@hono/swagger-ui": "^0.5.3",
     "@hono/zod-validator": "^0.7.6",
+    "@standard-community/standard-openapi": "^0.2.9",
     "dice-coefficient": "^2.1.1",
     "hono": "^4.11.9",
+    "hono-openapi": "^1.2.0",
     "temporal-polyfill": "^0.3.0",
     "zod": "^4.1"
   },

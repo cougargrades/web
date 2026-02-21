@@ -2,9 +2,10 @@
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
 import { zValidator } from '@hono/zod-validator'
+import { describeRoute, resolver } from 'hono-openapi'
 import { z } from 'zod'
 import * as rmp from '@cougargrades/vendor/rmp'
-import type { RMPRankedSearchResult } from '@cougargrades/vendor/rmp'
+import { RMPRankedSearchResult } from '@cougargrades/vendor/rmp'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
 import { diceCoefficient } from 'dice-coefficient'
@@ -19,6 +20,16 @@ app.get('/search',
     query: z.string().nonempty(),
     strict: z.coerce.boolean().optional(),
   })),
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(RMPRankedSearchResult.array()) }
+        }
+      }
+    }
+  }),
   cache({
     cacheName: 'cougargrades-api',
     cacheControl: TEMPORAL_CACHE_CONTROL(RMP_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),

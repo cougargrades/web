@@ -4,7 +4,7 @@ import { CoursePlusMetrics, InstructorPlusMetrics, TopOptions } from '@cougargra
 import { firestore } from './firestore-config'
 import { stream } from '@cougargrades/vendor/firestore'
 
-const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
+export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
 export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<(CoursePlusMetrics | InstructorPlusMetrics)[]> {
   const seen = new Set<string>();

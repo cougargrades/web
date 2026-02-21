@@ -1,5 +1,9 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { loadVendor, openAPIRouteHandler } from 'hono-openapi'
+import { convertToOpenAPISchema } from "@standard-community/standard-openapi/convert"
+import { swaggerUI } from '@hono/swagger-ui'
+import { toJSONSchema } from 'zod/v4/core'
 
 import rmp from './routes/external/rmp'
 import simplesyllabus from './routes/external/simplesyllabus'
@@ -38,5 +42,30 @@ app.route('/api/trending', trending);
 app.route('/api/course', course);
 app.route('/api/instructor', instructor);
 app.route('/api/group', group);
+
+// loadVendor('zod', {
+//   toOpenAPISchema: (schema, context) => {
+//     // TODO: fix why my Zod schemas aren't generating
+//     const jsonSchema = toJSONSchema(schema as any, {
+//       io: 'input',
+//       //target: 'openapi-3.0',
+//       unrepresentable: 'any',
+//       cycles: 'ref',
+//       reused: 'ref',
+//     });
+//     return convertToOpenAPISchema(jsonSchema as any, context);
+//   }
+// })
+
+app.get('/openapi.json', openAPIRouteHandler(app, {
+  documentation: {
+    info: {
+      title: 'CougarGrades API',
+      version: '3.0.0',
+    }
+  },
+  includeEmptyPaths: true,
+}));
+app.get('/swagger', swaggerUI({ url: '/openapi.json' }));
 
 export default app
