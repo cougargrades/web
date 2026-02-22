@@ -27,6 +27,24 @@
       },
     }
   },
+  "ratelimits": [
+    {
+      "name": "POPULARITY_CONTEST",
+      // First commit to CougarGrades
+      "namespace_id": "20190830",
+      "simple": {
+        "limit": 3,
+        "period": 10
+      }
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "COUGARGRADES_SQL",
+      "database_name": "cougargrades-data",
+      "database_id": "fca4360d-dcdb-4322-968d-8a81a42810be"
+    }
+  ]
   // "sec"
   // "kv_namespaces": [
   //   {

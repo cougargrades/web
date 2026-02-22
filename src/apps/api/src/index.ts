@@ -14,6 +14,7 @@ import trending from './routes/trending'
 import course from './routes/course'
 import instructor from './routes/instructor'
 import group from './routes/group'
+import popcon from './routes/popcon'
 
 const app = new Hono()
 
@@ -42,6 +43,7 @@ app.route('/api/trending', trending);
 app.route('/api/course', course);
 app.route('/api/instructor', instructor);
 app.route('/api/group', group);
+app.route('/api/popularity_contest', popcon);
 
 // loadVendor('zod', {
 //   toOpenAPISchema: (schema, context) => {

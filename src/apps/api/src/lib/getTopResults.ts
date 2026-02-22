@@ -51,6 +51,8 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
   else {
     // TODO: google analytics
 
+    // TODO: actually do it
+
     return [];
   }
 }
