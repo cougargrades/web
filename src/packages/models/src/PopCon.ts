@@ -1,6 +1,7 @@
 import { z } from 'zod'
 //import { v4 as uuidv4 } from 'uuid'
 import { Temporal } from 'temporal-polyfill';
+import { TopTopic } from './dto/TopDto';
 
 // export type PopConMetric = z.infer<typeof PopConMetric>
 // export const PopConMetric = z.enum(['page_view'])
@@ -12,8 +13,6 @@ export enum PopConMetric {
   PageView = 1,
   // TODO: Others?
 }
-
-
 
 export type PopCon = z.infer<typeof PopCon>
 export const PopCon = z.object({
@@ -37,20 +36,34 @@ export const PopCon = z.object({
   type: z.number(),
 })
 
-export function EpochSecondsToTemporal(epoch_seconds: number | bigint): Temporal.Instant {
+export type PopConOptions = z.infer<typeof PopConOptions>
+export const PopConOptions = z.object({
+  metric: z.enum(PopConMetric),
+  limit: z.coerce.number().int(),
+  offset: z.coerce.number().int().default(0),
+  /**
+   * [0] = Lower Bound (After)
+   * [1] = Upper Bound (Before)
+   */
+  timeRange: z.tuple([z.instanceof(Temporal.ZonedDateTime), z.instanceof(Temporal.ZonedDateTime)]).optional(),
+  topic: TopTopic,
+})
+
+export function EpochSecondsToTemporal(epoch_seconds: number | bigint): Temporal.ZonedDateTime {
   if (typeof epoch_seconds === 'number') {
-    return Temporal.Instant.fromEpochMilliseconds(epoch_seconds * 1000)
-    //return new Date(); // 1e6
+    return Temporal.Instant.fromEpochMilliseconds(epoch_seconds * 1000).toZonedDateTimeISO(Temporal.Now.timeZoneId())
   }
   else {
-    return Temporal.Instant.fromEpochNanoseconds(epoch_seconds * 1000n * 1000000n);
+    return Temporal.Instant.fromEpochNanoseconds(epoch_seconds * 1000n * 1000000n).toZonedDateTimeISO(Temporal.Now.timeZoneId());
   }
 }
 
-export function TemporalToEpochSeconds(instant: Temporal.Instant): number {
-  return instant.epochMilliseconds / 1000
+export function ToEpochSeconds(instant: Temporal.Instant | Temporal.ZonedDateTime | Date): number {
+  if (instant instanceof Temporal.Instant || instant instanceof Temporal.ZonedDateTime) {
+    return instant.epochMilliseconds / 1000
+  }
+  return instant.valueOf() / 1000;
 }
-
 
 // export function createPopCon(options: Pick<PopCon, 'pathname' | 'type'>): PopCon {
 //   return {

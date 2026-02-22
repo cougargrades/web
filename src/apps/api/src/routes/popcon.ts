@@ -35,8 +35,7 @@ app.post('/submit',
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
-    debugger;
-    if (!env.POPULARITY_CONTEST) return ctx.newResponse('cant', 200)
+    if (!env.POPULARITY_CONTEST) return ctx.newResponse('', 429);
     const { pathname, type } = ctx.req.valid('query');
 
     const ipAddress = ctx.req.header('cf-connecting-ip') ?? '';

@@ -13,6 +13,9 @@ importers:
       '@cougargrades/models':
         specifier: workspace:*
         version: link:../../packages/models
+      '@cougargrades/publicdata':
+        specifier: 1.0.0-20260221203129
+        version: 1.0.0-20260221203129
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../../packages/utils

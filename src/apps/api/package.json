@@ -6,10 +6,12 @@
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "wrangler": "wrangler",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "setup:schema": " wrangler d1 execute cougargrades-data --local --file=./schema.sql"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",
+    "@cougargrades/publicdata": "1.0.0-20260221203129",
     "@cougargrades/utils": "workspace:*",
     "@cougargrades/vendor": "workspace:*",
     "@hono/standard-validator": "^0.2.2",

@@ -1,13 +1,58 @@
+DROP TABLE IF EXISTS "PopularityContest";
 CREATE TABLE IF NOT EXISTS "PopularityContest" (
 	"id"	INTEGER NOT NULL,
 	"pathname"	TEXT NOT NULL,
-	"timestamp_epoch_seconds"	INTEGER NOT NULL DEFAULT 'unixepoch()',
+	"timestamp_epoch_seconds"	INTEGER NOT NULL DEFAULT (unixepoch()),
 	"metric_type"	INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
 CREATE INDEX idx_popularity_metric_time_path
 ON PopularityContest(metric_type, timestamp_epoch_seconds, pathname);
+
+/*
+Course sample data
+*/
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/CHEM%202323', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/CHEM%202323', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/CHEM%202323', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/CHEM%202323', 1);
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%203320', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%203320', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%203320', 1);
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/BCHS%203304', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%203360', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/CHEM%202325', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/MATH%203321', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/BIOL%203301', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/MATH%202415', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%202436', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/c/COSC%204368', 1);
+
+/*
+Instructor sample data
+*/
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/deng%2C%20xiaoxue', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/deng%2C%20xiaoxue', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/deng%2C%20xiaoxue', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/deng%2C%20xiaoxue', 1);
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/rincon%20castro%2C%20carlos%20alberto', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/rincon%20castro%2C%20carlos%20alberto', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/rincon%20castro%2C%20carlos%20alberto', 1);
+
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/scott%2C%20sean-patrick', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/bhattacharya%2C%20nandini%20saradindu', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/young%2C%20crystal%20ann', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/khurana%2C%20seema', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/larsen%2C%20russell%20gene', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/ogletree-hughes%2C%20monique%20l', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/cai%2C%20chengzhi', 1);
+INSERT INTO PopularityContest (pathname, metric_type) VALUES ('/i/cai%2C%20chengzhi', 1);
 
 
 -- DROP TABLE IF EXISTS Customers;
