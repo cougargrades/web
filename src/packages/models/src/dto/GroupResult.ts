@@ -2,9 +2,11 @@
 import { z } from 'zod'
 import { descendingComparator } from '@cougargrades/utils/comparator'
 
-import { DocumentReference } from '../DocumentReference'
+import { DocumentReference, IsDocumentReferenceArray } from '../DocumentReference'
 import { LabeledLink } from '../Course'
 import { Group } from '../Group'
+import { course2CoursePlus, CoursePlus } from './Plus'
+import { Section } from '../Section'
 
 export type LiteGroupResult = z.infer<typeof LiteGroupResult>
 /**
@@ -21,18 +23,18 @@ export const LiteGroupResult = z.object({
   sources: LabeledLink.array(),
 })
 
-export type GroupResult = z.infer<typeof GroupResult>
-export const GroupResult = LiteGroupResult.extend({
-  courses: DocumentReference.array(),
-  sections: DocumentReference.array(),
-})
-
-// export type PopulatedGroupResult = z.infer<typeof PopulatedGroupResult>
-// export const PopulatedGroupResult = GroupResult.extend({
-//   courses: CoursePlus.array(),
-//   sections: Section.array(),
-//   relatedGroups: LabeledLink.array(),
+// export type GroupResult = z.infer<typeof GroupResult>
+// export const GroupResult = LiteGroupResult.extend({
+//   courses: DocumentReference.array(),
+//   sections: DocumentReference.array(),
 // })
+
+export type PopulatedGroupResult = z.infer<typeof PopulatedGroupResult>
+export const PopulatedGroupResult = LiteGroupResult.extend({
+  courses: CoursePlus.array(),
+  sections: Section.array(),
+  relatedGroups: LabeledLink.array(),
+})
 
 export type AllGroupsResult = z.infer<typeof AllGroupsResult>
 export const AllGroupsResult = z.object({
@@ -57,24 +59,23 @@ export function group2Result(data: Group): LiteGroupResult {
   }
 }
 
-// export function group2PopResult(data: Group): PopulatedGroupResult {
-//   return {
-//     key: data.identifier,
-//     href: `/g/${data.identifier}`,
-//     title: data.name,
-//     description: data.description,
-//     categories: Array.isArray(data.categories) ? data.categories : [],
-//     courses: data.courses,
-//     //courseCount: data.courseCount,
-//     sections: data.sections,
-//     //sectionCount: data.sectionCount,
-//     relatedGroups: !IsDocumentReferenceArray(data.relatedGroups) ? data.relatedGroups.map(group => ({
-//       title: group.name,
-//       tooltip: group.description,
-//       url: `/g/${group.identifier}`,
-//     })) : [],
-//     sources: Array.isArray(data.sources) ? data.sources.sort((a,b) => descendingComparator(a, b, 'title')).slice(0,3) : []
-//   }
-// }
-
+export function group2PopResult(data: Group): PopulatedGroupResult {
+  return {
+    key: data.identifier,
+    href: `/g/${data.identifier}`,
+    title: data.name,
+    description: data.description,
+    categories: Array.isArray(data.categories) ? data.categories : [],
+    courses: IsDocumentReferenceArray(data.courses) ? [] : data.courses.map(e => course2CoursePlus(e)),
+    courseCount: data.courses.length,
+    sections: !IsDocumentReferenceArray(data.sections) ? data.sections : [],
+    sectionCount: data.sections.length,
+    relatedGroups: !IsDocumentReferenceArray(data.relatedGroups) ? data.relatedGroups.map(group => ({
+      title: group.name,
+      tooltip: group.description,
+      url: `/g/${group.identifier}`,
+    })) : [],
+    sources: Array.isArray(data.sources) ? data.sources.sort((a, b) => descendingComparator(a, b, 'title')).slice(0, 3) : [],
+  }
+}
 

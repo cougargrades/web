@@ -5,9 +5,11 @@ import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { AllGroupsResult } from '@cougargrades/models/dto'
+import { AllGroupsResult, PopulatedGroupResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
 import { getAllGroups } from '../lib/getAllGroups'
+import { getOneGroup } from '../lib/getOneGroup'
+import { isNullish } from '@cougargrades/utils/nullish'
 
 const app = new Hono()
 
@@ -35,18 +37,26 @@ app.get('/:groupId',
   validator('param', z.object({
     groupId: z.string()
   })),
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(PopulatedGroupResult) }
+        }
+      }
+    }
+  }),
   cache({
     cacheName: 'cougargrades-api',
     cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');
-    console.log('groupId?', groupId);
+    const results = await getOneGroup(groupId);
+    if (isNullish(results)) return ctx.status(404);
 
-    // TODO:
-
-    //const results = await getTopResults({ metric, topic, limit, time, hideCore })
-    return ctx.json('hello one group');
+    return ctx.json(results);
   }
 )
 app.get('/:groupId/sections',
@@ -60,12 +70,13 @@ app.get('/:groupId/sections',
   }),
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');
-    console.log('groupId?', groupId);
 
-    // TODO:
+    return ctx.newResponse('Temporarily disabled', 400);
 
-    //const results = await getTopResults({ metric, topic, limit, time, hideCore })
-    return ctx.json('hello sections in one group');
+    // const results = await getOneGroup(groupId, true);
+    // if (isNullish(results)) return ctx.status(404);
+
+    // return ctx.json(results);
   }
 )
 

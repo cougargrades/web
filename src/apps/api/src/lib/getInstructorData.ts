@@ -1,5 +1,5 @@
 import { Course, Enrollment, EstimateClassSize, formatTermCode, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section, ToDocumentReference } from '@cougargrades/models';
-import { course2Result, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult } from '@cougargrades/models/dto';
+import { course2CoursePlus, course2Result, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult } from '@cougargrades/models/dto';
 import { descendingComparator } from '@cougargrades/utils/comparator'
 import { isNullish } from '@cougargrades/utils/nullish'
 import { getRMPProfessorViewableUrl } from '@cougargrades/vendor/rmp'
@@ -78,20 +78,7 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
          */
       ],
       rows: [
-        ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => ({
-          ...e,
-          id: e._id,
-          instructorCount: Array.isArray(e.instructors) ? e.instructors.length : 0,
-          instructors: [],
-          sectionCount: Array.isArray(e.sections) ? e.sections.length : 0,
-          sections: [],
-          groups: [],
-          gradePointAverage: e.GPA.average,
-          standardDeviation: e.GPA.standardDeviation,
-          dropRate: e.enrollment !== undefined ? (e.enrollment.totalW/e.enrollment.totalEnrolled*100) : NaN,
-          totalEnrolled: e.enrollment !== undefined ? e.enrollment.totalEnrolled : NaN,
-          classSize: e.enrollment !== undefined && Array.isArray(e.sections) ? (e.enrollment.totalEnrolled / e.sections.length) : NaN,
-        })))
+        ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => course2CoursePlus(e)))
       ],
     },
     dataChart: {
