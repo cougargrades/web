@@ -1,7 +1,6 @@
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
-import { zValidator } from '@hono/zod-validator'
-import { describeRoute, resolver } from 'hono-openapi'
+import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
@@ -14,7 +13,7 @@ const app = new Hono()
 const DEFAULT_LIMIT = 5;
 
 app.get('/',
-  zValidator('query', z.object({
+  validator('query', z.object({
     limit: z.coerce.number().int().min(1).max(10).catch(DEFAULT_LIMIT),
   })),
   cache({

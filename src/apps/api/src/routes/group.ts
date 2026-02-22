@@ -1,8 +1,7 @@
 
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
-import { zValidator } from '@hono/zod-validator'
-import { describeRoute, resolver } from 'hono-openapi'
+import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
@@ -33,7 +32,7 @@ app.get('/',
   }
 )
 app.get('/:groupId',
-  zValidator('param', z.object({
+  validator('param', z.object({
     groupId: z.string()
   })),
   cache({
@@ -44,12 +43,14 @@ app.get('/:groupId',
     const { groupId } = ctx.req.valid('param');
     console.log('groupId?', groupId);
 
+    // TODO:
+
     //const results = await getTopResults({ metric, topic, limit, time, hideCore })
     return ctx.json('hello one group');
   }
 )
 app.get('/:groupId/sections',
-  zValidator('param', z.object({
+  validator('param', z.object({
     groupId: z.string()
   })),
   cache({
@@ -60,6 +61,8 @@ app.get('/:groupId/sections',
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');
     console.log('groupId?', groupId);
+
+    // TODO:
 
     //const results = await getTopResults({ metric, topic, limit, time, hideCore })
     return ctx.json('hello sections in one group');

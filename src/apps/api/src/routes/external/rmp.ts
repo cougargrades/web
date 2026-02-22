@@ -1,8 +1,7 @@
 
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
-import { zValidator } from '@hono/zod-validator'
-import { describeRoute, resolver } from 'hono-openapi'
+import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import * as rmp from '@cougargrades/vendor/rmp'
 import { RMPRankedSearchResult } from '@cougargrades/vendor/rmp'
@@ -16,7 +15,7 @@ export const RMP_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ da
 const app = new Hono()
 
 app.get('/search',
-  zValidator('query', z.object({
+  validator('query', z.object({
     query: z.string().nonempty(),
     strict: z.coerce.boolean().optional(),
   })),

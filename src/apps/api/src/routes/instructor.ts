@@ -1,8 +1,7 @@
 
 import { Hono } from 'hono'
 import { cache } from 'hono/cache'
-import { zValidator } from '@hono/zod-validator'
-import { describeRoute, resolver } from 'hono-openapi'
+import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
@@ -13,7 +12,7 @@ import { InstructorResult } from '@cougargrades/models/dto'
 const app = new Hono()
 
 app.get('/:instructorName',
-  zValidator('param', z.object({
+  validator('param', z.object({
     instructorName: z.string()
   })),
   // describeRoute({
