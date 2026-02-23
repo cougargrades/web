@@ -125,7 +125,7 @@ export function DocumentPathToPathname(documentPath: string): string | null {
 
   const [ documentCollection, documentId ] = trimStart(documentPath, '/').split('/');
 
-  const matchedKVP = Tlp2DocumentCollection.entries().find(kvp => kvp[1] === documentCollection);
+  const matchedKVP = Array.from(Tlp2DocumentCollection.entries()).find(kvp => kvp[1] === documentCollection);
   if (isNullish(matchedKVP)) return null;
 
   const [tlp, _] = matchedKVP;

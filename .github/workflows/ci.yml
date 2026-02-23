@@ -31,3 +31,5 @@ jobs:
         run: pnpm -r install
       - name: Run TSC
         run: pnpm run tsc
+      - name: Run build
+        run: pnpm run build

@@ -5,6 +5,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "build": "pnpm run -r --if-present build",
     "tsc": "pnpm run -r --if-present tsc"
   },
   "engines": {
