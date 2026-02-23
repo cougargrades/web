@@ -4,6 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocation } from '@tanstack/react-router';
 import { useEffect } from 'react'
 
+const SUBMIT_DELAY_MS = 5_000
+
 /**
  * Whenever the location returned by `useLocation` updates, submit a new record to the PopCon service
  * @returns 
@@ -23,7 +25,8 @@ export function PageViewLogger() {
     if (HAS_REQUIRED_PREFIX) {
       const pathnameCopy = location.pathname;
       // Submit after 5 seconds so page load isn't delayed
-      setTimeout(() => mutate(pathnameCopy), 5_000);
+      console.debug(`[PageViewLogger] Submitting in ${SUBMIT_DELAY_MS / 1000} seconds: \`${location.pathname}\``);
+      setTimeout(() => mutate(pathnameCopy), SUBMIT_DELAY_MS);
     }
   }, [location.pathname]);
 

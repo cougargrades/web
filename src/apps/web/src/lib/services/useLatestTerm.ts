@@ -10,9 +10,13 @@ export interface LatestTermResult {
   latestTermFormatted: string | null;
 }
 
+/**
+ * Query around `/api/latest_term`
+ * @returns 
+ */
 export function useLatestTerm() {
   const query = useQuery({
-    queryKey: ['sponsor-info'],
+    queryKey: ['latest_term'],
     queryFn: async () => {
       const svc = new LatestTermService();
       return await svc.GetLatestTerm();

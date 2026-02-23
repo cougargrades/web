@@ -1,5 +1,5 @@
 import React from 'react'
-// import Search from './search'
+import Search from './search'
 import { Emoji } from './emoji'
 import { DropdownNavLink, NavLink } from './link'
 
@@ -31,7 +31,7 @@ export function Header() {
             <NavLink href="/utilities"><Emoji label="hammer and wrench" symbol="🛠️" />Utilities</NavLink>
           </> : <></>} */}
         </nav>
-        {/* <Search /> */}
+        <Search />
       </div>
     </header>
   )

@@ -102,7 +102,7 @@ export const SearchResultBadge = z.object({
   key: z.string(),
   text: z.string(),
   color: z.string(),
-  opacity: z.string().optional(),
+  opacity: z.number().optional(),
   caption: z.string().optional(),
   title: z.string().optional(),
   suffix: z.string().optional(),

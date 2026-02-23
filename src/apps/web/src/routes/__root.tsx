@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
+import { Link, Outlet, createRootRoute, type ErrorComponentProps } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { ThemeProvider } from '@mui/material/styles'
@@ -9,7 +9,10 @@ import { Layout } from '../components/layout'
 
 export const Route = createRootRoute({
   component: RootComponent,
+  //errorComponent: ErrorComponent,
 })
+
+import errorStyles from '../styles/Error.module.scss'
 
 import '../styles/new.css'
 import 'bootstrap/dist/css/bootstrap-grid.css'
@@ -41,5 +44,18 @@ function RootComponent() {
         ]}
       />
     </ThemeProvider>
+  )
+}
+
+function ErrorComponent({ error, info }: ErrorComponentProps) {
+  return (
+    <div className={errorStyles.error}>
+      <div>
+        <h1>{error.name}</h1>
+        <div className={errorStyles.title}>
+          <h2>{error.message}</h2>
+        </div>
+      </div>
+    </div>
   )
 }
