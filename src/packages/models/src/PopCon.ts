@@ -1,7 +1,10 @@
 import { z } from 'zod'
 //import { v4 as uuidv4 } from 'uuid'
-import { Temporal } from 'temporal-polyfill';
-import { TopTopic } from './dto/TopDto';
+import { Temporal } from 'temporal-polyfill'
+import { URLPattern } from 'urlpattern-polyfill'
+import { trimStart } from 'lodash-es'
+import { PlusMetrics, TopTopic } from './dto/TopDto'
+import { isNullish, isNullishOrWhitespace } from '@cougargrades/utils/nullish'
 
 // export type PopConMetric = z.infer<typeof PopConMetric>
 // export const PopConMetric = z.enum(['page_view'])
@@ -13,6 +16,10 @@ export enum PopConMetric {
   PageView = 1,
   // TODO: Others?
 }
+
+export const PopConMetric2PlusMetricKey = new Map<PopConMetric, keyof PlusMetrics>([
+  [PopConMetric.PageView, 'screenPageViews']
+]);
 
 export type PopCon = z.infer<typeof PopCon>
 export const PopCon = z.object({
@@ -33,7 +40,8 @@ export const PopCon = z.object({
   /**
    * What metric was being measured
    */
-  type: z.number(),
+  //type: z.number(),
+  type: z.enum(PopConMetric),
 })
 
 export type PopConOptions = z.infer<typeof PopConOptions>
@@ -47,6 +55,7 @@ export const PopConOptions = z.object({
    */
   timeRange: z.tuple([z.instanceof(Temporal.ZonedDateTime), z.instanceof(Temporal.ZonedDateTime)]).optional(),
   topic: TopTopic,
+  exclude: z.array(z.string()).optional(),
 })
 
 export function EpochSecondsToTemporal(epoch_seconds: number | bigint): Temporal.ZonedDateTime {
@@ -60,16 +69,67 @@ export function EpochSecondsToTemporal(epoch_seconds: number | bigint): Temporal
 
 export function ToEpochSeconds(instant: Temporal.Instant | Temporal.ZonedDateTime | Date): number {
   if (instant instanceof Temporal.Instant || instant instanceof Temporal.ZonedDateTime) {
-    return instant.epochMilliseconds / 1000
+    return Math.round(instant.epochMilliseconds / 1000);
   }
-  return instant.valueOf() / 1000;
+  return Math.round(instant.valueOf() / 1000);
 }
 
-// export function createPopCon(options: Pick<PopCon, 'pathname' | 'type'>): PopCon {
-//   return {
-//     ...options,
-//     _id: uuidv4(),
-//     timestamp: new Date(),
-//   }
-// }
+const pathnamePattern = new URLPattern({ pathname: `/:tlp/:primaryKey`});
+const Tlp2DocumentCollection = new Map<'c' | 'i' | 'g', 'catalog' | 'instructors' | 'groups'>([
+  ['c', 'catalog'],
+  ['i', 'instructors'],
+  ['g', 'groups'],
+]);
+
+/**
+ * Converts pathnames for PopCon/Google Analytics (ex: `/c/ABCD 1234`) into Firestore document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`)
+ * @param pathname 
+ * @returns 
+ */
+export function PathnameToDocumentPath(pathname: string): string | null {
+  // Check that pathname matches the pattern we're requiring
+  const result = pathnamePattern.exec(`https://hostname/${trimStart(pathname, '/')}`);
+  if (isNullish(result)) return null;
+
+  // Check that values were provided for the different parts of the pattern
+  const tlp = result.pathname.groups['tlp']?.toLowerCase();
+  if (isNullishOrWhitespace(tlp)) return null;
+  const primaryKey = result.pathname.groups['primaryKey'];
+  if (isNullishOrWhitespace(primaryKey)) return null;
+
+  // Check that TLP (Top-Level Path) matches a known value
+  const documentCollection = Tlp2DocumentCollection.get(tlp as any);
+  if (isNullish(documentCollection)) return null;
+
+  // Instructors are always lowercase
+  if (documentCollection === 'instructors') {
+    return `${documentCollection}/${decodeURIComponent(primaryKey).toLowerCase()}`;
+  }
+  else {
+    return `${documentCollection}/${decodeURIComponent(primaryKey)}`
+  }
+}
+
+/**
+ * Converts from document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`) into pathnames for PopCon/Google Analytics pathname (ex: `/c/ABCD 1234`)
+ * @param pathname 
+ * @returns 
+ */
+export function DocumentPathToPathname(documentPath: string): string | null {
+  if (isNullishOrWhitespace(documentPath)) return null;
+
+  const [ documentCollection, documentId ] = trimStart(documentPath, '/').split('/');
+
+  const matchedKVP = Tlp2DocumentCollection.entries().find(kvp => kvp[1] === documentCollection);
+  if (isNullish(matchedKVP)) return null;
+
+  const [tlp, _] = matchedKVP;
+
+  if (tlp === 'i') {
+    return `/${tlp}/${encodeURIComponent(documentId.toLowerCase())}`
+  }
+  else {
+    return `/${tlp}/${encodeURIComponent(documentId)}`
+  }
+}
 

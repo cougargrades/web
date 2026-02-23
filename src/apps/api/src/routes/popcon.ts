@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { env } from 'cloudflare:workers'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { PopCon } from '@cougargrades/models'
+import { PopCon, PopConMetric } from '@cougargrades/models'
 import { DURATION_ZERO } from '../cache'
 import { CourseOrInstructorPlusMetrics, getTopResults } from '../lib/getTopResults'
 
@@ -17,7 +17,8 @@ const app = new Hono()
 app.post('/submit',
   validator('query', z.object({
     pathname: z.string(),
-    type: z.coerce.number(),
+    //type: z.coerce.number(),
+    type: z.preprocess(val => typeof val === 'string' ? Number.parseInt(val) : val, z.enum(PopConMetric))
   })),
   // describeRoute({
   //   responses: {

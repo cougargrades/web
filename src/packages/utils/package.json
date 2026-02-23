@@ -5,6 +5,7 @@
     ".": "./src/index.ts",
     "./cacheControl": "./src/cacheControl.ts",
     "./comparator": "./src/comparator.ts",
+    "./iterable": "./src/iterable.ts",
     "./nullish": "./src/nullish.ts",
     "./zod": "./src/zod.ts"
   },

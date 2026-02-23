@@ -135,6 +135,9 @@ importers:
       temporal-polyfill:
         specifier: ^0.3.0
         version: 0.3.0
+      urlpattern-polyfill:
+        specifier: ^10.1.0
+        version: 10.1.0
       uuid:
         specifier: ^13.0.0
         version: 13.0.0

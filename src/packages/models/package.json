@@ -11,6 +11,7 @@
     "@cougargrades/utils": "workspace:*",
     "lodash-es": "^4.17.23",
     "temporal-polyfill": "^0.3.0",
+    "urlpattern-polyfill": "^10.1.0",
     "uuid": "^13.0.0",
     "zod": "^4.1"
   },

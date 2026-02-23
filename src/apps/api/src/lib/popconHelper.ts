@@ -1,8 +1,9 @@
 import { parse, z } from 'zod'
-import { PopCon, PopConOptions, ToEpochSeconds } from '@cougargrades/models'
-import { isNullish } from '@cougargrades/utils/nullish';
+import { DocumentPathToPathname, PathnameToDocumentPath, PopCon, PopConOptions, ToEpochSeconds } from '@cougargrades/models'
+import { isNullish, isNullishOrWhitespace } from '@cougargrades/utils/nullish';
 import { env } from 'cloudflare:workers'
 import { Temporal } from 'temporal-polyfill';
+import { getFirestoreDocumentSafe } from './firestore-config'
 
 const EPOCH_START = Temporal.Instant.fromEpochMilliseconds(0).toZonedDateTimeISO(Temporal.Now.timeZoneId());
 
@@ -14,28 +15,63 @@ const EPOCH_START = Temporal.Instant.fromEpochMilliseconds(0).toZonedDateTimeISO
  */
 export async function sql(strings: TemplateStringsArray, ...values: unknown[]) {
   if (!env.COUGARGRADES_SQL) return null;
-  const raw = strings.join('?');
+
+  let raw = '';
+  let boundValues: unknown[] = [];
+  strings.forEach((str, i) => {
+    raw += str;
+    // If an array is provided as a value, then treat it as multiple variables separated by commas
+    if (Array.isArray(values[i])) {
+      const question_marks = Array.from(Array(values[i].length))
+        .map(() => '?')
+        .join(',');
+      raw += question_marks;
+      boundValues.push(...values[i]);
+    }
+    // Otherwise, just bind it like normal
+    else if (values[i] !== undefined && values[i] !== null) {
+      raw += '?';
+      boundValues.push(values[i]);
+    }
+  });
+
+  //const raw = strings.join('?');
   const statement = env.COUGARGRADES_SQL
     .prepare(raw)
-    .bind(...values);
+    //.bind(...values)
+    .bind(...boundValues);
   return await statement.run();
 }
 
 export async function recordPopCon(options: Pick<PopCon, 'pathname' | 'type'>) {
-  // Must be a valid prefix
-  if (['/c/', '/i/', '/g/'].some(prefix => options.pathname.startsWith(prefix)) === false) {
-    return;
-  }
-  const res = await sql`INSERT INTO PopularityContest (pathname, metric_type) VALUES (${options.pathname}, ${options.type})`;
+  // Verify that pathname matches the pattern we're looking for,
+  // and map it to a documentPath
+  const documentPath = PathnameToDocumentPath(options.pathname);
+  if (isNullish(documentPath)) return;
+
+  // Check that firestore document exists at that path
+  const doc = await getFirestoreDocumentSafe(documentPath, z.object({
+    _path: z.string(),
+  }));
+  if (!doc.success) return;
+
+  /**
+   * Based on the "_path" propert from the Firestore doc, compute the "pathname"
+   * 
+   * By "round-tripping" this, we standardize the capitalization and ensure that only valid PopCons are created.
+   */
+  const validatedPathname = DocumentPathToPathname(doc.data._path);
+  if (isNullish(validatedPathname)) return; 
+
+  // This is safe to add to the PopCon records
+  const res = await sql`INSERT INTO PopularityContest (pathname, metric_type) VALUES (${validatedPathname}, ${options.type})`;
 }
 
-export async function getPopConTopPages({ metric, limit, offset, timeRange, topic }: PopConOptions) {
+export async function getPopConTopPages({ metric, limit, offset, timeRange, topic, exclude }: PopConOptions) {
   //if (!env.COUGARGRADES_SQL) return null;
 
-  // TODO: use to hide core
-  // --AND pathname IN ('/c/COSC%201430')
-
   const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO()]
+  const qExclude = exclude ?? [];
 
   const res = await sql`
     SELECT
@@ -53,6 +89,7 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
         AND timestamp_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
         AND timestamp_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
         AND pathname LIKE ${topic === 'course' ? '/c/%' : '/i/%'}
+        AND pathname NOT IN (${qExclude})
       GROUP BY
         pathname
     )
@@ -61,9 +98,6 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
     LIMIT ${limit}
     OFFSET ${offset}
   `;
-
-  if (isNullish(res)) return null;
-  if (isNullish(res.results)) return null;
   
   const row_schema = z.object({
     pathname: z.string(),
@@ -71,9 +105,9 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
     rank: z.number().int()
   })
 
-  const parsed = row_schema.array().safeParse(res.results);
-  if (parsed.success) return parsed.data;
-  return null;
+  // We want a failed parse to throw an error
+  const parsed = row_schema.array().parse(res?.results);
+  return parsed;
 }
 
 // TODO: get rank of course or instructor by view count

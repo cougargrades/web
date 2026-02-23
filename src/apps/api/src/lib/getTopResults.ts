@@ -1,13 +1,17 @@
 
-import { Course, Instructor, PopConMetric } from '@cougargrades/models'
+import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
 import { CoursePlusMetrics, InstructorPlusMetrics, TopMetric2PopConMetric, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
 import * as core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
-import { firestore } from './firestore-config'
+import { firestore, getFirestoreDocumentSafe } from './firestore-config'
 import { getPopConTopPages } from './popconHelper';
+import { isNullish } from '@cougargrades/utils/nullish';
 
 const core_curriculum = new Set(Array.from(core_curriculum_json).map(row => `${row.department} ${row.catalogNumber}`))
+const core_curriculum_pathnames = Array.from(core_curriculum)
+  .map(courseName => DocumentPathToPathname(`catalog/${courseName}`))
+  .filter<string>((p): p is string => !isNullish(p))
 
 export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
@@ -52,25 +56,65 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     return result
   }
   else {
-    // TODO: google analytics
-
-    // TODO: actually do it
-
+    // Convert `Top` parameters into `PopCon` parameters
     const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
-    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({  years: 999 });
+    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
     const timeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = [Temporal.Now.zonedDateTimeISO().subtract(topDuration), Temporal.Now.zonedDateTimeISO()]
 
-    // metric, topic, limit, time, hideCore
-    const rows = await getPopConTopPages({
+    // Get the top visited PopCon pathnames 
+    const rankedPopcons = await getPopConTopPages({
       metric: pMetric,
       topic,
       timeRange,
       limit,
       offset: 0,
+      // Only add an `exclude` parameter when hiding core curriculum courses
+      exclude: (
+        hideCore && topic === 'course'
+        ? core_curriculum_pathnames
+        : undefined
+      )
     })
 
-    console.log('rows?', rows);
+    const resolved = await Promise.allSettled(rankedPopcons.map(async (pc) => {
+      const documentPath = PathnameToDocumentPath(pc.pathname);
+      if (isNullish(documentPath)) return null;
 
-    return [];
+      if (documentPath.startsWith('catalog')) {
+        // Get the "Course" document
+        const doc = await getFirestoreDocumentSafe(documentPath, CoursePlusMetrics);
+        if (!doc.success) return null;
+
+        // Based on the `pMetric` being searched, find out what property in `PlusMetrics` needs to be updated as a result
+        const plusMetricKey = PopConMetric2PlusMetricKey.get(pMetric);
+        if (isNullish(plusMetricKey)) return null;
+
+        // Store the metric value we queried in the correct property
+        doc.data[plusMetricKey] = pc.metric_count;
+
+        return doc.data;
+      }
+      else if (documentPath.startsWith('instructors')) {
+        // Get the "Course" document
+        const doc = await getFirestoreDocumentSafe(documentPath, InstructorPlusMetrics);
+        if (!doc.success) return null;
+
+        // Based on the `pMetric` being searched, find out what property in `PlusMetrics` needs to be updated as a result
+        const plusMetricKey = PopConMetric2PlusMetricKey.get(pMetric);
+        if (isNullish(plusMetricKey)) return null;
+
+        // Store the metric value we queried in the correct property
+        doc.data[plusMetricKey] = pc.metric_count;
+
+        return doc.data;
+      }
+      
+      return null;
+    }))
+
+    return resolved
+      .filter(r => r.status === 'fulfilled')
+      .map(r => r.value)
+      .filter((r): r is CoursePlusMetrics | InstructorPlusMetrics => !isNullish(r));
   }
 }
