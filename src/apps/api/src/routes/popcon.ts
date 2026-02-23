@@ -20,16 +20,13 @@ app.post('/submit',
     //type: z.coerce.number(),
     type: z.preprocess(val => typeof val === 'string' ? Number.parseInt(val) : val, z.enum(PopConMetric))
   })),
-  // describeRoute({
-  //   responses: {
-  //     200: {
-  //       description: '',
-  //       content: {
-  //         'application/json': { schema: resolver(CourseOrInstructorPlusMetrics.array()) }
-  //       }
-  //     }
-  //   }
-  // }),
+  describeRoute({
+    description: `
+    This is anonymized service for tracking when a Course or Instructor is "viewed" (but never by who), which influences the "Most Viewed" pages and the "Trending/Popular" search results feature.
+    Only what is submitted is collected. Submissions to this endpoint are rate limited and validated.
+    The naming of this service was inspired by the <a href="https://popcon.debian.org/">Debian Popularity Contest</a> system.
+    `.trim(),
+  }),
   cache({
     cacheName: 'cougargrades-api',
     // TODO: use real cache time
