@@ -18,22 +18,22 @@ export const InstructorResult = z.object({
   lastTaught: z.string(),
   relatedGroups: LiteGroupResult.array(),
   relatedCourses: CourseInstructorResult.array(),
-  sectionDataGrid: {
+  sectionDataGrid: z.object({
     /**
      * These can't be used on the back-end because functions can't be serialized.
      * Therefore, they aren't part of the shared model.
      */
     // columns: Column<SectionPlus>[];
     rows: SectionPlus.array(),
-  },
-  courseDataGrid: {
+  }),
+  courseDataGrid: z.object({
     /**
      * These can't be used on the back-end because functions can't be serialized.
      * Therefore, they aren't part of the shared model.
      */
     // columns: Column<SectionPlus>[];
     rows: CoursePlus.array(),
-  },
+  }),
   dataChart: z.object({
     data: z.array(z.any()),
     options: z.record(z.string(), z.any()),

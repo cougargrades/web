@@ -24,9 +24,6 @@ function RootComponent() {
         <Link to="/posts/$postId" params={{ postId: 'COSC 2430' }} className="[&.active]:font-bold">
           Post 456
         </Link>
-        <Link to="/sqlite-demo" className="[&.active]:font-bold">
-          SQLite Demo
-        </Link>
       </div>
       <hr />
       <Outlet />

@@ -3,8 +3,9 @@ import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { URLPattern } from 'urlpattern-polyfill'
 import { trimStart } from 'lodash-es'
-import { PlusMetrics, TopTopic } from './dto/TopDto'
+import { TopMetric, TopTopic } from './dto/TopDto'
 import { isNullish, isNullishOrWhitespace } from '@cougargrades/utils/nullish'
+import { PlusMetrics } from './dto/Plus'
 
 // export type PopConMetric = z.infer<typeof PopConMetric>
 // export const PopConMetric = z.enum(['page_view'])
@@ -19,6 +20,10 @@ export enum PopConMetric {
 
 export const PopConMetric2PlusMetricKey = new Map<PopConMetric, keyof PlusMetrics>([
   [PopConMetric.PageView, 'screenPageViews']
+]);
+
+export const TopMetric2PopConMetric = new Map<TopMetric, PopConMetric>([
+  ['pageView', PopConMetric.PageView]
 ]);
 
 export type PopCon = z.infer<typeof PopCon>
