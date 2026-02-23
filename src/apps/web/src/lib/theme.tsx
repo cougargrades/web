@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme } from '@mui/material/styles'
-import red from '@mui/material/colors/red';
+import { red } from '@mui/material/colors'
 
 export function useTheme() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

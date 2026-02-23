@@ -12,6 +12,9 @@ export default defineConfig({
   //     '@': fileURLToPath(new URL('./src', import.meta.url)),
   //   }
   // },
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     devtools(),
     // this is the plugin that enables path aliases
@@ -26,7 +29,7 @@ export default defineConfig({
     viteReact(),
   ],
   optimizeDeps: {
-    exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],
+    //exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],
   },
   worker: {
     format: 'es',
