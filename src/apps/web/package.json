@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",

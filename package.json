@@ -4,7 +4,9 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "tsc": "pnpm run -r --if-present tsc"
+  },
   "engines": {
     "node": ">16.0.0",
     "pnpm": ">=6"

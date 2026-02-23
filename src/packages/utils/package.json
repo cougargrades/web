@@ -18,6 +18,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "tsc": "tsc"
   }
 }

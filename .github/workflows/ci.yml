@@ -1,0 +1,33 @@
+
+name: "Continuous Integration"
+
+
+on:
+  push:
+  workflow_dispatch:
+    inputs: 
+
+
+jobs:
+  ci:
+    name: Build and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['24.x']
+        os: [ubuntu-latest, windows-latest] # previously [ubuntu-latest, windows-latest, macOS-latest]
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+          registry-url: "https://registry.npmjs.org"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.2.0
+      - name: Install dependencies
+        run: pnpm -r install
+      - name: Run TSC
+        run: pnpm run tsc
