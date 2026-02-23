@@ -2,31 +2,33 @@ import * as React from 'react'
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { ThemeProvider } from '@mui/material/styles'
+import { useTheme } from '../lib/theme'
+import { PageViewLogger } from '../components/PageViewLogger'
+import { Layout } from '../components/layout'
 
 export const Route = createRootRoute({
   component: RootComponent,
 })
 
+import '../styles/new.css'
+import 'bootstrap/dist/css/bootstrap-grid.css'
+import 'bootstrap/dist/css/bootstrap-utilities.css'
+import 'nprogress/nprogress.css'
+import '../styles/nprogress-custom.scss'
+import '../styles/globals.scss'
+import '../styles/colors.scss'
+import '../styles/syntax-highlighting.scss'
+
 function RootComponent() {
+  const theme = useTheme();
+
   return (
-    <>
-      <div>Hello "__root"!</div>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{' '}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-        <Link to="/posts/$postId" params={{ postId: 'ENGL 1301' }} className="[&.active]:font-bold">
-          Post 123
-        </Link>
-        <Link to="/posts/$postId" params={{ postId: 'COSC 2430' }} className="[&.active]:font-bold">
-          Post 456
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
+    <ThemeProvider theme={theme}>
+      <PageViewLogger />
+      <Layout>
+        <Outlet />
+      </Layout>
       <TanStackDevtools
         config={{
           position: 'bottom-right',
@@ -38,6 +40,6 @@ function RootComponent() {
           },
         ]}
       />
-    </>
+    </ThemeProvider>
   )
 }

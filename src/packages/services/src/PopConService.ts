@@ -10,7 +10,7 @@ export class PopConService extends BaseApiService {
   }
 
   public async SubmitRecord({ pathname, type }: Pick<PopCon, 'pathname' | 'type'>): Promise<void> {
-    await this.Post(`/api/popularity_contest/submit`, { pathname, type: type.toString() }, z.any());
+    await this.Post(`/api/popularity_contest/submit`, { pathname, type: type.toString() });
   }
 }
 

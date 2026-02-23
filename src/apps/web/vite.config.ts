@@ -31,4 +31,12 @@ export default defineConfig({
   worker: {
     format: 'es',
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // We get it, we're using deprecated things in the styles. IGNORE!
+        silenceDeprecations: ['import', 'global-builtin'],
+      }
+    }
+  }
 })

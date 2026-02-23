@@ -2,6 +2,7 @@ import * as z4 from 'zod/v4/core'
 import { trimEnd } from 'lodash-es';
 
 import { VITE_COUGARGRADES_API_ORIGIN } from '../environment'
+import { isNullish } from '@cougargrades/utils/nullish';
 
 export type SearchParams = ConstructorParameters<typeof URLSearchParams>[0];
 
@@ -40,7 +41,7 @@ export class BaseApiService {
     }
   }
 
-  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema: TSchema): Promise<z4.output<TSchema> | null> {
+  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema?: TSchema): Promise<z4.output<TSchema> | null> {
     const params = new URLSearchParams(query);
     const queryString: string = (
       params.size > 0
@@ -56,6 +57,7 @@ export class BaseApiService {
       return null;
     }
     try {
+      if (isNullish(schema)) return null;
       const data = await res.json();
       const parsed = z4.safeParse(schema, data);
       if (!parsed.success) {
