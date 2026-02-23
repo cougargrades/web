@@ -10,7 +10,7 @@ on:
 
 jobs:
   ci:
-    name: Build and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Build and test on Node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

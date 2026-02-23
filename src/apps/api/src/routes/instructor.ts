@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { DURATION_ZERO, PROD_CACHE_LIFETIME } from '../cache'
-import { getInstructorResults } from '../lib/getInstructorData'
+import { getInstructorResults } from '../lib/getInstructorResults'
 import { InstructorResult } from '@cougargrades/models/dto'
 
 const app = new Hono()

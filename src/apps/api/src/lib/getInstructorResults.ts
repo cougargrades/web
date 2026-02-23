@@ -56,11 +56,11 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
       .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
       .map(e => course2Result(e)),
     sectionDataGrid: {
-      columns: [
-        /**
-         * I don't think these columns matter on the back-end because functions can't be serialized anyway
-         */
-      ],
+      // columns: [
+      //   /**
+      //    * I don't think these columns matter on the back-end because functions can't be serialized anyway
+      //    */
+      // ],
       rows: [
         ...(didLoadCorrectly ? sectionData.sort((a,b) => b.term - a.term).map(e => ({
           ...e,
@@ -72,11 +72,11 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
       ],
     },
     courseDataGrid: {
-      columns: [
-        /**
-         * I don't think these columns matter on the back-end because functions can't be serialized anyway
-         */
-      ],
+      // columns: [
+      //   /**
+      //    * I don't think these columns matter on the back-end because functions can't be serialized anyway
+      //    */
+      // ],
       rows: [
         ...(courseData.sort((a,b) => b._id.localeCompare(a._id)).map(e => course2CoursePlus(e)))
       ],

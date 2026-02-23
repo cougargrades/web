@@ -1,7 +1,7 @@
 
-import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey } from '@cougargrades/models'
+import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
-import { CoursePlusMetrics, InstructorPlusMetrics, TopMetric2PopConMetric, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
+import { CoursePlusMetrics, InstructorPlusMetrics, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
 import * as core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
