@@ -6,7 +6,8 @@ import * as core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.pu
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
 import { getPopConTopPages } from './popconHelper';
-import { isNullish } from '@cougargrades/utils/nullish';
+import { isNullish } from '@cougargrades/utils/nullish'
+import { GetTimeRangeFromDurationBeforeNow } from '@cougargrades/utils/temporal'
 
 const core_curriculum = new Set(Array.from(core_curriculum_json).map(row => `${row.department} ${row.catalogNumber}`))
 const core_curriculum_pathnames = Array.from(core_curriculum)
@@ -59,7 +60,8 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     // Convert `Top` parameters into `PopCon` parameters
     const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
     const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
-    const timeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = [Temporal.Now.zonedDateTimeISO().subtract(topDuration), Temporal.Now.zonedDateTimeISO()]
+    //const timeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = [Temporal.Now.zonedDateTimeISO().subtract(topDuration), Temporal.Now.zonedDateTimeISO()]
+    const timeRange = GetTimeRangeFromDurationBeforeNow(topDuration);
 
     // Get the top visited PopCon pathnames 
     const rankedPopcons = await getPopConTopPages({

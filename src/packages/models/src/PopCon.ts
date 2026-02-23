@@ -54,7 +54,7 @@ export const PopConOptions = z.object({
    * [1] = Upper Bound (Before)
    */
   timeRange: z.tuple([z.instanceof(Temporal.ZonedDateTime), z.instanceof(Temporal.ZonedDateTime)]).optional(),
-  topic: TopTopic,
+  topic: TopTopic.optional(),
   exclude: z.array(z.string()).optional(),
 })
 

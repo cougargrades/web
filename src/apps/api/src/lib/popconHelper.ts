@@ -73,6 +73,16 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
   const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO()]
   const qExclude = exclude ?? [];
 
+  const pathname_LIKE = (
+    topic === 'course'
+    ? '/c/%'
+    : (
+      topic === 'instructor'
+      ? '/i/%'
+      : '%'
+    )
+  );
+
   const res = await sql`
     SELECT
       RANK() OVER (ORDER BY metric_count DESC) as rank,
@@ -88,7 +98,7 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
         metric_type = ${metric}
         AND timestamp_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
         AND timestamp_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
-        AND pathname LIKE ${topic === 'course' ? '/c/%' : '/i/%'}
+        AND pathname LIKE ${pathname_LIKE}
         AND pathname NOT IN (${qExclude})
       GROUP BY
         pathname
