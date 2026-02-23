@@ -8,6 +8,8 @@ import { SearchResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
 import { getTrendingResults } from '../lib/getTrendingResults'
 
+export const TRENDING_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
+
 const app = new Hono()
 
 const DEFAULT_LIMIT = 5;
@@ -28,8 +30,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(TRENDING_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { limit } = ctx.req.valid('query');

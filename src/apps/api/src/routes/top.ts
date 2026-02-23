@@ -9,6 +9,8 @@ import { TopOptions } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
 import { CourseOrInstructorPlusMetrics, getTopResults } from '../lib/getTopResults'
 
+export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
+
 const app = new Hono()
 
 app.get('/',
@@ -25,8 +27,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { metric, topic, limit, time, hideCore } = ctx.req.valid('query');

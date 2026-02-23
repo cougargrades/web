@@ -5,7 +5,7 @@ import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { DURATION_ZERO } from '../cache'
+import { DURATION_ZERO, PROD_CACHE_LIFETIME } from '../cache'
 import { getCourseResults } from '../lib/getCourseResults'
 import { CourseResult } from '@cougargrades/models/dto'
 
@@ -28,7 +28,7 @@ app.get('/:courseName',
   cache({
     cacheName: 'cougargrades-api',
     // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { courseName } = ctx.req.valid('param');

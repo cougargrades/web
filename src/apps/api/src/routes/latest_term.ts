@@ -9,6 +9,8 @@ import { Section } from '@cougargrades/models';
 import { firestore } from '../lib/firestore-config'
 import { DURATION_ZERO } from '../cache'
 
+export const LATEST_TERM_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
+
 const app = new Hono()
 
 app.get('/',
@@ -25,7 +27,7 @@ app.get('/',
   cache({
     cacheName: 'cougargrades-api',
     // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(DURATION_ZERO, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(LATEST_TERM_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const db = firestore();
