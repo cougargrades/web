@@ -1,15 +1,19 @@
-
 import { z } from 'zod'
-import { Group } from '@cougargrades/models'
-import { DocumentReferenceService } from './DocumentReferenceService'
+import { AllGroupsResult, InstructorResult, PopulatedGroupResult } from '@cougargrades/models/dto'
+import { BaseApiService } from './private/BaseApiService'
 
-export class GroupService extends DocumentReferenceService {
+export class GroupService extends BaseApiService {
   constructor() {
     super()
   }
 
-  public async GetGroup(groupId: string): Promise<Group | null> {
-    return await this.GetDocumentByPath(`/groups/${groupId}`, Group);
+  public async GetAllGroups(): Promise<AllGroupsResult | null> {
+    return await this.Get(`/api/group`, undefined, AllGroupsResult)
+  }
+
+  public async GetOneGroup(groupId: string): Promise<PopulatedGroupResult | null> {
+    return await this.Get(`/api/group/${encodeURIComponent(groupId)}`, undefined, PopulatedGroupResult)
   }
 }
+
 

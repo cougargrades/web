@@ -1,11 +1,10 @@
 
-//export const greeting = 'Hello, World!';
-
 export * from './CourseService'
-export * from './DocumentReferenceService'
 export * from './GroupService'
 export * from './InstructorService'
+export * from './LatestTermService'
+export * from './PopConService'
 export * from './RmpService'
-export * from './SectionService'
 export * from './SimpleSyllabusService'
-
+export * from './TopService'
+export * from './TrendingService'

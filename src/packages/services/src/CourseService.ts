@@ -1,15 +1,15 @@
 
 import { z } from 'zod'
-import { Course } from '@cougargrades/models'
-import { DocumentReferenceService } from './DocumentReferenceService'
+import { CourseResult } from '@cougargrades/models/dto'
+import { BaseApiService } from './private/BaseApiService'
 
-export class CourseService extends DocumentReferenceService {
+export class CourseService extends BaseApiService {
   constructor() {
     super()
   }
 
-  public async GetCourse(courseName: string): Promise<Course | null> {
-    return await this.GetDocumentByPath(`/catalog/${courseName}`, Course);
+  public async GetCourse(courseName: string): Promise<CourseResult | null> {
+    return await this.Get(`/api/course/${encodeURIComponent(courseName)}`, undefined, CourseResult)
   }
 }
 

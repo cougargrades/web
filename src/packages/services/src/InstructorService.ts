@@ -1,15 +1,15 @@
 
 import { z } from 'zod'
-import { Instructor } from '@cougargrades/models'
-import { DocumentReferenceService } from './DocumentReferenceService'
+import { InstructorResult } from '@cougargrades/models/dto'
+import { BaseApiService } from './private/BaseApiService'
 
-export class InstructorService extends DocumentReferenceService {
+export class InstructorService extends BaseApiService {
   constructor() {
     super()
   }
 
-  public async GetInstructor(instructorName: string): Promise<Instructor | null> {
-    return await this.GetDocumentByPath(`/instructors/${instructorName}`, Instructor);
+  public async GetInstructor(instructorName: string): Promise<InstructorResult | null> {
+    return await this.Get(`/api/instructor/${encodeURIComponent(instructorName.toLowerCase())}`, undefined, InstructorResult)
   }
 }
 
