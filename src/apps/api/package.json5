@@ -8,6 +8,7 @@
     "wrangler": "wrangler",
     "tsc": "tsc --noEmit",
     "setup:schema": "wrangler d1 execute cougargrades-data --local --file=./schema.sql",
+    "setup:loadbackfill": "wrangler d1 execute cougargrades-data --local --file=./data/backfill.sql",
     // Clears the local HTTP cache that wrangler uses
     "setup:clearcache": "rimraf -v ./.wrangler/state/v3/cache"
   },
