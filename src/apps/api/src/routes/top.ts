@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { TopOptions } from '@cougargrades/models/dto'
-import { DURATION_ZERO } from '../cache'
+import { DURATION_ZERO, NO_CACHE } from '../cache'
 import { CourseOrInstructorPlusMetrics, getTopResults } from '../lib/getTopResults'
 
 export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
@@ -27,7 +27,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { metric, topic, limit, time, hideCore } = ctx.req.valid('query');

@@ -1,5 +1,6 @@
 declare namespace Cloudflare {
 	interface Env {
 		GOOGLE_APPLICATION_CREDENTIALS: string;
+		NO_CACHE: string;
 	}
 }

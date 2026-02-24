@@ -6,7 +6,7 @@ import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { AllGroupsResult, PopulatedGroupResult } from '@cougargrades/models/dto'
-import { PROD_CACHE_LIFETIME } from '../cache'
+import { NO_CACHE, PROD_CACHE_LIFETIME } from '../cache'
 import { getAllGroups } from '../lib/getAllGroups'
 import { getOneGroup } from '../lib/getOneGroup'
 import { isNullish } from '@cougargrades/utils/nullish'
@@ -26,7 +26,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const results = await getAllGroups();

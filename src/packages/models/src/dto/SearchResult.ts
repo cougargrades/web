@@ -47,7 +47,7 @@ export function instructor2SearchResult(data: Instructor): SearchResult {
     href: `/i/${data._id}`,
     type: 'instructor',
     group: '👩‍🏫 Instructors',
-    title: data._id,
+    title: data.fullName,
     badges: getBadges(data.GPA, data.enrollment),
   };
 }

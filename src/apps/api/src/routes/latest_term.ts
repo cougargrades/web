@@ -7,7 +7,7 @@ import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Section } from '@cougargrades/models';
 import { firestore } from '../lib/firestore-config'
-import { DURATION_ZERO } from '../cache'
+import { DURATION_ZERO, NO_CACHE } from '../cache'
 
 export const LATEST_TERM_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
 
@@ -26,8 +26,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(LATEST_TERM_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(LATEST_TERM_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const db = firestore();

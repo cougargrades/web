@@ -7,7 +7,7 @@ import * as simplesyllabus from '@cougargrades/vendor/simplesyllabus'
 import { SSSearchResponse } from '@cougargrades/vendor/simplesyllabus'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { Temporal } from 'temporal-polyfill'
-import { DEFAULT_CLIENT_CACHE_LIFETIME } from '../../cache'
+import { DEFAULT_CLIENT_CACHE_LIFETIME, NO_CACHE } from '../../cache'
 
 export const SYLLABUS_CACHE_LIFETIME: Temporal.Duration = Temporal.Duration.from({ days: 1 });
 
@@ -30,7 +30,7 @@ app.get('/search',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(SYLLABUS_CACHE_LIFETIME, DEFAULT_CLIENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { query, strict } = ctx.req.valid('query');

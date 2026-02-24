@@ -7,6 +7,7 @@ import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { SearchResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO } from '../cache'
 import { getTrendingResults } from '../lib/getTrendingResults'
+import { NO_CACHE } from '../cache'
 
 export const TRENDING_CACHE_LIFETIME = Temporal.Duration.from({ days: 1 });
 
@@ -30,7 +31,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(TRENDING_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TRENDING_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
   }),
   async (ctx) => {
     const { limit } = ctx.req.valid('query');

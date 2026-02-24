@@ -3,11 +3,13 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
+    "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "wrangler": "wrangler",
     "tsc": "tsc --noEmit",
-    "setup:schema": " wrangler d1 execute cougargrades-data --local --file=./schema.sql"
+    "setup:schema": "wrangler d1 execute cougargrades-data --local --file=./schema.sql",
+    // Clears the local HTTP cache that wrangler uses
+    "setup:clearcache": "rimraf -v ./.wrangler/state/v3/cache"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",
@@ -25,6 +27,7 @@
     "zod": "^4.1"
   },
   "devDependencies": {
+    "rimraf": "^6.1.3",
     "typescript": "^5",
     "wrangler": "^4.67.0"
   }
