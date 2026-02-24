@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@cougargrades/firebase-rest-firestore": "^1.6.1",
-    "@cougargrades/publicdata": "1.0.0-20260221203129",
+    "@cougargrades/publicdata": "1.0.0-20260223070655",
     "@cougargrades/utils": "workspace:*",
     "lodash-es": "^4.17.23",
     "temporal-polyfill": "^0.3.0",

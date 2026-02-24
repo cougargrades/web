@@ -5,6 +5,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "dev": "pnpm run -r --if-present --parallel dev",
     "build": "pnpm run -r --if-present build",
     "tsc": "pnpm run -r --if-present tsc"
   },

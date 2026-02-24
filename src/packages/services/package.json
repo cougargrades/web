@@ -3,13 +3,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./CourseService": "./src/CourseService.ts",
-    "./DocumentReference": "./src/DocumentReferenceService.ts",
-    "./GroupService": "./src/GroupService.ts",
-    "./InstructorService": "./src/InstructorService.ts",
-    "./RmpService": "./src/RmpService.ts",
-    "./SectionService": "./src/SectionService.ts",
-    "./SimpleSyllabusService": "./src/SimpleSyllabusService.ts"
+    "./environment": "./src/environment.ts"
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",

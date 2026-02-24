@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import ErrorIcon from '@mui/icons-material/Error'
 import TimeAgo from 'timeago-react'
-import { buildArgs } from '../lib/environment'
+import { API_ORIGIN, BUILD_DATE, COMMIT_SHA, ENVIRONMENT_NAME, VERSION } from '@cougargrades/services/environment'
 import type { ObservableStatus } from '../lib/services/Observable'
 import { generateMissingDataMailToLink, useLatestTerm, useMissingData } from '../lib/services/useLatestTerm'
 import { useSponsorInformation } from '../lib/services/useSponsorInformation'
@@ -22,7 +22,6 @@ export function Footer(props: { hideDisclaimer?: boolean }) {
   const { data: termData } = useLatestTerm();
   const { data: missingData } = useMissingData();
   const latestTermFormatted = termData?.latestTermFormatted ?? null;
-  const { commitHash, version, buildDate } = buildArgs; // hopefully works
   return (
     <footer className={styles.footer}>
       <div className="new-container">
@@ -30,23 +29,12 @@ export function Footer(props: { hideDisclaimer?: boolean }) {
           <div className="col-sm">
             <h6>@cougargrades/web</h6>
             <p>
-              Version: {version}, Commit:{' '}
-              <a href={`https://github.com/cougargrades/web/commit/${commitHash}`}>
-                {typeof commitHash === 'string'
-                  ? commitHash.substring(0, 7)
-                  : commitHash}
+              Version: {VERSION}, Commit:{' '}
+              <a href={`https://github.com/cougargrades/web/commit/${COMMIT_SHA}`}>
+                {COMMIT_SHA.substring(0, 7)}
               </a>
               <br />
-              Build date:{' '}
-              <span
-                title={new Date(
-                  buildDate,
-                ).toUTCString()}
-              >
-                {new Date(
-                  buildDate,
-                ).toLocaleDateString()}
-              </span>
+              Build date: <span title={BUILD_DATE.toUTCString()}>{BUILD_DATE.toLocaleDateString()}</span>
               <br />
               Latest Data: <span>{latestTermFormatted ?? 'Unknown'}</span>{' '}
               {
@@ -75,8 +63,8 @@ export function Footer(props: { hideDisclaimer?: boolean }) {
                 : ''
               }
               <br />
-              { true ? <>
-              Environment: Unknown
+              { ENVIRONMENT_NAME !== 'production' ? <>
+              Environment: <a href={API_ORIGIN.toString()}>{ENVIRONMENT_NAME}</a>
               </> : <></>}
               <br />
               <a href="https://github.com/cougargrades/web/wiki/Feedback">

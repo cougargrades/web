@@ -31,10 +31,6 @@ app.use('*', cors({
   maxAge: 600,
 }));
 
-app.get('/', (ctx) => {
-  return ctx.text('Hello Hono!')
-})
-
 app.route('/api/external/rmp', rmp);
 app.route('/api/external/simplesyllabus', simplesyllabus);
 app.route('/api/environment', environment);
@@ -69,6 +65,6 @@ app.get('/openapi.json', openAPIRouteHandler(app, {
   },
   includeEmptyPaths: true,
 }));
-app.get('/swagger', swaggerUI({ url: '/openapi.json' }));
+app.get('/', swaggerUI({ url: '/openapi.json' }));
 
 export default app

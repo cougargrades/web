@@ -1,8 +1,7 @@
 import * as z4 from 'zod/v4/core'
 import { trimEnd } from 'lodash-es';
-
-import { VITE_COUGARGRADES_API_ORIGIN } from '../environment'
 import { isNullish } from '@cougargrades/utils/nullish';
+import { API_ORIGIN } from '../environment'
 
 export type SearchParams = ConstructorParameters<typeof URLSearchParams>[0];
 
@@ -10,7 +9,7 @@ export class BaseApiService {
   baseURL: URL;
 
   constructor(base?: URL) {
-    this.baseURL = base ?? VITE_COUGARGRADES_API_ORIGIN;
+    this.baseURL = base ?? API_ORIGIN;
   }
 
   public async Get<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema: TSchema): Promise<z4.output<TSchema> | null> {
