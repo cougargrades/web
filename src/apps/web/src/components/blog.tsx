@@ -1,5 +1,5 @@
-import { useAtomFeed } from '@au5ton/use-atom-feed';
-import type { AtomEntry, AtomFeed } from '@au5ton/use-atom-feed';
+//import { useAtomFeed } from '@au5ton/use-atom-feed';
+import type { AtomEntry, AtomFeed } from '@cougargrades/atom-feed';
 import React from 'react'
 import TimeAgo from 'timeago-react'
 import type { TDate } from 'timeago-react'
@@ -14,6 +14,7 @@ import { ENVIRONMENT_NAME, type EnvironmentName } from '@cougargrades/services/e
 import { Badge } from './badge'
 
 import styles from './blog.module.scss'
+import { useAtomFeed } from '../lib/services/useAtomFeed';
 
 //import { MaintenanceMonitor } from './MaintenanceMonitor';
 
@@ -22,7 +23,7 @@ export const BLOG_URL = 'https://blog.cougargrades.io/atom.xml'
 
 export default function Blog() {
   const previewLimit = 3;
-  const { data, isValidating } = useAtomFeed(BLOG_URL);
+  const { data, isLoading } = useAtomFeed(BLOG_URL);
   // Condition for determining if a post "has priority" or not
   const postHasPriority = (post: AtomEntry) => (new Date().valueOf() - post.updated.valueOf() < 6.048e8);
   // Has a blog entry been posted within the last week?
@@ -43,7 +44,7 @@ export default function Blog() {
         )}
       </summary>
       <ul>
-        {isValidating
+        {isLoading
           ? 'Loading...'
           : data?.entries.slice(0, previewLimit).map((e) => (
               <li key={e.id} className={postHasPriority(e) ? 'priority' : ''}>
@@ -173,7 +174,7 @@ function getNotices(feed?: AtomFeed): BlogNotice[] {
 
     return notices.map(e => 
       e.link!.filter(e => e.title === 'notice')
-      .map((link, index) => ({
+      .map<Partial<BlogNotice>>((link, index) => ({
         // extract what we can from the primary post information
         id: `${e.id}|${index}`,
         title: e.title.value,
@@ -195,10 +196,10 @@ function getNotices(feed?: AtomFeed): BlogNotice[] {
     // require that the "expiry" property be set
     .filter(e => e.expiry !== undefined && e.severity !== undefined && e.updated !== undefined)
     // put real values here
-    .map(({ updated, expiry, ...o}) => ({
-      updated: new Date(updated),
-      expiry: new Date(expiry),
-      ...o
+    .map<BlogNotice>(({ updated, expiry, ...o}) => ({
+      updated: new Date(updated as any),
+      expiry: new Date(expiry as any),
+      ...o as any
     }))
     /**
      * require that expiry be in the future
@@ -222,17 +223,3 @@ function decodeDataURI(dataURI: string): string {
   return decodeURI(dataURI.substring(dataURI.indexOf(',') + 1))
 }
 
-// const decodeAndUnescapeObject = (raw: { [key: string]: any }) => Object.keys(raw)
-//   .reduce((obj, key) => {
-//     if(typeof raw[key] === 'string') {
-//       obj[key] = htmlDecodeEscapeEntities(raw[key]);
-//     }
-//     else {
-//       obj[key] = raw[key];
-//     }
-//     return obj;
-//   }, {});
-
-// function htmlDecodeEscapeEntities(data: string): string {
-//   return new DOMParser().parseFromString(data, 'text/html').documentElement.textContent;
-// }

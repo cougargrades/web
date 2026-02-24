@@ -46,7 +46,7 @@ export const COMMIT_SHA: CommitSha = CF_PAGES_COMMIT_SHA ?? VITE_COMMIT_SHA ?? '
 //#region Interpreted Properties
 
 export type EnvironmentName = z.infer<typeof EnvironmentName>
-const EnvironmentName = z.enum(['production', 'preview', 'local'])
+const EnvironmentName = z.enum(['production', 'preview', 'development'])
 const PRODUCTION_BRANCH_NAME: BranchName = 'master';
 const VITE_ENVIRONMENT_NAME = EnvironmentName.optional().parse(import.meta.env.VITE_ENVIRONMENT_NAME);
 
