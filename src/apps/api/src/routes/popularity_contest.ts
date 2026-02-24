@@ -6,6 +6,7 @@ import { env } from 'cloudflare:workers'
 import { PopConMetric } from '@cougargrades/models'
 
 import { recordPopCon } from '../lib/popconHelper'
+import { NO_RATELIMIT } from '../cache'
 
 const app = new Hono()
 
@@ -29,9 +30,10 @@ app.post('/submit',
     const ipAddress = ctx.req.header('cf-connecting-ip') ?? '';
     const rateLimitKey = `${ipAddress} >> ${ctx.req.url}`;
 
+    //if (NO_RATELIMIT)
     const { success } = await env.POPULARITY_CONTEST.limit({ key: rateLimitKey });
 
-    if (success) {
+    if (success || NO_RATELIMIT) {
       await recordPopCon({ pathname, type });
       return ctx.newResponse('', 200)
     }
