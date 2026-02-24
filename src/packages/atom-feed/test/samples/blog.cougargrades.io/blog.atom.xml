@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>CougarGrades.io</title>
+ <link href="https://blog.cougargrades.io/atom.xml" rel="self"/>
+ <link href="https://blog.cougargrades.io/"/>
+ <updated>2021-03-12T19:27:38+00:00</updated>
+ <id>https://blog.cougargrades.io</id>
+ <author>
+   <name>Austin Jackson</name>
+   <email>austinjckson@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>📊 Fall 2020 grades</title>
+   <link href="https://blog.cougargrades.io/2021/03/12/new-data/"/>
+   <updated>2021-03-12T18:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2021/03/12/new-data</id>
+   <content type="html">&lt;p&gt;Fall 2020 data was received from the University of Houston and will start uploading to the database at 1:00PM on March 12, 2021 (Houston time). Some downtime may be experienced during that period. Expect Fall 2020 data to populate after that period.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/4a6dcdb53d8a0f77a1633385b1a99dbd1027f307/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06972%20Grade%20Distribution_Fall%202020.csv&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔧 0.4.4 Update</title>
+   <link href="https://blog.cougargrades.io/2021/01/06/update/"/>
+   <updated>2021-01-06T22:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2021/01/06/update</id>
+   <content type="html">&lt;p&gt;This update fixes some issues with the site and more.&lt;/p&gt;
+
+&lt;h3 id=&quot;cougargradesweb&quot;&gt;@cougargrades/web&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/9fbc21adb1fa6de2bbab81ed8c46cc93322d24f2&quot;&gt;9fbc21a&lt;/a&gt;] Fixed chart data processing bug that appeared with course “ECE 2300” (&lt;a href=&quot;https://github.com/cougargrades/web/issues/7&quot;&gt;#7&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/333cfca6d69f81554897ec5c1e29209ac030016a&quot;&gt;333cfca&lt;/a&gt;] Fixed chart data processing bug that appeared with course “COSC 6372” (&lt;a href=&quot;https://github.com/cougargrades/web/issues/32&quot;&gt;#32&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/4c876d2a3aec9ccff669e18bb9ad59ce16858976&quot;&gt;4c876d2&lt;/a&gt;] Fixed styling bug where charts on individual course pages (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/c/ENGL%201304&lt;/code&gt;) weren’t styled for dark mode. (&lt;a href=&quot;https://github.com/cougargrades/web/issues/12&quot;&gt;#12&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/de41a11c498818feed20199a9d15c0f57f87d707&quot;&gt;de41a11&lt;/a&gt;] Security patch with “npm audit”&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📊 Summer 2020 grades</title>
+   <link href="https://blog.cougargrades.io/2020/12/29/new-data/"/>
+   <updated>2020-12-29T22:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/12/29/new-data</id>
+   <content type="html">&lt;p&gt;Summer 2020 data was received from the University of Houston and will start uploading to the database at 5:00PM on December 29, 2020 (Houston time). Some downtime may be experienced during that period. Expect Summer 2020 data to populate overnight.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/1214628c0eae728f8dd5c2b304db6d2787bf2be8/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06861%20Summer%202020%20Grade%20distribution.csv&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;interim-undergraduate-grade-policy&quot;&gt;Interim Undergraduate Grade Policy&lt;/h2&gt;
+
+&lt;p&gt;In my last update, I added Spring 2020 grades to the database. In that update, UH did not provide me with any data on the “NCR” count, but did provide data for the “S” count. However, UH &lt;em&gt;did&lt;/em&gt; provide “NCR” data for Summer 2020. That can be seen in the source data but won’t be visible on the CougarGrades.io website until a future update is made.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📊 Spring 2020 grades</title>
+   <link href="https://blog.cougargrades.io/2020/07/15/new-data/"/>
+   <updated>2020-07-15T21:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/07/15/new-data</id>
+   <content type="html">&lt;p&gt;Spring 2020 data was received from the University of Houston and will start uploading to the database at 2:00 AM on July 16, 2020 (Houston time). Some downtime may be experienced during that period. Expect Spring 2020 data to populate during the day of July 16, 2020.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/7849a0f001bb73a2c63ef98dd6ac79fdcb1df82d/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06573%20Responsive%20Information.csv&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;interim-undergraduate-grade-policy&quot;&gt;Interim Undergraduate Grade Policy&lt;/h2&gt;
+
+&lt;p&gt;Some of you may be curious about the effects of the &lt;a href=&quot;https://uh.edu/provost/policies-resources/student/interim-undergraduate-grade-policy/index&quot;&gt;Interim Undergraduate Grade Policy&lt;/a&gt; that was in place during the Spring 2020 semester. This policy was put in place in response to the sudden transition to online learning as a result of the COVID-19 global health crisis. Below are 3 visual aids that present the number of grades issued for the Spring 2020, Fall 2019, and Spring 2019 semesters.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2020-07-15_Spring2020.svg&quot; /&gt;
+&lt;img src=&quot;/assets/2020-07-15_Fall2019.svg&quot; /&gt;
+&lt;img src=&quot;/assets/2020-07-15_Spring2019.svg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Before making any conclusions from this visual aid, I recommend you analyze the source data yourself below.&lt;/p&gt;
+
+&lt;p&gt;Note:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;“S” means “Satisfactory”, as described &lt;a href=&quot;https://uh.edu/provost/policies-resources/student/interim-undergraduate-grade-policy/index&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;“W” means “Drop with W”, as described &lt;a href=&quot;https://uh.edu/provost/policies-resources/student/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;sources&quot;&gt;Sources&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://frappe.io/charts/docs/basic/aggr_sliced_diags#configuring-percentage-bars&quot;&gt;Charts generated with Frappe Charts&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/7849a0f001bb73a2c63ef98dd6ac79fdcb1df82d/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06573%20Responsive%20Information.csv&quot;&gt;Spring 2020 data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/7849a0f001bb73a2c63ef98dd6ac79fdcb1df82d/documents/edu.uh.grade_distribution/IR06296%20Responsive%20Information.csv&quot;&gt;Fall 2019 data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/7849a0f001bb73a2c63ef98dd6ac79fdcb1df82d/documents/edu.uh.grade_distribution/Grade%20Distribution_Spring%202019.csv&quot;&gt;Spring 2019 data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;edit-july-20-2020&quot;&gt;Edit, July 20, 2020:&lt;/h3&gt;
+
+&lt;p&gt;If you’re curious about where “NCR” grades factored into this, I cannot provide any answers. In my formal public data request to the University of Houston, I requested that “NCR” grades be included, but they were specifically excluded in &lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/7849a0f001bb73a2c63ef98dd6ac79fdcb1df82d/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06573%20Responsive%20Information.csv&quot;&gt;their response&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;My phrasing:&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Please note, I have included the “S” and “NCR” fields as part of the Spring 2020 Interim Grade Policy. If including these fields is extra work or otherwise incompatible with your procedures, please do not include them as part of this request.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This phrasing is specific because if I ask for data that they cannot/won’t produce due to any reason, it could invalidate my entire request.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔭 Future update: Groups + Roadmap</title>
+   <link href="https://blog.cougargrades.io/2020/04/06/in-the-works/"/>
+   <updated>2020-04-06T22:20:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/04/06/in-the-works</id>
+   <content type="html">&lt;style&gt;
+/* Underline the Component Areas */
+span.ca {
+  color: #D22677;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+/* Pretty todo list */
+ul.task-list {
+    padding-left: 20px;
+}
+li.task-list-item {
+    list-style: none;
+}
+li.task-list-item input[type=&quot;checkbox&quot;] {
+    margin-right: 1em;
+}
+
+/* Youtube Embed */
+.iframe-wrap {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    margin-bottom: 1rem;
+}
+.iframe-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+&lt;/style&gt;
+
+&lt;p&gt;&lt;em&gt;Big wall of text incoming, I’ve been busy.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-next&quot;&gt;What’s next?&lt;/h2&gt;
+
+&lt;p&gt;The next planned features for CougarGrades include the “Groups” page (temporary name). This page has been greyed out and marked with a “🔒” in the navigation bar since launch. The intended use of this feature is to compare courses in a specific category or “Group”. Specifically, I’m referring to the &lt;a href=&quot;https://uh.edu/undergraduate-committee/documents-internal/uhcoreresources/&quot;&gt;UH Core Curriculum by Component Area&lt;/a&gt;. These &lt;em&gt;Component Areas&lt;/em&gt; are what most UH students are probably familiar with, such as: &lt;span class=&quot;ca&quot;&gt;Life &amp;amp; Physical Sciences&lt;/span&gt;, &lt;span class=&quot;ca&quot;&gt;Language, Philosophy, &amp;amp; Culture&lt;/span&gt;, &lt;span class=&quot;ca&quot;&gt;Writing in the Disciplines&lt;/span&gt;, and many others.&lt;/p&gt;
+
+&lt;h2 id=&quot;road-map&quot;&gt;Road Map&lt;/h2&gt;
+
+&lt;p&gt;Here’s a rough road map of what I’d like to have prepared before introducing “Groups”. The ones that are checked are already done, the “-“ indicate W.I.P.&lt;/p&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;&lt;a href=&quot;https://github.com/cougargrades/api-2.0.0&quot;&gt;@cougargrades/api v2.0.0&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;&lt;a href=&quot;https://github.com/cougargrades/importer&quot;&gt;@cougargrades/importer v2.0.0&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Port website to TypeScript &lt;span class=&quot;indeterminate&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Redesign website to have less bloat &lt;span class=&quot;indeterminate&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Build consistent pipeline for additional data (see: &lt;a href=&quot;https://github.com/cougargrades/publicdata&quot;&gt;@cougargrades/publicdata&lt;/a&gt;)&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;Use new data and systems for “Groups” feature&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;progress-so-far&quot;&gt;Progress so far&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Technical mumbo jumbo ahead:&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;A big challenge of introducing new data into CougarGrades is that importing and indexing over 100,000 rows of CSV into &lt;a href=&quot;https://firebase.google.com/products/firestore&quot;&gt;NoSQL&lt;/a&gt; can be a challenge when it comes to timing. As I’ve noted before, &lt;strong&gt;past database upgrades have taken up to 12 hours or more to complete&lt;/strong&gt; using the legacy &lt;a href=&quot;https://github.com/cougargrades/importer-python&quot;&gt;Python importer&lt;/a&gt; tool. This is because the tool ran synchronously where each row of data was ran &lt;em&gt;one at a time&lt;/em&gt; and required a multiple round-trips to verify that duplicates weren’t being created (very slow).&lt;/p&gt;
+
+&lt;p&gt;I’m proud to say that this is not the case anymore. As part of the API 2.0.0, future imports are done &lt;strong&gt;entirely in the cloud&lt;/strong&gt; and are processed &lt;strong&gt;asynchronously&lt;/strong&gt; by serverless, idempotent, &lt;a href=&quot;https://firebase.google.com/products/functions&quot;&gt;cloud functions&lt;/a&gt; (SUPER fast).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Paired with a rewritten Importer tool in TypeScript, the entire CougarGrades database can be imported and calculated in less than 45 minutes instead of 12 hours or more.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Here’s a demo:&lt;/p&gt;
+
+&lt;div class=&quot;iframe-wrap&quot;&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube-nocookie.com/embed/Q8kkSWf34Ww&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This was a lot of work and there were a lot of challenges along the way. For example, I needed to figure out how to &lt;a href=&quot;https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Welford's_online_algorithm&quot;&gt;incrementally calculate standard deviation&lt;/a&gt; without accessing any of the other elements at runtime. For my first dive into concurrent computing, I’m really proud of how it turned out.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-present--future&quot;&gt;The Present + Future&lt;/h2&gt;
+
+&lt;p&gt;The current version of the website (0.4.3) will stay published throughout this first round of Fall 2020 course registration to ensure stability and uptime. I’m planning on deploying to production when the “Groups” feature is ready. I want to take my time and get it right. Thankfully, there’s a lot of time until August when the next round of course registration runs through.&lt;/p&gt;
+
+&lt;p&gt;Thanks for using CougarGrades! Stay safe and good luck on finals.&lt;/p&gt;
+
+&lt;p&gt;Enjoy your Summer! ⛱️🌴&lt;/p&gt;
+
+&lt;script&gt;
+// Set which todo list items are currently IN PROGRESS
+Array.from(document.querySelectorAll('span.indeterminate'))
+.forEach(e =&gt; e.parentElement.children[0].indeterminate = true)
+&lt;/script&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔧 0.4.3 Update</title>
+   <link href="https://blog.cougargrades.io/2020/03/14/update/"/>
+   <updated>2020-03-14T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/03/14/update</id>
+   <content type="html">&lt;p&gt;This update fixes some issues with the site and more.&lt;/p&gt;
+
+&lt;h3 id=&quot;cougargradesweb&quot;&gt;@cougargrades/web&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/525344d992d83ad93a817c932245967be6bc8abd&quot;&gt;525344d&lt;/a&gt;] Fixed dark mode bug (&lt;a href=&quot;https://github.com/cougargrades/web/issues/5&quot;&gt;#4&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/c93d28b78ff84f371c8ba9526125adca7d8e7e00&quot;&gt;c93d28b&lt;/a&gt;] Security patch with “npm audit”&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔨 API Update 1.1.0</title>
+   <link href="https://blog.cougargrades.io/2020/02/17/api-update/"/>
+   <updated>2020-02-17T03:30:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/02/17/api-update</id>
+   <content type="html">&lt;h2 id=&quot;notice&quot;&gt;Notice&lt;/h2&gt;
+
+&lt;p&gt;This update pertains to the public &lt;a href=&quot;https://en.wikipedia.org/wiki/Web_API&quot;&gt;Web API&lt;/a&gt; intended for use by students and developers that want to consume CougarGrades data without some of the overhead that may be involved in consuming the &lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=FOIA-IR+user%3Acougargrades&amp;amp;type=Repositories&amp;amp;ref=advsearch&amp;amp;l=&amp;amp;l=&quot;&gt;CSV data&lt;/a&gt; on your own. &lt;em&gt;This update is not related to improvements to the CougarGrades website.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;technical-mumbo&quot;&gt;Technical mumbo&lt;/h2&gt;
+
+&lt;p&gt;The public HTTP API has been updated to support instructor-related data. This update adds the new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/instructors&lt;/code&gt; endpoint that can be queried by a search term through the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;query&lt;/code&gt; parameter, or an individual instructor can be accessed through the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fullName&lt;/code&gt; parameter.&lt;/p&gt;
+
+&lt;p&gt;To read more about the public API, check out the documentation or inspect the source code below.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Documentation: &lt;a href=&quot;https://cougargrades.github.io/api/&quot;&gt;https://cougargrades.github.io/api/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Source code: &lt;a href=&quot;https://github.com/cougargrades/api&quot;&gt;https://github.com/cougargrades/api&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📊 Fall 2019 grades</title>
+   <link href="https://blog.cougargrades.io/2020/01/21/database-upgrades/"/>
+   <updated>2020-01-21T17:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/21/database-upgrades</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Fall 2019 data was received from the University of Houston and will begin processing on Wednesday, January 22, 2020.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Upgrading the database requires a period of downtime where the database is wiped and recreated from scratch. This process usually takes about 10 hours. Accessing the site during this period could cause some unexpected or empty results when searching for courses or instructors. To prevent interruption during add/drop week, the upgrade will be started once course registration has closed.&lt;/p&gt;
+
+&lt;p&gt;As mentioned in the &lt;a href=&quot;/2020/01/15/update/&quot;&gt;0.4.1 update post&lt;/a&gt;, this database upgrade will also implement a bug fix &lt;a href=&quot;https://github.com/cougargrades/importer/commit/5c4995ebad68ca28f8c00a43a6faf3d7d69f75e5&quot;&gt;where the instructor’s departments field was incomplete and only represented one department&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/FOIA-IR06296&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔧 0.4.2 Update</title>
+   <link href="https://blog.cougargrades.io/2020/01/17/update/"/>
+   <updated>2020-01-17T10:30:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/17/update</id>
+   <content type="html">&lt;p&gt;This update fixes some issues with the site and more.&lt;/p&gt;
+
+&lt;h3 id=&quot;cougargradesweb&quot;&gt;@cougargrades/web&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Added support for &lt;strong&gt;native &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme&quot;&gt;Dark Mode&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Hopefully, eliminated some confusion between “UH GPA” and “Prof GPA” on Instructor page tables&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;video autoplay=&quot;&quot; loop=&quot;&quot; muted=&quot;&quot; playsinline=&quot;&quot;&gt;
+    &lt;source src=&quot;/assets/2020-01-17.webm&quot; type=&quot;video/webm&quot; /&gt;
+    &lt;source src=&quot;/assets/2020-01-17.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    Your browser does not support HTML5 video.
+&lt;/video&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔧 0.4.1 Update</title>
+   <link href="https://blog.cougargrades.io/2020/01/15/update/"/>
+   <updated>2020-01-15T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/15/update</id>
+   <content type="html">&lt;p&gt;This update fixes some issues with the site and more.&lt;/p&gt;
+
+&lt;h3 id=&quot;cougargradesweb&quot;&gt;@cougargrades/web&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/a286e70c9f6ddca9ceb156b5c54094bd350cab4e&quot;&gt;a286e70&lt;/a&gt;] Removed Moment.js as a dependency due to bloat&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/1a71d0bb8eb312ebe5bd2a9e3fdbac0b1a137f5a&quot;&gt;1a71d0b&lt;/a&gt;] Added an Instructor button on the homepage&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/9177321a1ec2b7658e571a1ae6a3f227c2a310c2&quot;&gt;9177321&lt;/a&gt;] Removed some demonstrational prefilled areas on the Courses page&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/25f018a0836e615e3e8093e64cbcda0bdd421569&quot;&gt;25f018a&lt;/a&gt;] Fixed a performance issue where instructor courses and section data weren’t fetched asynchronously&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;cougargradesimporter&quot;&gt;@cougargrades/importer&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/importer/commit/5c4995ebad68ca28f8c00a43a6faf3d7d69f75e5&quot;&gt;5c4995e&lt;/a&gt;] Fixed an issue where the instructor’s departments field was incomplete and only represented one department. &lt;em&gt;This fix requires a database upgrade to be reflected on the site. To prevent downtime during add/drop season, this fix will be processed after January 21, 2020.&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🎉 0.4.0 Update: Instructor search is now available</title>
+   <link href="https://blog.cougargrades.io/2020/01/13/instructor-update/"/>
+   <updated>2020-01-13T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/13/instructor-update</id>
+   <content type="html">&lt;p&gt;At long last, the Instructor search is here.&lt;/p&gt;
+
+&lt;p&gt;Interested in taking a course but none of the instructors that are offerred have a history of teaching that course before? Well, now you can learn more about their background within the university and see how they’ve done in other courses.&lt;/p&gt;
+
+&lt;video autoplay=&quot;&quot; loop=&quot;&quot; muted=&quot;&quot; playsinline=&quot;&quot;&gt;
+    &lt;source src=&quot;/assets/2020-01-13.webm&quot; type=&quot;video/webm&quot; /&gt;
+    &lt;source src=&quot;/assets/2020-01-13.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    Your browser does not support HTML5 video.
+&lt;/video&gt;
+
+&lt;p&gt;This feature has been in the works for a long time, and I’m proud with how it’s come along. In past blog posts, I’ve talked briefly about some of the behind-the-scenes work made along the way, such as with the database upgrades necessary to make the front-end possible.&lt;/p&gt;
+
+&lt;style&gt;
+    span.gr {
+        color: #515151;
+        border-radius: 0.3rem;
+        padding: 0.1rem;
+    }
+&lt;/style&gt;
+
+&lt;p&gt;Pictured below is an example of an Instructor search result. The labels above the professor’s name is both the GPA and the &lt;a href=&quot;https://en.wikipedia.org/wiki/Standard_deviation&quot;&gt;standard deviation&lt;/a&gt; respectively for the professor in question. The colors of the labels, inspired by &lt;a href=&quot;https://aggiescheduler.com/&quot;&gt;AggieScheduler&lt;/a&gt;, are indicative of the score. An &lt;span class=&quot;gr&quot; style=&quot;background:lightskyblue;&quot;&gt;A average&lt;/span&gt; is blue, a &lt;span class=&quot;gr&quot; style=&quot;background:lightgreen;&quot;&gt;B average&lt;/span&gt; is green, a &lt;span class=&quot;gr&quot; style=&quot;background:yellow;&quot;&gt;C average&lt;/span&gt; is yellow, and a &lt;span class=&quot;gr&quot; style=&quot;background:lightsalmon;&quot;&gt;D average&lt;/span&gt; is orange.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2020-01-13.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;preventing-arbitrary-thresholds-in-the-color-indication&quot;&gt;Preventing arbitrary thresholds in the color indication&lt;/h3&gt;
+
+&lt;p&gt;To prevent the standard deviation thresholds from being biased or misleading, I created a frequency distribution and decided to use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Probability_mass_function&quot;&gt;probability mass function&lt;/a&gt; to estimate when the cut-off should be. The results were pretty informative.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;For the standardDeviation values of all instructors (latest data: Summer 2019)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;min: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.0007071067811864697&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;mean: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.28632900784232573&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;median: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.24911322128640845&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;max: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.6836212460051696&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;25% likely to have stddev under 0.149&lt;/li&gt;
+  &lt;li&gt;50% likely to have stddev under 0.286&lt;/li&gt;
+  &lt;li&gt;75% likely to have stddev under 0.425&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2020-01-13.svg&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;thank-you&quot;&gt;Thank you&lt;/h3&gt;
+
+&lt;p&gt;Thank you for all the support and I hope you enjoy the new update. 💕&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Austin Jackson&lt;/em&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📦 New data: Instructor indexing of names</title>
+   <link href="https://blog.cougargrades.io/2020/01/09/database-upgrades/"/>
+   <updated>2020-01-09T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/09/database-upgrades</id>
+   <content type="html">&lt;p&gt;As a result of &lt;a href=&quot;https://github.com/cougargrades/importer/commit/cb142ea9d05797d3abfa81395d672f5703fa0877&quot;&gt;some updates&lt;/a&gt; being written to make searching for instructors by name possible, a database upgrade will be necessary.&lt;/p&gt;
+
+&lt;p&gt;This means that some functionality on the site will be limited for a couple hours starting Thursday, January 9, 2020 at midnight. Services will resume automatically when this upload has completed.&lt;/p&gt;
+
+&lt;h2 id=&quot;technical-mumbo&quot;&gt;Technical mumbo&lt;/h2&gt;
+
+&lt;p&gt;The updates being made are inspired by &lt;a href=&quot;https://medium.com/@ken11zer01/firebase-firestore-text-search-and-pagination-91a0df8131ef&quot;&gt;Ken Tan’s technique&lt;/a&gt; for text search in Google Firestore. After deleting Firestore collections used in production and uploading a new dataset created with the &lt;a href=&quot;https://github.com/cougargrades/importer&quot;&gt;importer&lt;/a&gt; tool, future features to the site can be deployed and tested in-place without any delay.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔭 Future update: Instructor search and Groups</title>
+   <link href="https://blog.cougargrades.io/2020/01/08/in-the-works/"/>
+   <updated>2020-01-08T21:19:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/08/in-the-works</id>
+   <content type="html">&lt;p&gt;The next planned features for CougarGrades include the “Instructors” page and another feature (temporarily) named “Groups”. These are the pages that have been greyed out and marked with a “🔒” in the navigation bar at the top of the site.&lt;/p&gt;
+
+&lt;p&gt;In order for these features to work as intended, certain statistics will need to be computed for the entire grades database before work can begun on the interface itself. Those statistics have been periodically &lt;a href=&quot;https://github.com/cougargrades/importer/commit/d8cb7c131aebd044bd9c3f84d63f823ace0e5a4d&quot;&gt;worked on&lt;/a&gt; and are reaching completition. The goal is to have the Instructors feature available by the start of the Spring 2020 semester, which will be Monday, January 13, 2020, and the “Groups” feature completed at a later date because the current planned design is more elaborate to develop than previous areas of the site.&lt;/p&gt;
+
+&lt;h2 id=&quot;site-growth&quot;&gt;Site growth&lt;/h2&gt;
+
+&lt;p&gt;Since the launch of CougarGrades in September 2019 until today, the website has received over 2800 unique visitors through organic growth. This includes positive reception on the subreddit &lt;a href=&quot;https://old.reddit.com/r/UniversityOfHouston/comments/cv3b1b/i_made_an_opensource_website_to_get_grade/&quot;&gt;/r/UniversityOfHouston&lt;/a&gt;. I am blown away with the positive feedback and I’m thankful that the UH community finds CougarGrades useful. 😄&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📫 New developer updates page</title>
+   <link href="https://blog.cougargrades.io/2020/01/08/developer-blog/"/>
+   <updated>2020-01-08T21:18:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2020/01/08/developer-blog</id>
+   <content type="html">&lt;p&gt;CougarGrades now has a standalone updates page that is separate from the main site to prevent a cluttered codebase. It is hosted on Github Pages and can be found at the link below.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://cougargrades.github.io/blog/&quot;&gt;https://cougargrades.github.io/blog/&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>🔧 Minor site update</title>
+   <link href="https://blog.cougargrades.io/2019/12/15/site-update/"/>
+   <updated>2019-12-15T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2019/12/15/site-update</id>
+   <content type="html">&lt;p&gt;Some of the text and layout of information on the website was adjusted.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📊 Summer 2019 grades</title>
+   <link href="https://blog.cougargrades.io/2019/09/24/new-data/"/>
+   <updated>2019-09-24T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2019/09/24/new-data</id>
+   <content type="html">&lt;p&gt;Summer 2019 data was received from the University of Houston and was successfully added to the database. Some downtime may have been experienced during that period.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/FOIA-IR06046&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>📦 New data: Instructor and course statistics</title>
+   <link href="https://blog.cougargrades.io/2019/09/10/database-upgrades/"/>
+   <updated>2019-09-10T00:00:00+00:00</updated>
+   <id>https://blog.cougargrades.io/2019/09/10/database-upgrades</id>
+   <content type="html">&lt;p&gt;Database upgrades have been completed. Site functionality may have been affected during the upload time into the hosted database. For more information, see the cougargrades importer.&lt;/p&gt;
+
+&lt;p&gt;The database upgrade was to compute some simple statistics for all courses and instructors. These computed statistics are anticipated to be used in future site updates.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/importer&quot;&gt;@cougargrades/importer&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>
