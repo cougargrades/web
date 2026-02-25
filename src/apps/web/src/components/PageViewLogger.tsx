@@ -23,10 +23,8 @@ export function PageViewLogger() {
     const required_prefixes = ['/c/', '/i/', '/g/'];
     const HAS_REQUIRED_PREFIX = !required_prefixes.every(prefix => !location.pathname.startsWith(prefix))
     if (HAS_REQUIRED_PREFIX) {
-      const pathnameCopy = location.pathname;
-      // Submit after 5 seconds so page load isn't delayed
-      console.debug(`[PageViewLogger] Submitting in ${SUBMIT_DELAY_MS / 1000} seconds: \`${location.pathname}\``);
-      setTimeout(() => mutate(pathnameCopy), SUBMIT_DELAY_MS);
+      // Send immediately because we use `Navigator.sendBeacon()` behind the scenes
+      mutate(location.pathname);
     }
   }, [location.pathname]);
 

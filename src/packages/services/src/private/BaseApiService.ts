@@ -40,7 +40,7 @@ export class BaseApiService {
     }
   }
 
-  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema?: TSchema): Promise<z4.output<TSchema> | null> {
+  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema?: TSchema, options?: Pick<RequestInit, 'priority'>): Promise<z4.output<TSchema> | null> {
     const params = new URLSearchParams(query);
     const queryString: string = (
       params.size > 0
@@ -49,6 +49,7 @@ export class BaseApiService {
     );
 
     const res = await fetch(`${trimEnd(this.baseURL.href, '/')}${path}${queryString}`, {
+      ...(options ?? {}),
       method: 'POST',
     });
     if (!res.ok) {
@@ -69,5 +70,16 @@ export class BaseApiService {
       console.error(`[BaseApiService] Error while parsing response: ${path}${queryString}`, err);
       return null;
     }
+  }
+
+  public SendBeacon(path: string, query: SearchParams): boolean {
+    const params = new URLSearchParams(query);
+    const queryString: string = (
+      params.size > 0
+      ? `?${params}`
+      : ''
+    );
+
+    return navigator.sendBeacon(`${trimEnd(this.baseURL.href, '/')}${path}${queryString}`)
   }
 }
