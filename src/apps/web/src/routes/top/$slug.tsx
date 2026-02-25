@@ -47,7 +47,7 @@ export const Route = createFileRoute('/top/$slug')({
   validateSearch: z.object({
     viewLimit: z.coerce.number().default(10),
     viewTime: z.enum(['all', 'lastMonth', 'lastYear']).default('all'),
-    //hideCore: z.stringbool().default(false),
+    //hideCore: z.stringbool().optional().default(false),
     hideCore: z.coerce.boolean().default(false),
   }),
   component: RouteComponent,

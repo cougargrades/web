@@ -85,12 +85,19 @@ export async function recordPopCon(options: Pick<PopCon, 'pathname' | 'type'>) {
   `;
 }
 
+export type PopConTopResult = z.infer<typeof PopConTopResult>
+export const PopConTopResult = z.object({
+  pathname: z.string(),
+  metric_count_sum: z.number().int(),
+  //rank: z.number().int()
+})
+
 /**
  * Gets the ordered list of top pages that follow the PopConOptions
  * @param options PopConOptions
  * @returns 
  */
-export async function getPopConTopPages({ metric, limit, offset, timeRange, topic, exclude }: PopConOptions) {
+export async function getPopConTopPages({ metric, limit, offset, timeRange, topic, exclude }: PopConOptions): Promise<PopConTopResult[]> {
   //if (!env.COUGARGRADES_SQL) return null;
 
   const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID)]
@@ -131,15 +138,33 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
     OFFSET ${offset}
   `;
   
-  const row_schema = z.object({
-    pathname: z.string(),
-    metric_count_sum: z.number().int(),
-    //rank: z.number().int()
-  })
-
   // We want a failed parse to throw an error
-  const parsed = row_schema.array().parse(res?.results);
+  const parsed = PopConTopResult.array().parse(res?.results);
   return parsed;
+}
+
+/**
+ * Wrapper around `getPopConTopPages(...)` to support streaming
+ * @param param0 
+ */
+export async function* streamPopConTopPages({ metric, timeRange, topic, exclude, chunkSize }: Omit<PopConOptions, 'limit' | 'offset'> & { chunkSize: number }) {
+  let offset = 0;
+  let snap: PopConTopResult[];
+  do {
+    snap = await getPopConTopPages({
+      metric,
+      timeRange,
+      topic,
+      exclude,
+      limit: chunkSize,
+      offset: offset,
+    });
+    for(let row of snap) {
+      yield row;
+    }
+    offset += chunkSize;
+  }
+  while(snap.length > 0);
 }
 
 /**
@@ -156,7 +181,7 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
  * @param options PopConOptions
  * @returns 
  */
-export async function getRankForPathname(pathname: string, { metric, limit, offset, timeRange, topic, exclude }: PopConOptions): Promise<RankingResult | null> {
+export async function getRankForPathname(pathname: string, { metric, timeRange, topic, exclude }: Omit<PopConOptions, 'limit' | 'offset'>): Promise<RankingResult | null> {
   const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID)]
   const qExclude = exclude ?? [];
 

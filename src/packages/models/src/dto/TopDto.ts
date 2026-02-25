@@ -23,6 +23,6 @@ export const TopOptions = z.object({
   topic: TopTopic,
   limit: z.coerce.number().int().min(1).max(250),
   time: TopTime,
-  hideCore: z.coerce.boolean().default(false),
+  hideCore: z.stringbool().optional().default(false),
 })
 

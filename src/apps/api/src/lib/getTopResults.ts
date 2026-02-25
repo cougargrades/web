@@ -1,18 +1,20 @@
 
-import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
+import { DocumentPathToPathname, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
 import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopResult, TopTime2Duration, ToTopResult } from '@cougargrades/models/dto'
 import core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
-import { getPopConTopPages, getRankForPathname } from './popconHelper';
+import { getPopConTopPages, getRankForPathname, PopConTopResult, streamPopConTopPages } from './popconHelper';
 import { isNullish } from '@cougargrades/utils/nullish'
 import { GetTimeRangeFromDurationBeforeNow, UTC_TIMEZONE_ID } from '@cougargrades/utils/temporal'
 
 const core_curriculum = new Set(Array.from(core_curriculum_json).map(row => `${row.department} ${row.catalogNumber}`))
-const core_curriculum_pathnames = Array.from(core_curriculum)
-  .map(courseName => DocumentPathToPathname(`catalog/${courseName}`))
-  .filter<string>((p): p is string => !isNullish(p))
+const core_curriculum_pathnames = new Set(
+  Array.from(core_curriculum)
+    .map(courseName => DocumentPathToPathname(`catalog/${courseName}`))
+    .filter<string>((p): p is string => !isNullish(p))
+)
 
 export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
@@ -63,22 +65,30 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
     const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
 
-    // Get the top visited PopCon pathnames 
-    
-    const rankedPopcons = await getPopConTopPages({
-      metric: pMetric,
-      topic,
-      timeRange,
-      limit,
-      offset: 0,
-      // Only add an `exclude` parameter when hiding core curriculum courses
-      // TODO: use another approach to respect `hideCore`, since this can cause `Error: D1_ERROR: too many SQL variables`
-      // exclude: (
-      //   hideCore && topic === 'course'
-      //   ? core_curriculum_pathnames
-      //   : undefined
-      // )
-    })
+    let rankedPopcons: PopConTopResult[] = [];
+
+    /**
+     * Stream the top visited PopCon pathnames
+     * 
+     * Stream it because it's the most syntactically simple
+     * way to keep asking for more if we find rows that we don't want (core curriculum filter).
+     */
+    for await (const row of streamPopConTopPages({ metric: pMetric, topic, timeRange, chunkSize: limit })) {
+      // End the stream if we capture the amount we want
+      if (rankedPopcons.length >= limit) break;
+
+      // Skip this row if it's one we're supposed to avoid
+      if (hideCore && topic === 'course' && core_curriculum_pathnames.has(row.pathname)) {
+        continue;
+      }
+
+      if (!seen.has(row.pathname)) {
+        // otherwise, push it
+        rankedPopcons.push(row);
+        // mark as seen
+        seen.add(row.pathname);
+      }
+    }
 
     const resolved = await Promise.allSettled(rankedPopcons.map(async (pc) => {
       const documentPath = PathnameToDocumentPath(pc.pathname);
@@ -151,9 +161,7 @@ export async function getRankForCourse(courseName: string, { metric, time }: Pic
     const rank = await getRankForPathname(pathname, {
       metric: pMetric,
       topic: 'course',
-      timeRange,
-      limit: 1, // this is unused
-      offset: 0,
+      timeRange
     })
 
     return rank;
@@ -187,9 +195,7 @@ export async function getRankForInstructor(instructorName: string, { metric, tim
     const rank = await getRankForPathname(pathname, {
       metric: pMetric,
       topic: 'instructor',
-      timeRange,
-      limit: 1, // this is unused
-      offset: 0,
+      timeRange
     })
 
     return rank;

@@ -25,6 +25,9 @@
     "**/**/index.*": "${dirname}/index.${extname}",
 
     // Web Tanstack Router file-based routing
-    "*/src/apps/web/src/routes/**/*.*": "(${dirname})/${filename}.${extname}"
+    "*/src/apps/web/src/routes/**/*.*": "web/(${dirname})/${filename}.${extname}",
+
+    // API Hono "file-based" (not really) routing
+    "*/src/apps/api/src/routes/**/*.*": "api/(${dirname})/${filename}.${extname}",
   }
 }

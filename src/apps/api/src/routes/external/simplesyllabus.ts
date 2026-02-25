@@ -16,7 +16,7 @@ const app = new Hono()
 app.get('/search',
   validator('query', z.object({
     query: z.string().nonempty(),
-    strict: z.coerce.boolean().optional(),
+    strict: z.stringbool().optional().default(true),
   })),
   describeRoute({
     responses: {
