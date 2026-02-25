@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { Section } from '../Section'
 import { Course, CourseThin } from '../Course'
-import { InstructorThin } from '../Instructor'
+import { Instructor, InstructorThin } from '../Instructor'
 
 export type SectionPlus = z.infer<typeof SectionPlus>
 export const SectionPlus = Section.extend({
@@ -29,12 +29,12 @@ export const PlusMetrics = z.object({
 })
 
 export type CoursePlusMetrics = z.infer<typeof CoursePlusMetrics>
-export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
-//export const CoursePlusMetrics = z.intersection(Course, PlusMetrics)
+//export const CoursePlusMetrics = z.intersection(CourseThin, PlusMetrics)
+export const CoursePlusMetrics = z.intersection(Course, PlusMetrics)
 
 export type InstructorPlusMetrics = z.infer<typeof InstructorPlusMetrics>
-export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
-//export const InstructorPlusMetrics = z.intersection(Instructor, PlusMetrics)
+//export const InstructorPlusMetrics = z.intersection(InstructorThin, PlusMetrics)
+export const InstructorPlusMetrics = z.intersection(Instructor, PlusMetrics)
 
 export function course2CoursePlus(course: Course): CoursePlus {
   return {

@@ -7,6 +7,7 @@
     "./comparator": "./src/comparator.ts",
     "./iterable": "./src/iterable.ts",
     "./nullish": "./src/nullish.ts",
+    "./object": "./src/object.ts",
     "./temporal": "./src/temporal.ts",
     "./zod": "./src/zod.ts"
   },

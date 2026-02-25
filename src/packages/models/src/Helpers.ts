@@ -70,3 +70,48 @@ export const scaleToRange = (x: number, [min, max]: [number, number]) => x * (ma
  * @returns 
  */
 export const shareOf = (x: number, of: number[]) => x / sum(of) * 100
+
+/**
+ * See: https://www.bauer.uh.edu/UHGPACalculator/
+ * See: https://publications.uh.edu/content.php?catoid=34&navoid=12493
+ */
+const GPA_WEIGHTS = {
+  'A': 4.0,
+  'A-': 3.67,
+  'B+': 3.33,
+  'B': 3.00,
+  'B-': 2.67,
+  'C+': 2.33,
+  'C': 2.00,
+  'C-': 1.67,
+  'D+': 1.33,
+  'D': 1.00,
+  'D-': 0.67,
+  'F': 0.00,
+} as const;
+
+/**
+ * Estimates GPA based on the formula that UH has defined.
+ * Used for comparing against the values that UH provides.
+ */
+export function estimateGPA(section: Section): number {
+  const { A, B, C, D, F, W, S, NCR } = section;
+  const totalEnrolled = GetTotalEnrolled(section);
+
+  let points = 0.0;
+  points += GPA_WEIGHTS['A'] * A;
+  points += GPA_WEIGHTS['B'] * B;
+  points += GPA_WEIGHTS['C'] * C;
+  points += GPA_WEIGHTS['D'] * D;
+  points += GPA_WEIGHTS['F'] * F;
+  return points / (totalEnrolled - (W + S + NCR));
+}
+
+export function stringContainsOneOf(value: string, ...candidates: string[]): boolean {
+  return candidates.some(c => value.toLowerCase().includes(c.toLowerCase()))
+}
+
+export function arrayLastEntries<T>(array: T[], numberOfEntries: number): T[] {
+  //arr.slice(Math.max(arr.length - 5, 0))
+  return array.slice(Math.max(array.length - numberOfEntries, 0));
+}

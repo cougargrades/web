@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { HeadContent, Link, Outlet, createRootRoute, type ErrorComponentProps } from '@tanstack/react-router'
+import { HeadContent, Link, Outlet, createRootRoute, createRootRouteWithContext, type ErrorComponentProps } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { QueryClient } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import { useTheme } from '../lib/theme'
 import { PageViewLogger } from '../components/PageViewLogger'
 import { Layout } from '../components/layout'
 
-export const Route = createRootRoute({
+//createRootRoute
+
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   component: RootComponent,
   //errorComponent: ErrorComponent,
 })

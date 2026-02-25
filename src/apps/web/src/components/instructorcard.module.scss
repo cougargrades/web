@@ -1,0 +1,65 @@
+
+.instructorCard {
+  //display: flex;
+  flex-shrink: 0;
+  button {
+    white-space: normal;
+  }
+}
+
+.cardActionArea {
+  height: 100%;
+}
+
+.cardContent {
+  height: 100%;
+  //padding: 20px;
+  padding: 0 20px!important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.badgeRow {
+  display: flex!important;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 5px;
+}
+
+.badgeRowBadge {
+  font-size: inherit!important;
+  // margin-right: 0.25rem;
+}
+
+.badgeStackListItem {
+  padding-right: 140px!important;
+}
+
+.badgeStack {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  max-width: 140px;
+  gap: 3px;
+  align-items: center;
+}
+
+.showMore {
+  font-size: 18px;
+  font-weight: 300;
+  //font-style: italic;
+  text-align: center;
+}
+
+.dialogTitle {
+  border-bottom: 0;
+}
+
+.showMoreContent {
+  padding: 0!important;
+}

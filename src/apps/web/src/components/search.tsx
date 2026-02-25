@@ -96,7 +96,7 @@ export default function SearchBar() {
   useEffect(() => {
     if (data) {
       for(let item of data) {
-        //router.preloadRoute(item.href);
+        router.preloadRoute({ to: item.href });
       }
     }
   }, [data]);

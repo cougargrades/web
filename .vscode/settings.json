@@ -8,5 +8,23 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "literals",
+
+  /**
+   * Makes it easier to identify files when using folder-based routing in Vue/Nuxt projects
+   */
+  "workbench.editor.customLabels.enabled": true,
+  "workbench.editor.customLabels.patterns": {
+    // Anything that is "index.*" within a folder
+    "**/**/index.*": "${dirname}/index.${extname}",
+
+    // Web Tanstack Router file-based routing
+    "*/src/apps/web/src/routes/**/*.*": "(${dirname})/${filename}.${extname}"
+  }
 }

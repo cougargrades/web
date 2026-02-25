@@ -5,7 +5,7 @@ import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { RankingResult, TopOptions } from '@cougargrades/models/dto'
+import { RankingResult, TopOptions, TopResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO, NO_CACHE } from '../cache'
 import { CourseOrInstructorPlusMetrics, getRankForCourse, getRankForInstructor, getTopResults } from '../lib/getTopResults'
 
@@ -20,7 +20,7 @@ app.get('/',
       200: {
         description: '',
         content: {
-          'application/json': { schema: resolver(CourseOrInstructorPlusMetrics.array()) }
+          'application/json': { schema: resolver(TopResult.array()) }
         }
       }
     }

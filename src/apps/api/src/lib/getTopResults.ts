@@ -1,8 +1,8 @@
 
 import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
-import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
-import * as core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
+import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopResult, TopTime2Duration, ToTopResult } from '@cougargrades/models/dto'
+import core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
 import { getPopConTopPages, getRankForPathname } from './popconHelper';
@@ -16,7 +16,7 @@ const core_curriculum_pathnames = Array.from(core_curriculum)
 
 export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
-export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<(CoursePlusMetrics | InstructorPlusMetrics)[]> {
+export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<TopResult[]> {
   const seen = new Set<string>();
   if (metric === 'totalEnrolled') {
     const db = firestore();
@@ -54,7 +54,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
       }
     }
     
-    return result
+    return result.map(r => ToTopResult(r, { metric, }));
   }
   else if (metric === 'pageView') {
     // Convert `Top` parameters into `PopCon` parameters
@@ -64,6 +64,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
 
     // Get the top visited PopCon pathnames 
+    
     const rankedPopcons = await getPopConTopPages({
       metric: pMetric,
       topic,
@@ -71,11 +72,12 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
       limit,
       offset: 0,
       // Only add an `exclude` parameter when hiding core curriculum courses
-      exclude: (
-        hideCore && topic === 'course'
-        ? core_curriculum_pathnames
-        : undefined
-      )
+      // TODO: use another approach to respect `hideCore`, since this can cause `Error: D1_ERROR: too many SQL variables`
+      // exclude: (
+      //   hideCore && topic === 'course'
+      //   ? core_curriculum_pathnames
+      //   : undefined
+      // )
     })
 
     const resolved = await Promise.allSettled(rankedPopcons.map(async (pc) => {
@@ -117,7 +119,8 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     return resolved
       .filter(r => r.status === 'fulfilled')
       .map(r => r.value)
-      .filter((r): r is CoursePlusMetrics | InstructorPlusMetrics => !isNullish(r));
+      .filter((r): r is CoursePlusMetrics | InstructorPlusMetrics => !isNullish(r))
+      .map(r => ToTopResult(r, { metric, }));
   }
 
   return [];
@@ -131,9 +134,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
  */
 export async function getRankForCourse(courseName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {
   if (metric === 'totalEnrolled') {
-    
     // TODO: this is not yet supported
-
     return null
   }
   else if (metric === 'pageView') {
@@ -169,9 +170,7 @@ export async function getRankForCourse(courseName: string, { metric, time }: Pic
  */
 export async function getRankForInstructor(instructorName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {
   if (metric === 'totalEnrolled') {
-
     // TODO: this is not yet supported
-
     return null
   }
   else if (metric === 'pageView') {
