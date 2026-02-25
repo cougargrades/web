@@ -1,4 +1,4 @@
-BEGIN TRANSACTION;
+
 -- Added manually to test features
 INSERT INTO "PopularityContest" ("pathname","date_epoch_seconds","metric_type","metric_count") VALUES ('/c/ENGL%201301',1770076799,1,150);
 
@@ -5257,4 +5257,4 @@ INSERT INTO "PopularityContest" ("pathname","date_epoch_seconds","metric_type","
 INSERT INTO "PopularityContest" ("pathname","date_epoch_seconds","metric_type","metric_count") VALUES ('/i/young%2C%20crystal%20ann',1771804800,1,4);
 INSERT INTO "PopularityContest" ("pathname","date_epoch_seconds","metric_type","metric_count") VALUES ('/i/yun%2C%20changhoon',1771804800,1,1);
 INSERT INTO "PopularityContest" ("pathname","date_epoch_seconds","metric_type","metric_count") VALUES ('/i/zastrow%2C%20melissa%20l',1771804800,1,1);
-COMMIT;
+

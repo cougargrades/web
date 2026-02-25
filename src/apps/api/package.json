@@ -9,6 +9,9 @@
     "tsc": "tsc --noEmit",
     "setup:schema": "wrangler d1 execute cougargrades-data --local --file=./data/schema.sql",
     "setup:seed": "wrangler d1 execute cougargrades-data --local --file=./data/seed_sample_data.sql",
+    "setup-actual:schema": "wrangler d1 execute cougargrades-data --remote --file=./data/schema.sql",
+    "setup-actual:seed": "wrangler d1 execute cougargrades-data --remote --file=./data/seed_sample_data.sql",
+    "setup-actual:seed-real": "wrangler d1 execute cougargrades-data --remote --file=./data/seed_real_data.sql",
     "reset:cache": "rimraf -v ./.wrangler/state/v3/cache",
     "reset:d1": "rimraf -v ./.wrangler/state/v3/d1"
   },
