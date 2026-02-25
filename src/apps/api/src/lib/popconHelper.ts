@@ -1,11 +1,13 @@
 import { parse, z } from 'zod'
 import { DocumentPathToPathname, PathnameToDocumentPath, PopCon, PopConOptions, ToEpochSeconds } from '@cougargrades/models'
+import { RankingResult } from '@cougargrades/models/dto'
 import { isNullish, isNullishOrWhitespace } from '@cougargrades/utils/nullish';
+import { UTC_TIMEZONE_ID } from "@cougargrades/utils/temporal"
 import { env } from 'cloudflare:workers'
 import { Temporal } from 'temporal-polyfill';
 import { getFirestoreDocumentSafe } from './firestore-config'
 
-const EPOCH_START = Temporal.Instant.fromEpochMilliseconds(0).toZonedDateTimeISO(Temporal.Now.timeZoneId());
+const EPOCH_START = Temporal.Instant.fromEpochMilliseconds(0).toZonedDateTimeISO(UTC_TIMEZONE_ID);
 
 /**
  * Allows using D1 SQLite with sql`` template literals safely
@@ -61,16 +63,37 @@ export async function recordPopCon(options: Pick<PopCon, 'pathname' | 'type'>) {
    * By "round-tripping" this, we standardize the capitalization and ensure that only valid PopCons are created.
    */
   const validatedPathname = DocumentPathToPathname(doc.data._path);
-  if (isNullish(validatedPathname)) return; 
+  if (isNullish(validatedPathname)) return;
 
   // This is safe to add to the PopCon records
-  const res = await sql`INSERT INTO PopularityContest (pathname, metric_type) VALUES (${validatedPathname}, ${options.type})`;
+  const res = await sql`
+  INSERT INTO PopularityContest (
+    pathname,
+    date_epoch_seconds,
+    metric_type,
+    metric_count
+  )
+  VALUES (
+    ${validatedPathname},
+    strftime('%s','now','start of day'),
+    ${options.type},
+    1
+  )
+  ON CONFLICT(pathname, date_epoch_seconds, metric_type)
+  DO UPDATE SET
+    metric_count = metric_count + 1;
+  `;
 }
 
+/**
+ * Gets the ordered list of top pages that follow the PopConOptions
+ * @param options PopConOptions
+ * @returns 
+ */
 export async function getPopConTopPages({ metric, limit, offset, timeRange, topic, exclude }: PopConOptions) {
   //if (!env.COUGARGRADES_SQL) return null;
 
-  const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO()]
+  const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID)]
   const qExclude = exclude ?? [];
 
   const pathname_LIKE = (
@@ -85,34 +108,33 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
 
   const res = await sql`
     SELECT
-      RANK() OVER (ORDER BY metric_count DESC) as rank,
       pathname,
-      metric_count
+      metric_count_sum
     FROM (
       SELECT
         pathname,
-        COUNT(*) AS metric_count
+        SUM(metric_count) as metric_count_sum
       FROM
         PopularityContest
       WHERE
         metric_type = ${metric}
-        AND timestamp_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
-        AND timestamp_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
+        AND date_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
+        AND date_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
         AND pathname LIKE ${pathname_LIKE}
         AND pathname NOT IN (${qExclude})
       GROUP BY
         pathname
     )
     ORDER BY
-      metric_count DESC
+      metric_count_sum DESC
     LIMIT ${limit}
     OFFSET ${offset}
   `;
   
   const row_schema = z.object({
     pathname: z.string(),
-    metric_count: z.number().int(),
-    rank: z.number().int()
+    metric_count_sum: z.number().int(),
+    //rank: z.number().int()
   })
 
   // We want a failed parse to throw an error
@@ -120,4 +142,61 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
   return parsed;
 }
 
-// TODO: get rank of course or instructor by view count
+/**
+ * Looks up the rank of an individual page (via `pathname`) that follows PopConOptions.
+ * This should give the same result as the position in `getPopConTopPages()`
+ * 
+ * This uses the SQLite `RANK()` function. 
+ * 
+ * A comparison:
+ * - RANK() => Ties share rank, gaps appear (1,2,2,4)
+ * - DENSE_RANK() => Ties share rank, no gaps (1,2,2,3)
+ * - ROW_NUMBER() => No ties, strictly sequential
+ * 
+ * @param options PopConOptions
+ * @returns 
+ */
+export async function getRankForPathname(pathname: string, { metric, limit, offset, timeRange, topic, exclude }: PopConOptions): Promise<RankingResult | null> {
+  const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [EPOCH_START, Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID)]
+  const qExclude = exclude ?? [];
+
+  const pathname_LIKE = (
+    topic === 'course'
+    ? '/c/%'
+    : (
+      topic === 'instructor'
+      ? '/i/%'
+      : '%'
+    )
+  );
+
+  const res = await sql`
+    WITH totals AS (
+      SELECT
+        pathname,
+        SUM(metric_count) AS total
+      FROM
+        PopularityContest
+      WHERE
+        metric_type = ${metric}
+        AND date_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
+        AND date_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
+        AND pathname LIKE ${pathname_LIKE}
+        AND pathname NOT IN (${qExclude})
+      GROUP BY
+        pathname
+    ),
+    target AS (
+      SELECT total FROM totals WHERE pathname = ${pathname}
+    )
+    SELECT
+      (SELECT COUNT(*) FROM totals WHERE total > target.total) + 1 AS rank,
+      target.total AS score
+    FROM
+      target;
+  `;
+  
+  // We want a failed parse to throw an error
+  const parsed = RankingResult.array().parse(res?.results);
+  return parsed.at(0) ?? null;
+}

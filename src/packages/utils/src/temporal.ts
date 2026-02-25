@@ -1,9 +1,11 @@
 
 import { Temporal } from 'temporal-polyfill'
 
-export function GetTimeRangeFromDurationBeforeNow(relativeDuration: Temporal.Duration): [Temporal.ZonedDateTime, Temporal.ZonedDateTime] {
+export const UTC_TIMEZONE_ID: Temporal.TimeZoneLike = 'Etc/UTC';
+
+export function GetTimeRangeFromDurationBeforeNow(endTime: Temporal.ZonedDateTime, relativeDuration: Temporal.Duration): [Temporal.ZonedDateTime, Temporal.ZonedDateTime] {
   return [
-    Temporal.Now.zonedDateTimeISO().subtract(relativeDuration),
-    Temporal.Now.zonedDateTimeISO()
+    endTime.subtract(relativeDuration),
+    endTime
   ]
 }

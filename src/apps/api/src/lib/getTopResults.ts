@@ -1,13 +1,13 @@
 
 import { Course, DocumentPathToPathname, Instructor, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
-import { CoursePlusMetrics, InstructorPlusMetrics, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
+import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopTime2Duration } from '@cougargrades/models/dto'
 import * as core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
-import { getPopConTopPages } from './popconHelper';
+import { getPopConTopPages, getRankForPathname } from './popconHelper';
 import { isNullish } from '@cougargrades/utils/nullish'
-import { GetTimeRangeFromDurationBeforeNow } from '@cougargrades/utils/temporal'
+import { GetTimeRangeFromDurationBeforeNow, UTC_TIMEZONE_ID } from '@cougargrades/utils/temporal'
 
 const core_curriculum = new Set(Array.from(core_curriculum_json).map(row => `${row.department} ${row.catalogNumber}`))
 const core_curriculum_pathnames = Array.from(core_curriculum)
@@ -56,12 +56,12 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
     
     return result
   }
-  else {
+  else if (metric === 'pageView') {
     // Convert `Top` parameters into `PopCon` parameters
     const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
     const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
-    //const timeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = [Temporal.Now.zonedDateTimeISO().subtract(topDuration), Temporal.Now.zonedDateTimeISO()]
-    const timeRange = GetTimeRangeFromDurationBeforeNow(topDuration);
+    const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+    const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
 
     // Get the top visited PopCon pathnames 
     const rankedPopcons = await getPopConTopPages({
@@ -92,7 +92,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
         if (isNullish(plusMetricKey)) return null;
 
         // Store the metric value we queried in the correct property
-        doc.data[plusMetricKey] = pc.metric_count;
+        doc.data[plusMetricKey] = pc.metric_count_sum;
 
         return doc.data;
       }
@@ -106,7 +106,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
         if (isNullish(plusMetricKey)) return null;
 
         // Store the metric value we queried in the correct property
-        doc.data[plusMetricKey] = pc.metric_count;
+        doc.data[plusMetricKey] = pc.metric_count_sum;
 
         return doc.data;
       }
@@ -119,4 +119,82 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
       .map(r => r.value)
       .filter((r): r is CoursePlusMetrics | InstructorPlusMetrics => !isNullish(r));
   }
+
+  return [];
+}
+
+/**
+ * Used to get the ranking for a Course based on `TopOptions`
+ * @param courseName 
+ * @param param1 
+ * @returns 
+ */
+export async function getRankForCourse(courseName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {
+  if (metric === 'totalEnrolled') {
+    
+    // TODO: this is not yet supported
+
+    return null
+  }
+  else if (metric === 'pageView') {
+    // Convert `Top` parameters into `PopCon` parameters
+    const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
+    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
+    const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+    const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
+
+    const pathname = DocumentPathToPathname(`catalog/${courseName}`);
+    if (isNullish(pathname)) return null;
+
+    // Get the top visited PopCon pathnames 
+    const rank = await getRankForPathname(pathname, {
+      metric: pMetric,
+      topic: 'course',
+      timeRange,
+      limit: 1, // this is unused
+      offset: 0,
+    })
+
+    return rank;
+  }
+
+  return null;
+}
+
+/**
+ * Used to get the ranking for an Instructor based on `TopOptions`
+ * @param instructorName 
+ * @param param1 
+ * @returns 
+ */
+export async function getRankForInstructor(instructorName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {
+  if (metric === 'totalEnrolled') {
+
+    // TODO: this is not yet supported
+
+    return null
+  }
+  else if (metric === 'pageView') {
+    // Convert `Top` parameters into `PopCon` parameters
+    const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
+    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
+    const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+    const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
+
+    const pathname = DocumentPathToPathname(`catalog/${instructorName}`);
+    if (isNullish(pathname)) return null;
+
+    // Get the top visited PopCon pathnames 
+    const rank = await getRankForPathname(pathname, {
+      metric: pMetric,
+      topic: 'instructor',
+      timeRange,
+      limit: 1, // this is unused
+      offset: 0,
+    })
+
+    return rank;
+  }
+
+  return null;
 }

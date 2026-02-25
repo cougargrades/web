@@ -2,7 +2,7 @@
 import { Temporal } from 'temporal-polyfill';
 import { course2SearchResult, instructor2SearchResult, SearchResult } from '@cougargrades/models/dto'
 import { Course, Instructor, PathnameToDocumentPath, PopConMetric } from '@cougargrades/models';
-import { GetTimeRangeFromDurationBeforeNow } from '@cougargrades/utils/temporal';
+import { GetTimeRangeFromDurationBeforeNow, UTC_TIMEZONE_ID } from '@cougargrades/utils/temporal';
 import { isNullish } from '@cougargrades/utils/nullish';
 import { getPopConTopPages } from './popconHelper';
 import { getFirestoreDocumentSafe } from './firestore-config';
@@ -11,7 +11,8 @@ const TRENDING_TEXT = '🔥 Popular';
 
 export async function getTrendingResults(limit: number = 5): Promise<SearchResult[]> {
   const last30Days = Temporal.Duration.from({ days: 31 });
-  const timeRange = GetTimeRangeFromDurationBeforeNow(last30Days);
+  const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+  const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, last30Days);
 
   // Get the top visited PopCon pathnames 
   const rankedPopcons = await getPopConTopPages({

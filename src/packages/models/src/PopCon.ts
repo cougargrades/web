@@ -116,7 +116,7 @@ export function PathnameToDocumentPath(pathname: string): string | null {
 }
 
 /**
- * Converts from document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`) into pathnames for PopCon/Google Analytics pathname (ex: `/c/ABCD 1234`)
+ * Converts from document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`) into pathnames for PopCon/Google Analytics pathname (ex: `/c/ABCD%201234`)
  * @param pathname 
  * @returns 
  */
