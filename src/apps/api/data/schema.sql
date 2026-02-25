@@ -2,13 +2,19 @@ DROP TABLE IF EXISTS "PopularityContest";
 CREATE TABLE IF NOT EXISTS "PopularityContest" (
 	"id"	INTEGER NOT NULL,
 	"pathname"	TEXT NOT NULL,
-	"timestamp_epoch_seconds"	INTEGER NOT NULL DEFAULT (unixepoch()),
+	--"timestamp_epoch_seconds"	INTEGER NOT NULL DEFAULT (unixepoch()),
+	"date_epoch_seconds"	INTEGER NOT NULL,
 	"metric_type"	INTEGER NOT NULL,
+	"metric_count"	INTEGER NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
-CREATE INDEX idx_popularity_metric_time_path
-ON PopularityContest(metric_type, timestamp_epoch_seconds, pathname);
+-- CREATE INDEX idx_popularity_metric_time_path
+-- ON PopularityContest(date_epoch_seconds, pathname, metric_type);
+
+-- Ensure that each `pathname` only has 1 row per day per metric_type
+CREATE UNIQUE INDEX IDX_UQ_POPULARITY
+ON PopularityContest(date_epoch_seconds, pathname, metric_type);
 
 /*
 Course sample data
