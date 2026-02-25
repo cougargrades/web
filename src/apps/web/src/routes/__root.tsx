@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link, Outlet, createRootRoute, type ErrorComponentProps } from '@tanstack/react-router'
+import { HeadContent, Link, Outlet, createRootRoute, type ErrorComponentProps } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { ThemeProvider } from '@mui/material/styles'
@@ -27,6 +27,8 @@ function RootComponent() {
   const theme = useTheme();
 
   return (
+    <>
+    <HeadContent />
     <ThemeProvider theme={theme}>
       <PageViewLogger />
       <Layout>
@@ -44,6 +46,7 @@ function RootComponent() {
         ]}
       />
     </ThemeProvider>
+    </>
   )
 }
 
