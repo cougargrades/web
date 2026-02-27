@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { loadVendor, openAPIRouteHandler } from 'hono-openapi'
 import { convertToOpenAPISchema } from "@standard-community/standard-openapi/convert"
-import { swaggerUI } from '@hono/swagger-ui'
+import { SwaggerUI } from '@hono/swagger-ui'
 import { toJSONSchema } from 'zod/v4/core'
 
 import github from './routes/external/github'
@@ -67,6 +67,23 @@ app.get('/openapi.json', openAPIRouteHandler(app, {
   },
   includeEmptyPaths: true,
 }));
-app.get('/', swaggerUI({ url: '/openapi.json' }));
+//app.get('/', swaggerUI({ url: '/openapi.json' }));
+app.get('/', ctx => {
+  return ctx.html(`
+     <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Custom Swagger" />
+        <title>SwaggerUI</title>
+        <script>
+          // custom script
+        </script>
+      </head>
+      <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist/swagger-ui-standalone-preset.js" crossorigin="anonymous"></script>
+      ${SwaggerUI({ url: '/openapi.json', presets: ['SwaggerUIBundle.presets.apis', 'SwaggerUIStandalonePreset'], layout: 'StandaloneLayout' })}
+    </html>
+  `)
+})
 
 export default app

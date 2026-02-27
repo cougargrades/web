@@ -12,8 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TopIndexRouteImport } from './routes/top/index'
+import { Route as RandomIndexRouteImport } from './routes/random/index'
 import { Route as TopSlugRouteImport } from './routes/top/$slug'
+import { Route as RandomInstructorRouteImport } from './routes/random/instructor'
+import { Route as RandomCourseRouteImport } from './routes/random/course'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
+import { Route as IInstructorNameRouteImport } from './routes/i/$instructorName'
+import { Route as GGroupIdRouteImport } from './routes/g/$groupId'
+import { Route as CCourseNameRouteImport } from './routes/c/$courseName'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -30,9 +36,24 @@ const TopIndexRoute = TopIndexRouteImport.update({
   path: '/top/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RandomIndexRoute = RandomIndexRouteImport.update({
+  id: '/random/',
+  path: '/random/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TopSlugRoute = TopSlugRouteImport.update({
   id: '/top/$slug',
   path: '/top/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomInstructorRoute = RandomInstructorRouteImport.update({
+  id: '/random/instructor',
+  path: '/random/instructor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomCourseRoute = RandomCourseRouteImport.update({
+  id: '/random/course',
+  path: '/random/course',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostsPostIdRoute = PostsPostIdRouteImport.update({
@@ -40,42 +61,115 @@ const PostsPostIdRoute = PostsPostIdRouteImport.update({
   path: '/posts/$postId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IInstructorNameRoute = IInstructorNameRouteImport.update({
+  id: '/i/$instructorName',
+  path: '/i/$instructorName',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GGroupIdRoute = GGroupIdRouteImport.update({
+  id: '/g/$groupId',
+  path: '/g/$groupId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CCourseNameRoute = CCourseNameRouteImport.update({
+  id: '/c/$courseName',
+  path: '/c/$courseName',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/c/$courseName': typeof CCourseNameRoute
+  '/g/$groupId': typeof GGroupIdRoute
+  '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/random/course': typeof RandomCourseRoute
+  '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/random/': typeof RandomIndexRoute
   '/top/': typeof TopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/c/$courseName': typeof CCourseNameRoute
+  '/g/$groupId': typeof GGroupIdRoute
+  '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/random/course': typeof RandomCourseRoute
+  '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/random': typeof RandomIndexRoute
   '/top': typeof TopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/c/$courseName': typeof CCourseNameRoute
+  '/g/$groupId': typeof GGroupIdRoute
+  '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/random/course': typeof RandomCourseRoute
+  '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/random/': typeof RandomIndexRoute
   '/top/': typeof TopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/posts/$postId' | '/top/$slug' | '/top/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/c/$courseName'
+    | '/g/$groupId'
+    | '/i/$instructorName'
+    | '/posts/$postId'
+    | '/random/course'
+    | '/random/instructor'
+    | '/top/$slug'
+    | '/random/'
+    | '/top/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/posts/$postId' | '/top/$slug' | '/top'
-  id: '__root__' | '/' | '/about' | '/posts/$postId' | '/top/$slug' | '/top/'
+  to:
+    | '/'
+    | '/about'
+    | '/c/$courseName'
+    | '/g/$groupId'
+    | '/i/$instructorName'
+    | '/posts/$postId'
+    | '/random/course'
+    | '/random/instructor'
+    | '/top/$slug'
+    | '/random'
+    | '/top'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/c/$courseName'
+    | '/g/$groupId'
+    | '/i/$instructorName'
+    | '/posts/$postId'
+    | '/random/course'
+    | '/random/instructor'
+    | '/top/$slug'
+    | '/random/'
+    | '/top/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CCourseNameRoute: typeof CCourseNameRoute
+  GGroupIdRoute: typeof GGroupIdRoute
+  IInstructorNameRoute: typeof IInstructorNameRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
+  RandomCourseRoute: typeof RandomCourseRoute
+  RandomInstructorRoute: typeof RandomInstructorRoute
   TopSlugRoute: typeof TopSlugRoute
+  RandomIndexRoute: typeof RandomIndexRoute
   TopIndexRoute: typeof TopIndexRoute
 }
 
@@ -102,11 +196,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TopIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/random/': {
+      id: '/random/'
+      path: '/random'
+      fullPath: '/random/'
+      preLoaderRoute: typeof RandomIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/top/$slug': {
       id: '/top/$slug'
       path: '/top/$slug'
       fullPath: '/top/$slug'
       preLoaderRoute: typeof TopSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random/instructor': {
+      id: '/random/instructor'
+      path: '/random/instructor'
+      fullPath: '/random/instructor'
+      preLoaderRoute: typeof RandomInstructorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random/course': {
+      id: '/random/course'
+      path: '/random/course'
+      fullPath: '/random/course'
+      preLoaderRoute: typeof RandomCourseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/posts/$postId': {
@@ -116,14 +231,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/i/$instructorName': {
+      id: '/i/$instructorName'
+      path: '/i/$instructorName'
+      fullPath: '/i/$instructorName'
+      preLoaderRoute: typeof IInstructorNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/g/$groupId': {
+      id: '/g/$groupId'
+      path: '/g/$groupId'
+      fullPath: '/g/$groupId'
+      preLoaderRoute: typeof GGroupIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/c/$courseName': {
+      id: '/c/$courseName'
+      path: '/c/$courseName'
+      fullPath: '/c/$courseName'
+      preLoaderRoute: typeof CCourseNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CCourseNameRoute: CCourseNameRoute,
+  GGroupIdRoute: GGroupIdRoute,
+  IInstructorNameRoute: IInstructorNameRoute,
   PostsPostIdRoute: PostsPostIdRoute,
+  RandomCourseRoute: RandomCourseRoute,
+  RandomInstructorRoute: RandomInstructorRoute,
   TopSlugRoute: TopSlugRoute,
+  RandomIndexRoute: RandomIndexRoute,
   TopIndexRoute: TopIndexRoute,
 }
 export const routeTree = rootRouteImport
