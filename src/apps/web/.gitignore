@@ -23,4 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-.content-collections
+
+# Needed because CI does TypeScript checks first before build
+# ... but generated type definitions aren't made until after the build
+.content-collections/*
+!pippo/pluto
+!.content-collections/generated
+.content-collections/generated/*
+!.content-collections/generated/*.d.ts
