@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { HeadContent, Link, Outlet, createRootRoute, createRootRouteWithContext, type ErrorComponentProps } from '@tanstack/react-router'
+import { HeadContent, Link, Outlet, Scripts, createRootRoute, createRootRouteWithContext, type ErrorComponentProps } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import { useTheme } from '../lib/theme'
 import { PageViewLogger } from '../components/PageViewLogger'
@@ -11,7 +11,20 @@ import { Layout } from '../components/layout'
 //createRootRoute
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { charSet: 'UTF-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0' },
+      { rel: 'icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { name: "google-site-verification", content: "6Ci3V-jOwFCqFvntbRrkdoxF7MB4DC5gI_wWNz9fNTI" },
+      { title: `CougarGrades.io: Grade distribution data for UH` },
+      { name: 'description', content: `Analyze grade distribution data for any past University of Houston course. Compare past instructors, compare multiple courses. Open source data and code.` },
+    ]
+  }),
+  shellComponent: RootShell,
   component: RootComponent,
+  ssr: false,
   //errorComponent: ErrorComponent,
 })
 
@@ -28,10 +41,12 @@ import '../styles/syntax-highlighting.scss'
 
 function RootComponent() {
   const theme = useTheme();
+  const context = Route.useRouteContext();
 
   return (
     <>
-    <HeadContent />
+    {/* <HeadContent /> */}
+    <QueryClientProvider client={context.queryClient}>
     <ThemeProvider theme={theme}>
       <PageViewLogger />
       <Layout>
@@ -49,7 +64,54 @@ function RootComponent() {
         ]}
       />
     </ThemeProvider>
+    </QueryClientProvider>
     </>
+  )
+}
+
+function RootShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  )
+}
+
+function StartRootComponent() {
+  const theme = useTheme();
+
+  return (
+    <html>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        <ThemeProvider theme={theme}>
+          <PageViewLogger />
+          <Layout>
+            <Outlet />
+          </Layout>
+          <TanStackDevtools
+            config={{
+              position: 'bottom-right',
+            }}
+            plugins={[
+              {
+                name: 'Tanstack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        </ThemeProvider>
+        <Scripts />
+      </body>
+    </html>
   )
 }
 

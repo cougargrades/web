@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 //import { fileURLToPath, URL } from 'node:url'
 import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
+//import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 //import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 // https://vite.dev/config/
@@ -22,17 +23,26 @@ export default defineConfig({
     //   projects: ['./tsconfig.json'],
     // }),
     //tailwindcss(),
-    tanstackRouter({
-      target: 'react',
-      autoCodeSplitting: true,
+    // tanstackRouter({
+    //   target: 'react',
+    //   autoCodeSplitting: true,
+    // }),
+    tanstackStart({
+      spa: {
+        enabled: true,
+      },
+      prerender: {
+        enabled: false,
+        crawlLinks: true
+      }
     }),
-    viteReact(),
+    viteReact()
   ],
   optimizeDeps: {
     //exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],
   },
-  worker: {
-    format: 'es',
+  ssr: {
+    noExternal: ['react-use'],
   },
   css: {
     preprocessorOptions: {

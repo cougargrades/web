@@ -10,6 +10,7 @@
     "dev:prod": "VITE_VERSION=$npm_package_version; VITE_BUILD_DATE=$(node -e 'process.stdout.write(new Date().toISOString())'); VITE_CF_PAGES_BRANCH=$CF_PAGES_BRANCH; VITE_CF_PAGES_COMMIT_SHA=$CF_PAGES_COMMIT_SHA; VITE_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD); VITE_COMMIT_SHA=$(git rev-parse HEAD); VITE_ENVIRONMENT_NAME=development; vite dev --port 3000",
     "build": "VITE_VERSION=$npm_package_version; VITE_BUILD_DATE=$(node -e 'process.stdout.write(new Date().toISOString())'); VITE_CF_PAGES_BRANCH=$CF_PAGES_BRANCH; VITE_CF_PAGES_COMMIT_SHA=$CF_PAGES_COMMIT_SHA; VITE_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD); VITE_COMMIT_SHA=$(git rev-parse HEAD); tsc -b && vite build",
     "preview": "vite preview",
+    "start": "pnpx srvx --prod -s ../client dist/server/server.js",
     "tsc": "tsc"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "^1.159.14",
     "@tanstack/react-router-devtools": "^1.159.14",
+    "@tanstack/react-start": "^1.163.2",
     "@tanstack/router-plugin": "^1.159.14",
     "bootstrap": "~5.3.7",
     "jotai": "^2.18.0",
@@ -52,6 +54,6 @@
     "@vitejs/plugin-react": "^5.1.1",
     "csstype": "^3.2.3",
     "typescript": "^5",
-    "vite": "^8.0.0-beta.15"
+    "vite": "^8.0.0-beta.16"
   }
 }

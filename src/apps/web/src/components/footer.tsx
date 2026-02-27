@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 import ErrorIcon from '@mui/icons-material/Error'
 import TimeAgo from 'timeago-react'
 import { API_ORIGIN, BUILD_DATE, COMMIT_SHA, ENVIRONMENT_NAME, VERSION } from '@cougargrades/services/environment'
+import * as ENV from '@cougargrades/services/environment'
 import type { ObservableStatus } from '../lib/services/Observable'
 import { generateMissingDataMailToLink, useLatestTerm, useMissingData } from '../lib/services/useLatestTerm'
 import { useSponsorInformation } from '../lib/services/useSponsorInformation'
@@ -66,6 +67,7 @@ export function Footer(props: { hideDisclaimer?: boolean }) {
               { ENVIRONMENT_NAME !== 'production' ? <>
               Environment: <a href={API_ORIGIN.toString()}>{ENVIRONMENT_NAME}</a>
               </> : <></>}
+              <pre>{JSON.stringify(ENV, null, 2)}</pre>
               <br />
               <a href="https://github.com/cougargrades/web/wiki/Feedback">
                 Got feedback?
