@@ -43,11 +43,10 @@ function RouteComponent() {
                 <Collaborator
                   key={e.id}
                   id={e.id}
-                  name={e.name}
+                  name={e.name ?? e.login}
                   login={e.login}
                   html_url={e.html_url}
                   avatar_url={e.avatar_url}
-                  avatar_blurhash={e.avatar_blurhash}
                 />
               )}
         </div>
@@ -68,11 +67,10 @@ function RouteComponent() {
                     <Collaborator
                       key={e.id}
                       id={e.id}
-                      name={e.name}
+                      name={e.name ?? e.login}
                       login={e.login}
                       html_url={e.html_url}
                       avatar_url={e.avatar_url}
-                      avatar_blurhash={e.avatar_blurhash}
                     />
                   )}
             </div>
