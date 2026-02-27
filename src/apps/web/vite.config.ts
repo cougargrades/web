@@ -13,6 +13,10 @@ export default defineConfig({
   //     '@': fileURLToPath(new URL('./src', import.meta.url)),
   //   }
   // },
+  base: '/',
+  server: {
+    port: 3000,
+  },
   build: {
     sourcemap: true,
   },
@@ -33,7 +37,6 @@ export default defineConfig({
       },
       prerender: {
         enabled: false,
-        crawlLinks: true
       }
     }),
     viteReact()

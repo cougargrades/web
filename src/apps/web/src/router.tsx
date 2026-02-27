@@ -13,12 +13,15 @@ const queryClient = new QueryClient({
 export function getRouter() {
   const router = createRouter({
     routeTree,
+    basepath: '/',
+    defaultPreload: 'intent',
+    scrollRestoration: true,
     // Optionally provide your loaderClient to the router context for
     // convenience (you can provide anything you want to the router
     // context!)
     context: {
       queryClient,
-    }
+    },
   })
 
   return router

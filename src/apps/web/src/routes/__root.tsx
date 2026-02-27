@@ -22,9 +22,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: 'description', content: `Analyze grade distribution data for any past University of Houston course. Compare past instructors, compare multiple courses. Open source data and code.` },
     ]
   }),
-  shellComponent: RootShell,
-  component: RootComponent,
-  ssr: false,
+  // shellComponent: RootShell,
+  // component: RootComponent,
+  // ssr: false,
+
+  //shellComponent: RootShell,
+  component: StartRootComponent,
+  //ssr: false,
   //errorComponent: ErrorComponent,
 })
 
@@ -84,31 +88,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function StartRootComponent() {
-  const theme = useTheme();
-
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <PageViewLogger />
-          <Layout>
-            <Outlet />
-          </Layout>
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
-        </ThemeProvider>
+        <RootComponent />
         <Scripts />
       </body>
     </html>
