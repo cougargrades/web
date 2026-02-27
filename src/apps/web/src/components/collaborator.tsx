@@ -8,10 +8,6 @@ export interface CollaboratorProps {
   login: string;
   html_url: string;
   avatar_url: string;
-  avatar_blurhash?: {
-    blurhash: string;
-    dataURI: string;
-  }
 }
 
 export function Collaborator(props: CollaboratorProps) {
