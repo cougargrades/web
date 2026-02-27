@@ -4,7 +4,7 @@ import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 //import viteTsConfigPaths from 'vite-tsconfig-paths'
-
+import contentCollections from '@content-collections/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,10 +13,6 @@ export default defineConfig({
   //     '@': fileURLToPath(new URL('./src', import.meta.url)),
   //   }
   // },
-  base: '/',
-  server: {
-    port: 3000,
-  },
   build: {
     sourcemap: true,
   },
@@ -31,7 +27,8 @@ export default defineConfig({
       target: 'react',
       autoCodeSplitting: true,
     }),
-    viteReact()
+    viteReact(),
+    contentCollections(),
   ],
   optimizeDeps: {
     //exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],

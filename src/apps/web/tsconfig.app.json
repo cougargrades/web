@@ -22,7 +22,11 @@
     "noUnusedParameters": false,
     //"erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "paths": {
+      "content-collections": ["./.content-collections/generated"]
+    }
   },
   "include": ["src"]
 }

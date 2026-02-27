@@ -13,12 +13,14 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TopIndexRouteImport } from './routes/top/index'
 import { Route as RandomIndexRouteImport } from './routes/random/index'
+import { Route as FaqIndexRouteImport } from './routes/faq/index'
 import { Route as TopSlugRouteImport } from './routes/top/$slug'
 import { Route as RandomInstructorRouteImport } from './routes/random/instructor'
 import { Route as RandomCourseRouteImport } from './routes/random/course'
 import { Route as PostsPostIdRouteImport } from './routes/posts/$postId'
 import { Route as IInstructorNameRouteImport } from './routes/i/$instructorName'
 import { Route as GGroupIdRouteImport } from './routes/g/$groupId'
+import { Route as FaqSlugRouteImport } from './routes/faq/$slug'
 import { Route as CCourseNameRouteImport } from './routes/c/$courseName'
 
 const AboutRoute = AboutRouteImport.update({
@@ -39,6 +41,11 @@ const TopIndexRoute = TopIndexRouteImport.update({
 const RandomIndexRoute = RandomIndexRouteImport.update({
   id: '/random/',
   path: '/random/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqIndexRoute = FaqIndexRouteImport.update({
+  id: '/faq/',
+  path: '/faq/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TopSlugRoute = TopSlugRouteImport.update({
@@ -71,6 +78,11 @@ const GGroupIdRoute = GGroupIdRouteImport.update({
   path: '/g/$groupId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqSlugRoute = FaqSlugRouteImport.update({
+  id: '/faq/$slug',
+  path: '/faq/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CCourseNameRoute = CCourseNameRouteImport.update({
   id: '/c/$courseName',
   path: '/c/$courseName',
@@ -81,12 +93,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/c/$courseName': typeof CCourseNameRoute
+  '/faq/$slug': typeof FaqSlugRoute
   '/g/$groupId': typeof GGroupIdRoute
   '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/random/course': typeof RandomCourseRoute
   '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/faq/': typeof FaqIndexRoute
   '/random/': typeof RandomIndexRoute
   '/top/': typeof TopIndexRoute
 }
@@ -94,12 +108,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/c/$courseName': typeof CCourseNameRoute
+  '/faq/$slug': typeof FaqSlugRoute
   '/g/$groupId': typeof GGroupIdRoute
   '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/random/course': typeof RandomCourseRoute
   '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/faq': typeof FaqIndexRoute
   '/random': typeof RandomIndexRoute
   '/top': typeof TopIndexRoute
 }
@@ -108,12 +124,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/c/$courseName': typeof CCourseNameRoute
+  '/faq/$slug': typeof FaqSlugRoute
   '/g/$groupId': typeof GGroupIdRoute
   '/i/$instructorName': typeof IInstructorNameRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/random/course': typeof RandomCourseRoute
   '/random/instructor': typeof RandomInstructorRoute
   '/top/$slug': typeof TopSlugRoute
+  '/faq/': typeof FaqIndexRoute
   '/random/': typeof RandomIndexRoute
   '/top/': typeof TopIndexRoute
 }
@@ -123,12 +141,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/c/$courseName'
+    | '/faq/$slug'
     | '/g/$groupId'
     | '/i/$instructorName'
     | '/posts/$postId'
     | '/random/course'
     | '/random/instructor'
     | '/top/$slug'
+    | '/faq/'
     | '/random/'
     | '/top/'
   fileRoutesByTo: FileRoutesByTo
@@ -136,12 +156,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/c/$courseName'
+    | '/faq/$slug'
     | '/g/$groupId'
     | '/i/$instructorName'
     | '/posts/$postId'
     | '/random/course'
     | '/random/instructor'
     | '/top/$slug'
+    | '/faq'
     | '/random'
     | '/top'
   id:
@@ -149,12 +171,14 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/c/$courseName'
+    | '/faq/$slug'
     | '/g/$groupId'
     | '/i/$instructorName'
     | '/posts/$postId'
     | '/random/course'
     | '/random/instructor'
     | '/top/$slug'
+    | '/faq/'
     | '/random/'
     | '/top/'
   fileRoutesById: FileRoutesById
@@ -163,12 +187,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CCourseNameRoute: typeof CCourseNameRoute
+  FaqSlugRoute: typeof FaqSlugRoute
   GGroupIdRoute: typeof GGroupIdRoute
   IInstructorNameRoute: typeof IInstructorNameRoute
   PostsPostIdRoute: typeof PostsPostIdRoute
   RandomCourseRoute: typeof RandomCourseRoute
   RandomInstructorRoute: typeof RandomInstructorRoute
   TopSlugRoute: typeof TopSlugRoute
+  FaqIndexRoute: typeof FaqIndexRoute
   RandomIndexRoute: typeof RandomIndexRoute
   TopIndexRoute: typeof TopIndexRoute
 }
@@ -201,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/random'
       fullPath: '/random/'
       preLoaderRoute: typeof RandomIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq/': {
+      id: '/faq/'
+      path: '/faq'
+      fullPath: '/faq/'
+      preLoaderRoute: typeof FaqIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/top/$slug': {
@@ -245,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GGroupIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq/$slug': {
+      id: '/faq/$slug'
+      path: '/faq/$slug'
+      fullPath: '/faq/$slug'
+      preLoaderRoute: typeof FaqSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$courseName': {
       id: '/c/$courseName'
       path: '/c/$courseName'
@@ -259,12 +299,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CCourseNameRoute: CCourseNameRoute,
+  FaqSlugRoute: FaqSlugRoute,
   GGroupIdRoute: GGroupIdRoute,
   IInstructorNameRoute: IInstructorNameRoute,
   PostsPostIdRoute: PostsPostIdRoute,
   RandomCourseRoute: RandomCourseRoute,
   RandomInstructorRoute: RandomInstructorRoute,
   TopSlugRoute: TopSlugRoute,
+  FaqIndexRoute: FaqIndexRoute,
   RandomIndexRoute: RandomIndexRoute,
   TopIndexRoute: TopIndexRoute,
 }
