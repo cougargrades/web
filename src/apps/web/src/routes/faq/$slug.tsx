@@ -3,7 +3,9 @@ import { createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { Container, Typography } from '@mui/material'
 import { isNullish } from '@cougargrades/utils/nullish'
 import TimeAgo from 'timeago-react'
+//@ts-ignore this chicken-vs-egg crap is pissing me off
 import { allPosts } from 'content-collections'
+import type { PostSchema } from '../../../content-collections'
 import { SidebarContainer, type SidebarItem } from '../../components/sidebarcontainer'
 import { PankoRow } from '../../components/panko'
 import { FaqPostBody } from '../../components/faqpostbody'
@@ -13,7 +15,7 @@ import interactivity from '../../styles/interactivity.module.scss'
 
 export const Route = createFileRoute('/faq/$slug')({
   head: (ctx) => {
-    const post = allPosts.find(p => p.slug === ctx.params.slug);
+    const post = allPosts.find((p: PostSchema) => p.slug === ctx.params.slug);
     return {
       meta: [
         { title: isNullish(post) ? `FAQ / CougarGrades.io` : `${post.title} / CougarGrades.io FAQ` },
@@ -22,7 +24,7 @@ export const Route = createFileRoute('/faq/$slug')({
     }
   },
   loader(ctx) {
-    const post = allPosts.find(p => p.slug === ctx.params.slug);
+    const post = allPosts.find((p: PostSchema) => p.slug === ctx.params.slug);
     if (isNullish(post)) {
       return notFound();
     }
@@ -32,7 +34,7 @@ export const Route = createFileRoute('/faq/$slug')({
 
 function RouteComponent() {
   const { slug } = Route.useParams();
-  const post = allPosts.find(p => p.slug === slug);
+  const post = allPosts.find((p: PostSchema) => p.slug === slug);
   const router = useRouter();
 
   const sidebarItems: SidebarItem[] = Array.isArray(allPosts) ? allPosts.map(post => ({

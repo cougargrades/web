@@ -3,6 +3,13 @@ import { z } from 'zod'
 import { defineCollection, defineConfig } from '@content-collections/core'
 import { markdownToHtml } from './src/server/markdown'
 
+export interface PostSchema {
+  title: string;
+  date: string;
+  content: string;
+  slug: string;
+}
+
 const posts = defineCollection({
   name: 'posts',
   directory: './src/content/faq', // Directory containing your .md files

@@ -23,12 +23,12 @@ export default defineConfig({
     //   projects: ['./tsconfig.json'],
     // }),
     //tailwindcss(),
+    contentCollections(),
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
     }),
     viteReact(),
-    contentCollections(),
   ],
   optimizeDeps: {
     //exclude: ['@sqlite.org/sqlite-wasm', 'sqlite-wasm-http'],

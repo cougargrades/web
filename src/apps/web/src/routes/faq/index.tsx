@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { CircularProgress, Stack, Typography } from '@mui/material'
+//@ts-ignore this chicken-vs-egg crap is pissing me off
 import { allPosts } from 'content-collections'
 
 export const Route = createFileRoute('/faq/')({
