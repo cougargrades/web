@@ -1,12 +1,9 @@
 
 import { useQuery } from '@tanstack/react-query'
 import type { CollaboratorProps } from '../../components/collaborator';
+import { ContributorsResponse } from '@cougargrades/models/dto'
+import { GitHubService } from '@cougargrades/services';
 
-export interface SponsorshipInformation {
-  totalSponsorCount: number,
-  monthlyEstimatedSponsorsIncomeInCents: number,
-  monthlyEstimatedSponsorsIncomeFormatted: string,
-}
 
 export interface CollaboratorResponse {
   public_members: CollaboratorProps[],
@@ -14,11 +11,12 @@ export interface CollaboratorResponse {
 }
 
 export function useCollaboratorInformation() {
-  const query = useQuery<CollaboratorResponse>({
+  const query = useQuery<ContributorsResponse>({
     queryKey: ['collaborator-info'],
     queryFn: async () => {
-      const res = await fetch('https://github-org-stats-au5ton.vercel.app/api/cougargrades');
-      return await res.json();
+      const svc = new GitHubService();
+      const data = await svc.GetContributors()
+      return data ?? { public_members: [], contributors: [] };
     }
   })
   return query;

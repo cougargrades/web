@@ -5,12 +5,13 @@
     ".": "./src/index.ts",
     "./firestore": "./src/google/firestore.ts",
     "./google-analytics": "./src/google/analytics.ts",
-    "./github": "./src/github/maintenance.ts",
+    "./github": "./src/github/index.ts",
     "./rmp": "./src/rmp/rmp.ts",
     "./simplesyllabus": "./src/simplesyllabus/simplesyllabus.ts"
   },
   "dependencies": {
     "@cougargrades/firebase-rest-firestore": "^1.6.1",
+    "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
     "@google-analytics/data": "^5.2.1",
     "@octokit/rest": "^19.0.13",

@@ -34,6 +34,15 @@ export const MaintenanceResult = z.object({
   progress: MaintenanceProgress.nullable(),
 })
 
+export async function test(githubAccessToken: string) {
+  const octokit = new Octokit({
+    auth: githubAccessToken,
+  });
+
+  const data = await octokit.rateLimit.get()
+  return data;
+} 
+
 export async function getDeploymentInfo(githubAccessToken: string): Promise<MaintenanceResult[]> {
   // These are the starter objects for what we will be returning
   const previewResult: MaintenanceResult = {

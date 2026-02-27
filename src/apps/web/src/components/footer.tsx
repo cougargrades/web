@@ -93,7 +93,7 @@ export function Footer(props: { hideDisclaimer?: boolean }) {
               <small>{
                 status === 'success' ?  
                 `${data!.totalSponsorCount} people sponsor CougarGrades 
-                totalling $${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
+                totalling ${data!.monthlyEstimatedSponsorsIncomeFormatted} per month. Thank you!` : ''
               }</small>
             </Typography>
           </div>

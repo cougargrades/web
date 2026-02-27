@@ -286,6 +286,9 @@ importers:
       '@cougargrades/firebase-rest-firestore':
         specifier: ^1.6.1
         version: 1.6.1
+      '@cougargrades/models':
+        specifier: workspace:*
+        version: link:../models
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../utils

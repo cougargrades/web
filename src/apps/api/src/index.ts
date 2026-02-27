@@ -5,6 +5,7 @@ import { convertToOpenAPISchema } from "@standard-community/standard-openapi/con
 import { swaggerUI } from '@hono/swagger-ui'
 import { toJSONSchema } from 'zod/v4/core'
 
+import github from './routes/external/github'
 import rmp from './routes/external/rmp'
 import simplesyllabus from './routes/external/simplesyllabus'
 import environment from './routes/environment'
@@ -31,6 +32,7 @@ app.use('*', cors({
   maxAge: 600,
 }));
 
+app.route('/api/external/github', github);
 app.route('/api/external/rmp', rmp);
 app.route('/api/external/simplesyllabus', simplesyllabus);
 app.route('/api/environment', environment);
