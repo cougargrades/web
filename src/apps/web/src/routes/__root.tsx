@@ -23,11 +23,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ]
   }),
   // shellComponent: RootShell,
-  // component: RootComponent,
+  component: RootComponent,
   // ssr: false,
 
   //shellComponent: RootShell,
-  component: StartRootComponent,
+  //component: StartRootComponent,
   //ssr: false,
   //errorComponent: ErrorComponent,
 })
