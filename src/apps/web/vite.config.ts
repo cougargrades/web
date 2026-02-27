@@ -6,6 +6,8 @@ import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 //import viteTsConfigPaths from 'vite-tsconfig-paths'
 
+import { cloudflare } from '@cloudflare/vite-plugin'
+
 // https://vite.dev/config/
 export default defineConfig({
   // resolve: {
@@ -31,6 +33,7 @@ export default defineConfig({
     //   target: 'react',
     //   autoCodeSplitting: true,
     // }),
+    cloudflare({ viteEnvironment: { name: 'client' }}),
     tanstackStart({
       spa: {
         enabled: true,

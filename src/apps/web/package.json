@@ -14,6 +14,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.25.6",
     "@cougargrades/atom-feed": "workspace:*",
     "@cougargrades/models": "workspace:*",
     "@cougargrades/publicdata": "1.0.0-20260223070655",
