@@ -29,6 +29,7 @@ import type { CourseInstructorResult } from '@cougargrades/models/dto'
 
 import styles from './instructorcard.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
+import { ListItemButton, ListItemSecondaryAction } from '@mui/material'
 
 
 interface InstructorCardProps {
@@ -63,7 +64,7 @@ export function InstructorCard({ data, fitSubtitle, variant, elevation }: Instru
               ))}
             </Box>
             {/* maxSize={18} */}
-            <Typography variant="h6" > 
+            <Typography variant="h6" className={styles.cardTitle} > 
               {data.title}
             </Typography>
             {
@@ -157,7 +158,17 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
                 {/* <Divider /> */}
                 {sortedData.filter(e => e.lastInitial === lastInitial).map(item => (
                   <React.Fragment key={`item-${lastInitial}-${item.id}`}>
-                    <ListItem className={styles.badgeStackListItem} component="a" href={item.href} secondaryAction={
+                    <ListItemButton className={styles.badgeStackListItem} href={item.href}>
+                      <ListItemText primary={item.altTitle ?? item.title} secondary={item.caption} />
+                      <ListItemSecondaryAction>
+                         <Box className={styles.badgeStack}>
+                          {item.badges.map(e => (
+                            <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em' }}>{e.text}</Badge>
+                          ))}
+                        </Box>
+                      </ListItemSecondaryAction>
+                    </ListItemButton>
+                    {/* <ListItem button   secondaryAction={
                       <Box className={styles.badgeStack}>
                         {item.badges.map(e => (
                           <Badge key={e.key} style={{ backgroundColor: e.color, fontSize: '0.7em' }}>{e.text}</Badge>
@@ -165,7 +176,7 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
                       </Box>
                     }>
                       <ListItemText primary={item.altTitle ?? item.title} secondary={item.caption} />
-                    </ListItem>
+                    </ListItem> */}
                     { index !== (array.length - 1) ? <Divider /> : ''}
                   </React.Fragment>
                 ))}

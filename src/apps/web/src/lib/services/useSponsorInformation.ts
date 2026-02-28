@@ -11,7 +11,7 @@ export const SponsorshipInformation = SponsorResponse.extend({
 
 export function useSponsorInformation() {
   const query = useQuery<SponsorshipInformation>({
-    queryKey: ['sponsor-info'],
+    queryKey: ['github', 'sponsor-info'],
     queryFn: async () => {
       const svc = new GitHubService();
       const data = await svc.GetSponsorInfo();

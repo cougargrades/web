@@ -49,7 +49,7 @@ function RootComponent() {
 
   return (
     <>
-    {/* <HeadContent /> */}
+    <HeadContent />
     <QueryClientProvider client={context.queryClient}>
     <ThemeProvider theme={theme}>
       <PageViewLogger />

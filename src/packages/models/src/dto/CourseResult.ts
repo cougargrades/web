@@ -11,13 +11,15 @@ import { LiteGroupResult } from './GroupResult'
 
 export type CourseResult = z.infer<typeof CourseResult>
 export const CourseResult = z.object({
+  _id: z.string(),
+  department: z.string(),
+  catalogNumber: z.string(),
+  description: z.string(),
+  longDescription: z.string(),
   badges: SearchResultBadge.array(),
-  publications: z.array(
-    z.intersection(
-      PublicationInfo,
-      z.object({ key: z.string() })
-    )
-  ),
+  publications: PublicationInfo.extend({
+    key: z.string()
+  }).array(),
   firstTaught: z.string(),
   lastTaught: z.string(),
   relatedGroups: LiteGroupResult.array(),

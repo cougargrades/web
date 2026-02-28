@@ -16,13 +16,13 @@ export const LabeledLink = z.object({
 })
 
 export type PublicationInfo = z.infer<typeof PublicationInfo>
-export const PublicationInfo = z.intersection(LabeledLink, z.object({
+export const PublicationInfo = LabeledLink.extend({
   catoid: z.string(),
   coid: z.string(),
   classification: z.enum(['undergraduate', 'graduate']),
   scrapeDate: z.string(),
   content: z.string(),
-}))
+})
 
 export type TCCNSUpdateInfo = z.infer<typeof TCCNSUpdateInfo>
 export const TCCNSUpdateInfo = z.object({

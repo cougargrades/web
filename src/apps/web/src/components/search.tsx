@@ -14,6 +14,7 @@ import { Badge } from './badge'
 import { isMobile } from '../lib/util'
 
 import styles from './search.module.scss'
+import { isNullish } from '@cougargrades/utils/nullish'
 
 
 
@@ -66,25 +67,8 @@ export default function SearchBar() {
       console.timeEnd('reroute')
     }
 
-    // router.events.on('routeChangeStart', handleStart);
-    // router.events.on('routeChangeComplete', handleStop);
-    // router.events.on('routeChangeError', handleStop);
-
-    // return () => {
-    //   router.events.off('routeChangeStart', handleStart);
-    //   router.events.off('routeChangeComplete', handleStop);
-    //   router.events.off('routeChangeError', handleStop);
-    // }
-
     const unsubBeforeNavigate = router.subscribe('onBeforeNavigate', handleStart);
     const unsubOnRendered = router.subscribe('onResolved', handleStop);
-    // router.subscribe('onBeforeLoad', () => console.log('onBeforeLoad'));
-    // router.subscribe('onBeforeNavigate', () => console.log('onBeforeNavigate'));
-    // router.subscribe('onBeforeRouteMount', () => console.log('onBeforeRouteMount'));
-    // router.subscribe('onLoad', () => console.log('onLoad'));
-    // router.subscribe('onRendered', () => console.log('onRendered'));
-    // router.subscribe('onResolved', () => console.log('onResolved'));
-    
 
     return () => {
       unsubBeforeNavigate();
@@ -93,13 +77,13 @@ export default function SearchBar() {
   }, [router])
 
   // Used for prefetching all options which are presented
-  useEffect(() => {
-    if (data) {
-      for(let item of data) {
-        router.preloadRoute({ to: item.href });
-      }
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     for(let item of data) {
+  //       //router.preloadRoute({ to: item.href });
+  //     }
+  //   }
+  // }, [data]);
 
   // Used for actually issuing the redirect
   const handleChange: AutocompleteProps<SearchResult, undefined, undefined, boolean | undefined>['onChange'] = (event, x) => {
@@ -122,6 +106,15 @@ export default function SearchBar() {
       if(isMobile() || (rect.top - 10) < 0) {
         window.scrollTo(0, window.pageYOffset + rect.top - 20)
       }
+    }
+  }
+
+  /**
+   * Only preload the search items that are "highlighted" instead of literally everything that's returned
+   */
+  const handleHighlightChange: AutocompleteProps<SearchResult, undefined, undefined, boolean | undefined>['onHighlightChange'] = (event, option, reason) => {
+    if (!isNullish(option)) {
+      router.preloadRoute({ to: option.href });
     }
   }
 
@@ -163,6 +156,7 @@ export default function SearchBar() {
         onClose={() => setOpen(false)}
         onChange={handleChange}
         onInputChange={(_, x) => setInputValue(x)}
+        onHighlightChange={handleHighlightChange}
         value={value}
         inputValue={inputValue}
         isOptionEqualToValue={(option, value) => option.key === value.key}

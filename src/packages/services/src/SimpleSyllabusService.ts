@@ -16,7 +16,7 @@ export class SimpleSyllabusService extends BaseApiService {
       query: query,
       strict: `${strictSearch}`
     });
-    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}/api/simplesyllabus/search?${qs}`);
+    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}/api/external/simplesyllabus/search?${qs}`);
     if (!res.ok) {
       console.error(`[SimpleSyllabusService] Failed to fetch SimpleSyllabus results (${res.status} ${res.statusText})`);
       return { sys: { success: false }, items: [] };

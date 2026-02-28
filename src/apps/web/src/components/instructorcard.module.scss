@@ -28,6 +28,8 @@
   flex-wrap: wrap;
   gap: 0.25rem;
   margin-bottom: 5px;
+  /* formerly set by `react-fitty` */
+  font-size: 11px; 
 }
 
 .badgeRowBadge {
@@ -37,6 +39,7 @@
 
 .badgeStackListItem {
   padding-right: 140px!important;
+  // TODO: fix link styling
 }
 
 .badgeStack {
@@ -47,6 +50,14 @@
   max-width: 140px;
   gap: 3px;
   align-items: center;
+}
+
+.cardTitle {
+  // white-space: nowrap;
+  display: inline-block;
+  padding: 0;
+  line-height: 1.4!important;
+  font-size: 18px!important;
 }
 
 .showMore {

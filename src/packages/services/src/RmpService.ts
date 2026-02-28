@@ -16,7 +16,7 @@ export class RmpService extends BaseApiService {
       query: query,
       strict: `${strictSearch}`
     });
-    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}/api/rmp/search?${qs}`);
+    const res = await fetch(`${trimEnd(this.baseURL.href, '/')}/api/external/rmp/search?${qs}`);
     if (!res.ok) {
       console.error(`[RmpService] Failed to fetch RMP results (${res.status} ${res.statusText})`);
       return [];

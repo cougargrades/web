@@ -30,3 +30,12 @@ export function formatTermCode(termCode: number) {
 
   return `${FormattedSeasonCode[season]} ${year}`
 }
+
+export function parseTermStringAsTermCode(termString: string): number {
+  const [seasonStr, yearStr] = termString.split(' ')
+  const seasonStr2SeasonCode = new Map<string, SeasonCode>(
+    Object.entries(FormattedSeasonCode).map<[string, SeasonCode]>(([code, str]) => ([str.toLowerCase().trim(), code as SeasonCode]))
+  )
+  return parseInt(`${yearStr}${seasonStr2SeasonCode.get(seasonStr.toLowerCase().trim())}`)
+  //return parseInt(`${termString.split(' ')[1]}${seasonCodes.get(termString.split(' ')[0])}`);
+}

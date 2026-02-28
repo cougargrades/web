@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { CircularProgress, Stack, Typography } from '@mui/material'
-import all_instructors from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/all_instructors.json'
 
 export const Route = createFileRoute('/random/instructor')({
-  loader(ctx) {
+  async loader(ctx) {
+    const { default: all_instructors } = await import('@cougargrades/publicdata/bundle/edu.uh.grade_distribution/all_instructors.json')
     const index = Math.floor(Math.random() * all_instructors.length);
     const instructorName = all_instructors[index];
 

@@ -9,6 +9,7 @@ export * from './SparklineData'
 export * from './DocumentReference'
 export * from './TermCode'
 export * from './PopCon'
+export * from './SeoHelper'
 
 export * as GPA from './GPA'
 export * as Average from './Statistics/Average'

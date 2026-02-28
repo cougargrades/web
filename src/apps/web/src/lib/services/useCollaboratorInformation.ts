@@ -12,7 +12,7 @@ export interface CollaboratorResponse {
 
 export function useCollaboratorInformation() {
   const query = useQuery<ContributorsResponse>({
-    queryKey: ['collaborator-info'],
+    queryKey: ['github', 'collaborator-info'],
     queryFn: async () => {
       const svc = new GitHubService();
       const data = await svc.GetContributors()

@@ -12,6 +12,8 @@ import { getChartData } from './getChartData';
  */
 export async function getCourseResults(courseName: string): Promise<CourseResult> {
   const { data } = await getFirestoreDocumentSafe(`catalog/${courseName}`, Course)
+  const { data: searchableData } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
+  const longDescription = searchableData.find(e => e.courseName === courseName)?.publicationTextContent ?? '';
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
 
   const settledData = await Promise.allSettled([
@@ -28,6 +30,11 @@ export async function getCourseResults(courseName: string): Promise<CourseResult
   const classSize = didLoadCorrectly ? EstimateClassSize(data.enrollment, sectionData) : 0
 
   return {
+    _id: data?._id ?? '',
+    department: data?.department ?? '',
+    catalogNumber: data?.catalogNumber ?? '',
+    description: data?.description ?? '',
+    longDescription,
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
     ],
