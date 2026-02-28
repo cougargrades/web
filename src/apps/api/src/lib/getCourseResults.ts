@@ -1,5 +1,6 @@
 import { Course, Enrollment, EstimateClassSize, formatTermCode, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section } from '@cougargrades/models';
 import { CourseResult, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, instructor2Result } from '@cougargrades/models/dto';
+import { isNullish } from '@cougargrades/utils/nullish';
 import { descendingComparator } from '@cougargrades/utils/comparator'
 
 import { getFirestoreDocument, getFirestoreDocuments, getFirestoreDocumentSafe } from './firestore-config';
@@ -10,8 +11,9 @@ import { getChartData } from './getChartData';
  * @param courseName 
  * @returns 
  */
-export async function getCourseResults(courseName: string): Promise<CourseResult> {
+export async function getCourseResults(courseName: string): Promise<CourseResult | null> {
   const { data } = await getFirestoreDocumentSafe(`catalog/${courseName}`, Course)
+  if (isNullish(data)) return null;
   const { data: searchableData } = await import('@cougargrades/publicdata/bundle/io.cougargrades.searchable/courses.json')
   const longDescription = searchableData.find(e => e.courseName === courseName)?.publicationTextContent ?? '';
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1

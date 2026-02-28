@@ -8,8 +8,9 @@ import { getFirestoreDocuments, getFirestoreDocumentSafe } from './firestore-con
 import { getChartDataForInstructor } from './getChartDataForInstructor';
 
 
-export async function getInstructorResults(instructorName: string): Promise<InstructorResult> {
+export async function getInstructorResults(instructorName: string): Promise<InstructorResult | null> {
   const { data } = await getFirestoreDocumentSafe(`instructors/${instructorName.toLowerCase()}`, Instructor)
+  if (isNullish(data)) return null;
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1  
   const groupRefs = Object.entries(data?.departments ?? {})
     .sort((a, b) => b[1] - a[1])

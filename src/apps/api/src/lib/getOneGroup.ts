@@ -6,6 +6,7 @@ import { descendingComparator } from '@cougargrades/utils/comparator'
 
 export async function getOneGroup(groupId: string, includeSections: boolean = false): Promise<PopulatedGroupResult | null> {
   const { data } = await getFirestoreDocumentSafe(`groups/${groupId}`, Group)
+  if (isNullish(data)) return null;
   const didLoadCorrectly = data !== undefined && typeof data === 'object' && Object.keys(data).length > 1
 
   const settledData = await Promise.allSettled([
