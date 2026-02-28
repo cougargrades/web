@@ -35,7 +35,13 @@ export function getSeasonalAvailability(sections: Section[]): SeasonalAvailabili
   // Create a new object (JavaScript sorts keys in the order they're created)
   let ratioSorted: Record<string, number> = {};
   for (let [k, v] of sortedEntries) {
-    ratioSorted[k] = v / totalEnrolled;
+    // Prevent division by zero
+    if (totalEnrolled > 0) {
+      ratioSorted[k] = v / totalEnrolled;
+    }
+    else {
+      ratioSorted[k] = 1/3;
+    }
   }
 
   return {
