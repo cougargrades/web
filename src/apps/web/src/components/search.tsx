@@ -104,7 +104,21 @@ export default function SearchBar() {
     if(elementRef.current !== null) {
       const rect = elementRef.current.getBoundingClientRect()
       if(isMobile() || (rect.top - 10) < 0) {
-        window.scrollTo(0, window.pageYOffset + rect.top - 20)
+        /**
+         * When the input field is focused, we want it to be at the viewport
+         * on mobile so the results can show below it without the user needing to scroll up.
+         * 
+         * At some point in an iOS release after I originally coded this, the focusing provided
+         * by the system would override my scroll code below.
+         * 
+         * This put the input field not where I want it to be, and instead where the system wants it.
+         * 
+         * This 10ms delay allows the system to adjust the scrolling first, then I override it (last scroll wins).
+         * Source: https://stackoverflow.com/a/78488283/4852536
+         */
+        setTimeout(() => {
+          window.scrollTo(0, window.pageYOffset + rect.top - 20)
+        }, 10);
       }
     }
   }
