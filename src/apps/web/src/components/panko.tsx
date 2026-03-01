@@ -152,20 +152,20 @@ export function generateBreadcrumbs(path: string) {
           return <span key={key}>{curated_colleges.find(college => college.identifier === value)?.groupLongTitle}</span>
         }
         else {
-          return <span key={key}>Group ID #{decodeURI(value)}</span>
+          return <span key={key}>Group ID #{decodeURIComponent(value)}</span>
         }
       }
       if(array[1].toLowerCase() === 'faq') {
-        return <span key={key}>{capitalizeFirstLetter(decodeURI(value).split('-').join(' '))}</span>
+        return <span key={key}>{capitalizeFirstLetter(decodeURIComponent(value).split('-').join(' '))}</span>
       }
       if(array[1].toLowerCase() === 'top') {
         return <span key={key}>{POPULAR_TABS.find(e => e.slug === value)?.title ?? '???'}</span>
       }
       if(array[1].toLowerCase() === 'i') {
-        return <span key={key} style={{ textTransform: 'capitalize' }}>{decodeURI(value)}</span>
+        return <span key={key} style={{ textTransform: 'capitalize' }}>{decodeURIComponent(value)}</span>
       }
     }
-    return <span key={key}>{decodeURI(value)}</span>
+    return <span key={key}>{decodeURIComponent(value)}</span>
   })
 }
 
