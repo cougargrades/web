@@ -31,7 +31,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TRENDING_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TRENDING_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { limit } = ctx.req.valid('query');

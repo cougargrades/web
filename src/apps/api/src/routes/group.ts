@@ -26,7 +26,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const results = await getAllGroups();
@@ -49,7 +49,7 @@ app.get('/:groupId',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');
@@ -66,7 +66,7 @@ app.get('/:groupId/sections',
   cache({
     cacheName: 'cougargrades-api',
     // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');

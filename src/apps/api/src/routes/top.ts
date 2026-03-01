@@ -7,7 +7,7 @@ import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { RankingResult, TopOptions, TopResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO, NO_CACHE } from '../cache'
-import { CourseOrInstructorPlusMetrics, getRankForCourse, getRankForInstructor, getTopResults } from '../lib/getTopResults'
+import { getRankForCourse, getRankForInstructor, getTopResults } from '../lib/getTopResults'
 
 export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
 
@@ -27,7 +27,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { metric, topic, limit, time, hideCore } = ctx.req.valid('query');
@@ -53,7 +53,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { courseName } = ctx.req.valid('param');
@@ -80,7 +80,7 @@ app.get('/',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { instructorName } = ctx.req.valid('param');

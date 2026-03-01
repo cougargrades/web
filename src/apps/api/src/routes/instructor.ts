@@ -27,7 +27,7 @@ app.get('/:instructorName',
   // }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { instructorName } = ctx.req.valid('param');
