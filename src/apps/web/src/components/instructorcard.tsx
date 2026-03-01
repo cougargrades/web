@@ -107,7 +107,7 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
     preventScrollOnSwipe: true,
   })
   const firstLetters = Array.from(new Set(data.map(e => e.lastInitial))).sort()
-  const sortedData = data.slice().sort((a,b) => b.id.localeCompare(a.id))
+  const sortedData = data.slice().sort((a,b) => a.id.localeCompare(b.id))
 
   return (
     <>
