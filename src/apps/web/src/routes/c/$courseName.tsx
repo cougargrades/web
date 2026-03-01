@@ -93,7 +93,7 @@ function RouteComponent() {
             : null
           }
           <figure>
-            { !isPending ? <h3>{data?.description ?? ''}</h3> : <CustomSkeleton width={360} height={45} /> }
+            { !isPending ? <h3>{data?.meta.description ?? ''}</h3> : <CustomSkeleton width={360} height={45} /> }
             { !isPending ? <h1 className={styles.display_3}>{courseName}{tccnsUpdateAsterisk}</h1> : <CustomSkeleton width={325} height={75} />}
             <div>
               {status === 'success' ? data?.badges.map(e => (

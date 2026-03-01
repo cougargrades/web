@@ -13,6 +13,9 @@ export const Instructor = z.object({
   _path: z.string(),
   firstName: z.string(),
   lastName: z.string(),
+  /**
+   * Ex: `Ernst L Leiss`
+   */
   fullName: z.string(),
   departments: z.record(z.string(), z.number()),
   firstTaught: z.number(),

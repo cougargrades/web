@@ -1,7 +1,7 @@
-import { Course, Enrollment, EstimateClassSize, formatTermCode, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section } from '@cougargrades/models';
-import { CourseResult, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, instructor2Result } from '@cougargrades/models/dto';
+import { Course, Enrollment, EstimateClassSize, formatTermCode, GetEnrolledCountByInstructor, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section } from '@cougargrades/models';
+import { CourseResult, CourseTopInstructorEntry, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, instructor2Result } from '@cougargrades/models/dto';
 import { isNullish } from '@cougargrades/utils/nullish';
-import { descendingComparator } from '@cougargrades/utils/comparator'
+import { defaultComparator, descendingComparator } from '@cougargrades/utils/comparator'
 
 import { getFirestoreDocument, getFirestoreDocuments, getFirestoreDocumentSafe } from './firestore-config';
 import { getChartData } from './getChartData';
@@ -32,11 +32,13 @@ export async function getCourseResults(courseName: string): Promise<CourseResult
   const classSize = didLoadCorrectly ? EstimateClassSize(data.enrollment, sectionData) : 0
 
   return {
-    _id: data?._id ?? '',
-    department: data?.department ?? '',
-    catalogNumber: data?.catalogNumber ?? '',
-    description: data?.description ?? '',
-    longDescription,
+    meta: {
+      _id: data?._id ?? '',
+      department: data?.department ?? '',
+      catalogNumber: data?.catalogNumber ?? '',
+      description: data?.description ?? '',
+      longDescription,
+    },
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
     ],
@@ -144,5 +146,11 @@ export async function getCourseResults(courseName: string): Promise<CourseResult
     //classSize: didLoadCorrectly ? data.enrollment.totalEnrolled / sectionData.filter(sec => getTotalEnrolled(sec) > 0).length : 0,
     classSize,
     sectionLoadingProgress: 100,
+    topInstructors: Array.from(GetEnrolledCountByInstructor(sectionData).entries())
+      .toSorted((a,b) => defaultComparator(a[1], b[1]))
+      .map<CourseTopInstructorEntry>(([instructorName, totalEnrolled]) => ({
+        instructorName,
+        totalEnrolled,
+      }))
   };
 }

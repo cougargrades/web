@@ -1,6 +1,6 @@
-import { Course, Enrollment, EstimateClassSize, formatTermCode, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section, ToDocumentReference } from '@cougargrades/models';
-import { course2CoursePlus, course2Result, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult } from '@cougargrades/models/dto';
-import { descendingComparator } from '@cougargrades/utils/comparator'
+import { Course, Enrollment, EstimateClassSize, formatTermCode, GetEnrolledCountByCourse, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section, ToDocumentReference } from '@cougargrades/models';
+import { course2CoursePlus, course2Result, EnrollmentInfoResult, generateSubjectString, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult, InstructorTopCourseEntry } from '@cougargrades/models/dto';
+import { defaultComparator, descendingComparator } from '@cougargrades/utils/comparator'
 import { isNullish } from '@cougargrades/utils/nullish'
 import { getRMPProfessorViewableUrl } from '@cougargrades/vendor/rmp'
 
@@ -31,6 +31,14 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
   const classSize = didLoadCorrectly ? EstimateClassSize(data.enrollment, sectionData) : 0
 
   return {
+    meta: {
+      _id: data?._id ?? '',
+      firstName: data?.firstName ?? '',
+      lastName: data?.lastName ?? '',
+      fullName: data?.fullName ?? '',
+      // 70 characters is also the default, but if we decide to change that later it shouldn't impact this
+      descriptionDepartmentsInvolved: generateSubjectString(data, 70),
+    },
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),
     ],
@@ -135,5 +143,11 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
     //sectionLoadingProgress: didLoadCorrectly ? Array.isArray(data.sections) ? (sectionLoadingProgress/data.sections.length*100) : 0 : 0,
     sectionLoadingProgress: 100,
     rmpHref: didLoadCorrectly && !isNullish(data.rmpLegacyId) ? getRMPProfessorViewableUrl(data.rmpLegacyId) : undefined,
+    topCourses: Array.from(GetEnrolledCountByCourse(sectionData).entries())
+      .toSorted((a,b) => defaultComparator(a[1], b[1]))
+      .map<InstructorTopCourseEntry>(([courseName, totalEnrolled]) => ({
+        courseName,
+        totalEnrolled,
+      })),
   }
 }

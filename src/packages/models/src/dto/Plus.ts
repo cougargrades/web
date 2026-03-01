@@ -17,9 +17,9 @@ export const CoursePlus = Course.extend({
   sectionCount: z.number(),
   gradePointAverage: z.number(),
   standardDeviation: z.number(),
-  dropRate: z.number(),
-  totalEnrolled: z.number(),
-  classSize: z.number(),
+  dropRate: z.number().nullable(),
+  totalEnrolled: z.number().nullable(),
+  classSize: z.number().nullable(),
 })
 
 export type PlusMetrics = z.infer<typeof PlusMetrics>
@@ -47,8 +47,8 @@ export function course2CoursePlus(course: Course): CoursePlus {
     groups: [],
     gradePointAverage: course.GPA.average,
     standardDeviation: course.GPA.standardDeviation,
-    dropRate: course.enrollment !== undefined ? (course.enrollment.totalW/course.enrollment.totalEnrolled*100) : NaN,
-    totalEnrolled: course.enrollment !== undefined ? course.enrollment.totalEnrolled : NaN,
-    classSize: course.enrollment !== undefined && Array.isArray(course.sections) ? (course.enrollment.totalEnrolled / course.sections.length) : NaN,
+    dropRate: course.enrollment !== undefined ? (course.enrollment.totalW/course.enrollment.totalEnrolled*100) : null,
+    totalEnrolled: course.enrollment !== undefined ? course.enrollment.totalEnrolled : null,
+    classSize: course.enrollment !== undefined && Array.isArray(course.sections) ? (course.enrollment.totalEnrolled / course.sections.length) : null,
   }
 }

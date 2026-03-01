@@ -47,7 +47,7 @@ export function courseDataQueryOptions(courseName: string) {
               type: 'string',
               width: 95,
               valueFormatter: (value: any) => (
-                <Link to="/i/$instructorName" params={{ instructorName: encodeURI(value) }}>
+                <Link to="/i/$instructorName" params={{ instructorName: value }}>
                   {value}
                 </Link>
               ),

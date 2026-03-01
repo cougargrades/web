@@ -47,7 +47,7 @@ export const IsDocumentReferenceArray = (input: unknown) => is(input, DocumentRe
 export const ToDocumentReference = (documentPath: string) => DocumentReference.parse(`FSDR:///${trimStart(documentPath, '/').split('/').map(part => encodeURIComponent(part)).join('/')}`);
 
 /**
- * Converts DocumentReferences (ex: `FSDR:///...`) into document paths (ex: `catalog/ABCD 1234`, or `/catalog/ABCD 1234`)
+ * Converts DocumentReferences (ex: `FSDR:///...`) into document paths (ex: `catalog/ABCD 1234`)
  * @param docRef 
  * @returns 
  */

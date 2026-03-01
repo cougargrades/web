@@ -9,13 +9,21 @@ import { CourseInstructorResult } from './CourseInstructorResult'
 import { SectionPlus } from './Plus'
 import { LiteGroupResult } from './GroupResult'
 
+export type CourseTopInstructorEntry = z.infer<typeof CourseTopInstructorEntry>
+export const CourseTopInstructorEntry = z.object({
+  instructorName: z.string(),
+  totalEnrolled: z.number(),
+})
+
 export type CourseResult = z.infer<typeof CourseResult>
 export const CourseResult = z.object({
-  _id: z.string(),
-  department: z.string(),
-  catalogNumber: z.string(),
-  description: z.string(),
-  longDescription: z.string(),
+  meta: z.object({
+    _id: z.string(),
+    department: z.string(),
+    catalogNumber: z.string(),
+    description: z.string(),
+    longDescription: z.string(),
+  }),
   badges: SearchResultBadge.array(),
   publications: PublicationInfo.extend({
     key: z.string()
@@ -44,6 +52,11 @@ export const CourseResult = z.object({
   tccnsUpdates: TCCNSUpdateInfo.array(),
   enrollmentSparklineData: SparklineData.optional(),
   seasonalAvailability: SeasonalAvailability,
+  /**
+   * The top instructors for *this course*, counting by the number enrolled in sections *they taught*.
+   * (should be pre-sorted in descending order)
+   */
+  topInstructors: CourseTopInstructorEntry.array(),
 });
 
 export function course2Result(data: Course): CourseInstructorResult {

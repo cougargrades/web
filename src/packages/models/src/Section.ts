@@ -1,6 +1,6 @@
 
 import { z } from 'zod'
-import { DocumentReference } from './DocumentReference';
+import { DocumentReference, IsDocumentReference, ToDocumentPath } from './DocumentReference';
 import { Instructor } from './Instructor';
 import { Course } from './Course';
 
@@ -47,3 +47,85 @@ export type SectionThin = z.infer<typeof SectionThin>
 export const SectionThin = Section.omit({ instructors: true })
 
 export const GetTotalEnrolled = (sec: Section) => sec.A + sec.B + sec.C + sec.D + sec.F + sec.NCR + sec.S + sec.W;
+
+/**
+ * Based on the input (Section[]), return a Map where:
+ * - the Key is the "courseName"
+ * - the Value is the count of sections within the input that were for this course
+ * @param sections 
+ */
+export function GetSectionCountByCourse(sections: Section[]): Map<string, number> {
+  const result = new Map<string, number>();
+  for(let item of sections) {
+    const existingValue = result.get(item.courseName) ?? 0;
+    result.set(item.courseName, existingValue + 1);
+  }
+  return result;
+}
+
+/**
+ * Based on the input (Section[]), return a Map where:
+ * - the Key is the "courseName"
+ * - the Value is the sum of the `GetTotalEnrolled(section)` within the input that were for this course
+ * @param sections 
+ */
+export function GetEnrolledCountByCourse(sections: Section[]): Map<string, number> {
+  const result = new Map<string, number>();
+  for(let item of sections) {
+    const existingValue = result.get(item.courseName) ?? 0;
+    const totalEnrolled = GetTotalEnrolled(item);
+    result.set(item.courseName, existingValue + totalEnrolled);
+  }
+  return result;
+}
+
+/**
+ * Based on the input (Section[]), return a Map where:
+ * - the Key is the "instructorName" (both values in `Section.instructorNames` are incremented)
+ * - the Value is the count of sections within the input that were for this course
+ * @param sections 
+ */
+export function GetSectionCountByInstructor(sections: Section[]): Map<string, number> {
+  const result = new Map<string, number>();
+  for(let item of sections) {
+    for (let instr of item.instructors) {
+      let instrID;
+      if (IsDocumentReference(instr)) {
+        const [collectionId, documentID] = ToDocumentPath(instr).split('/')
+        instrID = documentID;
+      }
+      else {
+        instrID = instr._id;
+      }
+      const existingValue = result.get(instrID) ?? 0;
+      result.set(instrID, existingValue + 1);
+    }
+  }
+  return result;
+}
+
+/**
+ * Based on the input (Section[]), return a Map where:
+ * - the Key is the "instructorName" (both values in `Section.instructorNames` are incremented)
+ * - the Value is the sum of the `GetTotalEnrolled(section)` within the input that were for this course
+ * @param sections 
+ */
+export function GetEnrolledCountByInstructor(sections: Section[]): Map<string, number> {
+  const result = new Map<string, number>();
+  for(let item of sections) {
+    for (let instr of item.instructors) {
+      let instrID;
+      if (IsDocumentReference(instr)) {
+        const [collectionId, documentID] = ToDocumentPath(instr).split('/')
+        instrID = documentID;
+      }
+      else {
+        instrID = instr._id;
+      }
+      const existingValue = result.get(instrID) ?? 0;
+      const totalEnrolled = GetTotalEnrolled(item);
+      result.set(instrID, existingValue + totalEnrolled);
+    }
+  }
+  return result;
+}

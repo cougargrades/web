@@ -9,9 +9,25 @@ import { CoursePlus, SectionPlus } from './Plus';
 import { CourseInstructorResult } from './CourseInstructorResult';
 import { Instructor } from '../Instructor';
 
+export type InstructorTopCourseEntry = z.infer<typeof InstructorTopCourseEntry>
+export const InstructorTopCourseEntry = z.object({
+  courseName: z.string(),
+  totalEnrolled: z.number(),
+})
 
 export type InstructorResult = z.infer<typeof InstructorResult>
 export const InstructorResult = z.object({
+  meta: z.object({
+    _id: z.string(),
+    firstName: z.string(),
+    lastName: z.string(),
+    fullName: z.string(),
+    /**
+     * Ex: 'Mathematics, Computer Science'
+     * Output of `generateSubjectString(...)`
+     */
+    descriptionDepartmentsInvolved: z.string(),
+  }),
   badges: SearchResultBadge.array(),
   enrollment: EnrollmentInfoResult.array(),
   firstTaught: z.string(),
@@ -45,6 +61,11 @@ export const InstructorResult = z.object({
   rmpHref: z.string().optional(),
   seasonalAvailability: SeasonalAvailability,
   enrollmentSparklineData: SparklineData.optional(),
+  /**
+   * The top courses that *this instructor* taught, counting by the number enrolled in sections *they taught*.
+   * (should be pre-sorted in descending order)
+   */
+  topCourses: InstructorTopCourseEntry.array(),
 });
 
 export function instructor2Result(data: Instructor): CourseInstructorResult {
@@ -61,12 +82,11 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
   };
 }
 
-export function generateSubjectString(data: Instructor | undefined): string {
+export function generateSubjectString(data: Instructor | undefined, characterLimit: number = 70): string {
   if(data !== undefined && data !== null && data.departments !== undefined && data.departments !== null) {
     const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
     if(entries.length > 0) {
       // The following attempts to prevent Instructor descriptions from being too long
-      const CHARACTER_LIMIT = 70
       let numAllowedEntries = entries.length
       const try_attempt = () => entries
         .slice(0, numAllowedEntries)
@@ -75,7 +95,7 @@ export function generateSubjectString(data: Instructor | undefined): string {
         .map(abbr => (abbreviationMap as Record<string, string | undefined>)[abbr] ?? abbr)
         .filter(desc => desc !== undefined)
         .join(', ');
-      while(try_attempt().length > CHARACTER_LIMIT) {
+      while(try_attempt().length > characterLimit) {
         numAllowedEntries--;
       }
       
