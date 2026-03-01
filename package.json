@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run -r --if-present --parallel dev",
+    "dev:host": "pnpm run -r --if-present --parallel dev:host",
     "build": "pnpm run -r --if-present build",
     "tsc": "pnpm run -r --if-present tsc"
   },

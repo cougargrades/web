@@ -1,3 +1,4 @@
+import { env } from 'cloudflare:workers'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { loadVendor, openAPIRouteHandler } from 'hono-openapi'
@@ -20,14 +21,18 @@ import popularity_contest from './routes/popularity_contest'
 const app = new Hono()
 
 app.use('*', cors({
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://localhost:4173",
-    "https://cougargrades.io",
-    "https://next.cougargrades.io",
-    "https://next2.cougargrades.io"
-  ],
+  origin: (
+    env.CORS_ALLOW_ALL === 'true'
+    ? '*'
+    : [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:4173",
+      "https://cougargrades.io",
+      "https://next.cougargrades.io",
+      "https://next2.cougargrades.io"
+    ]
+  ),
   allowMethods: ['POST', 'GET', 'OPTIONS'],
   maxAge: 600,
 }));

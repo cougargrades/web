@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
+    "dev:host": "wrangler dev --ip 0.0.0.0 --var \"CORS_ALLOW_ALL:true\"",
     "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "wrangler": "wrangler",
