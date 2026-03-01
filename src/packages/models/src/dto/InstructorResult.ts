@@ -22,6 +22,7 @@ export const InstructorResult = z.object({
     firstName: z.string(),
     lastName: z.string(),
     fullName: z.string(),
+    fullNameLastNameFirst: z.string(),
     /**
      * Ex: 'Mathematics, Computer Science'
      * Output of `generateSubjectString(...)`
@@ -74,7 +75,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
     href: `/i/${data._id}`,
     title: data.fullName,
     altTitle: `${data.lastName}, ${data.firstName}`,
-    subtitle: generateSubjectString(data),
+    subtitle: generateSubjectStringByCharacterLimit(data),
     caption: `${Array.isArray(data.courses) ? data.courses.length : 0} courses • ${Array.isArray(data.sections) ? data.sections.length : 0} sections`,
     badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
@@ -82,7 +83,7 @@ export function instructor2Result(data: Instructor): CourseInstructorResult {
   };
 }
 
-export function generateSubjectString(data: Instructor | undefined, characterLimit: number = 70): string {
+export function generateSubjectStringByCharacterLimit(data: Instructor | undefined, characterLimit: number = 70): string {
   if(data !== undefined && data !== null && data.departments !== undefined && data.departments !== null) {
     const entries = Object.entries(data.departments).sort((a, b) => b[1] - a[1])
     if(entries.length > 0) {
@@ -103,4 +104,20 @@ export function generateSubjectString(data: Instructor | undefined, characterLim
     }
   }
   return '';
+}
+
+export function generateSubjectStringByEntryLimit(data: Instructor | undefined, entries: number = 3) {
+  // sort department entries in descending by value
+  if(data !== undefined) {
+    const depts: [keyof typeof abbreviationMap, number][] = Object.entries(data.departments) as any;
+
+    const text = depts // [string, number][]
+      .sort((a, b) => b[1] - a[1]) // sort
+      .slice(0, entries) // limit to 3 entries
+      .map(e => abbreviationMap[e[0]]) // ['MATH'] => ['Mathematics']
+      .filter(e => e !== undefined) // remove those that didn't have an abbreviation
+      .join(', '); // 'Mathematics, Computer Science'
+    return text;
+  }
+  return ''
 }

@@ -1,25 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import CardActionArea from '@mui/material/CardActionArea'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import IconButton from '@mui/material/IconButton'
-import Button from '@mui/material/Button'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
+import { Box, Button, Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, List, ListItemButton, ListItemSecondaryAction, ListItemText, ListSubheader, Skeleton, Slide, Tooltip, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import Skeleton from '@mui/material/Skeleton'
-import Slide from '@mui/material/Slide'
 import type { TransitionProps } from '@mui/material/transitions'
-import ListSubheader from '@mui/material/ListSubheader'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 //import { ReactFitty } from 'react-fitty'
@@ -29,7 +12,7 @@ import type { CourseInstructorResult } from '@cougargrades/models/dto'
 
 import styles from './instructorcard.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-import { ListItemButton, ListItemSecondaryAction } from '@mui/material'
+
 
 
 interface InstructorCardProps {
@@ -159,7 +142,28 @@ export function InstructorCardShowMore({ cardTitle, modalTitle, data }: Instruct
                 {sortedData.filter(e => e.lastInitial === lastInitial).map(item => (
                   <React.Fragment key={`item-${lastInitial}-${item.id}`}>
                     <ListItemButton className={styles.badgeStackListItem} href={item.href}>
-                      <ListItemText primary={item.altTitle ?? item.title} secondary={item.caption} />
+                      <ListItemText
+                        slotProps={{
+                          secondary: {
+                            component: 'div',
+                          }
+                        }}
+                        primary={<>
+                        <Typography component="span" variant="inherit">
+                          {item.altTitle ?? item.title}
+                        </Typography>
+                        </>}
+                        secondary={<>
+                        <div className={styles.listItemSecondaryFlex}>
+                          <Typography component="span" variant="inherit" className={styles.listItemSecondarySubtitle}>
+                            {item.subtitle}
+                          </Typography>
+                          <Typography component="span" variant="inherit">
+                            {item.caption}
+                          </Typography>
+                        </div>
+                        </>}
+                      />
                       <ListItemSecondaryAction>
                          <Box className={styles.badgeStack}>
                           {item.badges.map(e => (

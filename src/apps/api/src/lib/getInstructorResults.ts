@@ -1,5 +1,5 @@
 import { Course, Enrollment, EstimateClassSize, formatTermCode, GetEnrolledCountByCourse, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section, ToDocumentReference } from '@cougargrades/models';
-import { course2CoursePlus, course2Result, EnrollmentInfoResult, generateSubjectString, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult, InstructorTopCourseEntry } from '@cougargrades/models/dto';
+import { course2CoursePlus, course2Result, EnrollmentInfoResult, generateSubjectStringByEntryLimit, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult, InstructorTopCourseEntry } from '@cougargrades/models/dto';
 import { defaultComparator, descendingComparator } from '@cougargrades/utils/comparator'
 import { isNullish } from '@cougargrades/utils/nullish'
 import { getRMPProfessorViewableUrl } from '@cougargrades/vendor/rmp'
@@ -36,8 +36,8 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
       firstName: data?.firstName ?? '',
       lastName: data?.lastName ?? '',
       fullName: data?.fullName ?? '',
-      // 70 characters is also the default, but if we decide to change that later it shouldn't impact this
-      descriptionDepartmentsInvolved: generateSubjectString(data, 70),
+      fullNameLastNameFirst: !isNullish(data) ? `${data.lastName}, ${data.firstName}` : '',
+      descriptionDepartmentsInvolved: generateSubjectStringByEntryLimit(data, 3),
     },
     badges: [
       ...(didLoadCorrectly ? getBadges(data.GPA, data.enrollment) : []),

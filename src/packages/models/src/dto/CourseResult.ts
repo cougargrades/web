@@ -1,5 +1,7 @@
 
 import { z } from 'zod'
+import abbreviationMap from '@cougargrades/publicdata/bundle/edu.uh.publications.subjects/subjects.json'
+import { isNullishOrWhitespace } from '@cougargrades/utils/nullish'
 import { Course, PublicationInfo, TCCNSUpdateInfo } from '../Course'
 import { getBadges, SearchResultBadge } from './Badges'
 import { SparklineData } from '../SparklineData'
@@ -60,6 +62,7 @@ export const CourseResult = z.object({
 });
 
 export function course2Result(data: Course): CourseInstructorResult {
+  const fullDepartmentName: string | undefined = (abbreviationMap as Record<string, string | undefined>)[data.department];
   return {
     key: data._path,
     href: `/c/${data._id}`,
@@ -68,7 +71,12 @@ export function course2Result(data: Course): CourseInstructorResult {
     caption: `${data.instructors.length} instructors • ${data.sections.length} sections`,
     badges: getBadges(data.GPA, data.enrollment),
     id: data._id,
-    lastInitial: '',
+    //lastInitial: '',
+    lastInitial: (
+      isNullishOrWhitespace(fullDepartmentName)
+      ? `"${data.department}" Subject`
+      : `${fullDepartmentName} (${data.department})`
+    ),
   };
 }
 

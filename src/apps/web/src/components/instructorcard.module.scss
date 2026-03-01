@@ -74,3 +74,32 @@
 .showMoreContent {
   padding: 0!important;
 }
+
+.showMoreListItemPrimaryFlex {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  // line-height: 1.25em;
+}
+
+.listItemSubtitle {
+  // 900px is the breakpoint for the modal to cover the entire screen
+  @media (width < 600px) {
+    display: none;
+  }
+}
+
+.listItemSecondaryFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+.listItemSecondarySubtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// .showMoreListItemPrimaryFlex > * {
+//   background: red;
+// }
