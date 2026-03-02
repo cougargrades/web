@@ -23,6 +23,26 @@ export const LiteGroupResult = z.object({
   sources: LabeledLink.array(),
 })
 
+// export type LiteGroupResult2 = z.infer<typeof LiteGroupResult2>
+// export const LiteGroupResult2 = Group.omit({ courses: true, sections: true, relatedGroups: true }).extend({
+//   href: z.string(),
+//   courseCount: z.number(),
+//   sectionCount: z.number(),
+//   get relatedGroups() {
+//     return LiteGroupResult2.array()
+//   },
+// })
+
+// export function ToLiteGroupResult({ courses, sections, relatedGroups, ...group }: Group): LiteGroupResult2 {
+//   return {
+//     ...group,
+//     href: `/g/${group.identifier}`,
+//     courseCount: courses.length,
+//     sectionCount: sections.length,
+//     relatedGroups: IsDocumentReferenceArray(relatedGroups) ? [] : relatedGroups.map(g => ToLiteGroupResult(g))
+//   }
+// }
+
 // export type GroupResult = z.infer<typeof GroupResult>
 // export const GroupResult = LiteGroupResult.extend({
 //   courses: DocumentReference.array(),

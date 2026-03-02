@@ -14,8 +14,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/models
       '@cougargrades/publicdata':
-        specifier: 1.0.0-20260221203129
-        version: 1.0.0-20260221203129
+        specifier: 1.0.0-20260223070655
+        version: 1.0.0-20260223070655
       '@cougargrades/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -531,9 +531,6 @@ packages:
   '@cougargrades/firebase-rest-firestore@1.6.1':
     resolution: {integrity: sha512-qv22dLW/5CJ4t14CtpMxYLb4Sj/KvArcUhTzlaOoG/xqhBVXv8W15VD3hT/Ec1AMmvWKWRapZcqGBjwLZc8xoQ==}
     engines: {node: '>=20.8.1'}
-
-  '@cougargrades/publicdata@1.0.0-20260221203129':
-    resolution: {integrity: sha512-4YUyhSVSye9OankPCkPdAWu2aRF4lllslR+NCz2rMyqyxBq2bmh2p1Ham3KfMYdD9prE/ZqmF71S944sR5KAyw==}
 
   '@cougargrades/publicdata@1.0.0-20260223070655':
     resolution: {integrity: sha512-+r06sxmGxXoT+iDOrtlAgs+hEKg03wLZXf6kD8fO8Dme2GxqKVn0SOFqBKoU6r7M1n/qNAYCBV0cc7TtMQ0X+A==}
@@ -4237,8 +4234,6 @@ snapshots:
     dependencies:
       jose: 4.15.9
       urlpattern-polyfill: 10.1.0
-
-  '@cougargrades/publicdata@1.0.0-20260221203129': {}
 
   '@cougargrades/publicdata@1.0.0-20260223070655': {}
 

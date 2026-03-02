@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@cougargrades/models": "workspace:*",
-    "@cougargrades/publicdata": "1.0.0-20260221203129",
+    "@cougargrades/publicdata": "1.0.0-20260223070655",
     "@cougargrades/utils": "workspace:*",
     "@cougargrades/vendor": "workspace:*",
     "@hono/standard-validator": "^0.2.2",

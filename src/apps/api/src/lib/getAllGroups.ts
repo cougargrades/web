@@ -1,9 +1,37 @@
 
 import { z } from 'zod'
-import { Group } from '@cougargrades/models'
-import { firestore } from './firestore-config'
+import { Group, metaFakeGroupDescription } from '@cougargrades/models'
+import { AllGroupsResult, group2Result, LiteGroupResult } from '@cougargrades/models/dto';
 import { defaultComparator } from '@cougargrades/utils/comparator';
-import { AllGroupsResult, group2Result } from '@cougargrades/models/dto';
+import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
+import counts from '@cougargrades/publicdata/bundle/edu.uh.grade_distribution/counts.json'
+import { firestore } from './firestore-config'
+
+export const FAKE_GROUPS: Group[] = [
+  ...curated_colleges.filter(college => !['college-exploratory'].includes(college.identifier)).map<Group>(college => ({
+    identifier: college.identifier,
+    name: college.groupLongTitle,
+    shortName: college.groupShortTitle,
+    description: metaFakeGroupDescription(college.identifier, false),
+    courses: [],
+    sections: [],
+    relatedGroups: [],
+    categories: ['Colleges/Schools', '#ShowInSidebar'],
+    sources: [],
+  })),
+  {
+    name: 'All Subjects',
+    identifier: 'all-subjects',
+    description: `Every Subject available at the University of Houston. ${counts.num_subjects} Subjects in total.`,
+    courses: [],
+    sections: [],
+    relatedGroups: [],
+    categories: ['Other Groups', '#ShowInSidebar'],
+    sources: [],
+  }
+]
+
+// TODO: actually return LiteGroupResult[]
 
 export async function getAllGroups(): Promise<AllGroupsResult> {
   const db = firestore()
@@ -22,14 +50,15 @@ export async function getAllGroups(): Promise<AllGroupsResult> {
     data[i].relatedGroups = []
   }
 
-  // make categories, necessary for sorting "correctly"
-  const categories = [
-    ...(
-      Array.from(new Set(data.map(e => Array.isArray(e.categories) ? e.categories.filter(cat => !cat.startsWith('#')) : []).flat()))
-        .sort((a,b) => defaultComparator(a,b)) // [ '(All)', '(2022-2023)', '(2021-2022)', '(2020-2021)' ]
-      ),
-    //ALL_GROUPS_SENTINEL
-  ];
+  const allPublicCategoriesSorted = Array.from(
+    new Set(
+      data
+        .map(g => 
+          g.categories.filter(cat => !cat.startsWith('#'))
+        )
+        .flat()
+    )
+  ).sort((a,b) => defaultComparator(a,b))
 
   const results = categories.map(cat => data.filter(e => Array.isArray(e.categories) && e.categories.includes(cat)).map(e => group2Result(e))).flat()
 
