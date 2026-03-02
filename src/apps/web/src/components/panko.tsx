@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useRouter } from '@tanstack/react-router'
-import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Snackbar from '@mui/material/Snackbar'
-import IconButton from '@mui/material/IconButton'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Breadcrumbs, IconButton, Snackbar, Tooltip } from '@mui/material'
+//import curated_colleges from '@cougargrades/publicdata/bundle/edu.uh.publications.colleges/curated_colleges_globbed_minified.json'
+import { } from '@cougargrades/models'
+import { PopulatedGroupResult } from '@cougargrades/models/dto'
+import { is } from '@cougargrades/utils/zod'
+import { isNullish } from '@cougargrades/utils/nullish'
 import CloseIcon from '@mui/icons-material/Close'
 import IosShareIcon from '@mui/icons-material/IosShare'
-import Tooltip from '@mui/material/Tooltip'
+import { allPosts } from 'content-collections'
 import { copyText } from '../lib/clipboard'
 import { Emoji } from './emoji'
 import { BlogNotifications } from './blog'
 import { POPULAR_TABS } from '../lib/top'
+import { useIsMobile } from '../lib/mediaQueries'
 
 import styles from './panko.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
-import { useIsMobile } from '../lib/mediaQueries'
+
 
 const strip = (path: string) => path.split(/[?|#]/).slice(0,1).join('')
 
 export default function Panko() {
   //const router = useRouter();
   const location = useLocation();
+  const breadcrumbs = useGenerateBreadcrumbs(strip(location.pathname))
 
   return (
-    <Breadcrumbs  aria-label="breadcrumb">
-      {generateBreadcrumbs(strip(location.pathname))}
+    <Breadcrumbs aria-label="breadcrumb">
+      {breadcrumbs}
     </Breadcrumbs>
   )
 }
@@ -120,7 +125,14 @@ export function PankoRow() {
   )
 }
 
-export function generateBreadcrumbs(path: string) {
+export function useGenerateBreadcrumbs(path: string) {
+  //const queryClient = useQueryClient();
+  // useQuery({
+  //   queryKey: ['group', value]
+  // })
+
+  // TODO: split the path better
+
   return path.split('/').map((value, index, array) => {
     const key = `${index}|${value}`
     if(index === 0) {
@@ -145,18 +157,23 @@ export function generateBreadcrumbs(path: string) {
     }
     if(index === 2) {
       if(array[1].toLowerCase() === 'g') {
-        if(value === 'all-subjects') {
-          return <span key={key}>All Subjects</span>
-        }
-        else if(value.startsWith('college')) {
-          return <span key={key}>{curated_colleges.find(college => college.identifier === value)?.groupLongTitle}</span>
-        }
-        else {
-          return <span key={key}>Group ID #{decodeURIComponent(value)}</span>
-        }
+        // const data = queryClient.getQueryData(['group', value])
+        // if (is(data, PopulatedGroupResult)) {
+        //   return <span key={key}>{data.shortName ?? data.name}</span>
+        // }
+        // else {
+        //   return <span key={key}>Group {decodeURIComponent(value)}</span>
+        // }
+        return <span key={key}>Group {decodeURIComponent(value)}</span>
       }
       if(array[1].toLowerCase() === 'faq') {
-        return <span key={key}>{capitalizeFirstLetter(decodeURIComponent(value).split('-').join(' '))}</span>
+        const data = allPosts.find(p => p.slug === value)
+        if (!isNullish(data)) {
+          return <span key={key}>{data.title}</span>
+        }
+        else {
+          return <span key={key}>{capitalizeFirstLetter(decodeURIComponent(value).split('-').join(' '))}</span>
+        }
       }
       if(array[1].toLowerCase() === 'top') {
         return <span key={key}>{POPULAR_TABS.find(e => e.slug === value)?.title ?? '???'}</span>

@@ -40,7 +40,7 @@ export function ToPopulatedGroupResult(data: Group): PopulatedGroupResult {
   return {
     ...lite,
     courses: IsDocumentReferenceArray(data.courses) ? [] : data.courses.map(e => course2CoursePlus(e)),
-    sections: !IsDocumentReferenceArray(data.sections) ? data.sections : [],
+    sections: IsDocumentReferenceArray(data.sections) ? [] : data.sections,
   }
 }
 

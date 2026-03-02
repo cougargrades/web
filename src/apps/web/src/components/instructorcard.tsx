@@ -17,7 +17,6 @@ import interactivity from '../styles/interactivity.module.scss'
 
 interface InstructorCardProps {
   data: CourseInstructorResult;
-  fitSubtitle?: boolean;
   variant?: 'elevation' | 'outlined';
   elevation?: number;
 }
@@ -34,10 +33,10 @@ interface InstructorCardEmptyProps {
   href?: string;
 }
 
-export function InstructorCard({ data, fitSubtitle, variant, elevation }: InstructorCardProps) {
+export function InstructorCard({ data, variant, elevation }: InstructorCardProps) {
   return (
     <Card sx={{ width: 250, height: 150 }} variant={variant} elevation={elevation} className={`${styles.instructorCard} ${interactivity.hoverActive}`}>
-      <Link to={data.href} className="nostyle">
+      <Link to={data.href} className="nostyle" preload="intent">
         <CardActionArea className={styles.cardActionArea}>
           <CardContent className={styles.cardContent}>
             {/* minSize={8} maxSize={11} */}
@@ -50,17 +49,9 @@ export function InstructorCard({ data, fitSubtitle, variant, elevation }: Instru
             <Typography variant="h6" className={styles.cardTitle} > 
               {data.title}
             </Typography>
-            {
-              fitSubtitle ?
-              // maxSize={18}
-              <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
-                {data.subtitle}
-              </Typography>
-              :
-              <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
-                {data.subtitle}
-              </Typography>
-            }
+            <Typography gutterBottom variant="body2" color="text.secondary" noWrap>
+              {data.subtitle}
+            </Typography>
             <Typography variant="caption" color="text.primary">
               {data.caption}
             </Typography>

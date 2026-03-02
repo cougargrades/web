@@ -20,17 +20,11 @@ export async function getOneGroup(groupId: string, includeSections: boolean = fa
   const combinedData: Group = {
     ...data,
     courses: courseData
-      .map(course => ({ 
-        ...course,
-        sections: [],
-        instructors: [],
-        relatedGroups: [],
-        publications: [],
-      }))
       // sort courses by total enrolled
       .toSorted((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled),
     sections: sectionData,
-    relatedGroups: relatedGroupData,
+    relatedGroups: relatedGroupData
+      .toSorted((a,b) => b.name.localeCompare(a.name)),
   }
 
   return ToPopulatedGroupResult(combinedData);

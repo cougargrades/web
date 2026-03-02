@@ -1,15 +1,15 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { Alert, AlertTitle, Container } from '@mui/material';
-import { } from '@cougargrades/models';
+//import { } from '@cougargrades/models';
+import { GetGroupLayoutFromCategories } from '@cougargrades/models/dto';
 import { isNullish } from '@cougargrades/utils/nullish';
 import type { Comparator } from '@cougargrades/utils/comparator';
 import { allGroupsDataQueryOptions, useAllGroups } from '../../lib/services/useAllGroups';
 import { oneGroupDataQueryOptions, useOneGroup } from '../../lib/services/useOneGroup';
 import { PankoRow } from '../../components/panko';
 import { SidebarContainer, type SidebarItem } from '../../components/sidebarcontainer';
-import { AllSubjectsList } from '../../components/AllSubjectsList';
-import { GroupContentSkeleton } from '../../components/groupcontent';
-import { GetGroupLayoutFromCategories } from '@cougargrades/models/dto';
+import { RelatedGroupList } from '../../components/RelatedGroupList';
+import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent';
 
 
 export const Route = createFileRoute('/g/$groupId')({
@@ -65,21 +65,18 @@ function RouteComponent() {
     <Container>
       <PankoRow />
     </Container>
-    <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems ?? []} categoryComparator={categoryComparator} showOverflowScrollers>
-      <h1>{data?.name}</h1>
-      <h5>Layout: <code>{layout}</code></h5>
-      <p>PLACEHOLDER</p>
-      <GroupContentSkeleton />
-      
-      {/* {
-        isPending
+    <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems ?? []} categoryComparator={categoryComparator} showOverflowScrollers preloadLinks={false}>
+      {
+        isPending || isNullish(data)
         ? <GroupContentSkeleton />
         : (
           layout === 'RelatedGroupList'
-          ? <AllSubjectsList title={groupName} caption={groupDescription} onlySubjects={filterSubjects} />
-          : <GroupContent data={oneGroup} />
+          ? (
+            <RelatedGroupList data={data} showDescription={false} />
+          )
+          : <GroupContent data={data} />
         )
-      } */}
+      }
     </SidebarContainer>
     </>
   )
@@ -105,7 +102,7 @@ function NotFoundComponent() {
     <Container>
       <PankoRow />
     </Container>
-    <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems ?? []} categoryComparator={categoryComparator} showOverflowScrollers>
+    <SidebarContainer condensedTitle="Select Group" sidebarItems={sidebarItems ?? []} categoryComparator={categoryComparator} showOverflowScrollers preloadLinks={false}>
       <Alert severity="error">
         <AlertTitle>Error 404</AlertTitle>
         Group &quot;<code className="plain">{groupId}</code>&quot; could not be found.

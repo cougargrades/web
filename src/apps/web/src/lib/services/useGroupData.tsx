@@ -29,7 +29,11 @@ export function useGroupData(data: PopulatedGroupResult): GroupDataResult {
 
   return {
     topEnrolled: [
-      ...data.courses.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => course2Result(e))
+      ...data.courses.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => {
+        e.instructors = new Array(e.instructorCount);
+        e.sections = new Array(e.sectionCount);
+        return course2Result(e);
+      })
     ],
     dataGrid: {
       columns: [

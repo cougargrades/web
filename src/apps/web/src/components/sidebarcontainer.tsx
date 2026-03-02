@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
+import { Link, useLocation, useNavigate, useRouter } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
 import { List, ListItemButton, ListItemText, useTheme } from '@mui/material'
 import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
@@ -30,6 +30,7 @@ export interface SidebarContainerProps {
   //selectedSidebarItem?: React.Key;
   resetScrollAfterLink?: boolean;
   showOverflowScrollers?: boolean;
+  preloadLinks?: boolean;
   children: React.ReactNode;
 }
 
@@ -44,7 +45,7 @@ function isSamePath(url1?: string, url2?: string): boolean {
   return relativeURL(url1)?.pathname.toLowerCase() === relativeURL(url2)?.pathname.toLowerCase()
 }
 
-export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, categoryComparator, sidebarItemComparator, children }: SidebarContainerProps) {
+export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, preloadLinks, categoryComparator, sidebarItemComparator, children }: SidebarContainerProps) {
   const router = useRouter()
   const navigate = useNavigate();
   const location = useLocation();
@@ -75,11 +76,8 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
   //   console.log('SHOW TOP HINT?', SHOW_TOP_HINT, 'SHOW BOTTOM HINT?', SHOW_BOTTOM_HINT)
   // }, [SHOW_TOP_HINT, SHOW_BOTTOM_HINT])
 
-  const handleClick = (href?: string) => {
-    if (href) {
-      navigate({ to: href, resetScroll: resetScrollAfterLink })
-      setTOCExpanded(false)
-    }
+  const handleClick = () => {
+    setTOCExpanded(false)
   }
 
   const handleScroll = (position: 'top' | 'bottom') => {
@@ -99,12 +97,14 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
   }
 
   useEffect(() => {
-    for(let item of sidebarItems) {
-      if (item.href) {
-        router.preloadRoute({ to: item.href });
+    if ((preloadLinks ?? true) === true) {
+      for(let item of sidebarItems) {
+        if (item.href) {
+          router.preloadRoute({ to: item.href });
+        }
       }
     }
-  },[sidebarItems])
+  },[sidebarItems]);
 
   return (
     <>
@@ -115,10 +115,10 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
             <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
               {sidebarItems.filter(e => e.categoryName === cat).toSorted(sidebarItemComparator).map((e, index) => (
                 <React.Fragment key={e.key}>
-                  <FakeLink href={e.href ?? "#"} style={{ cursor: e.disabled ? 'not-allowed' : 'auto' }}>
+                  <Link to={e.href ?? '#'} className="nostyle" style={{ cursor: e.disabled ? 'not-allowed' : 'auto' }} onClick={handleClick}>
                     <ListItemButton
                       selected={isSamePath(e.href, location.pathname)}
-                      onClick={() => handleClick(e.href)}
+                      onMouseOver={() => router.preloadRoute({ to: e.href })}
                       classes={{ root: `${styles.accordionRoot} ${interactivity.hoverActive}`, selected: styles.listItemSelected }}
                       disabled={e.disabled}
                       data-disabled={e.disabled}
@@ -134,7 +134,7 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
                         }}
                         />
                     </ListItemButton>
-                  </FakeLink>
+                  </Link>
                 </React.Fragment>
               ))}
             </List>
