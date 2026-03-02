@@ -160,8 +160,8 @@ function RouteComponent() {
             data.relatedGroups.length > 0
             ? (
               data.relatedGroups.map(e => (
-                <Tooltip key={e.key} title={e.description}>
-                  <Chip label={e.title} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
+                <Tooltip key={e.identifier} title={e.description}>
+                  <Chip label={e.shortName ?? e.name} className={`${styles.chip} ${interactivity.hoverActive}`} component="a" href={e.href} clickable />
                 </Tooltip>
               )) 
             )

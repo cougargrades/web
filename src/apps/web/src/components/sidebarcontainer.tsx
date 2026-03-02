@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
 import { List, ListItemButton, ListItemText, useTheme } from '@mui/material'
 import { ExpandLess as ExpandLessIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
+import type { Comparator } from '@cougargrades/utils/comparator'
 import { FakeLink } from './link'
 import { GroupNavSubheader, TableOfContentsWrap } from './groupnav'
 import { tocAtom } from '../lib/jotai'
@@ -24,6 +25,8 @@ export interface SidebarItem {
 export interface SidebarContainerProps {
   condensedTitle: string;
   sidebarItems: SidebarItem[];
+  categoryComparator?: Comparator<string>;
+  sidebarItemComparator?: Comparator<SidebarItem>;
   //selectedSidebarItem?: React.Key;
   resetScrollAfterLink?: boolean;
   showOverflowScrollers?: boolean;
@@ -41,7 +44,7 @@ function isSamePath(url1?: string, url2?: string): boolean {
   return relativeURL(url1)?.pathname.toLowerCase() === relativeURL(url2)?.pathname.toLowerCase()
 }
 
-export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, children }: SidebarContainerProps) {
+export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfterLink, showOverflowScrollers, categoryComparator, sidebarItemComparator, children }: SidebarContainerProps) {
   const router = useRouter()
   const navigate = useNavigate();
   const location = useLocation();
@@ -108,9 +111,9 @@ export function SidebarContainer({ condensedTitle, sidebarItems, resetScrollAfte
       <main className={styles.main}>
         <aside className={styles.nav} ref={scrollRef}>
           <TableOfContentsWrap condensedTitle={condensedTitle}>
-          { Array.from(new Set(sidebarItems.map(e => e.categoryName))).map(cat => (
+          { Array.from(new Set(sidebarItems.map(e => e.categoryName))).toSorted(categoryComparator).map(cat => (
             <List key={cat} className={styles.sidebarList} subheader={<GroupNavSubheader>{cat}</GroupNavSubheader>}>
-              {sidebarItems.filter(e => e.categoryName === cat).map((e, index) => (
+              {sidebarItems.filter(e => e.categoryName === cat).toSorted(sidebarItemComparator).map((e, index) => (
                 <React.Fragment key={e.key}>
                   <FakeLink href={e.href ?? "#"} style={{ cursor: e.disabled ? 'not-allowed' : 'auto' }}>
                     <ListItemButton

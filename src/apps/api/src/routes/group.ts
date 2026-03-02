@@ -5,7 +5,7 @@ import { describeRoute, resolver, validator } from 'hono-openapi'
 import { z } from 'zod'
 import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
-import { AllGroupsResult, PopulatedGroupResult } from '@cougargrades/models/dto'
+import { LiteGroupResult, PopulatedGroupResult } from '@cougargrades/models/dto'
 import { NO_CACHE, PROD_CACHE_LIFETIME } from '../cache'
 import { getAllGroups } from '../lib/getAllGroups'
 import { getOneGroup } from '../lib/getOneGroup'
@@ -19,7 +19,7 @@ app.get('/',
       200: {
         description: '',
         content: {
-          'application/json': { schema: resolver(AllGroupsResult) }
+          'application/json': { schema: resolver(LiteGroupResult.array()) }
         }
       }
     }
@@ -49,7 +49,7 @@ app.get('/:groupId',
   }),
   cache({
     cacheName: 'cougargrades-api',
-    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
   }),
   async (ctx) => {
     const { groupId } = ctx.req.valid('param');
@@ -57,26 +57,6 @@ app.get('/:groupId',
     if (isNullish(results)) return ctx.status(404);
 
     return ctx.json(results);
-  }
-)
-app.get('/:groupId/sections',
-  validator('param', z.object({
-    groupId: z.string()
-  })),
-  cache({
-    cacheName: 'cougargrades-api',
-    // TODO: use real cache time
-    cacheControl: TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME),
-  }),
-  async (ctx) => {
-    const { groupId } = ctx.req.valid('param');
-
-    return ctx.newResponse('Temporarily disabled', 400);
-
-    // const results = await getOneGroup(groupId, true);
-    // if (isNullish(results)) return ctx.status(404);
-
-    // return ctx.json(results);
   }
 )
 

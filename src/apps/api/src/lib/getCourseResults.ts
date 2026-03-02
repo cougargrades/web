@@ -1,5 +1,5 @@
 import { Course, Enrollment, EstimateClassSize, formatTermCode, GetEnrolledCountByInstructor, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section } from '@cougargrades/models';
-import { CourseResult, CourseTopInstructorEntry, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, instructor2Result } from '@cougargrades/models/dto';
+import { CourseResult, CourseTopInstructorEntry, EnrollmentInfoResult, getBadges, getSeasonalAvailability, Grade, grade2Color, ToLiteGroupResult, instructor2Result } from '@cougargrades/models/dto';
 import { isNullish } from '@cougargrades/utils/nullish';
 import { defaultComparator, descendingComparator } from '@cougargrades/utils/comparator'
 
@@ -61,7 +61,7 @@ export async function getCourseResults(courseName: string): Promise<CourseResult
        * Why? So that "2024-2025" appears before "2021-2022", even if "English" appears before "Communication".
        * I suppose this could be more sophisticated, but that's a lot of work.
        */
-      ...(didLoadCorrectly ? groupData.sort((a,b) => b.name.localeCompare(a.name)).map(e => group2Result(e)) : [])
+      ...(didLoadCorrectly ? groupData.sort((a,b) => b.name.localeCompare(a.name)).map(e => ToLiteGroupResult(e)) : [])
     ],
     relatedInstructors: [
       ...(didLoadCorrectly ? instructorData.sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled).map(e => instructor2Result(e)) : [])

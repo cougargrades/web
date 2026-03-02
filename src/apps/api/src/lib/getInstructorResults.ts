@@ -1,5 +1,5 @@
 import { Course, Enrollment, EstimateClassSize, formatTermCode, GetEnrolledCountByCourse, GetTotalEnrolled, Group, Instructor, IsDocumentReferenceArray, Section, ToDocumentReference } from '@cougargrades/models';
-import { course2CoursePlus, course2Result, EnrollmentInfoResult, generateSubjectStringByEntryLimit, getBadges, getSeasonalAvailability, Grade, grade2Color, group2Result, InstructorResult, InstructorTopCourseEntry } from '@cougargrades/models/dto';
+import { course2CoursePlus, course2Result, EnrollmentInfoResult, generateSubjectStringByEntryLimit, getBadges, getSeasonalAvailability, Grade, grade2Color, InstructorResult, InstructorTopCourseEntry, ToLiteGroupResult } from '@cougargrades/models/dto';
 import { defaultComparator, descendingComparator } from '@cougargrades/utils/comparator'
 import { isNullish } from '@cougargrades/utils/nullish'
 import { getRMPProfessorViewableUrl } from '@cougargrades/vendor/rmp'
@@ -60,7 +60,7 @@ export async function getInstructorResults(instructorName: string): Promise<Inst
     firstTaught: didLoadCorrectly ? formatTermCode(data.firstTaught) : '',
     lastTaught: didLoadCorrectly ? formatTermCode(data.lastTaught) : '',    
     relatedGroups: groupData
-      .map(e => group2Result(e)),
+      .map(e => ToLiteGroupResult(e)),
     relatedCourses: courseData
       .sort((a,b) => b.enrollment.totalEnrolled - a.enrollment.totalEnrolled)
       .map(e => course2Result(e)),
