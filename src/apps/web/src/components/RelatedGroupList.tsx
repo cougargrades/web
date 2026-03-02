@@ -1,68 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from '@tanstack/react-router'
-import { useAsync } from 'react-use'
-import { Box, Chip, Divider, List, ListItemButton, ListItemText, Typography } from '@mui/material'
-import { pluralize } from '@cougargrades/models'
-import type { PopulatedGroupResult, TopResult } from '@cougargrades/models/dto'
-import { isNullish } from '@cougargrades/utils/nullish'
-import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from './loading'
-import { TopListItem } from './TopListItem'
-import { useAbbreviationMap, useCourseIndex } from '../lib/services/useStaticPublicData'
-import { useGroupData } from '../lib/services/useGroupData'
+import { Chip, Divider, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import type { PopulatedGroupResult } from '@cougargrades/models/dto'
 
 import styles from './RelatedGroupList.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
 
-
-
-
 export interface RelatedGroupListProps {
   data: PopulatedGroupResult;
   showDescription?: boolean;
+  showIdentifier?: boolean;
 }
 
-
-
-export function RelatedGroupList({ data, showDescription }: RelatedGroupListProps) {
-  //const { topEnrolled, dataGrid } = useGroupData(data)
-  // const { data: abbreviationMap, isPending: isAbbrMapPending, error: abbrMapError } = useAbbreviationMap()
-  // const { data: courseIndex, isPending: isCourseIdxPending, error: courseIdxError } = useCourseIndex();
-
-  // const isPending = isAbbrMapPending || isCourseIdxPending;
-  // const error = abbrMapError ?? courseIdxError ?? null;
-
-  // const subjects: string[] = Array.from(new Set((courseIndex ?? []).map(e => e.courseName.split(' ')[0])));
-
-  // const results: TopResult[] = (
-  //   !isNullish(abbreviationMap) && !isNullish(courseIndex)
-  //   ? subjects
-  //     .filter(subj => 
-  //       Array.isArray(onlySubjects) && onlySubjects.length > 0
-  //       ? onlySubjects.includes(subj)
-  //       : true
-  //     )
-  //     .map(subj => {
-  //       const numCoursesUnderSubject = courseIndex.filter(e => e.courseName.startsWith(`${subj} `)).length;
-
-  //       return {
-  //         metricValue: 0,
-  //         metricFormatted: '',
-  //         metricTimeSpanFormatted: '',
-  //         key: subj,
-  //         href: `/g/${subj}`,
-  //         title: subj in abbreviationMap ? `${abbreviationMap[subj as keyof typeof abbreviationMap]} (${subj})` : `"${subj}" Subject`,
-  //         subtitle: `${numCoursesUnderSubject} ${pluralize({ quantity: numCoursesUnderSubject, rootWord: 'course' })} in this Subject`,
-  //         caption: '',
-  //         badges: [],
-  //         id: subj,
-  //         lastInitial: '',
-  //       }
-  //     })
-  //   : []
-  // );
-
-  console.log(data.relatedGroups);
-
+export function RelatedGroupList({ data, showDescription, showIdentifier }: RelatedGroupListProps) {
   return (
     <div>
       <Typography variant="h4" className={styles.h1}>
@@ -85,17 +35,21 @@ export function RelatedGroupList({ data, showDescription }: RelatedGroupListProp
         Here, a &quot;Subject&quot; refers to the 3-4 character prefix before a course number (<em>ex: <abbr title="English">ENGL</abbr>, <abbr title="Mathematics">MATH</abbr></em>)
       </Typography> */}
       <List sx={{ width: '100%' }}>
-        { data.relatedGroups.map((item, index, array) => (
+        { data.relatedGroups.toSorted((a,b) => a.name.replaceAll(/[^\w]/g, '').localeCompare(b.name.replaceAll(/[^\w]/g, ''))).map((item, index, array) => (
           <React.Fragment key={item.identifier}>
             <Link to={item.href} preload="intent" className="nostyle">
               <ListItemButton>
-                {/* <ListItemText
-                  primary={<>
-                  <strong>{item.name}</strong>
-                  <></>
-                  </>}
-                  secondary={`${item.courseCount} courses in this Subject`}
-                /> */}
+                {
+                  showIdentifier
+                  ?  <>
+                  <ListItemIcon>
+                    <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }}>
+                      <span style={{ fontSize: '0.7em' }}>{item.identifier}</span>
+                    </Typography>
+                  </ListItemIcon>
+                  </>
+                  : null
+                }
                 <ListItemText
                   slotProps={{
                     secondary: {

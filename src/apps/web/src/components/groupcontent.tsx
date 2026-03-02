@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { Link, useRouter } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { Chip, Skeleton, Tooltip, Typography, useMediaQuery } from '@mui/material'
 import type { CoursePlus, PopulatedGroupResult } from '@cougargrades/models/dto'
 import { isNullish } from '@cougargrades/utils/nullish'
@@ -8,8 +7,6 @@ import { InstructorCard, InstructorCardShowMore, InstructorCardSkeleton } from '
 import { useGroupData } from '../lib/services/useGroupData'
 import { Carousel } from './carousel'
 import { EnhancedTable } from './datatable'
-import { CustomSkeleton } from './skeleton'
-import { LoadingBoxIndeterminate } from './loading'
 
 import styles from './groupcontent.module.scss'
 import interactivity from '../styles/interactivity.module.scss'
@@ -20,14 +17,8 @@ interface GroupContentProps {
 }
 
 export function GroupContent({ data }: GroupContentProps) {
-  const router = useRouter()
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const { topEnrolled, dataGrid } = useGroupData(data)
-  // const RELATED_COURSE_LIMIT = (
-  //   4 < data.courses.length
-  //   ? 4 
-  //   : data.courses.length
-  // );
   const RELATED_COURSE_LIMIT = 4;
   const REMAINING_COURSES = (
     !isNullish(topEnrolled)
@@ -40,13 +31,6 @@ export function GroupContent({ data }: GroupContentProps) {
     : `Show ${REMAINING_COURSES.toLocaleString()} More`
   );
   const isCoreGroup = data.categories.includes('#UHCoreCurriculum')
-
-  // Used for prefetching all options which are presented
-  // useEffect(() => {
-  //   for(let item of topEnrolled) {
-  //     router.preloadRoute({ to: item.href })
-  //   }
-  // }, [topEnrolled]);
 
   return (
     <section className={styles.groupSection}>

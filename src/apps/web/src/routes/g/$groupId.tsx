@@ -1,13 +1,12 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { Alert, AlertTitle, Container } from '@mui/material';
-//import { } from '@cougargrades/models';
 import { GetGroupLayoutFromCategories } from '@cougargrades/models/dto';
 import { isNullish } from '@cougargrades/utils/nullish';
 import type { Comparator } from '@cougargrades/utils/comparator';
 import { allGroupsDataQueryOptions, useAllGroups } from '../../lib/services/useAllGroups';
 import { oneGroupDataQueryOptions, useOneGroup } from '../../lib/services/useOneGroup';
 import { PankoRow } from '../../components/panko';
-import { SidebarContainer, type SidebarItem } from '../../components/sidebarcontainer';
+import { SidebarContainer } from '../../components/sidebarcontainer';
 import { RelatedGroupList } from '../../components/RelatedGroupList';
 import { GroupContent, GroupContentSkeleton } from '../../components/groupcontent';
 
@@ -72,7 +71,7 @@ function RouteComponent() {
         : (
           layout === 'RelatedGroupList'
           ? (
-            <RelatedGroupList data={data} showDescription={false} />
+            <RelatedGroupList data={data} showDescription={false} showIdentifier={true} />
           )
           : <GroupContent data={data} />
         )
