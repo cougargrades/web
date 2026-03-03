@@ -25,6 +25,7 @@
     "@cougargrades/vendor": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@marsidev/react-turnstile": "^1.4.2",
     "@mui/icons-material": "^7.3.8",
     "@mui/material": "^7.3.8",
     "@mui/utils": "^7.3.8",

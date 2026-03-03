@@ -40,7 +40,7 @@ export class BaseApiService {
     }
   }
 
-  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema?: TSchema, options?: Pick<RequestInit, 'priority'>): Promise<z4.output<TSchema> | null> {
+  public async Post<TSchema extends z4.$ZodType>(path: string, query: SearchParams, schema?: TSchema, options?: Pick<RequestInit, 'priority' | 'body'>): Promise<z4.output<TSchema> | null> {
     const params = new URLSearchParams(query);
     const queryString: string = (
       params.size > 0
@@ -72,7 +72,7 @@ export class BaseApiService {
     }
   }
 
-  public SendBeacon(path: string, query: SearchParams): boolean {
+  public SendBeacon(path: string, query: SearchParams, data?: BodyInit): boolean {
     const params = new URLSearchParams(query);
     const queryString: string = (
       params.size > 0
@@ -80,6 +80,6 @@ export class BaseApiService {
       : ''
     );
 
-    return navigator.sendBeacon(`${trimEnd(this.baseURL.href, '/')}${path}${queryString}`)
+    return navigator.sendBeacon(`${trimEnd(this.baseURL.href, '/')}${path}${queryString}`, data);
   }
 }
