@@ -1,0 +1,6 @@
+
+*.csv
+*.sql
+*.json
+*.db
+*.sqlite

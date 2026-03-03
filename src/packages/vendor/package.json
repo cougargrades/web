@@ -1,0 +1,28 @@
+{
+  "name": "@cougargrades/vendor",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./firestore": "./src/google/firestore.ts",
+    "./google-analytics": "./src/google/analytics.ts",
+    "./github": "./src/github/index.ts",
+    "./rmp": "./src/rmp/rmp.ts",
+    "./simplesyllabus": "./src/simplesyllabus/simplesyllabus.ts"
+  },
+  "dependencies": {
+    "@cougargrades/firebase-rest-firestore": "^1.6.1",
+    "@cougargrades/models": "workspace:*",
+    "@cougargrades/utils": "workspace:*",
+    "@google-analytics/data": "^5.2.1",
+    "@octokit/rest": "^22.0.1",
+    "temporal-polyfill": "^0.3.0",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tsc": "tsc"
+  }
+}

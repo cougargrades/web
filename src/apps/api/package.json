@@ -1,0 +1,39 @@
+{
+  "name": "@cougargrades/api",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:host": "wrangler dev --ip 0.0.0.0 --var \"CORS_ALLOW_ALL:true\"",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "wrangler": "wrangler",
+    "tsc": "tsc --noEmit",
+    "setup:schema": "wrangler d1 execute cougargrades-data --local --file=./data/schema.sql",
+    "setup:seed": "wrangler d1 execute cougargrades-data --local --file=./data/seed_sample_data.sql",
+    "setup-actual:schema": "wrangler d1 execute cougargrades-data --remote --file=./data/schema.sql",
+    "setup-actual:seed": "wrangler d1 execute cougargrades-data --remote --file=./data/seed_sample_data.sql",
+    "setup-actual:seed-real": "wrangler d1 execute cougargrades-data --remote --file=./data/seed_real_data.sql",
+    "reset:cache": "rimraf -v ./.wrangler/state/v3/cache",
+    "reset:d1": "rimraf -v ./.wrangler/state/v3/d1"
+  },
+  "dependencies": {
+    "@cougargrades/models": "workspace:*",
+    "@cougargrades/publicdata": "1.0.0-20260223070655",
+    "@cougargrades/utils": "workspace:*",
+    "@cougargrades/vendor": "workspace:*",
+    "@hono/standard-validator": "^0.2.2",
+    "@hono/swagger-ui": "^0.5.3",
+    "@hono/zod-validator": "^0.7.6",
+    "@standard-community/standard-openapi": "^0.2.9",
+    "dice-coefficient": "^2.1.1",
+    "hono": "^4.12.3",
+    "hono-openapi": "^1.3.0",
+    "temporal-polyfill": "^0.3.0",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "rimraf": "^6.1.3",
+    "typescript": "^5",
+    "wrangler": "^4.69.0"
+  }
+}

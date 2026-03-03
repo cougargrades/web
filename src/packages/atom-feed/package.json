@@ -1,0 +1,23 @@
+{
+  "name": "@cougargrades/atom-feed",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tsc": "tsc",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@cougargrades/utils": "workspace:*",
+    "dompurify": "^3.3.1",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.13",
+    "jsdom": "^28.1.0",
+    "typescript": "^5",
+    "vitest": "^4.0.18"
+  }
+}

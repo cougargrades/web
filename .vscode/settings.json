@@ -1,6 +1,33 @@
 {
-	"files.associations": {
-		"wrangler.json": "jsonc"
-	},
-	"editor.tabSize": 2
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "literals",
+
+  /**
+   * Makes it easier to identify files when using folder-based routing in Vue/Nuxt projects
+   */
+  "workbench.editor.customLabels.enabled": true,
+  "workbench.editor.customLabels.patterns": {
+    // Anything that is "index.*" within a folder
+    "**/**/index.*": "${dirname}/index.${extname}",
+
+    // Web Tanstack Router file-based routing
+    "*/src/apps/web/src/routes/**/*.*": "web/(${dirname})/${filename}.${extname}",
+
+    // API Hono "file-based" (not really) routing
+    "*/src/apps/api/src/routes/**/*.*": "api/(${dirname})/${filename}.${extname}",
+  }
 }

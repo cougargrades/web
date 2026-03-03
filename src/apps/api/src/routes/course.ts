@@ -1,0 +1,40 @@
+
+import { Hono } from 'hono'
+import { cache } from 'hono/cache'
+import { describeRoute, resolver, validator } from 'hono-openapi'
+import { z } from 'zod'
+import { Temporal } from 'temporal-polyfill'
+import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
+import { DURATION_ZERO, NO_CACHE, PROD_CACHE_LIFETIME } from '../cache'
+import { getCourseResults } from '../lib/getCourseResults'
+import { CourseResult } from '@cougargrades/models/dto'
+
+const app = new Hono()
+
+app.get('/:courseName',
+  validator('param', z.object({
+    courseName: z.string()
+  })),
+  // describeRoute({
+  //   responses: {
+  //     200: {
+  //       description: '',
+  //       content: {
+  //         'application/json': { schema: resolver(CourseResult) }
+  //       }
+  //     }
+  //   }
+  // }),
+  cache({
+    cacheName: 'cougargrades-api',
+    // TODO: use real cache time
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(PROD_CACHE_LIFETIME, Temporal.Duration.from({ days: 1 })),
+  }),
+  async (ctx) => {
+    const { courseName } = ctx.req.valid('param');
+    const results = await getCourseResults(courseName);
+    return ctx.json(results);
+  }
+)
+
+export default app

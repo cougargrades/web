@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">NuGet Gallery Feed for Newtonsoft.Json</title>
+  <subtitle type="text">Json.NET is a popular high-performance JSON framework for .NET</subtitle>
+  <id>https://www.nuget.org/packages/Newtonsoft.Json/</id>
+  <updated>2021-03-22T20:13:24Z</updated>
+  <logo>https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/icon</logo>
+  <link rel="self" type="application/atom+xml" href="https://www.nuget.org/packages/Newtonsoft.Json/atom.xml" />
+  <link rel="alternate" type="text/html" href="https://www.nuget.org/packages/Newtonsoft.Json/" />
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/13.0.1</id>
+    <title type="text">Newtonsoft.Json 13.0.1</title>
+    <published>2021-03-22T20:10:49Z</published>
+    <updated>2021-03-22T20:13:24Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/13.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/12.0.3</id>
+    <title type="text">Newtonsoft.Json 12.0.3</title>
+    <published>2019-11-09T01:27:30Z</published>
+    <updated>2020-03-04T22:55:57Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/12.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/12.0.2</id>
+    <title type="text">Newtonsoft.Json 12.0.2</title>
+    <published>2019-04-22T01:21:49Z</published>
+    <updated>2019-04-22T01:25:58Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/12.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/12.0.1</id>
+    <title type="text">Newtonsoft.Json 12.0.1</title>
+    <published>2018-11-27T18:11:37Z</published>
+    <updated>2019-01-30T23:20:33Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/12.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/11.0.2</id>
+    <title type="text">Newtonsoft.Json 11.0.2</title>
+    <published>2018-03-24T20:18:14Z</published>
+    <updated>2018-10-15T01:01:57Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/11.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/11.0.1</id>
+    <title type="text">Newtonsoft.Json 11.0.1</title>
+    <published>2018-02-17T20:59:20Z</published>
+    <updated>2018-10-15T01:01:59Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/11.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/10.0.3</id>
+    <title type="text">Newtonsoft.Json 10.0.3</title>
+    <published>2017-06-18T02:10:29Z</published>
+    <updated>2018-10-15T01:02:38Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/10.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/10.0.2</id>
+    <title type="text">Newtonsoft.Json 10.0.2</title>
+    <published>2017-04-02T06:37:50Z</published>
+    <updated>2018-10-15T01:02:52Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/10.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/10.0.1</id>
+    <title type="text">Newtonsoft.Json 10.0.1</title>
+    <published>2017-03-20T07:18:50Z</published>
+    <updated>2018-10-15T01:03:04Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/10.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/9.0.1</id>
+    <title type="text">Newtonsoft.Json 9.0.1</title>
+    <published>2016-06-22T08:11:45Z</published>
+    <updated>2018-10-15T01:03:35Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/9.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/8.0.3</id>
+    <title type="text">Newtonsoft.Json 8.0.3</title>
+    <published>2016-03-14T09:03:38Z</published>
+    <updated>2018-10-15T01:04:02Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/8.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/8.0.2</id>
+    <title type="text">Newtonsoft.Json 8.0.2</title>
+    <published>2016-01-09T01:06:39Z</published>
+    <updated>2018-10-15T01:04:18Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/8.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/8.0.1</id>
+    <title type="text">Newtonsoft.Json 8.0.1</title>
+    <published>2015-12-29T01:03:30Z</published>
+    <updated>2018-10-15T01:05:28Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/8.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/7.0.1</id>
+    <title type="text">Newtonsoft.Json 7.0.1</title>
+    <published>2015-06-22T12:00:36Z</published>
+    <updated>2018-10-15T01:05:14Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/7.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.8</id>
+    <title type="text">Newtonsoft.Json 6.0.8</title>
+    <published>2015-01-11T07:30:45Z</published>
+    <updated>2018-10-15T01:05:50Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.8" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.7</id>
+    <title type="text">Newtonsoft.Json 6.0.7</title>
+    <published>2014-12-23T00:09:09Z</published>
+    <updated>2018-10-15T01:05:56Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.7" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.6</id>
+    <title type="text">Newtonsoft.Json 6.0.6</title>
+    <published>2014-10-24T10:57:02Z</published>
+    <updated>2018-10-15T01:06:02Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.6" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.5</id>
+    <title type="text">Newtonsoft.Json 6.0.5</title>
+    <published>2014-09-06T23:18:33Z</published>
+    <updated>2018-10-15T01:06:18Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.5" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.4</id>
+    <title type="text">Newtonsoft.Json 6.0.4</title>
+    <published>2014-08-03T09:19:01Z</published>
+    <updated>2018-10-15T01:06:25Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.4" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.3</id>
+    <title type="text">Newtonsoft.Json 6.0.3</title>
+    <published>2014-04-27T05:41:11Z</published>
+    <updated>2018-10-15T01:06:36Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.2</id>
+    <title type="text">Newtonsoft.Json 6.0.2</title>
+    <published>2014-03-30T05:55:21Z</published>
+    <updated>2018-10-15T01:06:43Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/6.0.1</id>
+    <title type="text">Newtonsoft.Json 6.0.1</title>
+    <published>2014-02-01T11:01:37Z</published>
+    <updated>2018-10-15T01:06:51Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/6.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.8</id>
+    <title type="text">Newtonsoft.Json 5.0.8</title>
+    <published>2013-10-17T00:18:13Z</published>
+    <updated>2018-10-15T01:07:07Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.8" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.7</id>
+    <title type="text">Newtonsoft.Json 5.0.7</title>
+    <published>2013-10-14T10:30:44Z</published>
+    <updated>2018-10-15T01:07:21Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.7" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.6</id>
+    <title type="text">Newtonsoft.Json 5.0.6</title>
+    <published>2013-06-06T03:11:18Z</published>
+    <updated>2018-10-15T01:07:33Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.6" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.5</id>
+    <title type="text">Newtonsoft.Json 5.0.5</title>
+    <published>2013-05-08T09:22:03Z</published>
+    <updated>2018-10-15T01:07:40Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.5" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.4</id>
+    <title type="text">Newtonsoft.Json 5.0.4</title>
+    <published>2013-04-25T04:48:23Z</published>
+    <updated>2018-10-15T01:07:44Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.4" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.3</id>
+    <title type="text">Newtonsoft.Json 5.0.3</title>
+    <published>2013-04-14T01:30:54Z</published>
+    <updated>2018-10-15T01:07:56Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.2</id>
+    <title type="text">Newtonsoft.Json 5.0.2</title>
+    <published>2013-04-08T11:51:51Z</published>
+    <updated>2018-10-15T01:08:13Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/5.0.1</id>
+    <title type="text">Newtonsoft.Json 5.0.1</title>
+    <published>2013-04-07T07:19:15Z</published>
+    <updated>2018-10-15T01:08:14Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/5.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.11</id>
+    <title type="text">Newtonsoft.Json 4.5.11</title>
+    <published>2012-11-20T10:02:17Z</published>
+    <updated>2018-10-15T01:08:23Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.11" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.10</id>
+    <title type="text">Newtonsoft.Json 4.5.10</title>
+    <published>2012-10-07T20:20:43Z</published>
+    <updated>2018-10-15T01:08:40Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.10" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.9</id>
+    <title type="text">Newtonsoft.Json 4.5.9</title>
+    <published>2012-09-08T10:48:48Z</published>
+    <updated>2018-10-15T01:08:49Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.9" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.8</id>
+    <title type="text">Newtonsoft.Json 4.5.8</title>
+    <published>2012-08-04T02:50:08Z</published>
+    <updated>2018-10-15T01:08:56Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.8" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.7</id>
+    <title type="text">Newtonsoft.Json 4.5.7</title>
+    <published>2012-06-09T07:42:19Z</published>
+    <updated>2018-10-15T01:09:06Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.7" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.6</id>
+    <title type="text">Newtonsoft.Json 4.5.6</title>
+    <published>2012-05-30T08:23:27Z</published>
+    <updated>2018-10-15T01:09:13Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.6" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.5</id>
+    <title type="text">Newtonsoft.Json 4.5.5</title>
+    <published>2012-05-08T09:08:43Z</published>
+    <updated>2018-10-15T01:09:21Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.5" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.4</id>
+    <title type="text">Newtonsoft.Json 4.5.4</title>
+    <published>2012-04-24T22:16:17Z</published>
+    <updated>2018-10-15T01:09:29Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.4" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.3</id>
+    <title type="text">Newtonsoft.Json 4.5.3</title>
+    <published>2012-04-13T14:02:56Z</published>
+    <updated>2018-10-15T01:09:39Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.2</id>
+    <title type="text">Newtonsoft.Json 4.5.2</title>
+    <published>2012-04-11T11:18:26Z</published>
+    <updated>2018-10-15T01:09:48Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.5.1</id>
+    <title type="text">Newtonsoft.Json 4.5.1</title>
+    <published>2012-03-20T09:12:45Z</published>
+    <updated>2018-10-15T01:10:01Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.5.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.8</id>
+    <title type="text">Newtonsoft.Json 4.0.8</title>
+    <published>2012-02-12T01:55:11Z</published>
+    <updated>2018-10-15T01:10:11Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.8" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.7</id>
+    <title type="text">Newtonsoft.Json 4.0.7</title>
+    <published>2012-01-24T09:35:39Z</published>
+    <updated>2018-10-15T01:10:21Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.7" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.6</id>
+    <title type="text">Newtonsoft.Json 4.0.6</title>
+    <published>2012-01-23T07:56:03Z</published>
+    <updated>2018-10-15T01:10:33Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.6" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.5</id>
+    <title type="text">Newtonsoft.Json 4.0.5</title>
+    <published>2011-12-10T21:17:15Z</published>
+    <updated>2018-10-15T01:10:35Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.5" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.4</id>
+    <title type="text">Newtonsoft.Json 4.0.4</title>
+    <published>2011-11-19T09:37:42Z</published>
+    <updated>2018-10-15T01:10:45Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.4" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.3</id>
+    <title type="text">Newtonsoft.Json 4.0.3</title>
+    <published>2011-10-02T02:28:46Z</published>
+    <updated>2018-10-15T01:10:56Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.2</id>
+    <title type="text">Newtonsoft.Json 4.0.2</title>
+    <published>2011-04-23T04:47:58Z</published>
+    <updated>2018-10-15T01:11:10Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.2" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/4.0.1</id>
+    <title type="text">Newtonsoft.Json 4.0.1</title>
+    <published>2011-01-08T22:12:29Z</published>
+    <updated>2018-10-15T01:11:20Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/4.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/3.5.8</id>
+    <title type="text">Newtonsoft.Json 3.5.8</title>
+    <published>2011-01-07T07:56:51Z</published>
+    <updated>2018-10-15T01:11:25Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/3.5.8" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+</feed>

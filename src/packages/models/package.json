@@ -1,0 +1,27 @@
+{
+  "name": "@cougargrades/models",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./dto": "./src/dto/index.ts"
+  },
+  "dependencies": {
+    "@cougargrades/firebase-rest-firestore": "^1.6.1",
+    "@cougargrades/publicdata": "1.0.0-20260223070655",
+    "@cougargrades/utils": "workspace:*",
+    "lodash-es": "^4.17.23",
+    "temporal-polyfill": "^0.3.0",
+    "urlpattern-polyfill": "^10.1.0",
+    "uuid": "^13.0.0",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "csstype": "^3.2.3",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tsc": "tsc"
+  }
+}

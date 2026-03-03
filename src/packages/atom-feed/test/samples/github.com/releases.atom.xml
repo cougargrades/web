@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+  xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/au5ton/use-atom-feed/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/au5ton/use-atom-feed/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/au5ton/use-atom-feed/releases.atom"/>
+  <title>Release notes from use-atom-feed</title>
+  <updated>2021-05-19T16:02:55-05:00</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.1.0</id>
+    <updated>2021-05-19T16:04:05-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.1.0"/>
+    <title>v0.1.0</title>
+    <content type="html">&lt;p&gt;Initial release with in-house parser using DOM only methods&lt;/p&gt;</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.8</id>
+    <updated>2021-05-19T15:42:02-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.8"/>
+    <title>v0.0.8</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.7</id>
+    <updated>2021-05-19T15:39:17-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.7"/>
+    <title>v0.0.7</title>
+    <content type="html">&lt;p&gt;test 3rd party&lt;/p&gt;</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.6</id>
+    <updated>2021-05-19T15:30:01-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.6"/>
+    <title>v0.0.6</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.5</id>
+    <updated>2021-05-19T15:07:45-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.5"/>
+    <title>v0.0.5</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.4</id>
+    <updated>2021-05-19T13:32:59-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.4"/>
+    <title>v0.0.4</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.3</id>
+    <updated>2021-05-18T22:14:46-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.3"/>
+    <title>v0.0.3</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.2</id>
+    <updated>2021-05-18T22:02:27-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.2"/>
+    <title>v0.0.2</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/368706259/v0.0.1</id>
+    <updated>2021-05-18T21:50:51-05:00</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/au5ton/use-atom-feed/releases/tag/v0.0.1"/>
+    <title>v0.0.1</title>
+    <content>No content.</content>
+    <author>
+      <name>au5ton</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/4109551?s=60&amp;v=4"/>
+  </entry>
+</feed>

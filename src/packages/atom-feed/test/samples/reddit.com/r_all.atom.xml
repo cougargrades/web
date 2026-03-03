@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <category term="all" label="r/all"/>
+  <updated>2021-05-20T02:52:03+00:00</updated>
+  <id>/r/all/.rss</id>
+  <link rel="self" href="https://old.reddit.com/r/all/.rss" type="application/atom+xml" />
+  <link rel="alternate" href="https://old.reddit.com/r/all/" type="text/html" />
+  <title>all subreddits</title>
+  <entry>
+    <author>
+      <name>/u/Greenthund3r</name>
+      <uri>https://old.reddit.com/user/Greenthund3r</uri>
+    </author>
+    <category term="nextfuckinglevel" label="r/nextfuckinglevel"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/nextfuckinglevel/comments/ngl4ts/we_stayed_because_if_we_left_they_wouldnt_have/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/7oxor8v716071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=9d9eeb0dcfa03f9f110eaa9bd83454dff473c629&quot; alt=&quot;“We stayed because If we left, they wouldn’t have nobody”&quot; title=&quot;“We stayed because If we left, they wouldn’t have nobody”&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Greenthund3r&quot;&gt; /u/Greenthund3r &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/nextfuckinglevel/&quot;&gt; r/nextfuckinglevel &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/7oxor8v716071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/nextfuckinglevel/comments/ngl4ts/we_stayed_because_if_we_left_they_wouldnt_have/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngl4ts</id>
+    <media:thumbnail url="https://preview.redd.it/7oxor8v716071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=9d9eeb0dcfa03f9f110eaa9bd83454dff473c629" />
+    <link href="https://old.reddit.com/r/nextfuckinglevel/comments/ngl4ts/we_stayed_because_if_we_left_they_wouldnt_have/" />
+    <updated>2021-05-19T23:57:13+00:00</updated>
+    <published>2021-05-19T23:57:13+00:00</published>
+    <title>“We stayed because If we left, they wouldn’t have nobody”</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Here-For-The-Comment</name>
+      <uri>https://old.reddit.com/user/Here-For-The-Comment</uri>
+    </author>
+    <category term="oddlysatisfying" label="r/oddlysatisfying"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/oddlysatisfying/comments/ngklwi/a_quick_pierogi_flip/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/08w2he7ww5071.gif?width=320&amp;amp;crop=smart&amp;amp;s=727b0c3f3e2255cac723e8b0be2a5cf9631ea9e2&quot; alt=&quot;A quick pierogi flip&quot; title=&quot;A quick pierogi flip&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Here-For-The-Comment&quot;&gt; /u/Here-For-The-Comment &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/oddlysatisfying/&quot;&gt; r/oddlysatisfying &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/08w2he7ww5071.gif&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/oddlysatisfying/comments/ngklwi/a_quick_pierogi_flip/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngklwi</id>
+    <media:thumbnail url="https://preview.redd.it/08w2he7ww5071.gif?width=320&amp;crop=smart&amp;s=727b0c3f3e2255cac723e8b0be2a5cf9631ea9e2" />
+    <link href="https://old.reddit.com/r/oddlysatisfying/comments/ngklwi/a_quick_pierogi_flip/" />
+    <updated>2021-05-19T23:33:03+00:00</updated>
+    <published>2021-05-19T23:33:03+00:00</published>
+    <title>A quick pierogi flip</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Here-For-The-Comment</name>
+      <uri>https://old.reddit.com/user/Here-For-The-Comment</uri>
+    </author>
+    <category term="ShittyLifeProTips" label="r/ShittyLifeProTips"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/ShittyLifeProTips/comments/ngj4vd/slpt_every_day_is_your_first_day/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/tq3b4pp4l5071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=34d61ea32533b0995b539529068bd948381e5604&quot; alt=&quot;SLPT every day is your first day&quot; title=&quot;SLPT every day is your first day&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Here-For-The-Comment&quot;&gt; /u/Here-For-The-Comment &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/ShittyLifeProTips/&quot;&gt; r/ShittyLifeProTips &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/tq3b4pp4l5071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/ShittyLifeProTips/comments/ngj4vd/slpt_every_day_is_your_first_day/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngj4vd</id>
+    <media:thumbnail url="https://preview.redd.it/tq3b4pp4l5071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=34d61ea32533b0995b539529068bd948381e5604" />
+    <link href="https://old.reddit.com/r/ShittyLifeProTips/comments/ngj4vd/slpt_every_day_is_your_first_day/" />
+    <updated>2021-05-19T22:27:15+00:00</updated>
+    <published>2021-05-19T22:27:15+00:00</published>
+    <title>SLPT every day is your first day</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/jshirleyfyukjfy</name>
+      <uri>https://old.reddit.com/user/jshirleyfyukjfy</uri>
+    </author>
+    <category term="aww" label="r/aww"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/aww/comments/ngjdf2/man_devotes_his_life_to_adopting_old_dogs_who/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/okb2v4zxm5071.jpg?width=320&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=f45ffef1c2139e53249f2cf0bbc65fc161452a91&quot; alt=&quot;man devotes his life to adopting old dogs who can't find forever homes&quot; title=&quot;man devotes his life to adopting old dogs who can't find forever homes&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/jshirleyfyukjfy&quot;&gt; /u/jshirleyfyukjfy &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/aww/&quot;&gt; r/aww &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/okb2v4zxm5071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/aww/comments/ngjdf2/man_devotes_his_life_to_adopting_old_dogs_who/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngjdf2</id>
+    <media:thumbnail url="https://preview.redd.it/okb2v4zxm5071.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=f45ffef1c2139e53249f2cf0bbc65fc161452a91" />
+    <link href="https://old.reddit.com/r/aww/comments/ngjdf2/man_devotes_his_life_to_adopting_old_dogs_who/" />
+    <updated>2021-05-19T22:37:39+00:00</updated>
+    <published>2021-05-19T22:37:39+00:00</published>
+    <title>man devotes his life to adopting old dogs who can't find forever homes</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/GQveracity</name>
+      <uri>https://old.reddit.com/user/GQveracity</uri>
+    </author>
+    <category term="gifs" label="r/gifs"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/gifs/comments/ngigx2/flip_off_diving_board_with_a_great_catch_and/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/w9zfl346g5071.gif?width=320&amp;amp;crop=smart&amp;amp;s=b0798f35a740930520cfc5f5675b221655083aff&quot; alt=&quot;Flip off diving board with a great catch and landing&quot; title=&quot;Flip off diving board with a great catch and landing&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/GQveracity&quot;&gt; /u/GQveracity &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/gifs/&quot;&gt; r/gifs &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/w9zfl346g5071.gif&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/gifs/comments/ngigx2/flip_off_diving_board_with_a_great_catch_and/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngigx2</id>
+    <media:thumbnail url="https://preview.redd.it/w9zfl346g5071.gif?width=320&amp;crop=smart&amp;s=b0798f35a740930520cfc5f5675b221655083aff" />
+    <link href="https://old.reddit.com/r/gifs/comments/ngigx2/flip_off_diving_board_with_a_great_catch_and/" />
+    <updated>2021-05-19T21:59:27+00:00</updated>
+    <published>2021-05-19T21:59:27+00:00</published>
+    <title>Flip off diving board with a great catch and landing</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Boardindundee</name>
+      <uri>https://old.reddit.com/user/Boardindundee</uri>
+    </author>
+    <category term="worldnews" label="r/worldnews"/>
+    <content type="html">&amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Boardindundee&quot;&gt; /u/Boardindundee &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/worldnews/&quot;&gt; r/worldnews &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://www.newsweek.com/russia-warns-israel-it-wont-tolerate-more-civilian-casualties-gaza-conflict-1592887?piano_t=1&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/worldnews/comments/ngjwl3/russia_warns_israel_it_wont_tolerate_more/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt;</content>
+    <id>t3_ngjwl3</id>
+    <link href="https://old.reddit.com/r/worldnews/comments/ngjwl3/russia_warns_israel_it_wont_tolerate_more/" />
+    <updated>2021-05-19T23:00:58+00:00</updated>
+    <published>2021-05-19T23:00:58+00:00</published>
+    <title>Russia warns Israel it won't tolerate more civilian casualties in Gaza conflict</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/patiii_lopez</name>
+      <uri>https://old.reddit.com/user/patiii_lopez</uri>
+    </author>
+    <category term="rarepuppers" label="r/rarepuppers"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/rarepuppers/comments/ngle57/sweetest_old_girl_we_met_at_the_dog_park/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/jjAUhAlslw_pErnviqVU8CLpvrFCXaUFEPlcyIEwRoQ.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=ad7bcf7755219c32862277526263059433aa57bc&quot; alt=&quot;Sweetest old girl we met at the dog park&quot; title=&quot;Sweetest old girl we met at the dog park&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/patiii_lopez&quot;&gt; /u/patiii_lopez &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/rarepuppers/&quot;&gt; r/rarepuppers &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://v.redd.it/9tl9l8f836071&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/rarepuppers/comments/ngle57/sweetest_old_girl_we_met_at_the_dog_park/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngle57</id>
+    <media:thumbnail url="https://external-preview.redd.it/jjAUhAlslw_pErnviqVU8CLpvrFCXaUFEPlcyIEwRoQ.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=ad7bcf7755219c32862277526263059433aa57bc" />
+    <link href="https://old.reddit.com/r/rarepuppers/comments/ngle57/sweetest_old_girl_we_met_at_the_dog_park/" />
+    <updated>2021-05-20T00:09:01+00:00</updated>
+    <published>2021-05-20T00:09:01+00:00</published>
+    <title>Sweetest old girl we met at the dog park</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/ground_truth</name>
+      <uri>https://old.reddit.com/user/ground_truth</uri>
+    </author>
+    <category term="funny" label="r/funny"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/funny/comments/nghmm5/quack_quack_courtesy_of_my_7yo_daughter_who/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/6YnRJAbHkwzMqVYbdsHdjea1ytdjywP_og0w8B30HD4.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=4eea342758c4e0fa7fdd1434a09528f59f6f40f3&quot; alt=&quot;&amp;quot;Quack Quack&amp;quot; (courtesy of my 7yo daughter who thought this was hilarious and wanted to share it with y'all)&quot; title=&quot;&amp;quot;Quack Quack&amp;quot; (courtesy of my 7yo daughter who thought this was hilarious and wanted to share it with y'all)&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/ground_truth&quot;&gt; /u/ground_truth &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/funny/&quot;&gt; r/funny &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://imgur.com/w34sAlU&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/funny/comments/nghmm5/quack_quack_courtesy_of_my_7yo_daughter_who/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_nghmm5</id>
+    <media:thumbnail url="https://external-preview.redd.it/6YnRJAbHkwzMqVYbdsHdjea1ytdjywP_og0w8B30HD4.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=4eea342758c4e0fa7fdd1434a09528f59f6f40f3" />
+    <link href="https://old.reddit.com/r/funny/comments/nghmm5/quack_quack_courtesy_of_my_7yo_daughter_who/" />
+    <updated>2021-05-19T21:25:34+00:00</updated>
+    <published>2021-05-19T21:25:34+00:00</published>
+    <title>&quot;Quack Quack&quot; (courtesy of my 7yo daughter who thought this was hilarious and wanted to share it with y'all)</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Fearless_File5908</name>
+      <uri>https://old.reddit.com/user/Fearless_File5908</uri>
+    </author>
+    <category term="PoliticalHumor" label="r/PoliticalHumor"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/PoliticalHumor/comments/ngh8xb/gop_is_a_party_of_fraud/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/ucwbwg2n75071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=03d1e627ff1c3f0b928b27b55b722fcc0a4486d7&quot; alt=&quot;GOP is a party of fraud&quot; title=&quot;GOP is a party of fraud&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Fearless_File5908&quot;&gt; /u/Fearless_File5908 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/PoliticalHumor/&quot;&gt; r/PoliticalHumor &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/ucwbwg2n75071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/PoliticalHumor/comments/ngh8xb/gop_is_a_party_of_fraud/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngh8xb</id>
+    <media:thumbnail url="https://preview.redd.it/ucwbwg2n75071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=03d1e627ff1c3f0b928b27b55b722fcc0a4486d7" />
+    <link href="https://old.reddit.com/r/PoliticalHumor/comments/ngh8xb/gop_is_a_party_of_fraud/" />
+    <updated>2021-05-19T21:11:29+00:00</updated>
+    <published>2021-05-19T21:11:29+00:00</published>
+    <title>GOP is a party of fraud</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/HotCaterpillar2</name>
+      <uri>https://old.reddit.com/user/HotCaterpillar2</uri>
+    </author>
+    <category term="Showerthoughts" label="r/Showerthoughts"/>
+    <content type="html">&amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/HotCaterpillar2&quot;&gt; /u/HotCaterpillar2 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/Showerthoughts/&quot;&gt; r/Showerthoughts &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/Showerthoughts/comments/ngk8dr/if_a_sequel_to_a_movie_doesnt_have_the/&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/Showerthoughts/comments/ngk8dr/if_a_sequel_to_a_movie_doesnt_have_the/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt;</content>
+    <id>t3_ngk8dr</id>
+    <link href="https://old.reddit.com/r/Showerthoughts/comments/ngk8dr/if_a_sequel_to_a_movie_doesnt_have_the/" />
+    <updated>2021-05-19T23:15:35+00:00</updated>
+    <published>2021-05-19T23:15:35+00:00</published>
+    <title>If a sequel to a movie doesn’t have the screenwriters or directors of the first movie in it, it’s basically just a high-budget fanfiction</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/moonlight_sonata_</name>
+      <uri>https://old.reddit.com/user/moonlight_sonata_</uri>
+    </author>
+    <category term="wholesomememes" label="r/wholesomememes"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/wholesomememes/comments/ngjodm/what_an_honour_by_nathan_w_pyle/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/akeqiy7rn5071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=f859213bcd428350e71f729d9b6a284eb4051f24&quot; alt=&quot;What an honour! (by Nathan W. Pyle)&quot; title=&quot;What an honour! (by Nathan W. Pyle)&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/moonlight_sonata_&quot;&gt; /u/moonlight_sonata_ &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/wholesomememes/&quot;&gt; r/wholesomememes &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/akeqiy7rn5071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/wholesomememes/comments/ngjodm/what_an_honour_by_nathan_w_pyle/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngjodm</id>
+    <media:thumbnail url="https://preview.redd.it/akeqiy7rn5071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=f859213bcd428350e71f729d9b6a284eb4051f24" />
+    <link href="https://old.reddit.com/r/wholesomememes/comments/ngjodm/what_an_honour_by_nathan_w_pyle/" />
+    <updated>2021-05-19T22:50:57+00:00</updated>
+    <published>2021-05-19T22:50:57+00:00</published>
+    <title>What an honour! (by Nathan W. Pyle)</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/academiaadvice</name>
+      <uri>https://old.reddit.com/user/academiaadvice</uri>
+    </author>
+    <category term="dataisbeautiful" label="r/dataisbeautiful"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/dataisbeautiful/comments/nghzv7/oc_who_makes_more_teachers_or_cops/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/n9c6zh7oc5071.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=72c39b75ecfd4571fe168c9bc94ce8ad3a4db857&quot; alt=&quot;[OC] Who Makes More: Teachers or Cops?&quot; title=&quot;[OC] Who Makes More: Teachers or Cops?&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/academiaadvice&quot;&gt; /u/academiaadvice &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/dataisbeautiful/&quot;&gt; r/dataisbeautiful &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/n9c6zh7oc5071.png&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/dataisbeautiful/comments/nghzv7/oc_who_makes_more_teachers_or_cops/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_nghzv7</id>
+    <media:thumbnail url="https://preview.redd.it/n9c6zh7oc5071.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=72c39b75ecfd4571fe168c9bc94ce8ad3a4db857" />
+    <link href="https://old.reddit.com/r/dataisbeautiful/comments/nghzv7/oc_who_makes_more_teachers_or_cops/" />
+    <updated>2021-05-19T21:40:02+00:00</updated>
+    <published>2021-05-19T21:40:02+00:00</published>
+    <title>[OC] Who Makes More: Teachers or Cops?</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/wademcgillis</name>
+      <uri>https://old.reddit.com/user/wademcgillis</uri>
+    </author>
+    <category term="blursedimages" label="r/blursedimages"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/blursedimages/comments/ngk5ic/blursed_spacejam/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/7g1tnzu4t5071.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=928f1c0e45877b24a5cdffd754cc1839ec89cfc3&quot; alt=&quot;blursed_spacejam&quot; title=&quot;blursed_spacejam&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/wademcgillis&quot;&gt; /u/wademcgillis &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/blursedimages/&quot;&gt; r/blursedimages &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/7g1tnzu4t5071.png&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/blursedimages/comments/ngk5ic/blursed_spacejam/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngk5ic</id>
+    <media:thumbnail url="https://preview.redd.it/7g1tnzu4t5071.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=928f1c0e45877b24a5cdffd754cc1839ec89cfc3" />
+    <link href="https://old.reddit.com/r/blursedimages/comments/ngk5ic/blursed_spacejam/" />
+    <updated>2021-05-19T23:12:01+00:00</updated>
+    <published>2021-05-19T23:12:01+00:00</published>
+    <title>blursed_spacejam</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/drchimpansee</name>
+      <uri>https://old.reddit.com/user/drchimpansee</uri>
+    </author>
+    <category term="PublicFreakout" label="r/PublicFreakout"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/PublicFreakout/comments/ngigyp/tim_ryan_of_ohio_has_had_enough_of_your_shit/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/scTor6L8zgrDlA5tz2DANeEiWUQabq_gwjx50GTctFA.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=12656d29d955e72ae296d71e4d243fb3e2ca5489&quot; alt=&quot;Tim Ryan of Ohio has had enough of your shit&quot; title=&quot;Tim Ryan of Ohio has had enough of your shit&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/drchimpansee&quot;&gt; /u/drchimpansee &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/PublicFreakout/&quot;&gt; r/PublicFreakout &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://v.redd.it/h7el4647g5071&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/PublicFreakout/comments/ngigyp/tim_ryan_of_ohio_has_had_enough_of_your_shit/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngigyp</id>
+    <media:thumbnail url="https://external-preview.redd.it/scTor6L8zgrDlA5tz2DANeEiWUQabq_gwjx50GTctFA.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=12656d29d955e72ae296d71e4d243fb3e2ca5489" />
+    <link href="https://old.reddit.com/r/PublicFreakout/comments/ngigyp/tim_ryan_of_ohio_has_had_enough_of_your_shit/" />
+    <updated>2021-05-19T21:59:30+00:00</updated>
+    <published>2021-05-19T21:59:30+00:00</published>
+    <title>Tim Ryan of Ohio has had enough of your shit</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/azgrunt</name>
+      <uri>https://old.reddit.com/user/azgrunt</uri>
+    </author>
+    <category term="Whatcouldgowrong" label="r/Whatcouldgowrong"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/Whatcouldgowrong/comments/ngfjla/bald_head_mesh_hat_no_sunblock_wcgw/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/heBfJrUF1CpMM9P8b9EHohYqiVsYz5bTOkpS-pbGxpk.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=a58ae73f6e5c445bdd6faaa5e7034f1b1e438664&quot; alt=&quot;Bald head, mesh hat, no sunblock. WCGW?&quot; title=&quot;Bald head, mesh hat, no sunblock. WCGW?&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/azgrunt&quot;&gt; /u/azgrunt &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/Whatcouldgowrong/&quot;&gt; r/Whatcouldgowrong &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://v.redd.it/3sw8zhofv4071&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/Whatcouldgowrong/comments/ngfjla/bald_head_mesh_hat_no_sunblock_wcgw/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngfjla</id>
+    <media:thumbnail url="https://external-preview.redd.it/heBfJrUF1CpMM9P8b9EHohYqiVsYz5bTOkpS-pbGxpk.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=a58ae73f6e5c445bdd6faaa5e7034f1b1e438664" />
+    <link href="https://old.reddit.com/r/Whatcouldgowrong/comments/ngfjla/bald_head_mesh_hat_no_sunblock_wcgw/" />
+    <updated>2021-05-19T20:03:04+00:00</updated>
+    <published>2021-05-19T20:03:04+00:00</published>
+    <title>Bald head, mesh hat, no sunblock. WCGW?</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Oneiric19</name>
+      <uri>https://old.reddit.com/user/Oneiric19</uri>
+    </author>
+    <category term="UpliftingNews" label="r/UpliftingNews"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/UpliftingNews/comments/ngfb6x/good_news_the_dea_quietly_announced_ending_their/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/B-cUkv_F7coU7mEAVj3UhdaUcWeLZBOVcw2519YC_mY.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=c8dbf4b88f0bf5b57d55abc5545e35fffed93616&quot; alt=&quot;Good news! The DEA quietly announced ending their monopoly on cannabis grown for scientific purposes. And that means American researchers can, for the first time ever, conduct studies using real-world cannabis instead of the terrible low-THC they’ve been forced to use for decades....&quot; title=&quot;Good news! The DEA quietly announced ending their monopoly on cannabis grown for scientific purposes. And that means American researchers can, for the first time ever, conduct studies using real-world cannabis instead of the terrible low-THC they’ve been forced to use for decades....&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Oneiric19&quot;&gt; /u/Oneiric19 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/UpliftingNews/&quot;&gt; r/UpliftingNews &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://www.leafly.com/news/politics/dea-finally-ends-fed-monopoly-on-schwaggy-research-grade-cannabis&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/UpliftingNews/comments/ngfb6x/good_news_the_dea_quietly_announced_ending_their/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngfb6x</id>
+    <media:thumbnail url="https://external-preview.redd.it/B-cUkv_F7coU7mEAVj3UhdaUcWeLZBOVcw2519YC_mY.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=c8dbf4b88f0bf5b57d55abc5545e35fffed93616" />
+    <link href="https://old.reddit.com/r/UpliftingNews/comments/ngfb6x/good_news_the_dea_quietly_announced_ending_their/" />
+    <updated>2021-05-19T19:53:18+00:00</updated>
+    <published>2021-05-19T19:53:18+00:00</published>
+    <title>Good news! The DEA quietly announced ending their monopoly on cannabis grown for scientific purposes. And that means American researchers can, for the first time ever, conduct studies using real-world cannabis instead of the terrible low-THC they’ve been forced to use for decades....</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/MoonTrooper258</name>
+      <uri>https://old.reddit.com/user/MoonTrooper258</uri>
+    </author>
+    <category term="memes" label="r/memes"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/memes/comments/ngfy8b/dont_deny_it_you_did_this_too/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/x868ot2dy4071.gif?width=320&amp;amp;crop=smart&amp;amp;s=47d207bd8c6d12e724467ca5075ded8a87bf0b4e&quot; alt=&quot;Don’t deny it. You did this too.&quot; title=&quot;Don’t deny it. You did this too.&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/MoonTrooper258&quot;&gt; /u/MoonTrooper258 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/memes/&quot;&gt; r/memes &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/x868ot2dy4071.gif&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/memes/comments/ngfy8b/dont_deny_it_you_did_this_too/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngfy8b</id>
+    <media:thumbnail url="https://preview.redd.it/x868ot2dy4071.gif?width=320&amp;crop=smart&amp;s=47d207bd8c6d12e724467ca5075ded8a87bf0b4e" />
+    <link href="https://old.reddit.com/r/memes/comments/ngfy8b/dont_deny_it_you_did_this_too/" />
+    <updated>2021-05-19T20:19:37+00:00</updated>
+    <published>2021-05-19T20:19:37+00:00</published>
+    <title>Don’t deny it. You did this too.</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/caydeisdumb</name>
+      <uri>https://old.reddit.com/user/caydeisdumb</uri>
+    </author>
+    <category term="news" label="r/news"/>
+    <content type="html">&amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/caydeisdumb&quot;&gt; /u/caydeisdumb &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/news/&quot;&gt; r/news &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://www.cbsnews.com/news/capitol-riot-officer-assault-metal-knuckles-baton/&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/news/comments/ngg0w8/newly_released_capitol_riot_footage_shows/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt;</content>
+    <id>t3_ngg0w8</id>
+    <link href="https://old.reddit.com/r/news/comments/ngg0w8/newly_released_capitol_riot_footage_shows/" />
+    <updated>2021-05-19T20:22:40+00:00</updated>
+    <published>2021-05-19T20:22:40+00:00</published>
+    <title>Newly released Capitol riot footage shows unidentified suspects attacking officers with a tactical baton and metal knuckles</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/MohanBhargava</name>
+      <uri>https://old.reddit.com/user/MohanBhargava</uri>
+    </author>
+    <category term="trashy" label="r/trashy"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/trashy/comments/ngitro/conor_mcgregors_15_million_diamond_studded_watch/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/qa7lirhsi5071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=21501273801ae315914fa822b03c4a5c5ec7d5e1&quot; alt=&quot;Conor McGregor's $1.5 Million, diamond studded watch&quot; title=&quot;Conor McGregor's $1.5 Million, diamond studded watch&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/MohanBhargava&quot;&gt; /u/MohanBhargava &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/trashy/&quot;&gt; r/trashy &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/qa7lirhsi5071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/trashy/comments/ngitro/conor_mcgregors_15_million_diamond_studded_watch/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngitro</id>
+    <media:thumbnail url="https://preview.redd.it/qa7lirhsi5071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=21501273801ae315914fa822b03c4a5c5ec7d5e1" />
+    <link href="https://old.reddit.com/r/trashy/comments/ngitro/conor_mcgregors_15_million_diamond_studded_watch/" />
+    <updated>2021-05-19T22:13:58+00:00</updated>
+    <published>2021-05-19T22:13:58+00:00</published>
+    <title>Conor McGregor's $1.5 Million, diamond studded watch</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/zSalsy</name>
+      <uri>https://old.reddit.com/user/zSalsy</uri>
+    </author>
+    <category term="Damnthatsinteresting" label="r/Damnthatsinteresting"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/Damnthatsinteresting/comments/ngflit/perfect_ruler_fit/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/EjC-lrbgbxXXtdkbSZE7IIryKl0bL8lf6-b3qYN7aw0.png?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=628bd39caf29904dfcb8b0122d4b364ae66c263d&quot; alt=&quot;Perfect ruler fit&quot; title=&quot;Perfect ruler fit&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/zSalsy&quot;&gt; /u/zSalsy &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/Damnthatsinteresting/&quot;&gt; r/Damnthatsinteresting &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://v.redd.it/419yj6xrv4071&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/Damnthatsinteresting/comments/ngflit/perfect_ruler_fit/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngflit</id>
+    <media:thumbnail url="https://external-preview.redd.it/EjC-lrbgbxXXtdkbSZE7IIryKl0bL8lf6-b3qYN7aw0.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=628bd39caf29904dfcb8b0122d4b364ae66c263d" />
+    <link href="https://old.reddit.com/r/Damnthatsinteresting/comments/ngflit/perfect_ruler_fit/" />
+    <updated>2021-05-19T20:05:15+00:00</updated>
+    <published>2021-05-19T20:05:15+00:00</published>
+    <title>Perfect ruler fit</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/MrBonelessPizza24</name>
+      <uri>https://old.reddit.com/user/MrBonelessPizza24</uri>
+    </author>
+    <category term="interestingasfuck" label="r/interestingasfuck"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/interestingasfuck/comments/ngkgaz/a_bernese_mountain_dog_with_vitiligo_a_skin/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/ogapgeolv5071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=6af1466ef928dc13c564f7223fbf536850586846&quot; alt=&quot;A Bernese mountain dog with vitiligo, a skin condition that causes a loss of pigmentation in skin and fur&quot; title=&quot;A Bernese mountain dog with vitiligo, a skin condition that causes a loss of pigmentation in skin and fur&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/MrBonelessPizza24&quot;&gt; /u/MrBonelessPizza24 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/interestingasfuck/&quot;&gt; r/interestingasfuck &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/ogapgeolv5071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/interestingasfuck/comments/ngkgaz/a_bernese_mountain_dog_with_vitiligo_a_skin/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngkgaz</id>
+    <media:thumbnail url="https://preview.redd.it/ogapgeolv5071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=6af1466ef928dc13c564f7223fbf536850586846" />
+    <link href="https://old.reddit.com/r/interestingasfuck/comments/ngkgaz/a_bernese_mountain_dog_with_vitiligo_a_skin/" />
+    <updated>2021-05-19T23:25:45+00:00</updated>
+    <published>2021-05-19T23:25:45+00:00</published>
+    <title>A Bernese mountain dog with vitiligo, a skin condition that causes a loss of pigmentation in skin and fur</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/PartyOfSpecialThings</name>
+      <uri>https://old.reddit.com/user/PartyOfSpecialThings</uri>
+    </author>
+    <category term="Superstonk" label="r/Superstonk"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/Superstonk/comments/ngjjvz/ryan_cohen_reading_our_theories_on_his_tweets/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/5eeE88houj7LIS4MUm6ePVGRh0kNthm0uqznTYcQBxQ.gif?width=320&amp;amp;crop=smart&amp;amp;s=5403f7639f435354a62fcece8babcedca52ab3ef&quot; alt=&quot;Ryan Cohen reading our theories on his tweets&quot; title=&quot;Ryan Cohen reading our theories on his tweets&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/PartyOfSpecialThings&quot;&gt; /u/PartyOfSpecialThings &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/Superstonk/&quot;&gt; r/Superstonk &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.imgur.com/PBALUCJ.gifv&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/Superstonk/comments/ngjjvz/ryan_cohen_reading_our_theories_on_his_tweets/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngjjvz</id>
+    <media:thumbnail url="https://external-preview.redd.it/5eeE88houj7LIS4MUm6ePVGRh0kNthm0uqznTYcQBxQ.gif?width=320&amp;crop=smart&amp;s=5403f7639f435354a62fcece8babcedca52ab3ef" />
+    <link href="https://old.reddit.com/r/Superstonk/comments/ngjjvz/ryan_cohen_reading_our_theories_on_his_tweets/" />
+    <updated>2021-05-19T22:45:21+00:00</updated>
+    <published>2021-05-19T22:45:21+00:00</published>
+    <title>Ryan Cohen reading our theories on his tweets</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/Boojibs</name>
+      <uri>https://old.reddit.com/user/Boojibs</uri>
+    </author>
+    <category term="specializedtools" label="r/specializedtools"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/specializedtools/comments/ngegaw/curb_shaper/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/RVjniprhjX0MGwgmFf3Mj9k8aZaG24swG9PY35ZfgEM.jpg?width=216&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=529cf3a490a311953c07c0463e88919b1b313278&quot; alt=&quot;Curb shaper&quot; title=&quot;Curb shaper&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/Boojibs&quot;&gt; /u/Boojibs &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/specializedtools/&quot;&gt; r/specializedtools &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://gfycat.com/poshtarteastrussiancoursinghounds&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/specializedtools/comments/ngegaw/curb_shaper/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngegaw</id>
+    <media:thumbnail url="https://external-preview.redd.it/RVjniprhjX0MGwgmFf3Mj9k8aZaG24swG9PY35ZfgEM.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=529cf3a490a311953c07c0463e88919b1b313278" />
+    <link href="https://old.reddit.com/r/specializedtools/comments/ngegaw/curb_shaper/" />
+    <updated>2021-05-19T19:17:47+00:00</updated>
+    <published>2021-05-19T19:17:47+00:00</published>
+    <title>Curb shaper</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/BehindObject973</name>
+      <uri>https://old.reddit.com/user/BehindObject973</uri>
+    </author>
+    <category term="WhitePeopleTwitter" label="r/WhitePeopleTwitter"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/WhitePeopleTwitter/comments/ngfda5/it_really_do_be_like_that/&quot;&gt; &lt;img src=&quot;https://preview.redd.it/4qcwxtk4u4071.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=28415b7258b7e1201123a6e50cd342c8c7172015&quot; alt=&quot;it really do be like that&quot; title=&quot;it really do be like that&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/BehindObject973&quot;&gt; /u/BehindObject973 &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/WhitePeopleTwitter/&quot;&gt; r/WhitePeopleTwitter &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://i.redd.it/4qcwxtk4u4071.jpg&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/WhitePeopleTwitter/comments/ngfda5/it_really_do_be_like_that/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_ngfda5</id>
+    <media:thumbnail url="https://preview.redd.it/4qcwxtk4u4071.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=28415b7258b7e1201123a6e50cd342c8c7172015" />
+    <link href="https://old.reddit.com/r/WhitePeopleTwitter/comments/ngfda5/it_really_do_be_like_that/" />
+    <updated>2021-05-19T19:55:52+00:00</updated>
+    <published>2021-05-19T19:55:52+00:00</published>
+    <title>it really do be like that</title>
+  </entry>
+  <entry>
+    <author>
+      <name>/u/LiterallyCantEvenUgh</name>
+      <uri>https://old.reddit.com/user/LiterallyCantEvenUgh</uri>
+    </author>
+    <category term="politics" label="r/politics"/>
+    <content type="html">&lt;table&gt; &lt;tr&gt;&lt;td&gt; &lt;a href=&quot;https://old.reddit.com/r/politics/comments/nggtxw/us_capitol_police_express_profound_disappointment/&quot;&gt; &lt;img src=&quot;https://external-preview.redd.it/EuCKPARs4GYnl9R8uNOVNbDweaE8bPnRW7DY2afXW04.jpg?width=640&amp;amp;crop=smart&amp;amp;auto=webp&amp;amp;s=559c319ddb47cde8b5073cdce795e5b96db9b37f&quot; alt=&quot;US Capitol Police express 'profound disappointment' with Kevin McCarthy and Mitch McConnell's refusal to support January 6 commission&quot; title=&quot;US Capitol Police express 'profound disappointment' with Kevin McCarthy and Mitch McConnell's refusal to support January 6 commission&quot; /&gt; &lt;/a&gt; &lt;/td&gt;&lt;td&gt; &amp;#32; submitted by &amp;#32; &lt;a href=&quot;https://old.reddit.com/user/LiterallyCantEvenUgh&quot;&gt; /u/LiterallyCantEvenUgh &lt;/a&gt; &amp;#32; to &amp;#32; &lt;a href=&quot;https://old.reddit.com/r/politics/&quot;&gt; r/politics &lt;/a&gt; &lt;br/&gt; &lt;span&gt;&lt;a href=&quot;https://www.businessinsider.com/capitol-police-statement-slams-mccarthy-mcconnell-jan-6-commission-2021-5?amp&amp;amp;__twitter_impression=true&quot;&gt;[link]&lt;/a&gt;&lt;/span&gt; &amp;#32; &lt;span&gt;&lt;a href=&quot;https://old.reddit.com/r/politics/comments/nggtxw/us_capitol_police_express_profound_disappointment/&quot;&gt;[comments]&lt;/a&gt;&lt;/span&gt; &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</content>
+    <id>t3_nggtxw</id>
+    <media:thumbnail url="https://external-preview.redd.it/EuCKPARs4GYnl9R8uNOVNbDweaE8bPnRW7DY2afXW04.jpg?width=640&amp;crop=smart&amp;auto=webp&amp;s=559c319ddb47cde8b5073cdce795e5b96db9b37f" />
+    <link href="https://old.reddit.com/r/politics/comments/nggtxw/us_capitol_police_express_profound_disappointment/" />
+    <updated>2021-05-19T20:55:32+00:00</updated>
+    <published>2021-05-19T20:55:32+00:00</published>
+    <title>US Capitol Police express 'profound disappointment' with Kevin McCarthy and Mitch McConnell's refusal to support January 6 commission</title>
+  </entry>
+</feed>
