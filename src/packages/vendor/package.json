@@ -3,6 +3,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./cloudflare-turnstile": "./src/cloudflare/turnstile.ts",
     "./firestore": "./src/google/firestore.ts",
     "./google-analytics": "./src/google/analytics.ts",
     "./github": "./src/github/index.ts",

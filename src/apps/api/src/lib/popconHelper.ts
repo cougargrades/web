@@ -116,22 +116,16 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
   const res = await sql`
     SELECT
       pathname,
-      metric_count_sum
-    FROM (
-      SELECT
-        pathname,
-        SUM(metric_count) as metric_count_sum
-      FROM
-        PopularityContest
-      WHERE
-        metric_type = ${metric}
-        AND date_epoch_seconds >= ${ToEpochSeconds(qTimeRange[0])}
-        AND date_epoch_seconds <= ${ToEpochSeconds(qTimeRange[1])}
-        AND pathname LIKE ${pathname_LIKE}
-        AND pathname NOT IN (${qExclude})
-      GROUP BY
-        pathname
-    )
+      SUM(metric_count) as metric_count_sum
+    FROM
+      PopularityContest
+    WHERE
+      date_epoch_seconds BETWEEN ${ToEpochSeconds(qTimeRange[0])} AND ${ToEpochSeconds(qTimeRange[1])}
+      AND metric_type = ${metric}
+      AND pathname LIKE ${pathname_LIKE}
+      AND pathname NOT IN (${qExclude})
+    GROUP BY
+      pathname
     ORDER BY
       metric_count_sum DESC
     LIMIT ${limit}

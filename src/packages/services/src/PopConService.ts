@@ -9,13 +9,13 @@ export class PopConService extends BaseApiService {
     super()
   }
 
-  public async SubmitRecord({ pathname, type }: Pick<PopCon, 'pathname' | 'type'>): Promise<void> {
+  public async SubmitRecord({ pathname, type }: Pick<PopCon, 'pathname' | 'type'>, turnstile_token: string): Promise<void> {
     // If the browser accepted our request to use `navigator.sendBeacon()`, then stop here
-    const didQueue = this.SendBeacon(`/api/popularity_contest/submit`, { pathname, type: type.toString() })
+    const didQueue = this.SendBeacon(`/api/popularity_contest/submit`, { pathname, type: type.toString() }, new URLSearchParams({ turnstile_token, }))
     if (didQueue) return;
 
     // Otherwise, do a normal fetch (with low priority)!
-    await this.Post(`/api/popularity_contest/submit`, { pathname, type: type.toString() }, undefined, { priority: 'low' });
+    await this.Post(`/api/popularity_contest/submit`, { pathname, type: type.toString(), }, undefined, { priority: 'low', body: new URLSearchParams({ turnstile_token, }) });
   }
 }
 

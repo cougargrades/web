@@ -82,7 +82,7 @@ def main():
   # Setup the output DB
   print('Setting up output SQLite database...')
   schema_setup_sql = ''
-  with open('../schema.sql', 'r') as f:
+  with open('./schema.sql', 'r') as f:
     schema_setup_sql = f.read()
 
   # automatically close connection when exited  
@@ -108,7 +108,7 @@ def main():
         progress(csv_row_progress - 1, csv_row_count)
         # this is what we need to end up with
         pathname = ''
-        timestamp_epoch_seconds = int(row.get("timestamp_epoch_seconds"))
+        date_epoch_seconds = int(row.get("date_epoch_seconds"))
 
         # if the CSV uses the "page_location" column, process it differently
         if "page_location" in row:
@@ -138,7 +138,24 @@ def main():
         # Escape single quotes for SQL
         #encoded_pathname = encoded_pathname.replace("'", "''")
 
-        cur.execute("INSERT INTO PopularityContest (timestamp_epoch_seconds, pathname, metric_type) VALUES (?, ?, 1)", (timestamp_epoch_seconds, encoded_pathname))
+        #cur.execute("INSERT INTO PopularityContest (date_epoch_seconds, pathname, metric_type) VALUES (?, ?, 1)", (date_epoch_seconds, encoded_pathname))
+        cur.execute("""
+INSERT INTO PopularityContest (
+  pathname,
+  date_epoch_seconds,
+  metric_type,
+  metric_count
+)
+VALUES (
+  ?,
+  strftime(?,'now','start of day'),
+  1,
+  1
+)
+ON CONFLICT(pathname, date_epoch_seconds, metric_type)
+DO UPDATE SET
+  metric_count = metric_count + 1;
+                    """, (encoded_pathname, date_epoch_seconds))
         uncommited_count += 1
 
         # every X inserts, do a commit
