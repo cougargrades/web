@@ -1,0 +1,24 @@
+{
+  "name": "@cougargrades/services",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./environment": "./src/environment.ts"
+  },
+  "dependencies": {
+    "@cougargrades/models": "workspace:*",
+    "@cougargrades/utils": "workspace:*",
+    "@cougargrades/vendor": "workspace:*",
+    "@std/path": "jsr:^1.1.4",
+    "lodash-es": "^4.17.23",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tsc": "tsc"
+  }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">NuGet Gallery Feed for Newtonsoft.Json</title>
+  <subtitle type="text">Json.NET is a popular high-performance JSON framework for .NET</subtitle>
+  <id>https://www.nuget.org/packages/Newtonsoft.Json/</id>
+  <updated>2021-03-22T20:13:24Z</updated>
+  <logo>https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/icon</logo>
+  <link rel="self" type="application/atom+xml" href="https://www.nuget.org/packages/Newtonsoft.Json/atom.xml" />
+  <link rel="alternate" type="text/html" href="https://www.nuget.org/packages/Newtonsoft.Json/" />
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/13.0.1</id>
+    <title type="text">Newtonsoft.Json 13.0.1</title>
+    <published>2021-03-22T20:10:49Z</published>
+    <updated>2021-03-22T20:13:24Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/13.0.1" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+  <entry>
+    <id>https://www.nuget.org/packages/Newtonsoft.Json/12.0.3</id>
+    <title type="text">Newtonsoft.Json 12.0.3</title>
+    <published>2019-11-09T01:27:30Z</published>
+    <updated>2020-03-04T22:55:57Z</updated>
+    <author>
+      <name>jamesnk</name>
+      <uri>https://www.nuget.org/profiles/jamesnk</uri>
+    </author>
+    <author>
+      <name>newtonsoft</name>
+      <uri>https://www.nuget.org/profiles/newtonsoft</uri>
+    </author>
+    <author>
+      <name>dotnetfoundation</name>
+      <uri>https://www.nuget.org/profiles/dotnetfoundation</uri>
+    </author>
+    <link rel="alternate" href="https://www.nuget.org/packages/Newtonsoft.Json/12.0.3" />
+    <content type="text">Json.NET is a popular high-performance JSON framework for .NET</content>
+  </entry>
+</feed>

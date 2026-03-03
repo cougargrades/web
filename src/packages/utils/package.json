@@ -1,0 +1,25 @@
+{
+  "name": "@cougargrades/utils",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cacheControl": "./src/cacheControl.ts",
+    "./comparator": "./src/comparator.ts",
+    "./iterable": "./src/iterable.ts",
+    "./nullish": "./src/nullish.ts",
+    "./object": "./src/object.ts",
+    "./temporal": "./src/temporal.ts",
+    "./zod": "./src/zod.ts"
+  },
+  "dependencies": {
+    "temporal-polyfill": "^0.3.0",
+    "zod": "^4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "tsc": "tsc"
+  }
+}

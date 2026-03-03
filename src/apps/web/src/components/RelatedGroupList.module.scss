@@ -1,0 +1,34 @@
+
+// .groupSection {
+//   h1, h2, h3, h4, h5, h6 {
+//     border-bottom: 0;
+//   }
+//   h1 {
+//     font-size: 2.5rem;
+//     line-height: 1.2;
+//   }
+//   p {
+//     font-size: 1.15rem;
+//   }
+// }
+
+.h1 {
+  // font-size: 2.5rem!important;
+  // line-height: 1.2!important;
+  margin-bottom: 0.35em!important;
+}
+
+.p {
+  font-size: 1.15rem!important;
+}
+
+.listItemSecondaryFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+.listItemSecondarySubtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

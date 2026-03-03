@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>CougarGrades.io</title>
+  <link href="https://blog.cougargrades.io/atom.xml" rel="self"/>
+  <link href="https://blog.cougargrades.io/"/>
+  <updated>2021-03-12T19:27:38+00:00</updated>
+  <id>https://blog.cougargrades.io</id>
+  <author>
+    <name>Austin Jackson</name>
+    <email>austinjckson@gmail.com</email>
+  </author>
+
+
+  <entry>
+    <title>📊 Fall 2020 grades</title>
+    <link href="https://blog.cougargrades.io/2021/03/12/new-data/"/>
+    <updated>2021-03-12T18:00:00+00:00</updated>
+    <id>https://blog.cougargrades.io/2021/03/12/new-data</id>
+    <content type="html">&lt;p&gt;Fall 2020 data was received from the University of Houston and will start uploading to the database at 1:00PM on March 12, 2021 (Houston time). Some downtime may be experienced during that period. Expect Fall 2020 data to populate after that period.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/cougargrades/publicdata/blob/4a6dcdb53d8a0f77a1633385b1a99dbd1027f307/documents/edu.uh.grade_distribution/Interim%20Grade%20Policy/IR06972%20Grade%20Distribution_Fall%202020.csv&quot;&gt;Source data&lt;/a&gt;&lt;/p&gt;
+
+    </content>
+  </entry>
+
+  <entry>
+    <title>🔧 0.4.4 Update</title>
+    <link href="https://blog.cougargrades.io/2021/01/06/update/"/>
+    <updated>2021-01-06T22:00:00+00:00</updated>
+    <id>https://blog.cougargrades.io/2021/01/06/update</id>
+    <content type="html">&lt;p&gt;This update fixes some issues with the site and more.&lt;/p&gt;
+
+&lt;h3 id=&quot;cougargradesweb&quot;&gt;@cougargrades/web&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/9fbc21adb1fa6de2bbab81ed8c46cc93322d24f2&quot;&gt;9fbc21a&lt;/a&gt;] Fixed chart data processing bug that appeared with course “ECE 2300” (&lt;a href=&quot;https://github.com/cougargrades/web/issues/7&quot;&gt;#7&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/333cfca6d69f81554897ec5c1e29209ac030016a&quot;&gt;333cfca&lt;/a&gt;] Fixed chart data processing bug that appeared with course “COSC 6372” (&lt;a href=&quot;https://github.com/cougargrades/web/issues/32&quot;&gt;#32&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/4c876d2a3aec9ccff669e18bb9ad59ce16858976&quot;&gt;4c876d2&lt;/a&gt;] Fixed styling bug where charts on individual course pages (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/c/ENGL%201304&lt;/code&gt;) weren’t styled for dark mode. (&lt;a href=&quot;https://github.com/cougargrades/web/issues/12&quot;&gt;#12&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;[&lt;a href=&quot;https://github.com/cougargrades/web/commit/de41a11c498818feed20199a9d15c0f57f87d707&quot;&gt;de41a11&lt;/a&gt;] Security patch with “npm audit”&lt;/li&gt;
+&lt;/ul&gt;
+
+    </content>
+  </entry>
+
+</feed>

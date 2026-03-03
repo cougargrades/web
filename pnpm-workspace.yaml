@@ -1,0 +1,9 @@
+packages:
+  - src/apps/**
+  - src/packages/**
+  - '!**/src/test/**'
+
+onlyBuiltDependencies:
+  - workerd
+
+shellEmulator: true
