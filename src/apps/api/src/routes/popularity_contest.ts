@@ -23,7 +23,7 @@ app.post('/submit',
   describeRoute({
     description: `
     This is anonymized service for tracking when a Course or Instructor is "viewed" (but never by who), which influences the "Most Viewed" pages and the "Trending/Popular" search results feature.
-    Only what is submitted is collected. Submissions to this endpoint are rate limited and validated.
+    Only what is submitted is collected. Submissions to this endpoint are validated and protected by <a href="https://developers.cloudflare.com/turnstile/">Cloudflare Turnstile</a> to prevent abuse.
     The naming of this service was inspired by the <a href="https://popcon.debian.org/">Debian Popularity Contest</a> system.
     `.trim(),
   }),
