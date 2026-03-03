@@ -14,7 +14,7 @@
     "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
     "@google-analytics/data": "^5.2.1",
-    "@octokit/rest": "^19.0.13",
+    "@octokit/rest": "^22.0.1",
     "temporal-polyfill": "^0.3.0",
     "zod": "^4.1"
   },
