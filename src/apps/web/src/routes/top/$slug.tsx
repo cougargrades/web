@@ -75,7 +75,9 @@ function RouteComponent() {
 
   // const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, skip: 0, time: viewTime, hideCore: hideCore });
 
-  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } = useTopResultsInfinite({ metric: viewMetric, topic: viewTopic, time: viewTime, hideCore: hideCore, chunkSize: 100 })
+  const chunkSize = 25;
+
+  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useTopResultsInfinite({ metric: viewMetric, topic: viewTopic, time: viewTime, hideCore: hideCore, chunkSize: chunkSize })
   const allRows = data?.pages.flat() ?? [];
 
   const parentRef = useRef<HTMLDivElement>(null);
@@ -95,7 +97,7 @@ function RouteComponent() {
       return
     }
 
-    const rowsLeftBeforeFetching = 10;
+    const rowsLeftBeforeFetching = Math.floor(chunkSize / 2);
 
     if (lastItem.index >= (allRows.length - 1 - rowsLeftBeforeFetching) && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -154,6 +156,15 @@ function RouteComponent() {
             </Tooltip>
           </FormControl>
         </Box>
+        {
+          isPending
+          ? (
+            <Typography variant="subtitle2" color="text.disabled" style={{ fontStyle: 'italic' }}>
+              Loading ...
+            </Typography>
+          )
+          : null
+        }
         <div ref={parentRef}>
           <List sx={{
             width: '100%',
@@ -173,14 +184,14 @@ function RouteComponent() {
                       top: 0,
                       left: 0,
                       width: '100%',
-                      height: `${virtualRow.size}px`,
+                      //height: `${virtualRow.size}px`,
                       transform: `translateY(${virtualRow.start - rowVirtualizer.options.scrollMargin}px)`,
                     }}
                   >
                     {
                       isLoaderRow
                       ? (
-                        <Typography variant="subtitle2" color="text.secondary" style={{ fontStyle: 'italic' }}>
+                        <Typography variant="subtitle2" color="text.disabled" style={{ fontStyle: 'italic' }}>
                           { hasNextPage ? 'Loading more...' : 'Nothing more to load' }
                         </Typography>
                       )
@@ -189,6 +200,7 @@ function RouteComponent() {
                         <TopListItem data={item}
                           index={virtualRow.index}
                           options={{ metric: viewMetric, time: viewTime, topic: viewTopic }}
+                          ref={rowVirtualizer.measureElement}
                           grow
                         />
                         <Divider variant="inset" component="li" />

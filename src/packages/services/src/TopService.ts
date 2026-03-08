@@ -10,8 +10,8 @@ export class TopService extends BaseApiService {
     super()
   }
 
-  public async GetTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<TopResult[]> {
-    return await this.Get(`/api/top`, { metric, topic, limit: limit.toString(), time, hideCore: `${hideCore}` }, TopResult.array()) ?? [];
+  public async GetTopResults({ metric, topic, limit, skip, time, hideCore }: TopOptions): Promise<TopResult[]> {
+    return await this.Get(`/api/top`, { metric, topic, limit: limit.toString(), skip: skip.toString(), time, hideCore: `${hideCore}` }, TopResult.array()) ?? [];
   }
 
   public async GetCourseRank(courseName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {

@@ -1,3 +1,4 @@
+import { useEffect, type ComponentProps, type Ref } from 'react';
 import z from 'zod'
 import { Link } from '@tanstack/react-router'
 import { useTheme } from '@mui/material/styles'
@@ -13,17 +14,16 @@ import { Badge } from './badge'
 import { arrayLastEntries, formatTermCode } from '@cougargrades/models';
 import { TopMetric, type TopOptions, type TopResult, type TopTopic } from '@cougargrades/models/dto';
 import { is } from '@cougargrades/utils/zod';
+import { isNullish } from '@cougargrades/utils/nullish';
+import { useTopSparkline } from '../lib/services/useTopSparkline';
 
 
 import styles from './TopListItem.module.scss'
 //import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from './instructorcard.module.scss'
-import { useTopSparkline } from '../lib/services/useTopSparkline';
-import { useEffect } from 'react';
-import { isNullish } from '@cougargrades/utils/nullish';
 
 
-interface TopListItemProps {
+interface TopListItemProps extends ComponentProps<'a'> {
   data: TopResult;
   index: number;
   options: Pick<TopOptions, 'metric' | 'time' | 'topic'>,
@@ -47,7 +47,7 @@ const TopMetric2ValueVerb: Record<TopMetric, string> = {
   'pageView': `{0} views`
 }
 
-export function TopListItem({ data: item, index, options, hidePosition, grow }: TopListItemProps) {
+export function TopListItem({ data: item, index, options, hidePosition, grow, ...props }: TopListItemProps) {
   const { metric, time, topic } = options;
   const theme = useTheme();
   // This is used because it looks prettier with the transparency and draws less attention to it
@@ -68,7 +68,7 @@ export function TopListItem({ data: item, index, options, hidePosition, grow }: 
   // }, [binnedSparklineData]);
 
   return (
-    <Link to={item.href} className="nostyle" style={{ height: grow ? '100%' : undefined }}>
+    <Link to={item.href} className="nostyle" style={{ height: grow ? '100%' : undefined }} {...props}>
       <ListItemButton alignItems="flex-start">
         <ListItemIcon className={styles.topItemIcon}>
           <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
