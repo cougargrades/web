@@ -137,7 +137,7 @@ function RouteComponent() {
                 data
                 .map((item, index, array) => (
                   <React.Fragment key={item.key}>
-                    <TopListItem data={item} index={index} viewMetric={viewMetric} />
+                    <TopListItem data={item} index={index} options={{ metric: viewMetric, time: viewTime, topic: viewTopic }} />
                     { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
                   </React.Fragment>
                 ))
