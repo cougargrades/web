@@ -28,6 +28,7 @@ interface TopListItemProps {
   index: number;
   options: Pick<TopOptions, 'metric' | 'time' | 'topic'>,
   hidePosition?: boolean;
+  grow?: boolean;
 }
 
 export function AreaGradient({ id, color, opacity }: { id: string, color: string, opacity?: [number, number] }) {
@@ -46,7 +47,7 @@ const TopMetric2ValueVerb: Record<TopMetric, string> = {
   'pageView': `{0} views`
 }
 
-export function TopListItem({ data: item, index, options, hidePosition }: TopListItemProps) {
+export function TopListItem({ data: item, index, options, hidePosition, grow }: TopListItemProps) {
   const { metric, time, topic } = options;
   const theme = useTheme();
   // This is used because it looks prettier with the transparency and draws less attention to it
@@ -59,14 +60,15 @@ export function TopListItem({ data: item, index, options, hidePosition }: TopLis
     'pageView': dynamicWarningColor,
   }
 
-  const { data: binnedSparklineData, isPending: isPendingSparklineData } = useTopSparkline(item.id, options);
+  const dynamicSparklineEnabled = options.metric !== 'totalEnrolled'
+  const { data: binnedSparklineData, isPending: isPendingSparklineData } = useTopSparkline(item.id, {...options, enabled: dynamicSparklineEnabled });
 
   // useEffect(() => {
   //   console.log('binnedSparklineData?', binnedSparklineData);
   // }, [binnedSparklineData]);
 
   return (
-    <Link to={item.href} className="nostyle">
+    <Link to={item.href} className="nostyle" style={{ height: grow ? '100%' : undefined }}>
       <ListItemButton alignItems="flex-start">
         <ListItemIcon className={styles.topItemIcon}>
           <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
@@ -121,7 +123,7 @@ export function TopListItem({ data: item, index, options, hidePosition }: TopLis
             {item.metricFormatted}{ metric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
           </Typography>
           {
-            isPendingSparklineData
+            isPendingSparklineData && dynamicSparklineEnabled
             // Show nothing while loading
             ? null
             : (

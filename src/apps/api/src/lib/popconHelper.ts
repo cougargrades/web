@@ -146,8 +146,8 @@ export async function getPopConTopPages({ metric, limit, offset, timeRange, topi
  * Wrapper around `getPopConTopPages(...)` to support streaming
  * @param param0 
  */
-export async function* streamPopConTopPages({ metric, timeRange, topic, exclude, chunkSize }: Omit<PopConOptions, 'limit' | 'offset'> & { chunkSize: number }) {
-  let offset = 0;
+export async function* streamPopConTopPages({ metric, timeRange, topic, offset: initialOffset, exclude, chunkSize }: Omit<PopConOptions, 'limit'> & { chunkSize: number }) {
+  let offset = initialOffset;
   let snap: PopConTopResult[];
   do {
     snap = await getPopConTopPages({

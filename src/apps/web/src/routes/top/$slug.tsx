@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createFileRoute, notFound, useNavigate, useRouter } from '@tanstack/react-router'
 import { useQueryClient } from '@tanstack/react-query'
+import { useVirtualizer, useWindowVirtualizer } from '@tanstack/react-virtual'
 import { z } from 'zod'
 import type { TopMetric, TopTime, TopTopic } from '@cougargrades/models/dto';
 import { isNullish } from '@cougargrades/utils/nullish';
 import { Box, Container, Divider, FormControl, FormControlLabel, InputLabel, List, MenuItem, Select, Switch, Tooltip, Typography } from '@mui/material'
 
-import { useTopResults } from '../../lib/services/useTopResults';
+import { useTopResults, useTopResultsInfinite } from '../../lib/services/useTopResults';
 import { POPULAR_TABS } from '../../lib/top';
 import { PankoRow } from '../../components/panko';
 import { ErrorBoxIndeterminate, LoadingBoxIndeterminate } from '../../components/loading';
@@ -72,10 +73,35 @@ function RouteComponent() {
   const viewMetric: TopMetric = slug.includes('viewed') ? 'pageView' : 'totalEnrolled'
   const viewTopic: TopTopic = slug.includes('instructor') ? 'instructor' : 'course'
 
-  const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, skip: 0, time: viewTime, hideCore: hideCore });
+  // const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, skip: 0, time: viewTime, hideCore: hideCore });
+
+  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } = useTopResultsInfinite({ metric: viewMetric, topic: viewTopic, time: viewTime, hideCore: hideCore, chunkSize: 100 })
+  const allRows = data?.pages.flat() ?? [];
+
+  const parentRef = useRef<HTMLDivElement>(null);
+  const rowVirtualizer = useWindowVirtualizer({
+    count: hasNextPage ? allRows.length + 1 : allRows.length,
+    //getScrollElement: () => parentRef.current,
+    estimateSize: () => 150,
+    overscan: 5,
+    scrollMargin: parentRef.current?.offsetTop ?? 0,
+  })
   
-  //router.preloadRoute()
-  
+  // Keep loading
+  useEffect(() => {
+    const [lastItem] = [...rowVirtualizer.getVirtualItems()].reverse();
+
+    if (!lastItem) {
+      return
+    }
+
+    const rowsLeftBeforeFetching = 10;
+
+    if (lastItem.index >= (allRows.length - 1 - rowsLeftBeforeFetching) && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, fetchNextPage, allRows.length, isFetchingNextPage, rowVirtualizer.getVirtualItems()]);
+
   
   return (
     <>
@@ -128,40 +154,85 @@ function RouteComponent() {
             </Tooltip>
           </FormControl>
         </Box>
-        <List sx={{ width: '100%' }}>
-          {
-            status === 'success' && Array.isArray(data)
-            ? (
-              <>
-              {
-                data
-                .map((item, index, array) => (
-                  <React.Fragment key={item.key}>
-                    <TopListItem data={item} index={index} options={{ metric: viewMetric, time: viewTime, topic: viewTopic }} />
-                    { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
-                  </React.Fragment>
-                ))
-              }
-              {
-                data.length === 0
-                ? (
-                  <Typography sx={{ textAlign: 'center' }} variant="body2" color="text.secondary">
-                    There are no results with the current filters. You may need to expand the Count to a larger number.
-                  </Typography>
+        <div ref={parentRef}>
+          <List sx={{
+            width: '100%',
+            height: `${rowVirtualizer.getTotalSize()}px`,
+            position: 'relative',
+          }}
+          >
+            {
+              rowVirtualizer.getVirtualItems().map(virtualRow => {
+                const isLoaderRow = virtualRow.index > allRows.length - 1;
+                const item = allRows[virtualRow.index];
+
+                return (
+                  <div key={virtualRow.index}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: `${virtualRow.size}px`,
+                      transform: `translateY(${virtualRow.start - rowVirtualizer.options.scrollMargin}px)`,
+                    }}
+                  >
+                    {
+                      isLoaderRow
+                      ? (
+                        <Typography variant="subtitle2" color="text.secondary" style={{ fontStyle: 'italic' }}>
+                          { hasNextPage ? 'Loading more...' : 'Nothing more to load' }
+                        </Typography>
+                      )
+                      : (
+                        <>
+                        <TopListItem data={item}
+                          index={virtualRow.index}
+                          options={{ metric: viewMetric, time: viewTime, topic: viewTopic }}
+                          grow
+                        />
+                        <Divider variant="inset" component="li" />
+                        </>
+                      )
+                    }
+                  </div>
                 )
-                : null
-              }
-              </>
-            )
-            : status === 'pending' 
-            ? (
-              <LoadingBoxIndeterminate title="Loading..." />
-            )
-            : (
-              <ErrorBoxIndeterminate />
-            )
-          }
-        </List>
+              })
+            }
+            {/* {
+              status === 'success' && Array.isArray(data)
+              ? (
+                <>
+                {
+                  data
+                  .map((item, index, array) => (
+                    <React.Fragment key={item.key}>
+                      <TopListItem data={item} index={index} options={{ metric: viewMetric, time: viewTime, topic: viewTopic }} />
+                      { index < (array.length - 1) ? <Divider variant="inset" component="li" /> : null }
+                    </React.Fragment>
+                  ))
+                }
+                {
+                  data.length === 0
+                  ? (
+                    <Typography sx={{ textAlign: 'center' }} variant="body2" color="text.secondary">
+                      There are no results with the current filters. You may need to expand the Count to a larger number.
+                    </Typography>
+                  )
+                  : null
+                }
+                </>
+              )
+              : status === 'pending' 
+              ? (
+                <LoadingBoxIndeterminate title="Loading..." />
+              )
+              : (
+                <ErrorBoxIndeterminate />
+              )
+            } */}
+          </List>
+        </div>
       </div>
     </SidebarContainer>
     </>

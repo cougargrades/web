@@ -1,5 +1,5 @@
 
-import { queryOptions, useQuery } from '@tanstack/react-query'
+import { queryOptions, useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { TopService } from '@cougargrades/services'
 import { sortObjectByKeys } from '@cougargrades/utils/object'
 import type { TopOptions } from '../../../../../packages/models/src/dto/TopDto';
@@ -30,4 +30,41 @@ export function useTopResults(options: TopOptions) {
   const opts = topResultsQueryOptions(options);
   const query = useQuery(opts)
   return query;
+}
+
+export function useTopResultsInfinite(options: Omit<TopOptions, 'skip' | 'limit'> & { chunkSize?: number }) {
+  // Turns `options` into a unique query key that should be the same, regardless of key order
+  const queryKey = new URLSearchParams(
+    Object.entries(sortObjectByKeys(options))
+      .map(([key, value]) => ([key, `${value}` ]))
+  ).toString()
+
+
+  // return useInfiniteQuery(
+  //   ['top', queryKey],
+  //   // ({ pageParam = 0 }) =>
+  //   //   fetchTopPage({ ...options, skip: pageParam, limit: options.limit }),
+  //   // {
+  //   //   getNextPageParam: (lastPage, allPages) => {
+  //   //     if (lastPage.length < options.limit) return undefined; // no more
+  //   //     return allPages.reduce((sum, p) => sum + p.length, 0);
+  //   //   },
+  //   // },
+  // );
+
+  const chunkSize = options.chunkSize ?? 25;
+
+  return useInfiniteQuery({
+    queryKey: ['top', queryKey],
+    queryFn: async ({ pageParam }) => {
+      const svc = new TopService();
+      return await svc.GetTopResults({
+        ...options,
+        limit: chunkSize,
+        skip: pageParam,
+      })
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages, lastPageParam) => lastPageParam + chunkSize,
+  })
 }

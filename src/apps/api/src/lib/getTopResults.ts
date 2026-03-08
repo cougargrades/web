@@ -18,12 +18,13 @@ const core_curriculum_pathnames = new Set(
 
 export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
-export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<TopResult[]> {
+export async function getTopResults({ metric, topic, limit, skip, time, hideCore }: TopOptions): Promise<TopResult[]> {
   const seen = new Set<string>();
   if (metric === 'totalEnrolled') {
     const db = firestore();
     const query = db.collection(topic === 'course' ? 'catalog' : 'instructors')
-        .orderBy('enrollment.totalEnrolled', 'desc');
+        .orderBy('enrollment.totalEnrolled', 'desc')
+        .offset(skip);
     
     let result: (CoursePlusMetrics | InstructorPlusMetrics)[] = [];
 
@@ -73,7 +74,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
      * Stream it because it's the most syntactically simple
      * way to keep asking for more if we find rows that we don't want (core curriculum filter).
      */
-    for await (const row of streamPopConTopPages({ metric: pMetric, topic, timeRange, chunkSize: limit })) {
+    for await (const row of streamPopConTopPages({ metric: pMetric, topic, timeRange, offset: skip, chunkSize: limit })) {
       // End the stream if we capture the amount we want
       if (rankedPopcons.length >= limit) break;
 
