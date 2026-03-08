@@ -105,6 +105,7 @@ function RouteComponent() {
               <MenuItem value={50}>Top 50</MenuItem>
               <MenuItem value={100}>Top 100</MenuItem>
               <MenuItem value={250}>Top 250</MenuItem>
+              <MenuItem value={500}>Top 500</MenuItem>
             </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
