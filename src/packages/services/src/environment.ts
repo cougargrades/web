@@ -1,6 +1,7 @@
 
 import { z } from 'zod'
 import { isNullishOrWhitespace } from '@cougargrades/utils/nullish'
+import { is } from '@cougargrades/utils/zod';
 
 //#region Cloudflare-specific
 
@@ -19,6 +20,17 @@ const CF_PAGES_BRANCH = z.string().optional().parse(import.meta.env.VITE_CF_PAGE
  * Ex: `f71a6dad94f6792a64fc9eb9d9ee728d48f2317c`
  */
 const CF_PAGES_COMMIT_SHA = z.string().optional().parse(import.meta.env.VITE_CF_PAGES_COMMIT_SHA);
+
+/**
+ * When built by Cloudflare, this will be specified: https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables
+ * When built locally, it will be nothing.
+ * 
+ * Ex: https://feature-view-sparklines.web-22p.pages.dev/
+ */
+const CF_PAGES_URL = z.string().optional().parse(import.meta.env.VITE_CF_PAGES_URL);
+const cfPreviewBranchPattern = new URLPattern(`https://:branch.:projectName.pages.dev/`);
+const PREVIEW_BRANCH_NAME = cfPreviewBranchPattern.exec(CF_PAGES_URL)?.hostname.groups['branch'];
+
 
 //#endregion
 
@@ -63,6 +75,7 @@ export const ENVIRONMENT_NAME: EnvironmentName = (
   )
 );
 
+const PREVIEW_API_BASE = `https://{0}-cougargrades-api.themacphage.workers.dev/`;
 const DEFAULT_API_ORIGIN = new URL(`https://api.cougargrades.io`);
 const VITE_API_ORIGIN = z.url().optional().parse(import.meta.env.VITE_API_ORIGIN);
 
@@ -72,9 +85,16 @@ const VITE_API_ORIGIN = z.url().optional().parse(import.meta.env.VITE_API_ORIGIN
  * - otherwise, DEFAULT_API_ORIGIN
  */
 export const API_ORIGIN: URL = (
+  // If "VITE_API_ORIGIN" is specified, always use it
   !isNullishOrWhitespace(VITE_API_ORIGIN)
   ? new URL(VITE_API_ORIGIN)
-  : DEFAULT_API_ORIGIN
+  // Otherwiose
+  : (
+    // If a "preview branch" is detected and it makes a valid URL, then try that!
+    !isNullishOrWhitespace(PREVIEW_BRANCH_NAME) && is(PREVIEW_API_BASE.replace('{0}', PREVIEW_BRANCH_NAME), z.url())
+    ? new URL(PREVIEW_API_BASE.replace('{0}', PREVIEW_BRANCH_NAME))
+    : DEFAULT_API_ORIGIN
+  )
 );
 
 //#endregion
