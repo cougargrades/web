@@ -19,7 +19,7 @@ export class TopService extends BaseApiService {
   }
 
   public async GetInstructorRank(instructorName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<RankingResult | null> {
-    return await this.Get(`/api/top/rank/instructor/${encodeURIComponent(instructorName)}`, { metric, time }, RankingResult);
+    return await this.Get(`/api/top/rank/instructor/${encodeURIComponent(instructorName)}`, { metric, time }, RankingResult.nullable());
   }
 
   // public async GetCourseSparkline(courseName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<BinnedSparklineData | null> {
@@ -31,7 +31,7 @@ export class TopService extends BaseApiService {
   // }
 
   public async GetTopicSparkline(courseName: string, { metric, time, topic }: Pick<TopOptions, 'metric' | 'time' | 'topic'>): Promise<BinnedSparklineData | null> {
-    return await this.Get(`/api/top/sparkline/${topic}/${encodeURIComponent(courseName)}`, { metric, time }, BinnedSparklineData);
+    return await this.Get(`/api/top/sparkline/${topic}/${encodeURIComponent(courseName)}`, { metric, time }, BinnedSparklineData.nullable());
   }
 }
 
