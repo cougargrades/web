@@ -28,7 +28,8 @@ export type TopOptions = z.infer<typeof TopOptions>
 export const TopOptions = z.object({
   metric: TopMetric,
   topic: TopTopic,
-  limit: z.coerce.number().int().min(1).max(500),
+  limit: z.coerce.number().int().min(1).max(250),
+  skip: z.coerce.number().int().min(0).optional().default(0),
   time: TopTime,
   hideCore: z.stringbool().optional().default(false),
 })

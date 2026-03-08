@@ -72,7 +72,7 @@ function RouteComponent() {
   const viewMetric: TopMetric = slug.includes('viewed') ? 'pageView' : 'totalEnrolled'
   const viewTopic: TopTopic = slug.includes('instructor') ? 'instructor' : 'course'
 
-  const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, time: viewTime, hideCore: hideCore });
+  const { data, status, error } = useTopResults({ metric: viewMetric, topic: viewTopic, limit: viewLimit, skip: 0, time: viewTime, hideCore: hideCore });
   
   //router.preloadRoute()
   
@@ -105,7 +105,6 @@ function RouteComponent() {
               <MenuItem value={50}>Top 50</MenuItem>
               <MenuItem value={100}>Top 100</MenuItem>
               <MenuItem value={250}>Top 250</MenuItem>
-              <MenuItem value={500}>Top 500</MenuItem>
             </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

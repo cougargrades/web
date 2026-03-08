@@ -31,9 +31,9 @@ app.get('/',
     cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
-    const { metric, topic, limit, time, hideCore } = ctx.req.valid('query');
+    const { metric, topic, limit, skip, time, hideCore } = ctx.req.valid('query');
 
-    const results = await getTopResults({ metric, topic, limit, time, hideCore })
+    const results = await getTopResults({ metric, topic, limit, skip, time, hideCore })
     return ctx.json(results);
   }
 )
