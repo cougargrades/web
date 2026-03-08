@@ -29,7 +29,7 @@ const CF_PAGES_COMMIT_SHA = z.string().optional().parse(import.meta.env.VITE_CF_
  */
 const CF_PAGES_URL = z.string().optional().parse(import.meta.env.VITE_CF_PAGES_URL);
 const cfPreviewBranchPattern = new URLPattern(`https://:branch.:projectName.pages.dev/`);
-const PREVIEW_BRANCH_NAME = cfPreviewBranchPattern.exec(CF_PAGES_URL)?.hostname.groups['branch'];
+const PREVIEW_BRANCH_NAME = cfPreviewBranchPattern.exec(window.location.href)?.hostname.groups['branch'];
 
 
 //#endregion
