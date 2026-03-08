@@ -188,7 +188,7 @@ export async function getRankForInstructor(instructorName: string, { metric, tim
     const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
     const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
 
-    const pathname = DocumentPathToPathname(`catalog/${instructorName}`);
+    const pathname = DocumentPathToPathname(`instructors/${instructorName}`);
     if (isNullish(pathname)) return null;
 
     // Get the top visited PopCon pathnames 
@@ -258,7 +258,7 @@ export async function getSparklineForInstructor(instructorName: string, { metric
     const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
     const binSize = TopTime2BinSize.get(time) ?? Temporal.Duration.from({ days: 1 });
 
-    const pathname = DocumentPathToPathname(`catalog/${instructorName}`);
+    const pathname = DocumentPathToPathname(`instructors/${instructorName}`);
     if (isNullish(pathname)) return null;
 
     // Get the top visited PopCon pathnames 

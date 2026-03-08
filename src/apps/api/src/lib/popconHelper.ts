@@ -252,21 +252,25 @@ export async function getSparklineForPathname(pathname: string, binSize: Tempora
   }
   const qTimeRange: [Temporal.ZonedDateTime, Temporal.ZonedDateTime] = timeRange ?? [COUGAR_GRADES_EARLIEST_ANALYTICS_DATE, Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID)]
 
-  const pathname_LIKE = (
-    topic === 'course'
-    ? '/c/%'
-    : (
-      topic === 'instructor'
-      ? '/i/%'
-      : '%'
-    )
-  );
+  // const pathname_LIKE = (
+  //   topic === 'course'
+  //   ? '/c/%'
+  //   : (
+  //     topic === 'instructor'
+  //     ? '/i/%'
+  //     : '%'
+  //   )
+  // );
 
   const binSizeSeconds = Math.floor(Math.abs(binSize.total({ unit: 'seconds', relativeTo: Temporal.Now.zonedDateTimeISO() })));
 
+  /**
+   * These are all the bins, not just what the SQL has.
+   * An entry in here should be IDENTICAL, to what is found in the SQL side.
+   */
   const bins = Array.from(
     GenerateBins(ToEpochSeconds(qTimeRange[0]), ToEpochSeconds(qTimeRange[1]), binSizeSeconds)
-  );
+  ).slice(0, -1);
 
   /**
    * Get the max Y-value given:
@@ -343,10 +347,18 @@ export async function getSparklineForPathname(pathname: string, binSize: Tempora
   })
 
   const result: BinnedSparklineData = {
-    data: rows.map(r => r.metric_sum),
-    xAxis: rows.map(r => {
-      const start = EpochSecondsToDate(r.bin_start);
-      const end = EpochSecondsToDate(r.bin_start + binSizeSeconds);
+    // data: rows.map(r => r.metric_sum),
+    // xAxis: rows.map(r => {
+    //   const start = EpochSecondsToDate(r.bin_start);
+    //   const end = EpochSecondsToDate(r.bin_start + binSizeSeconds);
+    //   return formatter.formatRange(start, end);
+    // }),
+    data: bins.map(b =>
+      rows.find(r => r.bin_start === b)?.metric_sum ?? 0
+    ),
+    xAxis: bins.map(bin => {
+      const start = EpochSecondsToDate(bin);
+      const end = EpochSecondsToDate(bin + binSizeSeconds);
       return formatter.formatRange(start, end);
     }),
     yAxis: {
