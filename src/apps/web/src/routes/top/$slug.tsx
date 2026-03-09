@@ -46,7 +46,7 @@ export const Route = createFileRoute('/top/$slug')({
     //ctx.context.queryClient.ensureQueryData();
   },
   validateSearch: z.object({
-    viewLimit: z.coerce.number().default(10),
+    //viewLimit: z.coerce.number().default(10),
     viewTime: z.enum(['all', 'lastMonth', 'lastYear']).default('all'),
     //hideCore: z.stringbool().optional().default(false),
     hideCore: z.coerce.boolean().default(false),
@@ -59,14 +59,14 @@ function RouteComponent() {
   const { slug } = Route.useParams();
   const { post, allPosts } = getPostData(slug);
   const searchParams = Route.useSearch();
-  const { viewLimit, viewTime, hideCore } = searchParams
+  const { viewTime, hideCore } = searchParams
   
   // Example updating search params:
   // 
   const navigate = useNavigate({ from: Route.fullPath })
 
   const setSearchParams = (opt: Partial<typeof searchParams>) => navigate({ search: (prev) => ({ ...prev, ...opt }), replace: true, resetScroll: false })
-  const setViewLimit = (x: number) => setSearchParams({ viewLimit: x })
+  // const setViewLimit = (x: number) => setSearchParams({ viewLimit: x })
   const setViewTime = (x: TopTime) => setSearchParams({ viewTime: x })
   const setHideCore = (x: boolean) => setSearchParams({  hideCore: x });
 
@@ -125,6 +125,7 @@ function RouteComponent() {
           {post?.content ?? '(Unknown)'}
         </Typography>
         <Box className={styles.controlBox}>
+          {/*  
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel>Count</InputLabel>
             <Select label="Count" value={viewLimit} onChange={(e) => setViewLimit(e.target.value)}>
@@ -135,6 +136,7 @@ function RouteComponent() {
               <MenuItem value={250}>Top 250</MenuItem>
             </Select>
           </FormControl>
+          */}
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <InputLabel>Time Span</InputLabel>
             <Select label="Time Span" value={viewTime} onChange={(e) => setViewTime(e.target.value as any)}>
