@@ -16,6 +16,7 @@ import { routeTree } from './routeTree.gen'
 
 // Create a new router instance
 const router = createRouter({
+  defaultPreload: 'intent',
   routeTree,
   // Optionally provide your loaderClient to the router context for
   // convenience (you can provide anything you want to the router
