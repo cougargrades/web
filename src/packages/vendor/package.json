@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
-    "test": "vitest --testNamePattern sections",
+    "test": "vitest",
     "test:debugger": "vitest --test-timeout=0 --no-file-parallelism"
   }
 }
