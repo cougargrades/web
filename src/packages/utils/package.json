@@ -12,11 +12,11 @@
     "./zod": "./src/zod.ts"
   },
   "dependencies": {
-    "temporal-polyfill": "^0.3.0",
-    "zod": "^4.1"
+    "temporal-polyfill": "^0.3.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "build": "tsc",
