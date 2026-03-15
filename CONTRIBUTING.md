@@ -118,10 +118,6 @@ pnpm -C src/packages/atom-feed test
 - `src/packages/utils/` - Shared utilities
 - `src/packages/atom-feed/` - Atom feed parsing
 
-**External Dependencies**:
-
-- `@cougargrades/publicdata` - Public datasets (⚠️ **lives in a separate repository**, auto-installed as a dependency)
-
 ## Making Changes
 
 ### Before You Start
