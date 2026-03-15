@@ -45,6 +45,6 @@ describe('sections', () => {
     const results = await service.SearchSections({ term: likelyAvailableTerm.term });
     expect(results).toBeTruthy();
     expect(results?.data.length).toBeGreaterThan(0);
-    console.log(results?.data.length ?? -1, 'sections fetched for ', likelyAvailableTerm);
+    console.log(results?.data.length ?? -1, 'sections fetched for', likelyAvailableTerm);
   })
 }, 20_000);
