@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { LatestTermService } from '@cougargrades/services'
-import { formatTermCode, getYear, SeasonCode, seasonCode } from '@cougargrades/models';
+import { END_OF_SEASON_DATES, formatTermCode, getYear, SeasonCode, seasonCode } from '@cougargrades/models';
 import type { Observable } from './Observable'
 import mailtoLink from 'mailto-link'
 
@@ -27,12 +27,6 @@ export function useLatestTerm() {
     } satisfies LatestTermResult) 
   })
   return query;
-}
-
-const END_OF_SEASON_DATES: Record<SeasonCode, `${number}-${number}`> = {
-  '01': '05-12', // Deadline for faculty to post Spring grade data (May 12)
-  '02': '08-19', // Deadline for faculty to post Summer grade data (August 19)
-  '03': '12-16', // Deadline for faculty to post Fall grade data (December 16)
 }
 
 export interface MissingTerm {

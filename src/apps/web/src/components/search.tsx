@@ -59,12 +59,12 @@ export default function SearchBar() {
   // Used for displaying rerouting progress bar
   useEffect(() => {
     const handleStart = () => {
-      console.time('reroute')
+      //console.time('reroute')
       NProgress.start()
     }
     const handleStop = () => {
       NProgress.done()
-      console.timeEnd('reroute')
+      //console.timeEnd('reroute')
     }
 
     const unsubBeforeNavigate = router.subscribe('onBeforeNavigate', handleStart);

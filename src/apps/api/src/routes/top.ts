@@ -7,7 +7,8 @@ import { Temporal } from 'temporal-polyfill'
 import { TEMPORAL_CACHE_CONTROL } from '@cougargrades/utils/cacheControl'
 import { RankingResult, TopOptions, TopResult } from '@cougargrades/models/dto'
 import { DURATION_ZERO, NO_CACHE } from '../cache'
-import { getRankForCourse, getRankForInstructor, getTopResults } from '../lib/getTopResults'
+import { getRankForCourse, getRankForInstructor, getSparklineForCourse, getSparklineForInstructor, getTopResults } from '../lib/getTopResults'
+import { BinnedSparklineData, SparklineData } from '@cougargrades/models'
 
 export const TOP_RECENT_CACHE_LIFETIME = Temporal.Duration.from({ days: 7 });
 
@@ -30,9 +31,9 @@ app.get('/',
     cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
   }),
   async (ctx) => {
-    const { metric, topic, limit, time, hideCore } = ctx.req.valid('query');
+    const { metric, topic, limit, skip, time, hideCore } = ctx.req.valid('query');
 
-    const results = await getTopResults({ metric, topic, limit, time, hideCore })
+    const results = await getTopResults({ metric, topic, limit, skip, time, hideCore })
     return ctx.json(results);
   }
 )
@@ -87,6 +88,60 @@ app.get('/',
     const { metric, time } = ctx.req.valid('query');
 
     const rank = await getRankForInstructor(instructorName, { metric, time });
+    return ctx.json(rank);
+  }
+)
+.get('/sparkline/course/:courseName',
+  validator('param', z.object({
+    courseName: z.string()
+  })),
+  validator('query', TopOptions.pick({ metric: true, time: true })),
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(BinnedSparklineData.nullable()) }
+        }
+      }
+    }
+  }),
+  cache({
+    cacheName: 'cougargrades-api',
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
+  }),
+  async (ctx) => {
+    const { courseName } = ctx.req.valid('param');
+    const { metric, time } = ctx.req.valid('query');
+
+    const rank = await getSparklineForCourse(courseName, { metric, time });
+    return ctx.json(rank);
+  }
+)
+.get('/sparkline/instructor/:instructorName',
+  validator('param', z.object({
+    instructorName: z.string()
+  })),
+  validator('query', TopOptions.pick({ metric: true, time: true })),
+  describeRoute({
+    responses: {
+      200: {
+        description: '',
+        content: {
+          'application/json': { schema: resolver(BinnedSparklineData.nullable()) }
+        }
+      }
+    }
+  }),
+  cache({
+    cacheName: 'cougargrades-api',
+    cacheControl: NO_CACHE ? undefined : TEMPORAL_CACHE_CONTROL(TOP_RECENT_CACHE_LIFETIME),
+  }),
+  async (ctx) => {
+    const { instructorName } = ctx.req.valid('param');
+    const { metric, time } = ctx.req.valid('query');
+
+    const rank = await getSparklineForInstructor(instructorName, { metric, time });
     return ctx.json(rank);
   }
 )

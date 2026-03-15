@@ -17,11 +17,19 @@ export const TopTime2Duration = new Map<TopTime, Temporal.Duration>([
   ['lastYear', Temporal.Duration.from({ days: 365 })]
 ])
 
+export const TopTime2BinSize = new Map<TopTime, Temporal.Duration>([
+  // use "quarters" (1/4th of the year)
+  ['all', Temporal.Duration.from({ months: 12/4 })],
+  ['lastMonth', Temporal.Duration.from({ days: 1 })],
+  ['lastYear', Temporal.Duration.from({ weeks: 1 })]
+])
+
 export type TopOptions = z.infer<typeof TopOptions>
 export const TopOptions = z.object({
   metric: TopMetric,
   topic: TopTopic,
   limit: z.coerce.number().int().min(1).max(250),
+  skip: z.coerce.number().int().min(0).optional().default(0),
   time: TopTime,
   hideCore: z.stringbool().optional().default(false),
 })

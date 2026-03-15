@@ -39,3 +39,23 @@ export function parseTermStringAsTermCode(termString: string): number {
   return parseInt(`${yearStr}${seasonStr2SeasonCode.get(seasonStr.toLowerCase().trim())}`)
   //return parseInt(`${termString.split(' ')[1]}${seasonCodes.get(termString.split(' ')[0])}`);
 }
+
+export const END_OF_SEASON_DATES: Record<SeasonCode, `${number}-${number}`> = {
+  '01': '05-12', // Deadline for faculty to post Spring grade data (May 12)
+  '02': '08-19', // Deadline for faculty to post Summer grade data (August 19)
+  '03': '12-16', // Deadline for faculty to post Fall grade data (December 16)
+}
+
+export function getCurrentSeason(date = new Date()): SeasonCode {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthDay = `${month}-${day}`;
+
+  // Return the first season whose end date is >= today
+  for (const [code, endDate] of Object.entries(END_OF_SEASON_DATES)) {
+    if (monthDay <= endDate) return code as SeasonCode;
+  }
+
+  // We're past all end dates (after Dec 16) — wrap around to Spring of next year
+  return '01';
+}

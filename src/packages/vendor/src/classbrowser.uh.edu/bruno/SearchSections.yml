@@ -1,0 +1,69 @@
+info:
+  name: SearchSections
+  type: http
+  seq: 19
+
+http:
+  method: POST
+  url: "{{BASE}}/api/courses"
+  body:
+    type: form-urlencoded
+    data:
+      - name: term
+        value: "2280"
+        disabled: true
+      - name: subject
+        value: ""
+        disabled: true
+      - name: location
+        value: ""
+        disabled: true
+      - name: limitToLocation
+        value: University of Houston
+        disabled: true
+      - name: limitToLocation
+        value: Katy Academic Building 1
+        disabled: true
+      - name: limitToLocation
+        value: UH-Sugar Land
+        disabled: true
+      - name: mode
+        value: ""
+        disabled: true
+      - name: session
+        value: ""
+        disabled: true
+      - name: coreComp
+        value: ""
+        disabled: true
+      - name: classNumber
+        value: ""
+        disabled: true
+      - name: catalogNumber
+        value: ""
+        disabled: true
+      - name: classStatus
+        value: ""
+        disabled: true
+      - name: weekendu
+        value: "0"
+        disabled: true
+      - name: day
+        value: ""
+        disabled: true
+      - name: career
+        value: GRAD
+        disabled: true
+      - name: instructor
+        value: ""
+        disabled: true
+      - name: classTime
+        value: ""
+        disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

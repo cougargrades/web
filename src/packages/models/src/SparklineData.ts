@@ -24,3 +24,24 @@ export const SparklineData = z.object({
     median: z.number(),
   })
 });
+
+export type BinnedSparklineData = z.infer<typeof BinnedSparklineData>;
+export const BinnedSparklineData = SparklineData.extend({
+  /**
+   * Each point represents a time range
+   */
+  xAxis: z.string().array(),
+  /**
+   * This is the range (set of possible y-values).
+   * This is different depending on the data.
+   * For courses, the upper range is the max value that a course had enrollment in a single semester.
+   * For instructors, the upper range is the max value that a instructors had enrollment in a single semester.
+   * The lower range for both is (presumably) zero.
+   */
+  yAxis: z.object({
+    // Typically, 0
+    min: z.number(),
+    // Depends on what is being measured
+    max: z.number(),
+  })
+})

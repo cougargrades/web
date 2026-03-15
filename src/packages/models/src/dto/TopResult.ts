@@ -1,7 +1,7 @@
 
 import { z } from 'zod'
 import { CourseInstructorResult } from './CourseInstructorResult'
-import { SparklineData } from '../SparklineData'
+import { BinnedSparklineData, SparklineData } from '../SparklineData'
 import { CoursePlusMetrics, InstructorPlusMetrics } from './Plus'
 import { course2Result } from './CourseResult'
 import { instructor2Result } from './InstructorResult'

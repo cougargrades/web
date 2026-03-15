@@ -21,18 +21,7 @@ import popularity_contest from './routes/popularity_contest'
 const app = new Hono()
 
 app.use('*', cors({
-  origin: (
-    env.CORS_ALLOW_ALL === 'true'
-    ? '*'
-    : [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:4173",
-      "https://cougargrades.io",
-      "https://next.cougargrades.io",
-      "https://next2.cougargrades.io"
-    ]
-  ),
+  origin: '*',
   allowMethods: ['POST', 'GET', 'OPTIONS'],
   maxAge: 600,
 }));
