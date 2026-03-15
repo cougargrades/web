@@ -1,0 +1,25 @@
+info:
+  name: Unknown_program_level
+  type: http
+  seq: 11
+
+http:
+  method: GET
+  url: "{{BASE}}/api/online/program_level?term=2280&career=GRAD&mode="
+  params:
+    - name: term
+      value: "2280"
+      type: query
+    - name: career
+      value: GRAD
+      type: query
+    - name: mode
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

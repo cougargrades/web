@@ -3,6 +3,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./classbrowser.uh.edu": "./src/classbrowser.uh.edu/_index.ts",
     "./cloudflare-turnstile": "./src/cloudflare/turnstile.ts",
     "./firestore": "./src/google/firestore.ts",
     "./google-analytics": "./src/google/analytics.ts",
@@ -16,14 +17,19 @@
     "@cougargrades/utils": "workspace:*",
     "@google-analytics/data": "^5.2.1",
     "@octokit/rest": "^22.0.1",
+    "lodash-es": "^4.17.23",
     "temporal-polyfill": "^0.3.0",
     "zod": "^4.1"
   },
   "devDependencies": {
-    "typescript": "^5"
+    "@types/lodash-es": "^4.17.12",
+    "typescript": "^5",
+    "vitest": "^4.0.18"
   },
   "scripts": {
     "build": "tsc",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "test": "vitest --testNamePattern sections",
+    "test:debugger": "vitest --test-timeout=0 --no-file-parallelism"
   }
 }
