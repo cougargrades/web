@@ -1,30 +1,18 @@
 
 # @cougargrades/api
 
-test 3
+This is the HTTP API that powers all data in CougarGrades (both 1st and 3rd party). 
 
-This is the HTTP API that powers 3rd party data in CougarGrades. Data that is provided by `@cougargrades/vendor` is accessible here through this API to abstract away, increase caching, and most importantly to fix CORS issues.
+It is viewable at: https://api.cougargrades.io/
 
-CougarGrade's own data is not served by this API, but by https://data.cougargrades.io
+3rd party data that is provided by `@cougargrades/vendor` is accessible here in order to provide abstraction, increase caching, and to fix CORS issues.
 
-```txt
-npm install
-npm run dev
-```
+It is deployed to [Cloudflare Workers](https://workers.cloudflare.com/).
 
-```txt
-npm run deploy
-```
+It uses:
+- [Hono 4](https://hono.dev/)
+- [Zod 4](https://zod.dev/) for type safety and validation at runtime
+- [Swagger UI via @hono/swagger-ui](https://github.com/honojs/middleware/tree/main/packages/swagger-ui) for a viewable overview of the available endpoints
+- [Cloudflare D1](https://developers.cloudflare.com/d1/) for tracking page views in SQLite, and making queries against it
+- [Cloudflare Turnstile](https://www.cloudflare.com/application-services/products/turnstile/) as a non-interactive CAPTCHA solution for preventing abuse with page view tracking.
 
-[For generating/synchronizing types based on your Worker configuration run](https://developers.cloudflare.com/workers/wrangler/commands/#types):
-
-```txt
-npm run cf-typegen
-```
-
-Pass the `CloudflareBindings` as generics when instantiation `Hono`:
-
-```ts
-// src/index.ts
-const app = new Hono<{ Bindings: CloudflareBindings }>()
-```
