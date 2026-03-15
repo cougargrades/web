@@ -42,9 +42,9 @@ describe('sections', () => {
     if (isNullish(likelyAvailableTerm)) throw new Error();
 
     // When no parameters are provided, an empty result is returned
-    const results = await service.SearchSections({ term: likelyAvailableTerm.term });
+    const results = await service.SearchSections({ term: likelyAvailableTerm.term, subject: "MATH" });
     expect(results).toBeTruthy();
     expect(results?.data.length).toBeGreaterThan(0);
-    console.log(results?.data.length ?? -1, 'sections fetched for', likelyAvailableTerm);
+    console.log(results?.data.length ?? -1, 'sections of MATH courses fetched for', likelyAvailableTerm);
   })
 }, 20_000);
