@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useEffect, type ComponentProps, type Ref } from 'react';
+import z from 'zod'
 import { Link } from '@tanstack/react-router'
 import { useTheme } from '@mui/material/styles'
 import ListItemButton from '@mui/material/ListItemButton';
@@ -10,21 +11,24 @@ import Tooltip from '@mui/material/Tooltip';
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
 import { areaElementClasses } from '@mui/x-charts/LineChart';
 import { Badge } from './badge'
-import type { TopMetric, TopResult } from '@cougargrades/models/dto';
-
+import { arrayLastEntries, formatTermCode } from '@cougargrades/models';
+import { TopMetric, type TopOptions, type TopResult, type TopTopic } from '@cougargrades/models/dto';
+import { is } from '@cougargrades/utils/zod';
+import { isNullish } from '@cougargrades/utils/nullish';
+import { useTopSparkline } from '../lib/services/useTopSparkline';
 
 
 import styles from './TopListItem.module.scss'
 //import interactivity from '../../styles/interactivity.module.scss'
 import instructorCardStyles from './instructorcard.module.scss'
-import { arrayLastEntries, formatTermCode } from '@cougargrades/models';
 
 
-interface TopListItemProps {
+interface TopListItemProps extends ComponentProps<'a'> {
   data: TopResult;
   index: number;
-  viewMetric: TopMetric;
+  options: Pick<TopOptions, 'metric' | 'time' | 'topic'>,
   hidePosition?: boolean;
+  grow?: boolean;
 }
 
 export function AreaGradient({ id, color, opacity }: { id: string, color: string, opacity?: [number, number] }) {
@@ -38,13 +42,33 @@ export function AreaGradient({ id, color, opacity }: { id: string, color: string
   );
 }
 
-export function TopListItem({ data: item, index, viewMetric, hidePosition }: TopListItemProps) {
+const TopMetric2ValueVerb: Record<TopMetric, string> = {
+  'totalEnrolled': `{0} enrolled`,
+  'pageView': `{0} views`
+}
+
+export function TopListItem({ data: item, index, options, hidePosition, grow, ...props }: TopListItemProps) {
+  const { metric, time, topic } = options;
   const theme = useTheme();
   // This is used because it looks prettier with the transparency and draws less attention to it
   const dynamicPrimaryColor = theme.palette.mode === 'light' ? theme.palette.primary.light : theme.palette.primary.dark;
+  const dynamicWarningColor = theme.palette.mode === 'light' ? theme.palette.warning.light : theme.palette.warning.dark;
   //console.log('item?', item);
+
+  const TopMetric2ChartColor: Record<TopMetric, string> = {
+    'totalEnrolled': dynamicPrimaryColor,
+    'pageView': dynamicWarningColor,
+  }
+
+  const dynamicSparklineEnabled = options.metric !== 'totalEnrolled'
+  const { data: binnedSparklineData, isPending: isPendingSparklineData } = useTopSparkline(item.id, {...options, enabled: dynamicSparklineEnabled });
+
+  // useEffect(() => {
+  //   console.log('binnedSparklineData?', binnedSparklineData);
+  // }, [binnedSparklineData]);
+
   return (
-    <Link to={item.href} className="nostyle">
+    <Link to={item.href} className="nostyle" style={{ height: grow ? '100%' : undefined }} {...props}>
       <ListItemButton alignItems="flex-start">
         <ListItemIcon className={styles.topItemIcon}>
           <Typography variant="h5" color="primary" sx={{ paddingTop: 0 }} data-value={index + 1}>
@@ -96,48 +120,105 @@ export function TopListItem({ data: item, index, viewMetric, hidePosition }: Top
         />
         <div className={styles.metricSparklineContainer}>
           <Typography className={styles.hintedMetric} variant="body2" color="text.secondary" noWrap>
-            {item.metricFormatted}{ viewMetric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
+            {item.metricFormatted}{ metric === 'totalEnrolled' ? <span className={styles.hintedMetricExtended}>{' '}since {item.metricTimeSpanFormatted}</span> : null}
           </Typography>
           {
-            item.sparklineData !== undefined
-            ? <>
-              <SparkLineChart
-                //data={item.sparklineData.data} // all data
-                data={arrayLastEntries(item.sparklineData.data, 3 * 10)} // last 10 years
-                height={100}
-                area
-                color={dynamicPrimaryColor}
-                curve="linear"
-                showHighlight
-                showTooltip
-                valueFormatter={(value: number | null) => value === null ? `N/A` : `${value} enrolled`}
-                xAxis={{
-                  scaleType: 'point',
-                  //data: item.sparklineData.xAxis, // all data
-                  data: arrayLastEntries(item.sparklineData.xAxis, 3 * 10), // last 10 years
-                  valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
-                }}
-                yAxis={{
-                  // min: undefined,
-                  // max: undefined,
-                  min: item.sparklineData.yAxis.min,
-                  max: item.sparklineData.yAxis.max,
-                  // min: item.href.startsWith('/c/') ? item.sparklineData.yAxis.min : undefined,
-                  // max: item.href.startsWith('/c/') ? item.sparklineData.yAxis.max : undefined,
-                }}
-                sx={{
-                  maxWidth: '150px',
-                  [`& .${areaElementClasses.root}`]: {
-                    fill: `url(#sparkline-area-gradient)`,
-                  },
-                }}
-                >
-                <AreaGradient id="sparkline-area-gradient" color={dynamicPrimaryColor} />
-              </SparkLineChart>
-            </>
-            : <>
-            {/* 📉 */}
-            </>
+            isPendingSparklineData && dynamicSparklineEnabled
+            // Show nothing while loading
+            ? null
+            : (
+              // If special Sparkline Data is available, use this
+              !isNullish(binnedSparklineData)
+              ? (
+                <SparkLineChart
+                  //data={item.sparklineData.data} // all data
+                  data={binnedSparklineData.data} // last 10 years
+                  height={100}
+                  area
+                  color={dynamicWarningColor}
+                  curve="linear"
+                  showHighlight
+                  showTooltip
+                  valueFormatter={(value: number | null) => (
+                    isNullish(value)
+                    ? `N/A`
+                    : (
+                      !isNullish(TopMetric2ValueVerb[metric])
+                      ? TopMetric2ValueVerb[metric].replaceAll('{0}', `${value}`) 
+                      : `${value}`
+                    )
+                  )}
+                  xAxis={{
+                    scaleType: 'point',
+                    data: binnedSparklineData.xAxis,
+                    // No formatter needed, it's preformatted
+                    //valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
+                  }}
+                  yAxis={{
+                    // min: undefined,
+                    // max: undefined,
+                    min: binnedSparklineData.yAxis.min,
+                    max: (
+                      binnedSparklineData.yAxis.max <= 0
+                      ? undefined
+                      : binnedSparklineData.yAxis.max
+                    ),
+                    // min: item.href.startsWith('/c/') ? item.sparklineData.yAxis.min : undefined,
+                    // max: item.href.startsWith('/c/') ? item.sparklineData.yAxis.max : undefined,
+                  }}
+                  sx={{
+                    maxWidth: '150px',
+                    [`& .${areaElementClasses.root}`]: {
+                      fill: `url(#sparkline-area-gradient)`,
+                    },
+                  }}
+                  >
+                  <AreaGradient id="sparkline-area-gradient" color={dynamicWarningColor} />
+                </SparkLineChart>
+              )
+              // Otherwise, used baked in Enrollment sparkline
+              : (
+                item.sparklineData !== undefined
+                ? (
+                  <>
+                  <SparkLineChart
+                    //data={item.sparklineData.data} // all data
+                    data={arrayLastEntries(item.sparklineData.data, 3 * 10)} // last 10 years
+                    height={100}
+                    area
+                    color={dynamicPrimaryColor}
+                    curve="linear"
+                    showHighlight
+                    showTooltip
+                    valueFormatter={(value: number | null) => value === null ? `N/A` : `${value} enrolled`}
+                    xAxis={{
+                      scaleType: 'point',
+                      //data: item.sparklineData.xAxis, // all data
+                      data: arrayLastEntries(item.sparklineData.xAxis, 3 * 10), // last 10 years
+                      valueFormatter: (value) => typeof value === 'number' ? formatTermCode(value) : value,
+                    }}
+                    yAxis={{
+                      // min: undefined,
+                      // max: undefined,
+                      min: item.sparklineData.yAxis.min,
+                      max: item.sparklineData.yAxis.max,
+                      // min: item.href.startsWith('/c/') ? item.sparklineData.yAxis.min : undefined,
+                      // max: item.href.startsWith('/c/') ? item.sparklineData.yAxis.max : undefined,
+                    }}
+                    sx={{
+                      maxWidth: '150px',
+                      [`& .${areaElementClasses.root}`]: {
+                        fill: `url(#sparkline-area-gradient)`,
+                      },
+                    }}
+                    >
+                    <AreaGradient id="sparkline-area-gradient" color={dynamicPrimaryColor} />
+                  </SparkLineChart>
+                  </>
+                )
+                : null
+              )
+            )
           }
         </div>
       </ListItemButton>

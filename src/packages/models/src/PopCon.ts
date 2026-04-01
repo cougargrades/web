@@ -63,22 +63,6 @@ export const PopConOptions = z.object({
   exclude: z.array(z.string()).optional(),
 })
 
-export function EpochSecondsToTemporal(epoch_seconds: number | bigint): Temporal.ZonedDateTime {
-  if (typeof epoch_seconds === 'number') {
-    return Temporal.Instant.fromEpochMilliseconds(epoch_seconds * 1000).toZonedDateTimeISO(Temporal.Now.timeZoneId())
-  }
-  else {
-    return Temporal.Instant.fromEpochNanoseconds(epoch_seconds * 1000n * 1000000n).toZonedDateTimeISO(Temporal.Now.timeZoneId());
-  }
-}
-
-export function ToEpochSeconds(instant: Temporal.Instant | Temporal.ZonedDateTime | Date): number {
-  if (instant instanceof Temporal.Instant || instant instanceof Temporal.ZonedDateTime) {
-    return Math.round(instant.epochMilliseconds / 1000);
-  }
-  return Math.round(instant.valueOf() / 1000);
-}
-
 const pathnamePattern = new URLPattern({ pathname: `/:tlp/:primaryKey`});
 const Tlp2DocumentCollection = new Map<'c' | 'i' | 'g', 'catalog' | 'instructors' | 'groups'>([
   ['c', 'catalog'],

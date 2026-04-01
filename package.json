@@ -8,7 +8,8 @@
     "dev": "pnpm run -r --if-present --parallel dev",
     "dev:host": "pnpm run -r --if-present --parallel dev:host",
     "build": "pnpm run -r --if-present build",
-    "tsc": "pnpm run -r --if-present tsc"
+    "tsc": "pnpm run -r --if-present tsc",
+    "test": "pnpm run -r --if-present test"
   },
   "engines": {
     "node": ">24.0.0",

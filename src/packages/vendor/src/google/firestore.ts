@@ -53,21 +53,21 @@ export function firestore(credentials: FirestoreCredentials) {
  */
 export async function* stream(query: Query, chunkSize: number = 25) {
   // If a limit or offset is already provided, then don't manipulate them
-  if (!isNullish(query._queryConstraints.limit) || !isNullish(query._queryConstraints.offset)) {
-    const snap = await query.get()
-    for(let doc of snap.docs) {
-      yield doc;
-    }
-  }
+  // if (!isNullish(query._queryConstraints.limit) || !isNullish(query._queryConstraints.offset)) {
+  //   const snap = await query.get()
+  //   for(let doc of snap.docs) {
+  //     yield doc;
+  //   }
+  // }
 
-  let i = 0;
+  let offset = query._queryConstraints.offset ?? 0;
   let snap: QuerySnapshot;
   do {
-    snap = await query.limit(chunkSize).offset(i).get();
+    snap = await query.limit(chunkSize).offset(offset).get();
     for(let doc of snap.docs) {
       yield doc;
     }
-    i += chunkSize;
+    offset += chunkSize;
   }
   while (!snap.empty);
 }

@@ -1,0 +1,19 @@
+info:
+  name: GetSessionsForTerm
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{BASE}}/api/online/sessions?term=2280"
+  params:
+    - name: term
+      value: "2280"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

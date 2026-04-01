@@ -12,7 +12,7 @@ export const POPULAR_TABS: FaqPostData[] = [
     id: 2,
     slug: 'viewed-courses',
     title: 'Most Viewed Courses',
-    content: 'The Courses which are most often viewed on CougarGrades. These results are powered by Google Analytics, so please interpret the results with a grain of salt.',
+    content: 'The Courses which are most often viewed on CougarGrades. Before CougarGrades 2.0.0 (March 3rd 2026), these results were powered by Google Analytics. Any data recorded from before then may be inconsistent.',
   },
   {
     id: 3,
@@ -24,6 +24,6 @@ export const POPULAR_TABS: FaqPostData[] = [
     id: 4,
     slug: 'viewed-instructors',
     title: 'Most Viewed Instructors',
-    content: 'The Instructors which are most often viewed on CougarGrades. These results are powered by Google Analytics, so please interpret the results with a grain of salt.',
+    content: 'The Instructors which are most often viewed on CougarGrades. Before CougarGrades 2.0.0 (March 3rd 2026), these results were powered by Google Analytics. Any data recorded from before then may be inconsistent.',
   },
 ];

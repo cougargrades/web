@@ -21,15 +21,17 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node_version }}
           registry-url: "https://registry.npmjs.org"
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4.2.0
+        uses: pnpm/action-setup@v4
       - name: Install dependencies
         run: pnpm -r install
       - name: Run TSC
         run: pnpm run tsc
       - name: Run build
         run: pnpm run build
+      - name: Run tests
+        run: pnpm run test

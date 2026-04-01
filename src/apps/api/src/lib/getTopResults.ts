@@ -1,11 +1,11 @@
 
-import { DocumentPathToPathname, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, TopMetric2PopConMetric } from '@cougargrades/models'
+import { BinnedSparklineData, DocumentPathToPathname, PathnameToDocumentPath, PopConMetric, PopConMetric2PlusMetricKey, SparklineData, TopMetric2PopConMetric } from '@cougargrades/models'
 import { stream } from '@cougargrades/vendor/firestore'
-import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopResult, TopTime2Duration, ToTopResult } from '@cougargrades/models/dto'
+import { CoursePlusMetrics, InstructorPlusMetrics, RankingResult, TopOptions, TopResult, TopTime2BinSize, TopTime2Duration, ToTopResult } from '@cougargrades/models/dto'
 import core_curriculum_json from '@cougargrades/publicdata/bundle/edu.uh.publications.core/core_curriculum.json'
 import { Temporal } from 'temporal-polyfill';
 import { firestore, getFirestoreDocumentSafe } from './firestore-config'
-import { getPopConTopPages, getRankForPathname, PopConTopResult, streamPopConTopPages } from './popconHelper';
+import { getPopConTopPages, getRankForPathname, getSparklineForPathname, PopConTopResult, streamPopConTopPages } from './popconHelper';
 import { isNullish } from '@cougargrades/utils/nullish'
 import { GetTimeRangeFromDurationBeforeNow, UTC_TIMEZONE_ID } from '@cougargrades/utils/temporal'
 
@@ -18,12 +18,13 @@ const core_curriculum_pathnames = new Set(
 
 export const CourseOrInstructorPlusMetrics = CoursePlusMetrics.or(InstructorPlusMetrics);
 
-export async function getTopResults({ metric, topic, limit, time, hideCore }: TopOptions): Promise<TopResult[]> {
+export async function getTopResults({ metric, topic, limit, skip, time, hideCore }: TopOptions): Promise<TopResult[]> {
   const seen = new Set<string>();
   if (metric === 'totalEnrolled') {
     const db = firestore();
     const query = db.collection(topic === 'course' ? 'catalog' : 'instructors')
-        .orderBy('enrollment.totalEnrolled', 'desc');
+        .orderBy('enrollment.totalEnrolled', 'desc')
+        .offset(skip);
     
     let result: (CoursePlusMetrics | InstructorPlusMetrics)[] = [];
 
@@ -73,7 +74,7 @@ export async function getTopResults({ metric, topic, limit, time, hideCore }: To
      * Stream it because it's the most syntactically simple
      * way to keep asking for more if we find rows that we don't want (core curriculum filter).
      */
-    for await (const row of streamPopConTopPages({ metric: pMetric, topic, timeRange, chunkSize: limit })) {
+    for await (const row of streamPopConTopPages({ metric: pMetric, topic, timeRange, offset: skip, chunkSize: limit })) {
       // End the stream if we capture the amount we want
       if (rankedPopcons.length >= limit) break;
 
@@ -188,7 +189,7 @@ export async function getRankForInstructor(instructorName: string, { metric, tim
     const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
     const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
 
-    const pathname = DocumentPathToPathname(`catalog/${instructorName}`);
+    const pathname = DocumentPathToPathname(`instructors/${instructorName}`);
     if (isNullish(pathname)) return null;
 
     // Get the top visited PopCon pathnames 
@@ -199,6 +200,76 @@ export async function getRankForInstructor(instructorName: string, { metric, tim
     })
 
     return rank;
+  }
+
+  return null;
+}
+
+/**
+ * Used to get the ranking for a Course based on `TopOptions`
+ * @param courseName 
+ * @param param1 
+ * @returns 
+ */
+export async function getSparklineForCourse(courseName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<BinnedSparklineData | null> {
+  if (metric === 'totalEnrolled') {
+    // TODO: this is not yet supported
+    return null
+  }
+  else if (metric === 'pageView') {
+    // Convert `Top` parameters into `PopCon` parameters
+    const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
+    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
+    const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+    const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
+    const binSize = TopTime2BinSize.get(time) ?? Temporal.Duration.from({ days: 1 });
+
+    const pathname = DocumentPathToPathname(`catalog/${courseName}`);
+    if (isNullish(pathname)) return null;
+
+    // Get the top visited PopCon pathnames 
+    const sparkline = await getSparklineForPathname(pathname, binSize, {
+      metric: pMetric,
+      topic: 'course',
+      timeRange
+    })
+
+    return sparkline;
+  }
+
+  return null;
+}
+
+/**
+ * Used to get the ranking for an Instructor based on `TopOptions`
+ * @param instructorName 
+ * @param param1 
+ * @returns 
+ */
+export async function getSparklineForInstructor(instructorName: string, { metric, time }: Pick<TopOptions, 'metric' | 'time'>): Promise<BinnedSparklineData | null> {
+  if (metric === 'totalEnrolled') {
+    // TODO: this is not yet supported
+    return null
+  }
+  else if (metric === 'pageView') {
+    // Convert `Top` parameters into `PopCon` parameters
+    const pMetric = TopMetric2PopConMetric.get(metric) ?? PopConMetric.PageView;
+    const topDuration = TopTime2Duration.get(time) ?? Temporal.Duration.from({ years: 999 });
+    const nowUTC = Temporal.Now.zonedDateTimeISO(UTC_TIMEZONE_ID);
+    const timeRange = GetTimeRangeFromDurationBeforeNow(nowUTC, topDuration);
+    const binSize = TopTime2BinSize.get(time) ?? Temporal.Duration.from({ days: 1 });
+
+    const pathname = DocumentPathToPathname(`instructors/${instructorName}`);
+    if (isNullish(pathname)) return null;
+
+    // Get the top visited PopCon pathnames 
+    const sparkline = await getSparklineForPathname(pathname, binSize, {
+      metric: pMetric,
+      topic: 'instructor',
+      timeRange
+    })
+
+    return sparkline;
   }
 
   return null;
