@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
-    "test": "vitest",
+    "test": "vitest -t asdfgh",
     "test:debugger": "vitest --test-timeout=0 --no-file-parallelism"
   }
 }

@@ -127,9 +127,9 @@ function RouteComponent() {
         </p>
         <h4>License</h4>
         <p>
-          This software is{' '}
+          This software is available under the {' '}
           <a href="https://github.com/cougargrades/web/blob/master/LICENSE">
-            MIT Licensed
+            GNU General Public License
           </a>
           .
         </p>
