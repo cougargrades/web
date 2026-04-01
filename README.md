@@ -1,7 +1,7 @@
 
 # CougarGrades Monorepo
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: GPLv2](https://img.shields.io/badge/License-GPLv2-yellow.svg)](LICENSE)
 ![Node.js](https://img.shields.io/badge/Node.js->24.0-green)
 ![pnpm](https://img.shields.io/badge/pnpm->=10-blue)
 
