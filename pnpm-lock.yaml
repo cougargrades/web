@@ -3522,8 +3522,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  serialize-javascript@7.0.4:
-    resolution: {integrity: sha512-DuGdB+Po43Q5Jxwpzt1lhyFSYKryqoNjQSA9M92tyw0lyHIOur+XCalOUe0KTJpyqzT8+fQ5A0Jf7vCx/NKmIg==}
+  serialize-javascript@7.0.5:
+    resolution: {integrity: sha512-F4LcB0UqUl1zErq+1nYEEzSHJnIwb3AF2XWB94b+afhrekOUijwooAYqFyRbjYkm2PAKBabx6oYv/xDxNi8IBw==}
     engines: {node: '>=20.0.0'}
 
   seroval-plugins@1.5.0:
@@ -4325,7 +4325,7 @@ snapshots:
       p-limit: 6.2.0
       picomatch: 4.0.3
       pluralize: 8.0.0
-      serialize-javascript: 7.0.4
+      serialize-javascript: 7.0.5
       tinyglobby: 0.2.15
       typescript: 5.9.3
       yaml: 2.8.2
@@ -7420,7 +7420,7 @@ snapshots:
 
   semver@7.7.4: {}
 
-  serialize-javascript@7.0.4: {}
+  serialize-javascript@7.0.5: {}
 
   seroval-plugins@1.5.0(seroval@1.5.0):
     dependencies:
