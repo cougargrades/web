@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { IOS_26_USER_AGENT_STRING } from '../common'
 
 /**
  * Thumbnail URLs: https://uh.simplesyllabus.com/api2/doc-png/{{ doc_code }}
@@ -114,7 +115,7 @@ export type SSSearchResult = z.infer<typeof SSSearchResult>
 export const SSSearchResult = z.object({
     code: z.string(), // "megwtcr68"
     title: z.string(), // "ACCT 7337 17848"
-    subtitle: z.string(), // "Oil & Gas Taxation"
+    sub_title: z.string(), // "Oil & Gas Taxation"
     term_name: z.string(), // "Fall 2025"
     editors: z.object({
         full_name: z.string(),
@@ -431,15 +432,20 @@ export async function search(filter: string): Promise<SSSearchResponse | null> {
     query.append('term_statuses[]', 'historic');
     const res = await fetch(`https://uh.simplesyllabus.com/api2/doc-library-search?${query}`, {
         headers: {
-            'Origin': 'https://cougargrades.io' // For now, we want to be neighborly...
+            'User-Agent': IOS_26_USER_AGENT_STRING,
         }
     });
+    if (!res.ok) {
+        console.warn(`[SimpleSyllabus] HTTP ${res.status} (${res.statusText}) ${res.url}`);
+    }
     const data = await res.json();
     const parsed = await schema.safeParseAsync(data)
     if (parsed.success) {
         return parsed.data
     }
     else {
+        console.warn(`[SimpleSyllabus] Response failed Zod schema with ${parsed.error.issues.length} issues:`, parsed.error);
+        debugger;
         return null;
     }
 }

@@ -129,7 +129,7 @@ export function SimpleSyllabusLauncher({ data, courseName }: SimpleSyllabusLaunc
                         <ListItemAvatar>
                           <Avatar alt="Thumbnail" src={getThumbnailUrl(item.code)} style={{ overflow: 'initial' }} imgProps={{ style: { marginBottom: 0 }}} />
                         </ListItemAvatar>
-                        <ListItemText primary={`${item.title}${item.subtitle !== '' ? ` - ${item.subtitle}` : ''}`} secondary={item.editors?.[0]?.full_name ?? ''} />
+                        <ListItemText primary={`${item.title}${item.sub_title !== '' ? ` - ${item.sub_title}` : ''}`} secondary={item.editors?.[0]?.full_name ?? ''} />
                       </ListItem>
                     </Link>
                     { index !== (array.length - 1) ? <Divider /> : ''}
