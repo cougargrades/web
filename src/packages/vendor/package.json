@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
-    "test": "vitest -t asdfgh",
+    "test": "vitest --exclude \"test/classbrowser.uh.edu/**\"",
     "test:debugger": "vitest --test-timeout=0 --no-file-parallelism"
   }
 }

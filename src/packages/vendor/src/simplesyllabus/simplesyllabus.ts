@@ -445,7 +445,6 @@ export async function search(filter: string): Promise<SSSearchResponse | null> {
     }
     else {
         console.warn(`[SimpleSyllabus] Response failed Zod schema with ${parsed.error.issues.length} issues:`, parsed.error);
-        debugger;
         return null;
     }
 }
