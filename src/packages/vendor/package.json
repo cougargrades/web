@@ -15,21 +15,21 @@
     "@cougargrades/firebase-rest-firestore": "^1.6.1",
     "@cougargrades/models": "workspace:*",
     "@cougargrades/utils": "workspace:*",
-    "@google-analytics/data": "^5.2.1",
+    "@google-analytics/data": "^5.2.2",
     "@octokit/rest": "^22.0.1",
     "lodash-es": "^4.18.1",
     "temporal-polyfill": "^0.3.2",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.10"
   },
   "scripts": {
     "build": "tsc",
     "tsc": "tsc",
-    "test": "vitest -t asdfgh",
+    "test": "vitest --exclude \"test/classbrowser.uh.edu/**\"",
     "test:debugger": "vitest --test-timeout=0 --no-file-parallelism"
   }
 }

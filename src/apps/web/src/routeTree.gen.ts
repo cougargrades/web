@@ -9,37 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TopIndexRouteImport } from './routes/top/index'
-import { Route as RandomIndexRouteImport } from './routes/random/index'
-import { Route as FaqIndexRouteImport } from './routes/faq/index'
-import { Route as TopSlugRouteImport } from './routes/top/$slug'
-import { Route as RandomInstructorRouteImport } from './routes/random/instructor'
-import { Route as RandomCourseRouteImport } from './routes/random/course'
-import { Route as IInstructorNameRouteImport } from './routes/i/$instructorName'
-import { Route as GGroupIdRouteImport } from './routes/g/$groupId'
-import { Route as FaqSlugRouteImport } from './routes/faq/$slug'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as CCourseNameRouteImport } from './routes/c/$courseName'
+import { Route as FaqIndexRouteImport } from './routes/faq/index'
+import { Route as FaqSlugRouteImport } from './routes/faq/$slug'
+import { Route as GGroupIdRouteImport } from './routes/g/$groupId'
+import { Route as IInstructorNameRouteImport } from './routes/i/$instructorName'
+import { Route as RandomIndexRouteImport } from './routes/random/index'
+import { Route as RandomCourseRouteImport } from './routes/random/course'
+import { Route as RandomInstructorRouteImport } from './routes/random/instructor'
+import { Route as TopIndexRouteImport } from './routes/top/index'
+import { Route as TopSlugRouteImport } from './routes/top/$slug'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TopIndexRoute = TopIndexRouteImport.update({
-  id: '/top/',
-  path: '/top/',
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RandomIndexRoute = RandomIndexRouteImport.update({
-  id: '/random/',
-  path: '/random/',
+const CCourseNameRoute = CCourseNameRouteImport.update({
+  id: '/c/$courseName',
+  path: '/c/$courseName',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqIndexRoute = FaqIndexRouteImport.update({
@@ -47,24 +42,9 @@ const FaqIndexRoute = FaqIndexRouteImport.update({
   path: '/faq/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TopSlugRoute = TopSlugRouteImport.update({
-  id: '/top/$slug',
-  path: '/top/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RandomInstructorRoute = RandomInstructorRouteImport.update({
-  id: '/random/instructor',
-  path: '/random/instructor',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RandomCourseRoute = RandomCourseRouteImport.update({
-  id: '/random/course',
-  path: '/random/course',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IInstructorNameRoute = IInstructorNameRouteImport.update({
-  id: '/i/$instructorName',
-  path: '/i/$instructorName',
+const FaqSlugRoute = FaqSlugRouteImport.update({
+  id: '/faq/$slug',
+  path: '/faq/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GGroupIdRoute = GGroupIdRouteImport.update({
@@ -72,14 +52,34 @@ const GGroupIdRoute = GGroupIdRouteImport.update({
   path: '/g/$groupId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FaqSlugRoute = FaqSlugRouteImport.update({
-  id: '/faq/$slug',
-  path: '/faq/$slug',
+const IInstructorNameRoute = IInstructorNameRouteImport.update({
+  id: '/i/$instructorName',
+  path: '/i/$instructorName',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CCourseNameRoute = CCourseNameRouteImport.update({
-  id: '/c/$courseName',
-  path: '/c/$courseName',
+const RandomIndexRoute = RandomIndexRouteImport.update({
+  id: '/random/',
+  path: '/random/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomCourseRoute = RandomCourseRouteImport.update({
+  id: '/random/course',
+  path: '/random/course',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomInstructorRoute = RandomInstructorRouteImport.update({
+  id: '/random/instructor',
+  path: '/random/instructor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TopIndexRoute = TopIndexRouteImport.update({
+  id: '/top/',
+  path: '/top/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TopSlugRoute = TopSlugRouteImport.update({
+  id: '/top/$slug',
+  path: '/top/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -188,13 +188,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -202,18 +195,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/top/': {
-      id: '/top/'
-      path: '/top'
-      fullPath: '/top/'
-      preLoaderRoute: typeof TopIndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/random/': {
-      id: '/random/'
-      path: '/random'
-      fullPath: '/random/'
-      preLoaderRoute: typeof RandomIndexRouteImport
+    '/c/$courseName': {
+      id: '/c/$courseName'
+      path: '/c/$courseName'
+      fullPath: '/c/$courseName'
+      preLoaderRoute: typeof CCourseNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq/': {
@@ -223,32 +216,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/top/$slug': {
-      id: '/top/$slug'
-      path: '/top/$slug'
-      fullPath: '/top/$slug'
-      preLoaderRoute: typeof TopSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/random/instructor': {
-      id: '/random/instructor'
-      path: '/random/instructor'
-      fullPath: '/random/instructor'
-      preLoaderRoute: typeof RandomInstructorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/random/course': {
-      id: '/random/course'
-      path: '/random/course'
-      fullPath: '/random/course'
-      preLoaderRoute: typeof RandomCourseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/i/$instructorName': {
-      id: '/i/$instructorName'
-      path: '/i/$instructorName'
-      fullPath: '/i/$instructorName'
-      preLoaderRoute: typeof IInstructorNameRouteImport
+    '/faq/$slug': {
+      id: '/faq/$slug'
+      path: '/faq/$slug'
+      fullPath: '/faq/$slug'
+      preLoaderRoute: typeof FaqSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/g/$groupId': {
@@ -258,18 +230,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GGroupIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/faq/$slug': {
-      id: '/faq/$slug'
-      path: '/faq/$slug'
-      fullPath: '/faq/$slug'
-      preLoaderRoute: typeof FaqSlugRouteImport
+    '/i/$instructorName': {
+      id: '/i/$instructorName'
+      path: '/i/$instructorName'
+      fullPath: '/i/$instructorName'
+      preLoaderRoute: typeof IInstructorNameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/c/$courseName': {
-      id: '/c/$courseName'
-      path: '/c/$courseName'
-      fullPath: '/c/$courseName'
-      preLoaderRoute: typeof CCourseNameRouteImport
+    '/random/': {
+      id: '/random/'
+      path: '/random'
+      fullPath: '/random/'
+      preLoaderRoute: typeof RandomIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random/course': {
+      id: '/random/course'
+      path: '/random/course'
+      fullPath: '/random/course'
+      preLoaderRoute: typeof RandomCourseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/random/instructor': {
+      id: '/random/instructor'
+      path: '/random/instructor'
+      fullPath: '/random/instructor'
+      preLoaderRoute: typeof RandomInstructorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/top/': {
+      id: '/top/'
+      path: '/top'
+      fullPath: '/top/'
+      preLoaderRoute: typeof TopIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/top/$slug': {
+      id: '/top/$slug'
+      path: '/top/$slug'
+      fullPath: '/top/$slug'
+      preLoaderRoute: typeof TopSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
