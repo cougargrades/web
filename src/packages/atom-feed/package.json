@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@cougargrades/utils": "workspace:*",
-    "dompurify": "^3.4.13",
+    "dompurify": "^3.4.17",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
     "jsdom": "^28.1.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }
