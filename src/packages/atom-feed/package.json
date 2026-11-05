@@ -12,7 +12,7 @@
   "dependencies": {
     "@cougargrades/utils": "workspace:*",
     "dompurify": "^3.4.17",
-    "zod": "^4.4.3"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
